@@ -60,16 +60,19 @@ function baseEvidence(overrides = {}) {
       'chart_fitted_before_reads',
       'primary_count_defined',
       'macro_subwaves_mapped',
+      'ratio_model_selected',
       'alternate_count_defined',
       'wave3_projection_checked',
       'c_of_3_checked',
       'support_invalidation_checked',
+      'wave_b_ladder_checked',
       'alternation_checked',
       'corrective_structure_checked',
       'projection_targets_clustered',
       'hard_invalidation_defined',
       'flip_level_defined',
       'trade_posture_scored',
+      'castaway_model_selected',
       'validation_log_complete',
       'red_team_complete',
       'screenshots_aligned',
@@ -120,6 +123,13 @@ function baseEvidence(overrides = {}) {
       wave1_origin: 90,
       wave1_extreme: 100,
       wave2: 94,
+    },
+    ratio_model_selection: {
+      selected_model: 'model_1_standard',
+      status: 'pass',
+      evidence: 'Fixture count uses the standard model.',
+      upgrade_or_downgrade_triggers: 'Upgrade above the fixture extension zone.',
+      terminal_risk_note: 'Model 3 is not active in fixture.',
     },
     ratio_validation: [
       {
@@ -176,12 +186,35 @@ function baseEvidence(overrides = {}) {
       flip_level: 100,
       alternate_trigger: 94,
     },
+    wave_b_invalidation_ladder: {
+      direction: 'bullish',
+      violation_standard: 'daily_close',
+      levels: {
+        wave1_origin: 90,
+        wave2: 94,
+        b_of_3: 98,
+        wave4: 'not_applicable',
+        b_of_5: 'not_applicable',
+      },
+      current_status: 'pass',
+      report_wording: 'Bulls must hold the Wave 2 low for B of 3.',
+    },
     trade_posture: {
       posture: 'STAND ASIDE',
       structural_setup: 'Candidate Wave 3.',
       execution_setup: 'No trigger in fixture.',
       hard_invalidation: 90,
       flip_level: 100,
+    },
+    castaway_trade_model: {
+      selected_model: 'model_6_stand_aside',
+      macro_alignment: 'Fixture count is structural only.',
+      micro_setup: 'No executable setup in fixture.',
+      trigger: 'not_available',
+      stop_or_invalidation: 90,
+      reward_risk_management: 'not_applicable',
+      permission: 'structural_only',
+      permission_reason: 'No trigger in fixture.',
     },
     validation_log: [
       {
@@ -242,12 +275,18 @@ describe('HEW evidence validator', () => {
       rule_validation: [],
       alternate_counts: [],
     });
+    delete evidence.ratio_model_selection;
+    delete evidence.wave_b_invalidation_ladder;
+    delete evidence.castaway_trade_model;
     const { dir, file } = writeEvidence(evidence);
     try {
       const result = runValidator(file);
       assert.equal(result.exitCode, 1);
+      assert.ok(result.stderr.includes('missing top-level section: ratio_model_selection'));
       assert.ok(result.stderr.includes('missing ratio_validation id: wave3_1764_floor'));
+      assert.ok(result.stderr.includes('missing top-level section: wave_b_invalidation_ladder'));
       assert.ok(result.stderr.includes('alternate_counts must be a non-empty array'));
+      assert.ok(result.stderr.includes('missing top-level section: castaway_trade_model'));
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

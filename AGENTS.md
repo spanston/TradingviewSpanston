@@ -297,9 +297,12 @@ When the user asks for symbol analysis using HEW, Harmonic Elliott Wave, Elliott
 10. Start with compact reads: `quote_get`, `data_get_ohlcv` with `summary: true`, `data_get_study_values`, and focused Pine drawing reads with `study_filter`.
 11. Pull bounded raw OHLCV only when exact pivots, durations, or ratio validation require it.
 12. Include subwave anatomy inside the macro waves wherever chart resolution permits. Macro Waves 1, 3, and 5 need A-B-C or lower-degree motive internals; macro Waves 2 and 4 need corrective classification. If subwaves cannot be read, record that as missing evidence and reduce confidence.
-13. Build projections from the highest-probability count that follows the macro count: either the next impulsive wave, or the most likely complex corrective path (`A-B-C`, `W-X-Y`, flat, triangle, double/triple three). Do not project isolated price levels without tying them to the active macro scenario.
-14. Report primary count, alternate count, active wave, ratio validation, rule validation, alternation, corrective structure, target cluster, hard invalidation, flip level, validation log, red-team countercase, and trade posture.
-15. Say `STAND ASIDE` when the macro count is not validated, required subwaves are missing, price is in a messy B wave, the alternate materially changes posture, hard invalidation is too wide, target confluence is absent, or the setup lacks a defined trigger.
+13. Select the active HEW ratio model for serious reports: Model 1 standard, Model 2 extended, or Model 3 super-extended. Start from Model 1, upgrade only when lower-model targets are exceeded without terminal behavior, and treat Model 3 as terminal-risk mapping rather than chase permission.
+14. Document the Wave-B invalidation ladder: Wave 1 origin -> Wave 2 -> B of 3 -> Wave 4 -> B of 5, inverted for bearish counts, with the exact violation standard.
+15. Select the Castaway trade model before using trade language. Model 6 means stand aside; Models 1, 1.2, 2.2, 3, 4, and 5 require macro alignment, trigger, stop/invalidation, target path, and reward/risk management.
+16. Build projections from the highest-probability count that follows the macro count: either the next impulsive wave, or the most likely complex corrective path (`A-B-C`, `W-X-Y`, flat, triangle, double/triple three). Do not project isolated price levels without tying them to the active macro scenario.
+17. Report primary count, alternate count, active wave, ratio model, ratio validation, Wave-B ladder, rule validation, alternation, corrective structure, target cluster, hard invalidation, flip level, Castaway model, validation log, red-team countercase, and trade posture.
+18. Say `STAND ASIDE` when the macro count is not validated, required subwaves are missing, price is in a messy B wave, the alternate materially changes posture, hard invalidation is too wide, target confluence is absent, the Castaway model is Model 6, or the setup lacks a defined trigger.
 
 Do not promise certainty or guaranteed profit. HEW gives a structural map, not a signal system.
 
@@ -321,11 +324,14 @@ Every serious HEW report must also include:
 - A primary count and a meaningful alternate count with activation and invalidation.
 - A macro-first count map. The highest-degree count must be attempted before lower-timeframe micro counts, and the final posture must follow the macro count unless the report explicitly rejects it with rule or ratio evidence.
 - Subwave evidence inside the macro count. Show A/B/C or lower-degree motive internals for Waves 1, 3, and 5 when visible, and classify corrective subwaves for Waves 2 and 4.
+- HEW ratio-model selection: Model 1, Model 2, Model 3, or a clear unavailable/recount reason.
 - Ratio validation for Wave 3, C of 3 when applicable, and Wave 5 target logic when applicable.
 - Rule validation for Wave 2, Wave 3, Wave 4, Wave 5, and B of 5 as applicable.
+- Wave-B invalidation ladder from the origin through Wave 2, B of 3, Wave 4, and B of 5, with wick/close/daily-close/weekly-close/structural-break violation standard.
 - Corrective-structure classification or an explicit missing-evidence note.
 - A target cluster, not only a single ratio.
 - A projection map based on the highest-probability macro-following path: impulsive continuation or complex correction.
+- Castaway trade model selection. Trade language is blocked unless macro alignment, execution trigger, invalidation, reward/risk, and management are defined; Model 6 is stand-aside.
 - A validation log with traceable measurements.
 - A red-team countercase: the strongest argument against the primary count.
 - Review triggers so the report can be marked pending, confirmed, failed, or stale later.
@@ -345,13 +351,16 @@ Required top-level JSON sections:
 - `primary_count`
 - `alternate_counts`
 - `pivot_map`
+- `ratio_model_selection`
 - `ratio_validation`
 - `rule_validation`
 - `corrective_structure`
 - `alternation`
 - `projection_targets`
 - `invalidation_and_flip_levels`
+- `wave_b_invalidation_ladder`
 - `trade_posture`
+- `castaway_trade_model`
 - `validation_log`
 - `no_trade_gate`
 - `red_team`

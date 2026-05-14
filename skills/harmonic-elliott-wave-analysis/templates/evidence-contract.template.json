@@ -1,4 +1,10 @@
 {
+  "journal_id": "SYMBOL_YYYY-MM-DD_hew",
+  "saved_at": "YYYY-MM-DDTHH:mm:ssZ",
+  "symbol": "EXCHANGE:SYMBOL",
+  "method": "Harmonic Elliott Wave",
+  "workflow_version": "hew_evidence_stack_v1",
+  "status": "complete | complete_with_fallbacks | partial | blocked | structural_stand_aside",
   "evidence_contract": {
     "contract_version": "hew_evidence_stack_v1",
     "completion_status": "complete | complete_with_fallbacks | partial | blocked",
@@ -8,7 +14,7 @@
     "validator": "npm run validate:hew"
   },
   "asset_context": {
-    "asset_class": "equity_adr",
+    "asset_class": "equity_adr | equity | etf | index | crypto_spot | crypto_perp | futures | fx | commodity | unknown",
     "venue": "NYSE | NASDAQ | COINBASE | CME | FX | other",
     "session_model": "regular_hours | extended_hours | 24_7 | futures_rth_eth | continuous_fx",
     "volume_reliability": "native_exchange_volume | crypto_exchange_volume | tick_volume_proxy | futures_contract_volume | unreliable_or_missing"
@@ -45,6 +51,11 @@
       "evidence": "Subwaves inside macro Waves 1, 3, and 5 were mapped when visible, or missing evidence was stated."
     },
     {
+      "id": "ratio_model_selected",
+      "status": "pass",
+      "evidence": "Model 1, Model 2, Model 3, or unavailable/recount reason was recorded."
+    },
+    {
       "id": "alternate_count_defined",
       "status": "pass",
       "evidence": "Alternate count has activation, invalidation, and different next implication."
@@ -63,6 +74,11 @@
       "id": "support_invalidation_checked",
       "status": "pass",
       "evidence": "Wave 2, B of 3, Wave 4, and B of 5 support/resistance rules were checked as applicable."
+    },
+    {
+      "id": "wave_b_ladder_checked",
+      "status": "pass",
+      "evidence": "Wave-B invalidation ladder was documented with a violation standard."
     },
     {
       "id": "alternation_checked",
@@ -95,6 +111,11 @@
       "evidence": "Location, trigger, invalidation, reward, and timeframe alignment were scored."
     },
     {
+      "id": "castaway_model_selected",
+      "status": "pass",
+      "evidence": "Castaway model was selected; Model 6 blocks trade language."
+    },
+    {
       "id": "validation_log_complete",
       "status": "pass",
       "evidence": "Important measurements are traceable with pass/fail conclusions."
@@ -108,6 +129,27 @@
       "id": "screenshots_aligned",
       "status": "pass",
       "evidence": "journal.md screenshots and evidence.json screenshots reference the same package-relative files."
+    }
+  ],
+  "chart_prep": {
+    "source": "TradingView MCP",
+    "layout": "HEW layout",
+    "drawings_cleared": true,
+    "visible_ranges_verified": true,
+    "notes": "Record any explicit user override or preserved drawings."
+  },
+  "screenshots": [
+    {
+      "role": "macro_structure | projection_map | alternate_count | wave_anatomy | risk_architecture",
+      "path": "screenshots/SYMBOL_hew_macro_structure.png",
+      "purpose": "What this screenshot proves."
+    }
+  ],
+  "timeframe_summaries": [
+    {
+      "timeframe": "M | W | D | 4H | 1H",
+      "count_state": "candidate impulse | correction | unclear",
+      "active_wave": "Wave 2 | Wave A of 3 | Wave B of 3 | Wave C of 3 | Wave 4 | Wave 5 | post-five-wave correction | unclear"
     }
   ],
   "primary_count": {
@@ -133,6 +175,22 @@
       "implication": "What this count means next."
     }
   ],
+  "pivot_map": {
+    "wave1_origin": "Price/time.",
+    "wave1_extreme": "Price/time.",
+    "wave2": "Price/time.",
+    "b_of_3": "Price/time.",
+    "wave4": "Price/time.",
+    "b_of_5": "Price/time.",
+    "notes": "Include arrays or objects when more detail is needed."
+  },
+  "ratio_model_selection": {
+    "selected_model": "model_1_standard | model_2_extended | model_3_super_extended | unavailable | recount_required",
+    "status": "pass | fail | partial | not_applicable | missing",
+    "evidence": "Why this model fits the active count, or why no model can be selected.",
+    "upgrade_or_downgrade_triggers": "What would force Model 1 -> Model 2 -> Model 3, downgrade, or recount.",
+    "terminal_risk_note": "Required when Model 3 is active or possible."
+  },
   "ratio_validation": [
     {
       "id": "wave3_1764_floor",
@@ -151,21 +209,89 @@
       "trade_impact": "How this affects posture."
     }
   ],
+  "corrective_structure": {
+    "active_pattern": "zigzag | double_zigzag | regular_flat | expanded_flat | running_flat | triangle | double_three | triple_three | unclear",
+    "evidence": "Observed corrective anatomy.",
+    "status": "confirmed | probable | candidate | invalidated | unclear"
+  },
+  "alternation": {
+    "wave2": "Depth, duration, and complexity.",
+    "wave4": "Depth, duration, and complexity.",
+    "status": "pass | fail | partial | not_applicable | missing"
+  },
   "projection_targets": [
     {
-      "id": "wave3_targets",
+      "id": "wave3_targets | c_of_3_targets | wave5_targets | complex_correction_targets | failure_path_levels",
       "scenario_type": "impulsive_continuation | complex_correction | unavailable",
-      "method": "Highest-probability macro-following count path, e.g. Wave 1 projected from Wave 2 or complex correction projection.",
+      "method": "Highest-probability macro-following count path.",
       "levels": [],
       "cluster_status": "clustered | isolated | missing | not_applicable",
       "notes": "Confluence or lack of confluence."
     }
   ],
+  "invalidation_and_flip_levels": {
+    "hard_invalidation": "Level or behavior that invalidates the count.",
+    "flip_level": "Level or behavior that changes posture.",
+    "alternate_trigger": "Level or behavior that activates the alternate."
+  },
+  "wave_b_invalidation_ladder": {
+    "direction": "bullish | bearish | mixed_or_unclear",
+    "violation_standard": "intraday_wick | candle_close | daily_close | weekly_close | structural_break | not_defined",
+    "levels": {
+      "wave1_origin": "Price/time level that Wave 2 must respect.",
+      "wave2": "Price/time level that B of 3 must respect.",
+      "b_of_3": "Price/time level that Wave 4 must respect.",
+      "wave4": "Price/time level that B of 5 must respect.",
+      "b_of_5": "Price/time level that must hold while Wave 5 completes."
+    },
+    "current_status": "pass | fail | partial | not_applicable | missing",
+    "report_wording": "Decisive wording to use in the journal."
+  },
   "trade_posture": {
     "posture": "BULLISH | BEARISH | ACCUMULATION | STAND ASIDE",
     "structural_setup": "Describe the structural location.",
     "execution_setup": "Trigger, stop, target, or why execution is unavailable.",
     "hard_invalidation": "Level or behavior that invalidates the count.",
     "flip_level": "Level or behavior that changes posture."
+  },
+  "castaway_trade_model": {
+    "selected_model": "model_0_business | model_1_macro_wave1_wave2 | model_1_2_nested_1_2 | model_2_2_micro_flat | model_3_triangle | model_4_breakout_confirmation | model_5_reward_risk_management | model_6_stand_aside | inverse_short | not_applicable",
+    "macro_alignment": "How the micro setup aligns with the higher-timeframe HEW count.",
+    "micro_setup": "Entry structure or why no executable setup exists.",
+    "trigger": "Entry confirmation or not available.",
+    "stop_or_invalidation": "Stop/invalidation logic.",
+    "reward_risk_management": "Targets and management, including 123.6%, 223.6%, 423.6% risk multiples when Model 5 applies.",
+    "permission": "allowed | blocked | watchlist_only | structural_only",
+    "permission_reason": "Why trade language is allowed or blocked."
+  },
+  "validation_log": [
+    {
+      "test": "Wave 3 floor",
+      "result": "pass | fail | partial | not_applicable | missing",
+      "notes": "Traceable measurement and conclusion."
+    }
+  ],
+  "no_trade_gate": [
+    {
+      "id": "location | trigger | invalidation | reward | timeframe_alignment",
+      "status": "pass | fail | partial | not_applicable | missing",
+      "evidence": "Gate evidence."
+    }
+  ],
+  "red_team": {
+    "countercase": "Strongest argument against the primary count.",
+    "proof_needed": "What would prove the countercase."
+  },
+  "review_triggers": [
+    {
+      "condition": "Review condition.",
+      "expected": "What the primary scenario should show.",
+      "downgrade_if": "What downgrades or invalidates it."
+    }
+  ],
+  "missing_evidence": [],
+  "confidence": {
+    "rating": "high | medium | low",
+    "rationale": "Why confidence is assigned."
   }
 }

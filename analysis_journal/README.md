@@ -23,5 +23,6 @@ npm run validate:hew -- analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/evidence.json
 | 2026-05-14 | NYSE:KLAR | Strict Wyckoff macro | [KLAR_2026-05-14_wyckoff/journal.md](KLAR_2026-05-14_wyckoff/journal.md) |
 | 2026-05-14 | NYSE:NVO | Strict Wyckoff macro | [NVO_2026-05-14_wyckoff/journal.md](NVO_2026-05-14_wyckoff/journal.md) |
 | 2026-05-14 | COINBASE:BTCUSD | Strict Wyckoff macro | [BTCUSD_2026-05-14_wyckoff/journal.md](BTCUSD_2026-05-14_wyckoff/journal.md) |
+| 2026-05-14 | BITSTAMP:BTCUSD | Harmonic Elliott Wave macro | [BTCUSD_2026-05-14_hew/journal.md](BTCUSD_2026-05-14_hew/journal.md) |
 | 2026-05-14 | COINBASE:SUIUSD | Strict Wyckoff macro | [SUIUSD_2026-05-14_wyckoff/journal.md](SUIUSD_2026-05-14_wyckoff/journal.md) |
 | 2026-05-14 | COINBASE:ETHUSD | Strict Wyckoff macro | [ETHUSD_2026-05-14_wyckoff/journal.md](ETHUSD_2026-05-14_wyckoff/journal.md) |

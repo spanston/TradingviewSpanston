@@ -58,6 +58,25 @@ Retracement references:
 23.6%, 38.2%, 41.4%, 50.0%, 58.6%, 61.8%, 66.7%, 76.4%, 85.4%, 91.2%, 98.2%
 ```
 
+## HEW Ratio Model Selection
+
+The ratio model classifies the strength profile of the active five-wave HEW fractal. It is a validation layer, not a target-shopping tool.
+
+Use this decision order:
+
+1. Start with Model 1 as the default five-wave template.
+2. Upgrade to Model 2 only when Wave 3 clearly exceeds the standard Model 1 zone without terminal behavior.
+3. Upgrade to Model 3 only when the structure is super-extended, normally inside the strongest subdivision of Wave C of 3.
+4. Downgrade or recount if the selected model cannot explain Wave 3, Wave 5, alternation, and the Wave-B ladder at the same time.
+
+| Model | Use When | Key Ratio Map | Agent Warning |
+|---|---|---|---|
+| Model 1 - Standard five waves | Wave 3 validates the impulse but remains proportionate | A of 3: 109.2%-123.6% of Wave 1; C of 3: 176.4%-214.6% of Wave 1; Wave 5: 214.4%-223.6% of Wave 1 or 50.0%-66.7% of Waves 1 + 3 | Keep as default unless price exceeds the standard zone without reversal or consolidation |
+| Model 2 - Extended five waves | Wave 3 is clearly stronger than standard but not yet vertical | A of 3: 123.6% of Wave 1; C of 3: 223.6%-241.4% of Wave 1; Wave 5: about 285.4% of Wave 1 or 50.0% of Waves 1 + 3 | Use when Model 1 targets are exceeded and C of 3 is materially stronger than A of 3 |
+| Model 3 - Super-extended five waves | Price is in the strongest vertical phase, often inside C of 3 | A of 3: 176.4% of Wave 1; C of 3: 314.4%-323.6% of Wave 1; Wave 5: about 376.4% of Wave 1 or 44.0%-61.8% of Waves 1 + 3 | Treat as terminal-risk mapping, not permission to chase |
+
+Every serious report must name the selected model or state why model selection is unavailable. If the model is upgraded, record the evidence that invalidated the lower model. If Model 3 is active or possible, the posture must explicitly address late-entry risk.
+
 ## Projection Formulas
 
 Bullish C target:
@@ -140,6 +159,42 @@ Wave B is the wild card.
 - Inside a correction, B can move with the larger trend, retest or exceed the prior extreme, and trap traders.
 - If B becomes too emotional, wait for confirmation instead of forcing the count.
 
+## Wave-B Invalidation Ladder
+
+The Wave-B ladder is the structural spine of the HEW count. In a bullish count, each higher low becomes the next support the following correction must respect. In a bearish count, each lower high becomes the next resistance the following correction must respect.
+
+Bullish ladder:
+
+```text
+Wave 1 origin -> must hold for Wave 2
+Wave 2 low -> must hold for Wave B of 3
+Wave B of 3 low -> must hold for Wave 4
+Wave 4 low -> must hold for Wave B of 5
+Wave B of 5 low -> must hold while Wave 5 completes
+```
+
+Bearish ladder:
+
+```text
+Wave 1 origin -> must hold for Wave 2
+Wave 2 high -> must hold for Wave B of 3
+Wave B of 3 high -> must hold for Wave 4
+Wave 4 high -> must hold for Wave B of 5
+Wave B of 5 high -> must hold while Wave 5 completes
+```
+
+Define the violation standard before publishing: intraday wick, candle close, daily close, weekly close, or full structural break. For campaign maps, prefer daily or weekly closes unless the analysis is explicitly intraday.
+
+Report wording should be decisive:
+
+```text
+Bulls must hold the B-of-3 low. A daily close below it invalidates the active Wave 4 thesis and forces a recount.
+```
+
+```text
+This is not a buyable pullback unless Wave B of 3 holds above Wave 2.
+```
+
 ## Alternation
 
 Wave 2 and Wave 4 should alternate in at least one of:
@@ -217,6 +272,25 @@ Stand aside when:
 - risk/reward is poor
 - target confluence is absent
 
+## Castaway Trader Models
+
+Castaway logic separates the structural HEW map from the executable trade model. The macro count decides whether long or short setups are allowed. The micro setup defines where risk can be controlled. The reward model defines management after entry.
+
+| Model | Purpose | Requirements | Trade Permission |
+|---|---|---|---|
+| Model 0 - Trading business model | Baseline risk discipline | Repeatable setup, average gain larger than average loss, stop-defined risk | Required for any trade language |
+| Model 1 - Macro long after Wave 1 up and Wave 2 down | First buy-on-weakness campaign after a major low | A-B-C Wave 1 up, A-B-C Wave 2 down, Wave 2 holds origin | Longs allowed only while the Wave 1 origin holds |
+| Model 1.2 - Nested 1-2 / i-ii | Stronger early Wave 3 entry | Macro Wave 1/2 plus smaller-degree i/ii holding above support | Tactical risk can use the smaller-degree ii; campaign risk remains the major low |
+| Model 2.2 - Micro flat | Refined buy-the-weakness setup | First push from the low, flat or A-B-C pullback, often deep retracement, support holds | Anticipatory entry near support or confirmation above wave (a) only if risk is defined |
+| Model 3 - Triangle after first push | Strong market refuses a deep pullback | Completed a-b-c-d-e triangle after the first push, support holds | Conservative breakout or aggressive E-wave support hold |
+| Model 4 - Breakout confirmation | Lower structural uncertainty after unclear count | Break above setup resistance or inverse breakdown for shorts | Often later and may reduce reward/risk |
+| Model 5 - Targeted reward-risk management | Position management | Risk = entry to stop; Target 1 = 123.6% risk, Target 2 = 223.6% risk, Target 3 = 423.6% risk | At Target 1 move stop to breakeven; at Target 2 sell 50%; at Target 3 sell remaining 50% |
+| Model 6 - Stand-aside | Protect capital when structure or execution is not clean | Macro not impulsive, micro not aligned, invalidation unclear, messy B wave, poor reward/risk | No trade |
+
+For bearish setups, invert the direction and use the same alignment rule. A micro short cannot be traded in isolation; it must align with a higher-timeframe bearish or corrective fractal.
+
+Do not label a report `BULLISH` or `BEARISH` with trade permission unless the selected Castaway model, trigger, stop/invalidation, target path, and reward/risk management are explicit. If the selected model is Model 6, posture is `STAND ASIDE`, `structural_only`, or `watchlist_only`.
+
 ## Chart Construction Standards
 
 Macro structure chart:
@@ -270,6 +344,7 @@ Before publishing:
 ```text
 [ ] Macro regime is stated.
 [ ] Primary macro count is labeled.
+[ ] Ratio model is selected or explicitly unavailable.
 [ ] Subwaves are mapped inside macro Waves 1, 3, and 5 when visible.
 [ ] Alternate count is meaningful.
 [ ] Wave 3 meets or exceeds 176.4% of Wave 1.
@@ -278,6 +353,7 @@ Before publishing:
 [ ] B of 3 respects Wave 2.
 [ ] Wave 4 respects B of 3.
 [ ] B of 5 respects Wave 4.
+[ ] Wave-B invalidation ladder is documented with a violation standard.
 [ ] Wave 2 and Wave 4 alternate.
 [ ] Corrective pattern is identified.
 [ ] Projection follows either the highest-probability impulsive path or the highest-probability complex corrective path.
@@ -285,6 +361,7 @@ Before publishing:
 [ ] Flip level is visible.
 [ ] Hard invalidation is visible.
 [ ] Trade setup is separated from structural thesis.
+[ ] Castaway trade model is selected; Model 6 blocks trade language.
 [ ] Risk/reward is acceptable if trade language is used.
 [ ] Validation log is complete.
 ```

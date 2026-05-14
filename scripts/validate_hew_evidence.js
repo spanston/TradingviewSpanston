@@ -24,13 +24,16 @@ const requiredTopLevel = [
   'primary_count',
   'alternate_counts',
   'pivot_map',
+  'ratio_model_selection',
   'ratio_validation',
   'rule_validation',
   'corrective_structure',
   'alternation',
   'projection_targets',
   'invalidation_and_flip_levels',
+  'wave_b_invalidation_ladder',
   'trade_posture',
+  'castaway_trade_model',
   'validation_log',
   'no_trade_gate',
   'red_team',
@@ -46,16 +49,19 @@ const requiredChecklistIds = [
   'chart_fitted_before_reads',
   'primary_count_defined',
   'macro_subwaves_mapped',
+  'ratio_model_selected',
   'alternate_count_defined',
   'wave3_projection_checked',
   'c_of_3_checked',
   'support_invalidation_checked',
+  'wave_b_ladder_checked',
   'alternation_checked',
   'corrective_structure_checked',
   'projection_targets_clustered',
   'hard_invalidation_defined',
   'flip_level_defined',
   'trade_posture_scored',
+  'castaway_model_selected',
   'validation_log_complete',
   'red_team_complete',
   'screenshots_aligned',
@@ -174,10 +180,13 @@ function validateEvidence(file) {
     'asset_context',
     'chart_prep',
     'primary_count',
+    'ratio_model_selection',
     'corrective_structure',
     'alternation',
     'invalidation_and_flip_levels',
+    'wave_b_invalidation_ladder',
     'trade_posture',
+    'castaway_trade_model',
     'red_team',
     'confidence',
   ]) {
@@ -272,6 +281,40 @@ function validateEvidence(file) {
 
   if (tradePermission === 'allowed' && posture === 'STAND ASIDE') {
     errors.push('trade_permission is allowed while trade_posture.posture is STAND ASIDE');
+  }
+
+  const ratioModel = evidence.ratio_model_selection;
+  if (ratioModel) {
+    if (!ratioModel.selected_model) errors.push('ratio_model_selection.selected_model is required');
+    if (!ratioModel.status) errors.push('ratio_model_selection.status is required');
+    if (ratioModel.status && !allowedValidationStatuses.has(ratioModel.status)) {
+      errors.push(`ratio_model_selection.status has unsupported value: ${ratioModel.status}`);
+    }
+  }
+
+  const waveBLadder = evidence.wave_b_invalidation_ladder;
+  if (waveBLadder) {
+    if (!waveBLadder.violation_standard) {
+      errors.push('wave_b_invalidation_ladder.violation_standard is required');
+    }
+    if (!waveBLadder.current_status) {
+      errors.push('wave_b_invalidation_ladder.current_status is required');
+    }
+    if (waveBLadder.current_status && !allowedValidationStatuses.has(waveBLadder.current_status)) {
+      errors.push(`wave_b_invalidation_ladder.current_status has unsupported value: ${waveBLadder.current_status}`);
+    }
+  }
+
+  const castawayModel = evidence.castaway_trade_model;
+  if (castawayModel) {
+    if (!castawayModel.selected_model) errors.push('castaway_trade_model.selected_model is required');
+    if (!castawayModel.permission) errors.push('castaway_trade_model.permission is required');
+    if (castawayModel.permission && !allowedTradePermissions.has(castawayModel.permission)) {
+      errors.push(`castaway_trade_model.permission has unsupported value: ${castawayModel.permission}`);
+    }
+    if (tradePermission === 'allowed' && castawayModel.selected_model === 'model_6_stand_aside') {
+      errors.push('trade_permission is allowed while castaway_trade_model.selected_model is model_6_stand_aside');
+    }
   }
 
   return { file, errors, warnings };
