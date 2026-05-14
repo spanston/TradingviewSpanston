@@ -1,0 +1,162 @@
+{
+  "evidence_contract": {
+    "contract_version": "wyckoff_evidence_stack_v1",
+    "completion_status": "complete_with_fallbacks",
+    "asset_class": "equity_adr | equity | etf | index | crypto_spot | crypto_perp | futures | fx | commodity | unknown",
+    "clean_trade_permission": "allowed | blocked | watchlist_only",
+    "clean_trade_reason": "Explain why clean trade language is allowed or blocked.",
+    "validator": "npm run validate:wyckoff"
+  },
+  "asset_context": {
+    "asset_class": "equity_adr",
+    "venue": "NYSE | NASDAQ | COINBASE | CME | FX | other",
+    "session_model": "regular_hours | extended_hours | 24_7 | futures_rth_eth | continuous_fx",
+    "benchmark_set": {
+      "primary": "SPY | BTC | DXY | ES1! | asset-specific",
+      "secondary": "QQQ | ETH | TOTAL | sector/risk proxy",
+      "sector_or_group": "XLV | sector ETF | crypto sector leader | not_applicable",
+      "notes": "Explain why these benchmarks fit the asset."
+    },
+    "volume_reliability": "native_exchange_volume | crypto_exchange_volume | tick_volume_proxy | futures_contract_volume | unreliable_or_missing"
+  },
+  "indicator_evidence_stack": [
+    {
+      "id": "price_structure_volume",
+      "role": "primary_wyckoff_evidence",
+      "status": "native",
+      "source": "TradingView MCP quote_get and data_get_ohlcv",
+      "findings": "Price structure, volume behavior, and key Wyckoff events.",
+      "trade_impact": "This is mandatory and has priority over all indicators."
+    },
+    {
+      "id": "value_profile",
+      "role": "accepted_value_and_liquidity",
+      "status": "native | computed | fallback | missing | unavailable",
+      "source": "Native Volume Profile / custom Pine table / OHLCV binned fallback",
+      "findings": "VPOC, VAH, VAL, HVN, LVN, or exact reason they are unavailable.",
+      "trade_impact": "Missing value evidence usually blocks clean-trade language."
+    },
+    {
+      "id": "avwap_cost_basis",
+      "role": "dynamic_cost_basis",
+      "status": "native | computed | fallback | missing | unavailable",
+      "source": "Anchored VWAP from markdown high, terminal low, spring, UTAD, SOS, or gap anchor",
+      "findings": "Anchor date/price, current AVWAP position, trapped buyer/seller read.",
+      "trade_impact": "Supports or weakens acceptance, LPS/BUEC, and UTAD/LPSY calls."
+    },
+    {
+      "id": "relative_strength",
+      "role": "sponsorship_confirmation",
+      "status": "native | computed | proxy | missing | unavailable",
+      "source": "Ratio or comparison versus asset-class benchmark set",
+      "findings": "Leadership, laggard behavior, divergence, or benchmark conflict.",
+      "trade_impact": "Weak or missing RS lowers confidence in institutional sponsorship."
+    },
+    {
+      "id": "weis_wave_effort_result",
+      "role": "wave_effort_result",
+      "status": "native | computed | manual | fallback | missing",
+      "source": "Weis Wave Volume indicator or manual OHLCV wave table",
+      "findings": "Last 3-5 meaningful waves with effort/result conclusions.",
+      "trade_impact": "Required for serious Wyckoff reports."
+    },
+    {
+      "id": "momentum_sot",
+      "role": "secondary_shortening_of_thrust_confirmation",
+      "status": "native | computed | fallback | missing | not_applicable",
+      "source": "MACD, Awesome Oscillator, or price/spread slope fallback",
+      "findings": "Divergence or no divergence. Do not use crossovers as Wyckoff triggers.",
+      "trade_impact": "Warning evidence only, never standalone entry permission."
+    },
+    {
+      "id": "order_flow_execution",
+      "role": "execution_confirmation_only",
+      "status": "native | proxy | missing | not_requested | not_applicable",
+      "source": "Footprint, CVD, delta, open interest, funding, liquidation map, or volume/spread proxy",
+      "findings": "Absorption plus initiative behavior at a pre-defined key zone, or why it was skipped.",
+      "trade_impact": "Required only when giving lower-timeframe execution or precise entries."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "Market read sourced from TradingView MCP only unless explicit external context was requested."
+    },
+    {
+      "id": "asset_adapter_selected",
+      "status": "pass",
+      "evidence": "Asset class, session model, benchmark set, and volume reliability were defined."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass",
+      "evidence": "Each timeframe was fitted or visible range was explicitly set before interpretation."
+    },
+    {
+      "id": "structure_volume_primary",
+      "status": "pass",
+      "evidence": "Price structure and volume were read before secondary indicators."
+    },
+    {
+      "id": "value_profile_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Native profile was attempted; fallback or missing state recorded."
+    },
+    {
+      "id": "avwap_checked",
+      "status": "pass_with_fallback",
+      "evidence": "AVWAP anchors were selected, read, computed, or marked unavailable."
+    },
+    {
+      "id": "relative_strength_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Benchmark comparison was read, computed, or marked unavailable."
+    },
+    {
+      "id": "effort_result_checked",
+      "status": "pass",
+      "evidence": "Weis Wave or manual wave effort/result table covers the latest 3-5 waves."
+    },
+    {
+      "id": "momentum_sot_checked",
+      "status": "pass",
+      "evidence": "MACD/AO/divergence was used only as secondary SOT evidence."
+    },
+    {
+      "id": "order_flow_execution_gate",
+      "status": "not_requested",
+      "evidence": "Order flow was required only if execution entries/stops were requested."
+    },
+    {
+      "id": "event_evidence_ledger_complete",
+      "status": "pass",
+      "evidence": "Every proposed Wyckoff event has requirement, observed evidence, missing evidence, status, and trade impact."
+    },
+    {
+      "id": "acceptance_rules_complete",
+      "status": "pass",
+      "evidence": "Every trigger level has explicit acceptance and failure behavior."
+    },
+    {
+      "id": "no_trade_gate_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, and timeframe alignment were scored."
+    },
+    {
+      "id": "red_team_complete",
+      "status": "pass",
+      "evidence": "Strongest countercase and proof needed were written before final posture."
+    },
+    {
+      "id": "screenshots_aligned",
+      "status": "pass",
+      "evidence": "journal.md screenshots and evidence.json screenshots reference the same package-relative files."
+    },
+    {
+      "id": "clean_trade_permission_respected",
+      "status": "pass",
+      "evidence": "Clean-trade language was blocked unless the evidence contract allowed it."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "evidence_contract": {
+    "contract_version": "hew_evidence_stack_v1",
+    "completion_status": "complete | complete_with_fallbacks | partial | blocked",
+    "asset_class": "equity_adr | equity | etf | index | crypto_spot | crypto_perp | futures | fx | commodity | unknown",
+    "trade_permission": "allowed | blocked | watchlist_only | structural_only",
+    "trade_permission_reason": "Explain whether the HEW map permits trade language or only structural monitoring.",
+    "validator": "npm run validate:hew"
+  },
+  "asset_context": {
+    "asset_class": "equity_adr",
+    "venue": "NYSE | NASDAQ | COINBASE | CME | FX | other",
+    "session_model": "regular_hours | extended_hours | 24_7 | futures_rth_eth | continuous_fx",
+    "volume_reliability": "native_exchange_volume | crypto_exchange_volume | tick_volume_proxy | futures_contract_volume | unreliable_or_missing"
+  },
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "Market read sourced from TradingView MCP only unless explicit external context was requested."
+    },
+    {
+      "id": "top_down_timeframes_checked",
+      "status": "pass",
+      "evidence": "Monthly/Weekly/Daily or an explicitly compressed stack was checked before lower-timeframe execution."
+    },
+    {
+      "id": "macro_count_prioritized",
+      "status": "pass",
+      "evidence": "Highest-degree macro count was attempted before lower-timeframe micro counts."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass",
+      "evidence": "Each timeframe was fitted or visible range was explicitly set before interpretation."
+    },
+    {
+      "id": "primary_count_defined",
+      "status": "pass",
+      "evidence": "Primary HEW count defines direction, degree, active wave, subwaves, and confidence."
+    },
+    {
+      "id": "macro_subwaves_mapped",
+      "status": "pass",
+      "evidence": "Subwaves inside macro Waves 1, 3, and 5 were mapped when visible, or missing evidence was stated."
+    },
+    {
+      "id": "alternate_count_defined",
+      "status": "pass",
+      "evidence": "Alternate count has activation, invalidation, and different next implication."
+    },
+    {
+      "id": "wave3_projection_checked",
+      "status": "pass",
+      "evidence": "Wave 3 was checked against the 176.4% minimum floor from Wave 2."
+    },
+    {
+      "id": "c_of_3_checked",
+      "status": "pass",
+      "evidence": "C of 3 was compared against A of 3 when Wave 3 internals were visible."
+    },
+    {
+      "id": "support_invalidation_checked",
+      "status": "pass",
+      "evidence": "Wave 2, B of 3, Wave 4, and B of 5 support/resistance rules were checked as applicable."
+    },
+    {
+      "id": "alternation_checked",
+      "status": "pass",
+      "evidence": "Wave 2 and Wave 4 were compared for depth, duration, and complexity."
+    },
+    {
+      "id": "corrective_structure_checked",
+      "status": "pass",
+      "evidence": "Active correction type was identified or missing evidence was stated."
+    },
+    {
+      "id": "projection_targets_clustered",
+      "status": "pass",
+      "evidence": "Projection follows the highest-probability macro-following impulsive or complex corrective path; targets were clustered or lack of confluence was recorded."
+    },
+    {
+      "id": "hard_invalidation_defined",
+      "status": "pass",
+      "evidence": "Hard invalidation level breaks a rule and is separated from flip level."
+    },
+    {
+      "id": "flip_level_defined",
+      "status": "pass",
+      "evidence": "Flip level changes posture without necessarily invalidating the count."
+    },
+    {
+      "id": "trade_posture_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, and timeframe alignment were scored."
+    },
+    {
+      "id": "validation_log_complete",
+      "status": "pass",
+      "evidence": "Important measurements are traceable with pass/fail conclusions."
+    },
+    {
+      "id": "red_team_complete",
+      "status": "pass",
+      "evidence": "Strongest countercase and proof needed were written before final posture."
+    },
+    {
+      "id": "screenshots_aligned",
+      "status": "pass",
+      "evidence": "journal.md screenshots and evidence.json screenshots reference the same package-relative files."
+    }
+  ],
+  "primary_count": {
+    "direction": "bullish | bearish | corrective | unclear",
+    "degree": "highest | large | medium | lower | micro | mixed_or_unclear",
+    "active_wave": "Wave 2 | Wave A of 3 | Wave B of 3 | Wave C of 3 | Wave 4 | Wave 5 | post-five-wave correction | unclear",
+    "status": "confirmed | probable | candidate | invalidated | unclear",
+    "macro_priority": "highest_degree_attempted | rejected_with_reason | unavailable",
+    "subwaves": {
+      "wave1": "A/B/C or lower-degree internals, or missing evidence.",
+      "wave2": "Corrective classification, or missing evidence.",
+      "wave3": "A/B/C of 3, or missing evidence.",
+      "wave4": "Corrective classification, or missing evidence.",
+      "wave5": "A/B/C of 5, or missing evidence."
+    },
+    "summary": "Primary count thesis and why it is preferred."
+  },
+  "alternate_counts": [
+    {
+      "name": "Alternate count 1",
+      "activation_level": "Price level and behavior that activates the alternate.",
+      "invalidation_level": "Price level or behavior that kills the alternate.",
+      "implication": "What this count means next."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "wave3_1764_floor",
+      "measurement": "Wave 1 length projected from Wave 2.",
+      "required_or_target": "Wave 3 must reach at least 176.4% of Wave 1 from Wave 2.",
+      "actual": "Observed price or unavailable.",
+      "status": "pass | fail | partial | not_applicable | missing"
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "wave2_origin",
+      "requirement": "Wave 2 must not violate Wave 1 origin.",
+      "observed": "Observed support/resistance behavior.",
+      "status": "pass | fail | partial | not_applicable | missing",
+      "trade_impact": "How this affects posture."
+    }
+  ],
+  "projection_targets": [
+    {
+      "id": "wave3_targets",
+      "scenario_type": "impulsive_continuation | complex_correction | unavailable",
+      "method": "Highest-probability macro-following count path, e.g. Wave 1 projected from Wave 2 or complex correction projection.",
+      "levels": [],
+      "cluster_status": "clustered | isolated | missing | not_applicable",
+      "notes": "Confluence or lack of confluence."
+    }
+  ],
+  "trade_posture": {
+    "posture": "BULLISH | BEARISH | ACCUMULATION | STAND ASIDE",
+    "structural_setup": "Describe the structural location.",
+    "execution_setup": "Trigger, stop, target, or why execution is unavailable.",
+    "hard_invalidation": "Level or behavior that invalidates the count.",
+    "flip_level": "Level or behavior that changes posture."
+  }
+}

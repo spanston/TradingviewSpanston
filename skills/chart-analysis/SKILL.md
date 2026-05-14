@@ -7,6 +7,8 @@ description: Analyze a chart — set up symbol/timeframe, add indicators, scroll
 
 You are performing technical analysis on a TradingView chart.
 
+Use TradingView MCP as the source of live chart facts, current price, OHLCV, visible indicators, drawings, and screenshots. Do not use web search, external quote pages, or local report files for the market read unless the user explicitly asks for non-chart context.
+
 ## Step 1: Set Up the Chart
 
 1. `chart_set_symbol` — switch to the requested symbol
@@ -32,8 +34,12 @@ After adding, use `indicator_set_inputs` to customize settings (e.g., change EMA
 - `chart_scroll_to_date` — jump to a specific date of interest
 - `chart_set_visible_range` — zoom to a specific date window
 - `chart_get_visible_range` — check what's currently visible
+- Before analyzing or screenshotting, autofit or set a visible range that includes the full relevant structure so prior highs/lows, range boundaries, breakout points, and invalidation are not off-screen.
+- For any forward scenario, path, forecast, or trade-posture screenshot, fit the historical structure first, then pan/scroll forward so the projected path has several weeks or months of right-side space. TradingView may clamp future timestamps in `chart_set_visible_range`, so use UI panning when needed.
 
 ## Step 4: Annotate
+
+For a fresh technical analysis or Wyckoff/trade-posture chart, clear inherited drawings with `draw_clear` before adding the current analysis layer, unless the user explicitly asks to preserve existing drawings or the task is to inspect what is already drawn.
 
 Use drawing tools to mark up the chart:
 - `draw_shape` with `horizontal_line` for support/resistance

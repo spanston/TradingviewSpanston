@@ -1,0 +1,852 @@
+{
+  "journal_id": "ETHUSD_2026-05-14_wyckoff",
+  "saved_at": "2026-05-14T15:30:00+02:00",
+  "symbol": "COINBASE:ETHUSD",
+  "asset": "Ethereum / U.S. Dollar",
+  "layout": "Wyckoff VSA (intended Wyckoff Layout — rename pending)",
+  "method": "strict multi-timeframe macro Wyckoff",
+  "workflow_version": "strict_evidence_gates_v2",
+  "status": "watchlist_only_no_clean_trade",
+  "evidence_contract": {
+    "contract_version": "wyckoff_evidence_stack_v1",
+    "completion_status": "complete_with_fallbacks",
+    "asset_class": "crypto_spot",
+    "clean_trade_permission": "blocked",
+    "clean_trade_reason": "ETH is mid-range between the SC at 1742.79 and the Creek at 2466.50, ETH/BTC has put in 5 consecutive lower weekly closes (0.030967 -> 0.028248) showing weakening sponsorship, the active macro structure shows a lower high at 4254 (Oct 2025), and native value/profile + trusted AVWAP + order-flow execution data are unavailable.",
+    "validator": "npm run validate:wyckoff"
+  },
+  "asset_context": {
+    "asset_class": "crypto_spot",
+    "venue": "COINBASE",
+    "session_model": "24_7",
+    "benchmark_set": {
+      "primary": "BTC",
+      "secondary": "TOTAL",
+      "sector_or_group": "BTC.D",
+      "notes": "For ETH, sponsorship is judged against BTC (primary leader) and broader total crypto cap. ETH/BTC ratio is the cleanest leadership read."
+    },
+    "volume_reliability": "crypto_exchange_volume_with_venue_caveat"
+  },
+  "indicator_evidence_stack": [
+    {
+      "id": "price_structure_volume",
+      "role": "primary_wyckoff_evidence",
+      "status": "native",
+      "source": "TradingView MCP quote_get and data_get_ohlcv across monthly/weekly/daily.",
+      "findings": "Phase A: Selling climax candidate on 2026-02-02 weekly bar at 1742.79 on climactic 2.18M volume after Jan markdown from 3477. Phase B: range developing between SC 1742.79 and Creek 2466.50 (Apr 17). Multiple higher lows (1800 ST, 1937, 2015, 2218 LPS candidate). Daily SOS attempts at 2386 (Mar 16) and 2466 (Apr 17) have failed to accept. Current 2306 mid-range with last week's rally rejected at 2424 and probing 2232.",
+      "trade_impact": "Constructive Phase B repair but no confirmed SOS/JAC and no confirmed LPS. Watchlist only."
+    },
+    {
+      "id": "value_profile",
+      "role": "accepted_value_and_liquidity",
+      "status": "fallback",
+      "source": "Native Volume Profile not available on this layout. Approximate OHLCV-binned fallback from active Phase B range bars (Feb 2 - May 14).",
+      "findings": "Approximate VPOC 2200-2350 (heaviest congestion across April-May). Approximate VAH 2425-2466 (range high cluster). Approximate VAL 1850-1950 (post-SC base). LVN gap 1800-1900 (fast move zone during AR). HVN at current 2250-2350 acts as magnet.",
+      "trade_impact": "Fallback value supports planning but blocks clean-trade language. Acceptance above approximate VAH 2466 or rejection at it is the structural decision point."
+    },
+    {
+      "id": "avwap_cost_basis",
+      "role": "dynamic_cost_basis",
+      "status": "unavailable",
+      "source": "Anchored VWAP from SC anchor (2026-02-02) and prior BC anchor (2025-11-03) was not deployable via MCP on this layout. data_get_study_values returned no values.",
+      "findings": "No reliable AVWAP cost basis for the active Phase B campaign was extracted.",
+      "trade_impact": "Missing trusted cost-basis evidence blocks clean-trade language and degrades trapped-buyer/seller read."
+    },
+    {
+      "id": "relative_strength",
+      "role": "sponsorship_confirmation",
+      "status": "computed",
+      "source": "COINBASE:ETHBTC weekly OHLCV (52 bars) and direct BTC/ETH quotes.",
+      "findings": "ETH/BTC has printed 5 consecutive lower weekly closes from 0.030967 (Apr 13) -> 0.030124 -> 0.029556 -> 0.028832 -> 0.028248 (current). 52-week ETH/BTC range is 0.0214-0.04324; current 0.028248 sits in the lower third. BTC recovered to 81598 from 60001 (+36%) while ETH recovered to 2306 from 1742 (+32%) over similar window. ETH is a lagging follower, not a leader.",
+      "trade_impact": "Weak/declining relative strength is bearish sponsorship evidence. Lowers confidence in ETH-led markup and tilts the alternative redistribution case."
+    },
+    {
+      "id": "weis_wave_effort_result",
+      "role": "wave_effort_result",
+      "status": "manual",
+      "source": "Manual OHLCV wave table from weekly and daily bars (see wave_effort_result).",
+      "findings": "Six-wave manual table covers Q4-2025 markdown, SC, AR, ST, SOS attempts, and the May LPS test. Effort/result favors absorption at the SC but stalls at the Creek with shortening of thrust on upper rallies.",
+      "trade_impact": "Supports the conditional Phase B accumulation thesis; not enough for entry."
+    },
+    {
+      "id": "momentum_sot",
+      "role": "secondary_shortening_of_thrust_confirmation",
+      "status": "fallback",
+      "source": "Awesome Oscillator and MACD were visible on the Wyckoff VSA layout (chart_get_state confirmed). data_get_study_values returned no values, so SOT read uses price slope + spread fallback.",
+      "findings": "Rally thrust shortening visible at the upper boundary: 2386 (Mar 16) -> 2466 (Apr 17) -> 2425 (Apr 24) -> 2405 (Apr 30) -> 2424 (May 9). Successive rally peaks compressing despite higher lows below — warning of failing upside displacement at the Creek.",
+      "trade_impact": "SOT warning is bearish secondary evidence at the range high. No standalone entry trigger."
+    },
+    {
+      "id": "order_flow_execution",
+      "role": "execution_confirmation_only",
+      "status": "not_requested",
+      "source": "No CVD, footprint, funding, open interest, or liquidation map was requested for lower-timeframe execution.",
+      "findings": "No execution-grade order flow evidence at the Creek or at the LPS zone.",
+      "trade_impact": "Precise execution entries cannot be specified. Only macro/posture-level guidance is offered."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "All chart facts (price, OHLCV, drawings, screenshots) come from TradingView MCP."
+    },
+    {
+      "id": "asset_adapter_selected",
+      "status": "pass",
+      "evidence": "Crypto spot adapter, 24/7 session, BTC/TOTAL/BTC.D benchmark set, Coinbase venue volume."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass_with_fallback",
+      "evidence": "Explicit chart_set_visible_range was set on each timeframe. chart_get_visible_range and chart_scroll_to_date returned 'evaluate is not defined' so the actual range from chart_set_visible_range response was used as fit guard. Forward time space for trade-posture scenarios could not be paneled; paths are described in journal text instead."
+    },
+    {
+      "id": "structure_volume_primary",
+      "status": "pass",
+      "evidence": "Phase A SC at 1742.79 on climactic 2.18M weekly volume drives the read. Volume signature on monthly Feb-Apr (5.7M -> 5.07M -> 4.24M) supports buyer absorption interpretation."
+    },
+    {
+      "id": "value_profile_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Native Volume Profile not available. Approximate OHLCV-binned value zones recorded."
+    },
+    {
+      "id": "avwap_checked",
+      "status": "fail",
+      "evidence": "AVWAP could not be deployed/read on this layout via MCP. SC and BC anchors are documented for future re-runs."
+    },
+    {
+      "id": "relative_strength_checked",
+      "status": "pass",
+      "evidence": "ETH/BTC weekly read shows 5 consecutive lower closes from 0.030967 to 0.028248. Bearish sponsorship signal recorded."
+    },
+    {
+      "id": "effort_result_checked",
+      "status": "pass",
+      "evidence": "Six-wave manual effort/result table covers the latest meaningful waves."
+    },
+    {
+      "id": "momentum_sot_checked",
+      "status": "pass_with_fallback",
+      "evidence": "AO/MACD numeric values unavailable; price-slope SOT fallback documented at the range high (compressing rally peaks)."
+    },
+    {
+      "id": "order_flow_execution_gate",
+      "status": "not_requested",
+      "evidence": "User asked for a full Wyckoff read, not lower-timeframe execution. Order flow is recorded as a future condition."
+    },
+    {
+      "id": "event_evidence_ledger_complete",
+      "status": "pass",
+      "evidence": "Every event (SC, AR, ST, SOS attempt, LPS, Creek/JAC, BUEC) has requirement, observed, missing, status, trade impact."
+    },
+    {
+      "id": "acceptance_rules_complete",
+      "status": "pass",
+      "evidence": "Bullish acceptance above 2466, LPS hold at 2218-2150, bearish failure below 2150 -> 1742 are defined."
+    },
+    {
+      "id": "no_trade_gate_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, timeframe alignment scored. Result is no_clean_trade_yet."
+    },
+    {
+      "id": "red_team_complete",
+      "status": "pass",
+      "evidence": "Redistribution/LPSY countercase and confirming evidence are documented."
+    },
+    {
+      "id": "screenshots_aligned",
+      "status": "pass",
+      "evidence": "journal.md and evidence.json reference the same package-relative screenshot paths."
+    },
+    {
+      "id": "clean_trade_permission_respected",
+      "status": "pass",
+      "evidence": "Clean trade is blocked. Status remains watchlist_only_no_clean_trade."
+    }
+  ],
+  "chart_prep": {
+    "chart_get_state_once_at_start": {
+      "symbol": "COINBASE:ETHUSD",
+      "timeframe": "1D",
+      "studies": [
+        "Awesome Oscillator",
+        "Moving Average Convergence Divergence",
+        "Volume"
+      ]
+    },
+    "existing_drawings_removed": false,
+    "autofit_policy": "chart_set_visible_range was used per timeframe. The chart carries inherited HEW drawings (wave labels 1-5, dashed horizontal lines, 'NO CLEAN HEW' / 'Stand aside' text) that could not be cleared because draw_clear returned 'getChartApi is not defined'. Wyckoff layer was added on top. All screenshots therefore include inherited HEW annotations; they are flagged in the journal and do not change the Wyckoff read.",
+    "indicator_notes": [
+      "data_get_study_values returned 0 visible studies even though chart_get_state listed AO, MACD, Volume.",
+      "draw_clear and chart_get_visible_range returned 'getChartApi is not defined' / 'evaluate is not defined' for this session — drawings could not be wiped programmatically.",
+      "Native Volume Profile not present on layout. Approximate OHLCV-binned fallback used."
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "macro_context",
+      "path": "screenshots/ETHUSD_monthly_macro.png",
+      "purpose": "Monthly chart showing macro ATH 4955.90, macro lower high 4254 (Oct 2025), macro higher low 1383 (Apr 2025), macro major low 880 (Jun 2022), and current Phase B candidate range 1742.79-2466.50."
+    },
+    {
+      "role": "wyckoff_structure",
+      "path": "screenshots/ETHUSD_weekly_structure.png",
+      "purpose": "Weekly chart showing the Q4-2025 distribution high cluster, sharp markdown into Feb 2026, SC bar, and the post-SC range building. Inherited HEW wave labels are visible but the structural Wyckoff is the rectangle and key levels."
+    },
+    {
+      "role": "wyckoff_structure_daily",
+      "path": "screenshots/ETHUSD_daily_wyckoff_structure.png",
+      "purpose": "Daily chart with explicit SC, ST, AR, SOS attempt, candidate LPS labels and the 1742.79-2466.50 range rectangle. Shows Phase B development and current mid-range location."
+    },
+    {
+      "role": "trade_path_posture",
+      "path": "screenshots/ETHUSD_daily_trade_posture.png",
+      "purpose": "Same daily structure view used as posture chart. Forward-time path scenarios could not be panned onto the chart due to MCP UI limitations, so Path A (Creek break + BUEC) and Path B (SC break + markdown) are written into the journal scenarios section instead of drawn on the screenshot."
+    }
+  ],
+  "quote_snapshot": {
+    "time": 1778716800,
+    "open": 2257.82,
+    "high": 2319.78,
+    "low": 2237.11,
+    "close": 2306.3,
+    "last": 2306.3,
+    "volume": 90334,
+    "exchange": "Coinbase",
+    "type": "spot"
+  },
+  "timeframe_summaries": {
+    "monthly": {
+      "bar_count": 100,
+      "period": {
+        "from": 1517443200,
+        "to": 1777593600
+      },
+      "open": 1105.01,
+      "close": 2300.34,
+      "high": 4955.9,
+      "low": 80.6,
+      "range": 4875.3,
+      "change_pct": "108.17%",
+      "avg_volume": 5114402,
+      "visible_range_requested": {
+        "from": 1577836800,
+        "to": 1788393600
+      },
+      "visible_range_actual": {
+        "from": 1577836800,
+        "to": 1777593600
+      },
+      "last_5_bars": [
+        {
+          "time": 1767225600,
+          "open": 2966.68,
+          "high": 3405.03,
+          "low": 2238.74,
+          "close": 2449.36,
+          "volume": 3296641.4,
+          "note": "Jan 2026 wide bearish bar; Phase A markdown begins"
+        },
+        {
+          "time": 1769904000,
+          "open": 2449.44,
+          "high": 2473.86,
+          "low": 1742.79,
+          "close": 1964.71,
+          "volume": 5719112.22,
+          "note": "Feb 2026 SC monthly: terminal low 1742.79 on climactic 5.7M volume"
+        },
+        {
+          "time": 1772323200,
+          "open": 1964.7,
+          "high": 2386.23,
+          "low": 1907.99,
+          "close": 2103.61,
+          "volume": 5065422.6,
+          "note": "Mar 2026 AR/ST month: higher low, bullish close above midpoint"
+        },
+        {
+          "time": 1775001600,
+          "open": 2103.41,
+          "high": 2466.5,
+          "low": 2015.85,
+          "close": 2256.8,
+          "volume": 4236890.49,
+          "note": "Apr 2026 Creek touch at 2466.5; failed to accept, decreasing vol"
+        },
+        {
+          "time": 1777593600,
+          "open": 2256.8,
+          "high": 2424,
+          "low": 2232.72,
+          "close": 2300.34,
+          "volume": 1292803.9,
+          "note": "May 2026 in formation: rejection at 2424 retest, sitting at midrange"
+        }
+      ]
+    },
+    "weekly": {
+      "bar_count": 100,
+      "period": {
+        "from": 1718582400,
+        "to": 1778457600
+      },
+      "open": 3622.53,
+      "close": 2300.95,
+      "high": 4955.9,
+      "low": 1383.26,
+      "range": 3572.64,
+      "change_pct": "-36.48%",
+      "avg_volume": 941560,
+      "visible_range_requested": {
+        "from": 1640995200,
+        "to": 1788393600
+      },
+      "visible_range_actual": {
+        "from": 1641168000,
+        "to": 1778457600
+      },
+      "last_5_bars": [
+        {
+          "time": 1776038400,
+          "open": 2191.77,
+          "high": 2466.5,
+          "low": 2174.31,
+          "close": 2263.89,
+          "volume": 1045851.74,
+          "note": "Apr 13 wk: Creek touch 2466.5 - range high, SOS attempt"
+        },
+        {
+          "time": 1776643200,
+          "open": 2263.9,
+          "high": 2425,
+          "low": 2260.51,
+          "close": 2370.47,
+          "volume": 931543.31,
+          "note": "Apr 20 wk: tighter range higher low close"
+        },
+        {
+          "time": 1777248000,
+          "open": 2370.47,
+          "high": 2405.01,
+          "low": 2218.65,
+          "close": 2322.5,
+          "volume": 793601.44,
+          "note": "Apr 27 wk: shortening rally, deeper low to 2218 (LPS candidate)"
+        },
+        {
+          "time": 1777852800,
+          "open": 2322.48,
+          "high": 2424,
+          "low": 2269.55,
+          "close": 2371.12,
+          "volume": 702678.61,
+          "note": "May 4 wk: retest of Creek edge, second SOS attempt at 2424"
+        },
+        {
+          "time": 1778457600,
+          "open": 2370.96,
+          "high": 2375.28,
+          "low": 2232.72,
+          "close": 2300.95,
+          "volume": 388193.77,
+          "note": "May 11 wk (current): rejection at 2375 retest, weak close near midrange"
+        }
+      ]
+    },
+    "daily": {
+      "bar_count": 80,
+      "period": {
+        "from": 1771891200,
+        "to": 1778716800
+      },
+      "open": 1855.53,
+      "close": 2302.33,
+      "high": 2466.5,
+      "low": 1800.09,
+      "range": 666.41,
+      "change_pct": "24.08%",
+      "avg_volume": 156000,
+      "visible_range_requested": {
+        "from": 1762128000,
+        "to": 1785052800
+      },
+      "visible_range_actual": {
+        "from": 1762128000,
+        "to": 1778716800
+      },
+      "last_5_bars": [
+        {
+          "time": 1778284800,
+          "open": 2307.24,
+          "high": 2337.83,
+          "low": 2299.57,
+          "close": 2326.16,
+          "volume": 28654.66
+        },
+        {
+          "time": 1778371200,
+          "open": 2326.15,
+          "high": 2382.48,
+          "low": 2311.85,
+          "close": 2371.12,
+          "volume": 62079.36
+        },
+        {
+          "time": 1778457600,
+          "open": 2370.96,
+          "high": 2375.28,
+          "low": 2302.75,
+          "close": 2339.39,
+          "volume": 93468.39
+        },
+        {
+          "time": 1778544000,
+          "open": 2339.48,
+          "high": 2340.45,
+          "low": 2255.29,
+          "close": 2274.43,
+          "volume": 112031.79
+        },
+        {
+          "time": 1778630400,
+          "open": 2274.32,
+          "high": 2323.1,
+          "low": 2232.72,
+          "close": 2257.85,
+          "volume": 92956.35
+        }
+      ]
+    }
+  },
+  "relative_strength_eth_btc": {
+    "symbol": "COINBASE:ETHBTC",
+    "timeframe": "weekly",
+    "current": 0.028248,
+    "range_52w": {
+      "low": 0.0214,
+      "high": 0.04324
+    },
+    "consecutive_lower_closes": 5,
+    "trend": "down",
+    "note": "ETH underperforming BTC by every weekly close since Apr 13. Tilts the read toward redistribution / weak sponsorship."
+  },
+  "key_bars": [
+    {
+      "role": "buying_climax_zone_distribution_high",
+      "time_window": "2025-10-20 to 2025-11-03",
+      "high_cluster": [4178.82, 4254.23, 3914.06],
+      "volume": "rising into the high then expanding through markdown (peaked at 1.22M weekly)",
+      "read": "Probable buying climax / Phase A distribution at 4178-4254. Macro lower high vs ATH 4955."
+    },
+    {
+      "role": "phase_a_markdown",
+      "time_window": "2026-01-12 to 2026-01-26 weekly",
+      "open_close": [3282.55, 2268.18],
+      "volume": "expanding through the move",
+      "read": "Sign of weakness on the parent campaign. Established the path of least resistance to the SC."
+    },
+    {
+      "role": "probable_selling_climax",
+      "time": 1769990400,
+      "open": 2268.24,
+      "high": 2395.59,
+      "low": 1742.79,
+      "close": 2088.42,
+      "volume": 2176505.36,
+      "read": "2026-02-02 weekly: climactic 2.18M volume (2.3x the prior 100-bar weekly avg), low 1742.79, recovered to close 2088.42. Probable SC."
+    },
+    {
+      "role": "automatic_rally_initial",
+      "time": 1771977600,
+      "open": 1852,
+      "high": 2148.44,
+      "low": 1845.98,
+      "close": 2057.71,
+      "volume": 303211.81,
+      "read": "2026-02-27 daily: wide-spread bullish reversal bar from ST low. Initial AR ceiling 2148."
+    },
+    {
+      "role": "secondary_test",
+      "time_window": "2026-02-23 to 2026-02-26 daily",
+      "low_zone": [1800.09, 1820],
+      "volume": "lower than SC bar",
+      "read": "Probable ST holding above 1742. Reduced supply confirmed."
+    },
+    {
+      "role": "sos_attempt_1",
+      "time": 1773619200,
+      "open": 2178.6,
+      "high": 2386.23,
+      "low": 2070.09,
+      "close": 2352.94,
+      "volume": 234070.18,
+      "read": "2026-03-16 daily: wide bullish bar +8% close at 2353. First major SOS attempt — strong result but did not break Creek."
+    },
+    {
+      "role": "creek_touch_range_high",
+      "time": 1776384000,
+      "open": 2348.61,
+      "high": 2466.5,
+      "low": 2317.02,
+      "close": 2419.81,
+      "volume": 198818.29,
+      "read": "2026-04-17 daily: range high 2466.5. Failed to print acceptance bar (no follow-through close above). Creek established."
+    },
+    {
+      "role": "candidate_lps",
+      "time": 1777420800,
+      "open": 2289.28,
+      "high": 2347.49,
+      "low": 2218.65,
+      "close": 2251.85,
+      "volume": 211257.6,
+      "read": "2026-05-02 daily: deeper LPS test at 2218 holding above the AR initial 2148 — candidate LPS, not confirmed until a SOS prints from this level."
+    },
+    {
+      "role": "sos_attempt_2_with_sot",
+      "time_window": "2026-05-07 to 2026-05-09 daily",
+      "high_cluster": [2399.68, 2400.16, 2424],
+      "result": "rejected and rolled to 2232 low by 2026-05-13",
+      "read": "Second SOS attempt failed at lower-then-equal high vs Creek. Shortening of thrust warning at upper boundary."
+    }
+  ],
+  "levels": {
+    "current_read_price": 2306,
+    "macro_supply_band": {
+      "low": 4254,
+      "high": 4955.9
+    },
+    "broken_overhead_supply": {
+      "low": 2800,
+      "high": 3050
+    },
+    "range_creek_high": 2466.5,
+    "range_creek_secondary": 2425,
+    "candidate_lps": 2218.65,
+    "ar_initial_demand_floor": 2148,
+    "selling_climax_low": 1742.79,
+    "macro_higher_low_2025": 1383,
+    "macro_major_low_2022": 880,
+    "aggressive_long_invalidation": 2150,
+    "context_flip_risk": 2050,
+    "campaign_invalidation": 1742.79
+  },
+  "event_evidence": [
+    {
+      "event": "prior_markdown_damage",
+      "requirement": "Strong decline into range after failed upper campaign",
+      "observed": "ETH fell 4254 -> 1742.79 (-59%) in Oct 2025 -> Feb 2026. Below broken support cluster 2800-3050.",
+      "missing": "none for context",
+      "status": "confirmed_context",
+      "trade_impact": "Bullish case is repair from deep markdown. Bearish case is redistribution after a lower macro high."
+    },
+    {
+      "event": "buying_climax",
+      "requirement": "Heavy buying meets strong selling at upper campaign extreme",
+      "observed": "Late-Oct 2025 weekly cluster 4178-4254 with expanding volume and immediate sharp downside reaction the following week.",
+      "missing": "Volume profile detail at the top.",
+      "status": "probable",
+      "trade_impact": "Macro BC anchors the lower-high case at 4254 as overhead supply."
+    },
+    {
+      "event": "selling_climax",
+      "requirement": "Heavy selling meets strong buying that stops the decline",
+      "observed": "2026-02-02 weekly low 1742.79 on 2.18M volume (~2.3x prior 100-bar weekly average). Close recovered to 2088.42 (~+20% off the low).",
+      "missing": "Native AVWAP/Volume Profile to corroborate absorption.",
+      "status": "probable",
+      "trade_impact": "Supports the Phase B accumulation thesis but is not an entry."
+    },
+    {
+      "event": "spring",
+      "requirement": "Break below defined support then reclaim and strength",
+      "observed": "1742.79 broke through the prior 2025 range floor but had no mature prior boundary to undercut at this exact level (April 2025 macro low was at 1383). Recovered into range.",
+      "missing": "Defined Phase B range boundary before the flush.",
+      "status": "candidate_spring_like",
+      "trade_impact": "Bullish clue only, not a clean spring."
+    },
+    {
+      "event": "automatic_rally",
+      "requirement": "Rally after selling pressure exhausts, defining range high zone",
+      "observed": "Initial AR to 2148 (Feb 27), extended AR to 2466.50 (Apr 17). Subsequent rejections at 2425/2424 form a sequence of shrinking thrusts.",
+      "missing": "none.",
+      "status": "confirmed",
+      "trade_impact": "Sets Creek at 2466.50 as the structural trigger."
+    },
+    {
+      "event": "secondary_test",
+      "requirement": "Retest of the climax area with reduced supply",
+      "observed": "Feb 23-26 daily probing 1800-1820 area with sub-AR-bar volume; higher low vs 1742.79.",
+      "missing": "Tighter low-volume final test would strengthen the case.",
+      "status": "probable",
+      "trade_impact": "Strengthens absorption read but does not unlock a long."
+    },
+    {
+      "event": "lps",
+      "requirement": "Reaction after confirmed strength holding as higher low",
+      "observed": "May 2 daily low 2218.65 holding above prior LPS candidates and the AR initial 2148. Multiple shallow higher lows since Feb (1742 -> 1800 -> 1937 -> 2015 -> 2174 -> 2218).",
+      "missing": "No prior confirmed SOS/JAC accepted above 2466.50 — without prior strength, the higher low is a Phase B test, not a confirmed LPS.",
+      "status": "candidate_only",
+      "trade_impact": "Do not call it LPS until a Creek break and constructive retest occur."
+    },
+    {
+      "event": "sos_jac",
+      "requirement": "Strong displacement through Creek with acceptance or constructive reaction",
+      "observed": "Two SOS attempts: Mar 16 to 2386 (failed below Creek), Apr 17 to 2466.50 (touched Creek then rolled), May 7-9 retest to 2424 (failed). Rally thrusts are shortening: 2386 -> 2466 -> 2425 -> 2405 -> 2424.",
+      "missing": "No daily/weekly close above 2466.50. Shortening of thrust + relative-strength weakness argue against an imminent break.",
+      "status": "attempt",
+      "trade_impact": "Bullish trigger remains pending. Pattern is leaning toward LPSY/redistribution risk if the next rejection from the upper edge prints with stronger downside result."
+    },
+    {
+      "event": "buec",
+      "requirement": "Retest after accepted Creek break",
+      "observed": "No accepted Creek break has occurred.",
+      "missing": "Acceptance + retest is a planned condition.",
+      "status": "not_active",
+      "trade_impact": "Not in play yet."
+    },
+    {
+      "event": "lpsy_redistribution_alt",
+      "requirement": "Failed rally to Creek followed by a lower high and weakness into the range mid",
+      "observed": "Successive upper-band rejections 2466 -> 2425 -> 2424 with weakening ETH/BTC and shortening rally thrust. Current 2306 is at range mid after a 2424 rejection.",
+      "missing": "A confirmed acceptance below 2150 with expanding volume would activate this scenario.",
+      "status": "active_warning",
+      "trade_impact": "Argues for treating any near-term failure at the Creek as LPSY risk, not just a normal pullback."
+    }
+  ],
+  "wave_effort_result": [
+    {
+      "wave": "BC distribution to mid-Jan markdown start",
+      "direction": "down",
+      "distance": "4254 to 2814, about -34%",
+      "duration": "about 11 weekly bars (Oct 27 -> Jan 12)",
+      "volume": "elevated, climaxed at 1.22M on Nov 3 wk",
+      "result": "broke 3000 acceptance, established lower high vs ATH",
+      "reaction": "weak bounces, supply dominant",
+      "read": "Macro distribution / SOW. Anchors bearish overhead."
+    },
+    {
+      "wave": "Jan 12 to Feb 2 capitulation into SC",
+      "direction": "down",
+      "distance": "3282.55 to 1742.79, about -47%",
+      "duration": "about 3-4 weekly bars",
+      "volume": "climactic, 2.18M on the SC week (2.3x prior average)",
+      "result": "terminal low at 1742.79, sharp recovery to 2088 close",
+      "reaction": "strong AR followed",
+      "read": "Supply climax met initiative demand. Probable SC."
+    },
+    {
+      "wave": "Feb 2 to Feb 27 AR + ST",
+      "direction": "up then sideways",
+      "distance": "1742.79 -> 2148 AR -> 1800 ST",
+      "duration": "about 4 weekly bars",
+      "volume": "moderate on AR, lower on ST",
+      "result": "established preliminary range, defended 1742 with higher low",
+      "reaction": "absorption began",
+      "read": "Phase A complete. Phase B started."
+    },
+    {
+      "wave": "Feb 27 to Mar 16 SOS attempt 1",
+      "direction": "up",
+      "distance": "1852 -> 2386, about +29%",
+      "duration": "about 2.5 weekly bars",
+      "volume": "expanding on the impulse day (Mar 16 = 234k daily)",
+      "result": "wide-spread bullish bar but failed to reach Creek 2466",
+      "reaction": "shallow pullback held the 2050-2100 base",
+      "read": "Demand active but not enough to break the range."
+    },
+    {
+      "wave": "Mar 16 to Apr 17 Creek touch",
+      "direction": "up (choppy)",
+      "distance": "2386 -> 2466.50, about +3% (more time than price)",
+      "duration": "about 4-5 weekly bars",
+      "volume": "decreasing into the Creek (effort fading)",
+      "result": "touched Creek but no acceptance",
+      "reaction": "rolled back below 2300",
+      "read": "Effort/result divergence at the upper boundary."
+    },
+    {
+      "wave": "Apr 17 to May 2 LPS test",
+      "direction": "down",
+      "distance": "2466.50 -> 2218.65, about -10%",
+      "duration": "about 2 weekly bars",
+      "volume": "lower than prior down legs",
+      "result": "deeper LPS test that held above AR initial 2148",
+      "reaction": "rally to 2424",
+      "read": "Candidate LPS. Not confirmed."
+    },
+    {
+      "wave": "May 2 to May 14 SOS attempt 2 + reject",
+      "direction": "up then down",
+      "distance": "2218 -> 2424 -> 2232",
+      "duration": "about 1.5 weekly bars",
+      "volume": "fading on rally peaks, expanding on rejection day (May 13-14)",
+      "result": "lower-then-equal high at Creek, ~95% pullback of the rally",
+      "reaction": "still inside range, no break of LPS yet",
+      "read": "Shortening of thrust + ETH/BTC weakness = LPSY warning."
+    }
+  ],
+  "value_profile": {
+    "native_volume_profile": {
+      "available": false,
+      "failure": "No Volume Profile indicator is on this Wyckoff VSA layout, and the MCP layout switched to Wyckoff Layout name was unavailable (renamed pending)."
+    },
+    "anchored_vwap": {
+      "available": false,
+      "failure": "AVWAP from SC anchor (2026-02-02) and BC anchor (2025-11-03) was not deployable; data_get_study_values returned no values for visible studies."
+    },
+    "approximate_ohlcv_fallback": {
+      "method": "Manual OHLCV value fallback from active Phase B range bars (Feb 2 - May 14).",
+      "primary_accepted_area_vpoc_approx": {
+        "low": 2250,
+        "high": 2350
+      },
+      "secondary_accepted_shelf": {
+        "low": 2150,
+        "high": 2250
+      },
+      "value_area_high_approx": {
+        "low": 2425,
+        "high": 2466
+      },
+      "value_area_low_approx": {
+        "low": 1850,
+        "high": 1950
+      },
+      "lvn_fast_move_zone": {
+        "low": 1800,
+        "high": 1900
+      },
+      "confidence": "low_to_moderate"
+    }
+  },
+  "acceptance_rules": {
+    "bullish_above_2466": [
+      "Daily close above 2466.50.",
+      "No immediate re-entry below 2466 within 1-3 daily bars.",
+      "Constructive retest of 2425-2466 (BUEC).",
+      "Supportive spread/volume on the break bar (>1.5x 80-bar daily average).",
+      "Weekly close above 2466.50 upgrades the macro case.",
+      "ETH/BTC stabilizing or turning up materially strengthens the case."
+    ],
+    "path_a_pullback_hold": [
+      "Price tests 2150-2218 (candidate LPS zone) with contracting volume.",
+      "No daily close below 2150.",
+      "Bullish reversal bar or low-volume test followed by upward structure break.",
+      "Bullish if combined with BTC making fresh local higher highs."
+    ],
+    "bearish_failure_lpsy_redistribution": [
+      "Rejection at 2425-2466 with a wide bearish bar.",
+      "Daily acceptance below 2150 (loss of candidate LPS) with rising volume.",
+      "Below 2050, the SC retest at 1742.79 becomes the active target.",
+      "Loss of 1742.79 on a daily close = redistribution confirmed -> 1383 macro higher low at risk."
+    ]
+  },
+  "no_trade_gate": {
+    "score": "1 pass, 1 conditional, 3 fail",
+    "result": "no_clean_trade_yet",
+    "gates": [
+      {
+        "gate": "location",
+        "status": "fail",
+        "evidence": "Current 2306 is mid-range between LPS candidate 2218 and Creek 2466. Not at a clean extreme."
+      },
+      {
+        "gate": "trigger",
+        "status": "fail",
+        "evidence": "No accepted Creek break above 2466 and no completed Phase C spring/LPS test with strength reaction."
+      },
+      {
+        "gate": "invalidation",
+        "status": "pass",
+        "evidence": "1742.79 SC low and 2150 LPS-zone floor are both well defined."
+      },
+      {
+        "gate": "reward",
+        "status": "conditional",
+        "evidence": "Good only from 2150-2218 with subsequent confirmation, or from above 2466 on accepted BUEC. Poor from current price."
+      },
+      {
+        "gate": "timeframe_alignment",
+        "status": "fail",
+        "evidence": "Monthly carries a lower high vs ATH and bearish 2025 markdown; weekly ETH/BTC is down 5 weeks; daily is constructive Phase B. Alignment is mixed to bearish."
+      }
+    ]
+  },
+  "scenarios": {
+    "primary": {
+      "summary": "Phase B accumulation candidate. Long activates only on acceptance above 2466.50 with constructive BUEC at 2425-2466, OR on a clean LPS hold at 2150-2218 followed by a strong impulse.",
+      "activation": [
+        "Daily close above 2466.50 with no immediate re-entry within 1-3 bars.",
+        "Constructive BUEC retest of 2425-2466 with shrinking spread/volume.",
+        "Alternative entry: low-volume test of 2150-2218 with bullish reversal and structure break upward."
+      ],
+      "targets": [
+        2800,
+        3050,
+        3477,
+        4254
+      ],
+      "status": "pending"
+    },
+    "alternative": {
+      "summary": "LPSY / redistribution. Successive shrinking rallies into the Creek combined with declining ETH/BTC argue that the Phase B range may resolve down, retesting 1742.79 and potentially the 1383 macro higher low.",
+      "activation": [
+        "Rejection at 2425-2466 with a wide bearish bar and rising volume.",
+        "Daily acceptance below 2150.",
+        "Loss of 2050 turns 1742 into the active target."
+      ],
+      "targets": [
+        2050,
+        1850,
+        1742.79,
+        1383
+      ],
+      "status": "active_warning_no_entry_yet"
+    }
+  },
+  "red_team": {
+    "countercase": "The most concerning case is LPSY/redistribution, not accumulation. Three pieces of supporting evidence: (1) macro structure prints a lower high at 4254 vs the 4955 ATH, anchoring overhead supply; (2) ETH/BTC has put in 5 consecutive lower weekly closes from 0.030967 -> 0.028248, showing institutional money is preferring BTC; (3) the sequence of upper-band rejections at 2466 -> 2425 -> 2424 is a shortening-of-thrust pattern, classic LPSY behavior. If the next rejection at the Creek prints with strong volume and breaks 2150, the entire Phase B is a redistribution and the prior 1742.79 SC was an absorption stop on the way to a deeper markdown.",
+    "confirms_countercase": [
+      "Daily acceptance below 2150 with rising volume.",
+      "Loss of 2050 and inability to reclaim it on a retest.",
+      "ETH/BTC making fresh sub-0.028 multi-month lows.",
+      "Weekly close below 1742.79."
+    ]
+  },
+  "review_triggers": {
+    "review_when": [
+      "ETH closes above 2466.50 on daily.",
+      "ETH trades into 2150-2218 LPS zone.",
+      "ETH closes below 2150 on daily.",
+      "ETH/BTC weekly flips to a higher close above 0.0295."
+    ],
+    "primary_should_show": [
+      "Wide bullish bar through 2466 with strong close and supportive volume.",
+      "Low-volume retest of 2425-2466 (BUEC) that holds.",
+      "Stabilizing or turning ETH/BTC on the weekly."
+    ],
+    "downgrade_or_invalidates_if": [
+      "Daily acceptance below 2150.",
+      "Wide bearish bar from 2425-2466 with rising volume.",
+      "Loss of 1742.79 on a daily close."
+    ],
+    "outcome_status": "pending"
+  },
+  "missing_evidence": [
+    "Native Volume Profile / VPOC / VAH / VAL was unavailable on this layout.",
+    "Trusted Anchored VWAP from SC (2026-02-02) and BC (2025-11-03) anchors could not be deployed via MCP this session.",
+    "data_get_study_values returned no values for AO, MACD, Volume on this layout.",
+    "Lower-timeframe order flow (CVD, footprint, funding, open interest, liquidation) was not requested.",
+    "draw_clear and chart_scroll_to_date failed with 'getChartApi/evaluate is not defined' so inherited HEW drawings remained visible and forward-time trade-posture paths could not be panned onto the screenshot.",
+    "Wyckoff Layout was not present (used Wyckoff VSA fallback; rename pending)."
+  ],
+  "confidence": {
+    "watchlist_thesis": "moderate",
+    "actionability": "low",
+    "reason": "The SC + Phase B sequence is structurally credible, but the combination of weakening ETH/BTC, shortening rally thrusts into the Creek, and absence of native value/AVWAP/order-flow evidence keeps clean-trade language blocked. Current price is mid-range with no defined location, no confirmed trigger, and timeframe alignment is mixed to bearish."
+  }
+}

@@ -1,0 +1,633 @@
+{
+  "journal_id": "NVO_2026-05-14_wyckoff",
+  "saved_at": "2026-05-14T14:02:26+02:00",
+  "symbol": "NYSE:NVO",
+  "asset": "Novo Nordisk A/S Sponsored ADR Class B",
+  "method": "strict multi-timeframe macro Wyckoff",
+  "workflow_version": "strict_evidence_gates_v2",
+  "status": "watchlist_only_no_clean_trade",
+  "evidence_contract": {
+    "contract_version": "wyckoff_evidence_stack_v1",
+    "completion_status": "complete_with_missing_secondary_context",
+    "asset_class": "equity_adr",
+    "clean_trade_permission": "blocked",
+    "clean_trade_reason": "Price is in overhead supply and the run lacks native value/profile, usable AVWAP levels, relative-strength confirmation, and a completed LPS/BUEC trigger.",
+    "validator": "npm run validate:wyckoff"
+  },
+  "asset_context": {
+    "asset_class": "equity_adr",
+    "venue": "NYSE ADR routed through BATS/Cboe One in TradingView output",
+    "session_model": "regular_hours",
+    "benchmark_set": {
+      "primary": "SPY",
+      "secondary": "QQQ",
+      "sector_or_group": "XLV",
+      "notes": "NVO should be judged against broad U.S. risk, growth risk, and healthcare sector sponsorship when relative-strength data is available."
+    },
+    "volume_reliability": "native_exchange_volume_with_adr_routing_caveat"
+  },
+  "indicator_evidence_stack": [
+    {
+      "id": "price_structure_volume",
+      "role": "primary_wyckoff_evidence",
+      "status": "native",
+      "source": "TradingView MCP quote_get and data_get_ohlcv",
+      "findings": "The ADR fell from 148.15 to 35.12, reclaimed from the terminal-test area, and rallied into 47.8-49.4 supply with fading recent volume.",
+      "trade_impact": "Constructive repair is present, but price/volume alone does not justify chasing into supply."
+    },
+    {
+      "id": "value_profile",
+      "role": "accepted_value_and_liquidity",
+      "status": "fallback",
+      "source": "Approximate OHLCV fallback; native study values and Pine profile reads returned empty.",
+      "findings": "Approximate active range is 35.12-47.79 with a midpoint near 41.45; 43.8-45.2 is the preferred validation zone and 47.8-49.4 is immediate supply.",
+      "trade_impact": "Fallback value lowers confidence and supports watchlist-only posture until native or computed profile confirms acceptance."
+    },
+    {
+      "id": "avwap_cost_basis",
+      "role": "dynamic_cost_basis",
+      "status": "unavailable",
+      "source": "Anchored VWAP was visible, but Pine line/label/box reads returned no usable levels.",
+      "findings": "No reliable AVWAP from the 148.15 markdown high or 35.12 terminal test low was available in this run.",
+      "trade_impact": "Missing cost-basis confirmation blocks clean-trade language."
+    },
+    {
+      "id": "relative_strength",
+      "role": "sponsorship_confirmation",
+      "status": "missing",
+      "source": "No NVO/SPY, NVO/QQQ, or NVO/XLV ratio was gathered in this run.",
+      "findings": "Institutional sponsorship versus broad market and healthcare sector was not confirmed.",
+      "trade_impact": "Relative-strength gap lowers confidence and blocks upgrade beyond watchlist."
+    },
+    {
+      "id": "weis_wave_effort_result",
+      "role": "wave_effort_result",
+      "status": "manual",
+      "source": "Manual OHLCV wave table in wave_effort_result.",
+      "findings": "Downside effort was heavy into the low; recovery improved but the latest rally slowed into supply.",
+      "trade_impact": "Supports no-chase posture and the need for LPS/BUEC validation."
+    },
+    {
+      "id": "momentum_sot",
+      "role": "secondary_shortening_of_thrust_confirmation",
+      "status": "fallback",
+      "source": "MACD/AO were visible, but no numeric study values loaded; SOT read uses price progress and fading volume.",
+      "findings": "Recent upside progress slowed near 47.8-49.4 supply.",
+      "trade_impact": "Secondary warning only; it does not create a short or long trigger."
+    },
+    {
+      "id": "order_flow_execution",
+      "role": "execution_confirmation_only",
+      "status": "not_requested",
+      "source": "No footprint, CVD, or lower-timeframe execution read was requested.",
+      "findings": "Execution absorption at 43.8-45.2 remains a future condition.",
+      "trade_impact": "Precise entry confirmation is unavailable."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "Source discipline states the market read came from TradingView MCP with no external market data."
+    },
+    {
+      "id": "asset_adapter_selected",
+      "status": "pass",
+      "evidence": "Equity ADR adapter selected with SPY/QQQ/XLV benchmark set and ADR routing caveat."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass",
+      "evidence": "Explicit visible ranges were set before reads and screenshots."
+    },
+    {
+      "id": "structure_volume_primary",
+      "status": "pass",
+      "evidence": "Price structure and OHLCV wave evidence drive the read before secondary indicators."
+    },
+    {
+      "id": "value_profile_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Native value/profile reads failed and approximate OHLCV fallback was recorded."
+    },
+    {
+      "id": "avwap_checked",
+      "status": "fail",
+      "evidence": "Anchored VWAP returned no usable Pine levels or zones."
+    },
+    {
+      "id": "relative_strength_checked",
+      "status": "fail",
+      "evidence": "No NVO/SPY, NVO/QQQ, or NVO/XLV relative-strength read was gathered."
+    },
+    {
+      "id": "effort_result_checked",
+      "status": "pass",
+      "evidence": "Manual effort/result table covers the last meaningful waves."
+    },
+    {
+      "id": "momentum_sot_checked",
+      "status": "pass_with_fallback",
+      "evidence": "MACD/AO values were unavailable; SOT was inferred from slowing price progress and fading volume."
+    },
+    {
+      "id": "order_flow_execution_gate",
+      "status": "not_requested",
+      "evidence": "No lower-timeframe execution entry was requested."
+    },
+    {
+      "id": "event_evidence_ledger_complete",
+      "status": "pass",
+      "evidence": "Each event includes requirement, observed evidence, missing evidence, status, and trade impact."
+    },
+    {
+      "id": "acceptance_rules_complete",
+      "status": "pass",
+      "evidence": "Bullish breakout, LPS/BUEC validation, and bearish failure rules are defined."
+    },
+    {
+      "id": "no_trade_gate_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, and timeframe alignment are scored."
+    },
+    {
+      "id": "red_team_complete",
+      "status": "pass",
+      "evidence": "Failed-SOS/upthrust countercase is documented."
+    },
+    {
+      "id": "screenshots_aligned",
+      "status": "pass",
+      "evidence": "evidence.json screenshot paths are package-relative and match journal.md."
+    },
+    {
+      "id": "clean_trade_permission_respected",
+      "status": "pass",
+      "evidence": "Clean trade is blocked and status remains watchlist_only_no_clean_trade."
+    }
+  ],
+  "source_discipline": {
+    "market_data_source": "TradingView MCP",
+    "feed_note": "Requested NYSE:NVO. TradingView quote output reported exchange Cboe One / chart routing BATS:NVO while displaying the NYSE-listed NVO ADR.",
+    "external_market_data_used": false
+  },
+  "chart_prep": {
+    "chart_get_state_once_at_start": {
+      "symbol": "BATS:NVO",
+      "timeframe": "1D",
+      "studies": [
+        "Anchored VWAP",
+        "Awesome Oscillator",
+        "Moving Average Convergence Divergence",
+        "Volume"
+      ]
+    },
+    "existing_drawings_removed": true,
+    "autofit_policy": "Explicit visible ranges were set before chart reads and screenshots. chart_get_visible_range returned evaluate is not defined, so chart_set_visible_range actual responses were used as the fit guard.",
+    "indicator_notes": [
+      "data_get_study_values returned no visible numeric study values.",
+      "data_get_pine_lines, data_get_pine_labels, and data_get_pine_boxes for Anchored VWAP returned no levels or zones.",
+      "Value/profile analysis uses an approximate OHLCV fallback."
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "macro_context",
+      "path": "screenshots/NVO_wyckoff_monthly_macro_annotated_zoom_2026-05-14.png",
+      "purpose": "Show post-markdown macro repair, higher-timeframe supply, and base demand."
+    },
+    {
+      "role": "wyckoff_structure",
+      "path": "screenshots/NVO_wyckoff_weekly_structure_annotated_2026-05-14.png",
+      "purpose": "Show active base, SC candidate, probable terminal test/spring, and JAC/SOS attempt."
+    },
+    {
+      "role": "trade_path_posture",
+      "path": "screenshots/NVO_wyckoff_daily_trade_posture_2026-05-14.png",
+      "purpose": "Show no-clean-trade posture, pullback validation path, breakout acceptance path, and failure route."
+    }
+  ],
+  "quote_snapshot": {
+    "time": 1778679000,
+    "local_time": "2026-05-13 15:30 +02:00",
+    "open": 47.07,
+    "high": 47.21,
+    "low": 46.65,
+    "close": 47.08,
+    "last": 47.08,
+    "volume": 9998736,
+    "exchange": "Cboe One",
+    "type": "dr"
+  },
+  "timeframe_summaries": {
+    "monthly": {
+      "bar_count": 80,
+      "period": {
+        "from": 1569936600,
+        "to": 1777642200
+      },
+      "open": 25.52,
+      "close": 47.08,
+      "high": 148.15,
+      "low": 24.62,
+      "range": 123.53,
+      "change_pct": "84.48%",
+      "avg_volume": 119718827,
+      "last_5_bars": [
+        {
+          "time": 1767364200,
+          "open": 51.61,
+          "high": 64.16,
+          "low": 51.41,
+          "close": 59.43,
+          "volume": 447951212
+        },
+        {
+          "time": 1770042600,
+          "open": 57.905,
+          "high": 59.3,
+          "low": 37.31,
+          "close": 37.45,
+          "volume": 604339831
+        },
+        {
+          "time": 1772461800,
+          "open": 36.83,
+          "high": 39.88,
+          "low": 35.12,
+          "close": 36.75,
+          "volume": 423663985
+        },
+        {
+          "time": 1775050200,
+          "open": 36.77,
+          "high": 42.855,
+          "low": 35.625,
+          "close": 42.22,
+          "volume": 349802277
+        },
+        {
+          "time": 1777642200,
+          "open": 43.31,
+          "high": 47.79,
+          "low": 43.095,
+          "close": 47.08,
+          "volume": 180236353
+        }
+      ]
+    },
+    "weekly": {
+      "bar_count": 120,
+      "period": {
+        "from": 1706538600,
+        "to": 1778506200
+      },
+      "open": 108.13,
+      "close": 47.08,
+      "high": 148.15,
+      "low": 35.12,
+      "range": 113.03,
+      "change_pct": "-56.46%",
+      "avg_volume": 53910457,
+      "last_5_bars": [
+        {
+          "time": 1776087000,
+          "open": 37.135,
+          "high": 41.41,
+          "low": 36.95,
+          "close": 40.52,
+          "volume": 81188678
+        },
+        {
+          "time": 1776691800,
+          "open": 40.51,
+          "high": 41.23,
+          "low": 38.02,
+          "close": 41.17,
+          "volume": 90557879
+        },
+        {
+          "time": 1777296600,
+          "open": 40.76,
+          "high": 44.04,
+          "low": 39.7,
+          "close": 43.88,
+          "volume": 103557361
+        },
+        {
+          "time": 1777901400,
+          "open": 44.15,
+          "high": 47.55,
+          "low": 43.843708,
+          "close": 46.07,
+          "volume": 99829281
+        },
+        {
+          "time": 1778506200,
+          "open": 46.69,
+          "high": 47.79,
+          "low": 46.27,
+          "close": 47.08,
+          "volume": 42098535
+        }
+      ]
+    },
+    "daily": {
+      "bar_count": 100,
+      "period": {
+        "from": 1766068200,
+        "to": 1778679000
+      },
+      "open": 48,
+      "close": 47.08,
+      "high": 64.16,
+      "low": 35.12,
+      "range": 29.04,
+      "change_pct": "-1.92%",
+      "avg_volume": 21689519,
+      "last_5_bars": [
+        {
+          "time": 1778160600,
+          "open": 46.55,
+          "high": 47.08,
+          "low": 45.75,
+          "close": 45.8,
+          "volume": 16912603
+        },
+        {
+          "time": 1778247000,
+          "open": 45.97,
+          "high": 46.14,
+          "low": 45.19,
+          "close": 46.07,
+          "volume": 12054050
+        },
+        {
+          "time": 1778506200,
+          "open": 46.69,
+          "high": 47.79,
+          "low": 46.27,
+          "close": 46.4,
+          "volume": 17851623
+        },
+        {
+          "time": 1778592600,
+          "open": 46.99,
+          "high": 47.11,
+          "low": 46.29,
+          "close": 47,
+          "volume": 14248176
+        },
+        {
+          "time": 1778679000,
+          "open": 47.07,
+          "high": 47.21,
+          "low": 46.65,
+          "close": 47.08,
+          "volume": 9998736
+        }
+      ]
+    }
+  },
+  "event_evidence": [
+    {
+      "event": "prior_markdown",
+      "definition_requirement": "Strong decline into a range after failed upper campaign.",
+      "observed_evidence": "ADR fell from 148.15 to 35.12; monthly and weekly remain below major overhead supply.",
+      "missing_evidence": "None for context.",
+      "status": "confirmed_context",
+      "trade_impact": "Bulls are repairing damage, not in mature markup."
+    },
+    {
+      "event": "SC_candidate",
+      "definition_requirement": "Heavy selling meets demand and begins stopping the decline.",
+      "observed_evidence": "Feb 23 weekly selloff into 37.31 on very high volume near 257.8M.",
+      "missing_evidence": "Later undercut means this was not the terminal low.",
+      "status": "candidate",
+      "trade_impact": "Early stopping evidence only."
+    },
+    {
+      "event": "spring_terminal_test",
+      "definition_requirement": "Defined low break or terminal shakeout followed by recovery.",
+      "observed_evidence": "Mar 30 low 35.12, then reclaim and sustained advance to 47.79.",
+      "missing_evidence": "Prior boundary was still young, so it is not a textbook mature range spring.",
+      "status": "probable_functionally_confirmed",
+      "trade_impact": "Supports accumulation repair thesis."
+    },
+    {
+      "event": "SOS_JAC_attempt",
+      "definition_requirement": "Displacement through Creek with acceptance or constructive reaction.",
+      "observed_evidence": "Rally cleared 40.5-41.4 and reached 47.79.",
+      "missing_evidence": "No completed retest; current price is in supply.",
+      "status": "probable_attempt",
+      "trade_impact": "Bullish, but needs BUEC/LPS or acceptance above 49.4."
+    },
+    {
+      "event": "LPS_BUEC",
+      "definition_requirement": "Reaction after strength that holds as a higher low or retest after accepted Creek.",
+      "observed_evidence": "43.8-45.2 is mapped as the valid future test zone.",
+      "missing_evidence": "Pullback has not occurred or held yet.",
+      "status": "candidate_only",
+      "trade_impact": "Do not enter just because the zone exists."
+    },
+    {
+      "event": "UTAD_failed_SOS_risk",
+      "definition_requirement": "Break above resistance followed by rejection and weakness.",
+      "observed_evidence": "Price is at 47.8-49.4 supply and slowing.",
+      "missing_evidence": "Needs rejection plus loss of 43.1.",
+      "status": "candidate_risk",
+      "trade_impact": "Be defensive if 43.1 fails."
+    }
+  ],
+  "wave_effort_result": [
+    {
+      "wave": "Jan high to Feb breakdown",
+      "direction": "down",
+      "distance": "64.16 to 37.31, about -41.8%",
+      "duration": "about 24 daily bars",
+      "volume": "very heavy on gap/down weeks",
+      "result": "large downside progress",
+      "reaction": "temporary bounce then more testing",
+      "read": "Sellers controlled, possible climax process begins."
+    },
+    {
+      "wave": "Feb 23 to Mar 30",
+      "direction": "down/test",
+      "distance": "41.09 to 35.12, about -14.5%",
+      "duration": "about 25 daily bars",
+      "volume": "elevated but less efficient",
+      "result": "new low made limited additional progress",
+      "reaction": "reclaimed and turned up",
+      "read": "Supply started losing efficiency."
+    },
+    {
+      "wave": "Mar 30 to Apr 13",
+      "direction": "up",
+      "distance": "35.12 to 41.41, about +17.9%",
+      "duration": "about 10 daily bars",
+      "volume": "moderate",
+      "result": "cleared immediate low base",
+      "reaction": "pullback held above 38",
+      "read": "Demand appeared."
+    },
+    {
+      "wave": "Apr 21 to May 1",
+      "direction": "up",
+      "distance": "38.02 to 44.04, about +15.8%",
+      "duration": "about 9 daily bars",
+      "volume": "supportive",
+      "result": "cleared 41.4 Creek zone",
+      "reaction": "held above the breakout shelf",
+      "read": "JAC/SOS attempt improves."
+    },
+    {
+      "wave": "May 1 to May 13",
+      "direction": "up/stall",
+      "distance": "43.10 to 47.79, about +10.9%",
+      "duration": "about 8 daily bars",
+      "volume": "volume fades into latest daily bars",
+      "result": "reached supply with slower progress",
+      "reaction": "needs retest or acceptance",
+      "read": "Do not chase into supply."
+    }
+  ],
+  "value_profile": {
+    "native_profile_available": false,
+    "method": "approximate OHLCV fallback",
+    "active_range": {
+      "low": 35.12,
+      "high": 47.79,
+      "midpoint": 41.45
+    },
+    "zones": [
+      {
+        "name": "base_demand",
+        "low": 35.12,
+        "high": 41.4,
+        "read": "Accepted base and terminal-test region."
+      },
+      {
+        "name": "preferred_LPS_BUEC_candidate",
+        "low": 43.8,
+        "high": 45.2,
+        "read": "Best pullback validation zone for a risk-defined long."
+      },
+      {
+        "name": "immediate_supply_acceptance_band",
+        "low": 47.8,
+        "high": 49.4,
+        "read": "No-chase zone unless accepted and held."
+      }
+    ],
+    "confidence_note": "Approximate value levels have lower authority than native Volume Profile or VWAP."
+  },
+  "acceptance_rules": [
+    {
+      "scenario": "bullish_acceptance_above_49_4",
+      "rules": [
+        "Daily close above 49.4.",
+        "No immediate re-entry below 47.8 within 1-3 sessions.",
+        "Constructive retest of 47.8-49.4.",
+        "Weekly close above 49.4 upgrades the macro case."
+      ]
+    },
+    {
+      "scenario": "LPS_BUEC_pullback_validation",
+      "rules": [
+        "Price tests 43.8-45.2.",
+        "Selling pressure contracts.",
+        "Price holds above 43.1.",
+        "Price turns up through minor structure."
+      ]
+    },
+    {
+      "scenario": "bearish_rejection_failure",
+      "rules": [
+        "Rejection at 47.8-49.4.",
+        "Daily acceptance below 43.1.",
+        "Below 40.5 the recovery thesis downgrades sharply."
+      ]
+    }
+  ],
+  "no_trade_gate": {
+    "result": "no_clean_trade_yet",
+    "gates": [
+      {
+        "gate": "location",
+        "status": "fail_now_pending",
+        "evidence": "Current price near 47.08 is close to 47.8-49.4 supply, not at 43.8-45.2 demand and not accepted above 49.4."
+      },
+      {
+        "gate": "trigger",
+        "status": "fail",
+        "evidence": "No completed LPS/BUEC and no accepted breakout above 49.4."
+      },
+      {
+        "gate": "invalidation",
+        "status": "pass",
+        "evidence": "43.1 for aggressive thesis, 40.5 for broader context."
+      },
+      {
+        "gate": "reward",
+        "status": "conditional",
+        "evidence": "Attractive only from 43.8-45.2 or after accepted 49.4 retest."
+      },
+      {
+        "gate": "timeframe_alignment",
+        "status": "mixed",
+        "evidence": "Daily/weekly repair is constructive; monthly is still below large supply."
+      }
+    ]
+  },
+  "primary_scenario": {
+    "summary": "NVO is building a possible accumulation repair.",
+    "activation_conditions": [
+      "Pullback into 43.8-45.2 with contracting selling pressure and turn up.",
+      "Acceptance above 49.4 followed by constructive retest of 47.8-49.4."
+    ],
+    "targets": [
+      "51.1-53",
+      "59.3-64.16"
+    ],
+    "invalidation": [
+      "Below 43.1 for aggressive long thesis.",
+      "Below 40.5 for broader context."
+    ]
+  },
+  "alternative_scenario": {
+    "summary": "The current rally is a failed SOS/upthrust into overhead supply.",
+    "activation_conditions": [
+      "Rejects 47.8-49.4.",
+      "Accepts below 43.1.",
+      "Loses 40.5 for context flip."
+    ],
+    "targets": [
+      "38",
+      "35.12"
+    ]
+  },
+  "red_team": {
+    "countercase": "The move from 35.12 to 47.79 may be only a relief rally after markdown, not a true SOS.",
+    "proof_needed": "Rejection from 47.8-49.4 followed by acceptance below 43.1, then loss of 40.5.",
+    "trade_impact": "Do not preserve a bullish label if the failure route triggers."
+  },
+  "review_triggers": [
+    "NVO closes above 49.4.",
+    "NVO trades into 43.8-45.2.",
+    "NVO closes below 43.1.",
+    "NVO loses 40.5 after rejecting supply."
+  ],
+  "missing_evidence": [
+    "Native Volume Profile / VPOC / VAH / VAL unavailable from current study reads.",
+    "data_get_study_values returned no numeric indicator values.",
+    "Reliable Anchored VWAP levels from the 148.15 markdown high and 35.12 terminal low were unavailable.",
+    "Relative strength versus SPY, QQQ, and XLV was not gathered.",
+    "No lower-timeframe execution refinement was requested.",
+    "No completed LPS/BUEC retest exists yet."
+  ],
+  "confidence": {
+    "watchlist_thesis": "moderate",
+    "actionable_trade_now": "low",
+    "reason": "The accumulation repair is plausible, but current price is in overhead supply and lacks either LPS/BUEC validation or accepted breakout."
+  }
+}

@@ -7,6 +7,8 @@ description: Generate a comprehensive strategy performance report — metrics, t
 
 You are generating a detailed performance report for a Pine Script strategy on TradingView.
 
+Use TradingView MCP Strategy Tester and chart tools as the source of performance metrics, trades, equity curve, screenshots, symbol, timeframe, and current chart context. Do not use web search, external performance pages, or local report files for strategy results unless the user explicitly asks for outside context.
+
 ## Step 1: Gather Data
 
 Collect all available performance data:

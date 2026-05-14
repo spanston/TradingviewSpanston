@@ -198,16 +198,22 @@ tv stream tables --filter Profiler       # table data monitoring
 tv stream all                            # all panes at once (multi-symbol)
 ```
 
-## How Claude Knows Which Tool to Use
+## How Agents Know Which Tool to Use
 
-Claude reads [`CLAUDE.md`](CLAUDE.md) automatically when working in this project. It contains a complete decision tree:
+Agent instructions live in [`AGENTS.md`](AGENTS.md). [`CLAUDE.md`](CLAUDE.md) is kept as a compatibility pointer. The canonical guide contains the complete decision tree, Wyckoff and HEW workflows, drawing grammar, and screenshot/report rules:
 
-| You say... | Claude uses... |
+| You say... | Agent uses... |
 |------------|---------------|
 | "What's on my chart?" | `chart_get_state` → `data_get_study_values` → `quote_get` |
 | "What levels are showing?" | `data_get_pine_lines` → `data_get_pine_labels` |
 | "Read the session table" | `data_get_pine_tables` with `study_filter` |
 | "Give me a full analysis" | `quote_get` → `data_get_study_values` → `data_get_pine_lines` → `data_get_pine_labels` → `data_get_pine_tables` → `data_get_ohlcv` (summary) → `capture_screenshot` |
+| "Give me a Wyckoff macro analysis of BTCUSD" | `layout_switch` to `Wyckoff Layout` → `skills/wyckoff-macro-analysis` → Monthly/Weekly/Daily chart reads → price, volume, value, liquidity, scenarios, invalidation |
+| "Give me a HEW analysis of BTCUSD" | `layout_switch` to `HEW layout` → `skills/harmonic-elliott-wave-analysis` → Monthly/Weekly/Daily count map → ratios, primary/alternate count, projection targets, invalidation |
+| "Show me the Wyckoff chart proof" | Annotated screenshots for macro context, Wyckoff structure, trade posture, and optional execution refinement |
+| "Show me the HEW projection map" | Annotated screenshots for macro structure, projection map, alternate count, and optional wave anatomy |
+| "Save the Wyckoff journal" | Fill `wyckoff_evidence_stack_v1` in `evidence.json` → run `npm run validate:wyckoff -- analysis_journal/<PACKAGE>/evidence.json` |
+| "Save the HEW journal" | Fill `hew_evidence_stack_v1` in `evidence.json` → run `npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json` |
 | "Switch to AAPL daily" | `chart_set_symbol` → `chart_set_timeframe` |
 | "Write a Pine Script for..." | `pine_set_source` → `pine_smart_compile` → `pine_get_errors` |
 | "Start replay at March 1st" | `replay_start` → `replay_step` → `replay_trade` |

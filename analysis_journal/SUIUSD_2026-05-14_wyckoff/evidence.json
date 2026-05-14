@@ -1,0 +1,672 @@
+{
+  "journal_id": "SUIUSD_2026-05-14_wyckoff",
+  "saved_at": "2026-05-14T13:25:00+02:00",
+  "symbol": "COINBASE:SUIUSD",
+  "asset": "SUI / U.S. Dollar",
+  "layout": "Arete Trading",
+  "method": "strict multi-timeframe macro Wyckoff",
+  "workflow_version": "strict_evidence_gates_v2",
+  "status": "watchlist_only_pending_buec",
+  "evidence_contract": {
+    "contract_version": "wyckoff_evidence_stack_v1",
+    "completion_status": "complete_with_fallbacks",
+    "asset_class": "crypto_spot",
+    "clean_trade_permission": "watchlist_only",
+    "clean_trade_reason": "SOS attempt is fresh and unconfirmed by BUEC retest; native value profile is unavailable (only OHLCV approximate); AVWAP from the markdown high remains overhead at 2.37. Clean execution permitted only after a daily close above 1.18 holds the 1.03-1.18 BUEC zone on retest.",
+    "validator": "npm run validate:wyckoff"
+  },
+  "asset_context": {
+    "asset_class": "crypto_spot",
+    "venue": "COINBASE",
+    "session_model": "24_7",
+    "benchmark_set": {
+      "primary": "BTC",
+      "secondary": "TOTAL",
+      "sector_or_group": "L1_alts (SOL, APT, SEI)",
+      "notes": "SUI is a high-beta L1 alt; sponsorship is best judged against BTC ratio and the alt sector. SUI/BTC pair was read directly via BINANCE:SUIBTC."
+    },
+    "volume_reliability": "crypto_exchange_volume_coinbase_only"
+  },
+  "indicator_evidence_stack": [
+    {
+      "id": "price_structure_volume",
+      "role": "primary_wyckoff_evidence",
+      "status": "native",
+      "source": "TradingView MCP quote_get and data_get_ohlcv on monthly, weekly, daily.",
+      "findings": "Clean Wyckoff accumulation footprint after markdown from 5.37 ATH: SC on Feb 5 2026 at 0.789 on climactic weekly volume (244M vs avg 153M), AR same day to 1.03, multi-month range 0.79-1.05 with multiple STs holding above 0.82, then daily SOS-attempt on May 6 to 1.42 on 74M vol vs 12-15M average. Current price 1.21 sits at the AR/Creek line as a BUEC candidate.",
+      "trade_impact": "Primary structure supports a Phase D accumulation read; SOS still requires acceptance via BUEC retest."
+    },
+    {
+      "id": "value_profile",
+      "role": "accepted_value_and_liquidity",
+      "status": "fallback",
+      "source": "Approximate VPOC/VAH/VAL computed from 90 daily OHLCV bars across the Feb 5 - May 4 accumulation range; native Volume Profile not added.",
+      "findings": "Approximate POC ~0.92, VAL ~0.84, VAH ~1.02, HVN cluster 0.85-0.97 (multi-month acceptance), LVN above 1.05 (cleared rapidly on May 6 SOS day).",
+      "trade_impact": "Approximate value supports planning, not clean-trade permission. POC at 0.92 is the magnet on any failed BUEC."
+    },
+    {
+      "id": "avwap_cost_basis",
+      "role": "dynamic_cost_basis",
+      "status": "fallback",
+      "source": "Anchored VWAP visible on chart (entity roOcL6). Anchor was verified via ui_evaluate inspection of the study inputs: start_time=0, source=hlc3, bands_multiplier=1 and 2. This means the AVWAP is anchored to the inception bar (SUI listing, May 2023) — it is a lifetime cumulative VWAP, not a campaign-event-anchored AVWAP.",
+      "findings": "Lifetime AVWAP at 2.3677 with -1σ band at 1.1987 (current price level) and +1σ at 3.5368. As a lifetime cost-basis proxy, 2.37 represents the blended VWAP-weighted average price of all SUI buyers since listing — informative but NOT the strict-Wyckoff markdown-campaign anchor (which would be anchored at the Jan 2025 ATH 5.37 or the Oct 2025 markdown high 4.30). Price sitting on the -1σ band at 1.20 is still a meaningful mean-reversion location.",
+      "trade_impact": "Lifetime VWAP at 2.37 is a plausible mean-reversion magnet but should NOT be treated as the trapped-distribution cost basis from the 5.37 ATH; confidence on it as T2 is reduced from high to medium. A campaign-anchored AVWAP from the Jan 2025 ATH was not added and is in missing_evidence."
+    },
+    {
+      "id": "relative_strength",
+      "role": "sponsorship_confirmation",
+      "status": "proxy",
+      "source": "BINANCE:SUIBTC pair OHLCV (daily) read directly.",
+      "findings": "SUI/BTC made a clean descending wedge accumulation with terminal shakedown to 0.0000116 ratio on May 1 (lower low while SUIUSD held above the Feb 5 SC). The May 6 ratio surge to 0.0000174 (+50% in 3 days) coincided with the spot SOS day. Currently at 0.0000151 — well above the spring ratio low. This is a textbook ratio-Wyckoff accumulation pattern that confirms institutional sponsorship.",
+      "trade_impact": "Strongest single piece of evidence supporting the long thesis: smart money was absorbing SUI vs BTC into ratio weakness then revealed itself with the SOS surge."
+    },
+    {
+      "id": "weis_wave_effort_result",
+      "role": "wave_effort_result",
+      "status": "manual",
+      "source": "Manual weekly wave table in wave_effort_result based on bounded OHLCV reads.",
+      "findings": "Five-wave effort/result shows declining bearish effort through markdown (Jan), climactic exhaustion on the SC week, low-effort/tight-spread base through Mar-Apr, and explosive bullish effort/result on the SOS week.",
+      "trade_impact": "Effort/result sequence consistent with Phase C-D accumulation; supports continued markup unless current digestion week prints abnormal selling pressure."
+    },
+    {
+      "id": "momentum_sot",
+      "role": "secondary_shortening_of_thrust_confirmation",
+      "status": "fallback",
+      "source": "MACD and Awesome Oscillator were on chart but data_get_study_values returned only AVWAP values; SOT read uses bar-spread/wave progress fallback.",
+      "findings": "On weekly bars the Jan markdown leg shows shortening of thrust on each lower low into the Feb SC; on daily bars the breakout has not yet shown SOT.",
+      "trade_impact": "Secondary context only; no momentum signal authorizes entry by itself."
+    },
+    {
+      "id": "order_flow_execution",
+      "role": "execution_confirmation_only",
+      "status": "not_requested",
+      "source": "No CVD, footprint, funding, liquidation, OI, or lower-timeframe execution read requested.",
+      "findings": "No order-flow confirmation gathered; macro/swing posture only.",
+      "trade_impact": "Precise lower-timeframe execution entries are unavailable; BUEC retest hold is the next gate."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "Read is sourced from TradingView MCP chart, quote, OHLCV, drawings, and screenshots only."
+    },
+    {
+      "id": "asset_adapter_selected",
+      "status": "pass",
+      "evidence": "Crypto spot adapter selected with 24/7 session, Coinbase venue, BTC/TOTAL/L1-alts benchmark set."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass_with_fallback",
+      "evidence": "Explicit visible ranges set on each timeframe before reads; chart_get_visible_range and chart_scroll_to_date returned 'evaluate is not defined', so chart_set_visible_range actual responses were used as the fit guard. Forward-time fit for trade-posture chart was clamped by TradingView at the last real bar."
+    },
+    {
+      "id": "structure_volume_primary",
+      "status": "pass",
+      "evidence": "Price structure and OHLCV-derived wave/effort evidence drove the read before secondary indicators were consulted."
+    },
+    {
+      "id": "value_profile_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Native Volume Profile was not added; approximate VPOC/VAH/VAL computed from 90 daily bars across the accumulation range."
+    },
+    {
+      "id": "avwap_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Anchored VWAP visible on chart with VWAP 2.37, -1σ band 1.20 (current), +1σ band 3.54. Anchor was VERIFIED via ui_evaluate inspection: start_time=0 = inception (May 2023) — this is lifetime cumulative VWAP, NOT a campaign-event-anchored AVWAP. A campaign-anchored AVWAP from the Jan 2025 ATH/markdown high was not added; status downgraded to fallback."
+    },
+    {
+      "id": "relative_strength_checked",
+      "status": "pass",
+      "evidence": "SUI/BTC pair read on Binance daily; descending-wedge accumulation with terminal shakedown and May 6 ratio surge confirms sponsorship."
+    },
+    {
+      "id": "effort_result_checked",
+      "status": "pass",
+      "evidence": "Manual five-wave weekly effort/result table covers Jan markdown through current digestion."
+    },
+    {
+      "id": "momentum_sot_checked",
+      "status": "pass_with_fallback",
+      "evidence": "MACD/AO study values returned empty; bar-spread/wave-progress fallback used. No crossover signal acted on."
+    },
+    {
+      "id": "order_flow_execution_gate",
+      "status": "not_requested",
+      "evidence": "No lower-timeframe execution entry/stop was requested; macro/swing scope only."
+    },
+    {
+      "id": "event_evidence_ledger_complete",
+      "status": "pass",
+      "evidence": "SC, AR, ST, Spring, SOS, BUEC, LPS each have requirement, observed, missing, status, trade impact."
+    },
+    {
+      "id": "acceptance_rules_complete",
+      "status": "pass",
+      "evidence": "Acceptance above 1.18 on retest hold of 1.03-1.18 BUEC zone defined; bearish acceptance below 0.95 defined."
+    },
+    {
+      "id": "no_trade_gate_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, and timeframe alignment scored."
+    },
+    {
+      "id": "red_team_complete",
+      "status": "pass",
+      "evidence": "Failed-SOS / UTAD-trap countercase documented with confirmation conditions."
+    },
+    {
+      "id": "screenshots_aligned",
+      "status": "pass",
+      "evidence": "All evidence.json screenshot paths are package-relative and match journal.md embeds."
+    },
+    {
+      "id": "clean_trade_permission_respected",
+      "status": "pass",
+      "evidence": "Clean trade is watchlist_only pending BUEC confirmation; status field reflects this."
+    }
+  ],
+  "chart_prep": {
+    "chart_get_state_once_at_start": {
+      "symbol": "COINBASE:SUIUSD",
+      "timeframe": "1W",
+      "studies": [
+        "Anchored VWAP",
+        "Awesome Oscillator",
+        "Moving Average Convergence Divergence",
+        "Volume"
+      ]
+    },
+    "existing_drawings_removed": true,
+    "existing_drawings_removed_method": "Initial chart state inspected via ui_evaluate on the chart-widget-collection dataSources list: confirmed only system data sources (Crosshair, SUIUSD series, Ideas, RollDates, FuturesContractExpiration) and the four studies (AVWAP, AO, MACD, Volume) were present — no inherited user drawings. After the first annotation pass, drawings were removed via window._exposed_chartWidgetCollection.getAll()[0].model().removeAllDrawingTools() before redrawing the final annotation set (draw_clear and draw_remove_one both returned 'getChartApi is not defined' so the model-level call was used instead).",
+    "autofit_policy": "Explicit visible ranges set before each timeframe read and screenshot. chart_scroll_to_date and chart_get_visible_range returned 'evaluate is not defined'. Forward-time fit on the trade-posture screenshot was achieved by calling timeScale.zoomToBarsRange(first, last+60) via ui_evaluate to add 60 forward bars to the visible range — TradingView accepted this on the second attempt after the first attempt accidentally targeted a different chart widget.",
+    "indicator_notes": [
+      "Studies were hidden on the initial chart; AVWAP/AO/MACD were toggled visible with indicator_toggle_visibility.",
+      "data_get_study_values only returned Anchored VWAP values (VWAP 2.3677, -1σ 1.1987, +1σ 3.5368).",
+      "AVWAP anchor was verified via ui_evaluate on the study inputs: start_time=0 = listing inception (May 2023), source=hlc3, bands_multiplier=1 and 2. This is lifetime VWAP, NOT a strict-Wyckoff campaign anchor.",
+      "Volume Profile was not added; an OHLCV-binned approximate VPOC was computed across the accumulation range."
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "macro_context_monthly",
+      "path": "screenshots/01_monthly_clean.png",
+      "purpose": "Monthly view of full SUI history: 0.36 ATL (Oct 2023), 5.37 ATH (Jan 2025), markdown into 0.79 (Feb 2026), May 2026 reversal bar +33%."
+    },
+    {
+      "role": "macro_context_weekly",
+      "path": "screenshots/02_weekly_clean.png",
+      "purpose": "Weekly view showing distribution from 5.37 ATH, markdown to 0.79 SC week, range Feb-Apr 2026, then May 6 SOS-attempt week to 1.42."
+    },
+    {
+      "role": "wyckoff_structure_daily_unannotated",
+      "path": "screenshots/03_daily_clean.png",
+      "purpose": "Unannotated daily showing the Feb 5 SC wick, three-month accumulation base 0.82-1.05, and the May 6 breakout candle. Embedded in journal as the Wyckoff Structure (Unannotated) chart."
+    },
+    {
+      "role": "wyckoff_structure_annotated",
+      "path": "screenshots/04_daily_structure.png",
+      "purpose": "Daily with SC (0.789), AR/Creek (1.05), SOS-attempt (1.42), range rectangle, BUEC retest zone (1.03-1.18), soft invalidation (0.95), hard invalidation (<0.789), and the descending lifetime Anchored VWAP at ~2.37."
+    },
+    {
+      "role": "relative_strength",
+      "path": "screenshots/05_suibtc_ratio.png",
+      "purpose": "BINANCE:SUIBTC daily showing descending-wedge ratio accumulation with terminal shakedown to 0.0000116 (May 1) and explosive surge on May 6 confirming sponsorship."
+    },
+    {
+      "role": "trade_path_posture_initial",
+      "path": "screenshots/06_trade_posture.png",
+      "purpose": "Initial trade-posture view with full Wyckoff annotation set and watchlist sidebar; forward fit was clamped at the last real bar by TradingView. Superseded by 07_trade_posture_paths.png after forward-bars zoom workaround."
+    },
+    {
+      "role": "trade_path_posture_with_forward_paths",
+      "path": "screenshots/07_trade_posture_paths.png",
+      "purpose": "Final trade-posture chart with forward-projected Path A (BUEC retest into markup to T1) and Path B (failed SOS) trend-line segments visible after extending the visible range by 60 forward bars via timeScale.zoomToBarsRange. This answers 'what next?' at a glance."
+    }
+  ],
+  "quote_snapshot": {
+    "time": 1778716800,
+    "open": 1.207,
+    "high": 1.2267,
+    "low": 1.186,
+    "close": 1.2078,
+    "last": 1.2078,
+    "volume": 4902048.7,
+    "exchange": "Coinbase",
+    "type": "spot"
+  },
+  "timeframe_summaries": {
+    "monthly": {
+      "bar_count": 37,
+      "period": {
+        "from": 1682899200,
+        "to": 1777593600
+      },
+      "open": 1.17,
+      "close": 1.2052,
+      "high": 5.37,
+      "low": 0.363,
+      "range": 5.01,
+      "change_pct": "3.01%",
+      "avg_volume": 475861452,
+      "visible_range_requested": {
+        "from": 1682899200,
+        "to": 1788393600
+      },
+      "visible_range_actual": {
+        "from": 1685577600,
+        "to": 1777593600
+      },
+      "notes": "May 2026 monthly bar is in-progress with +33% MTD reversal on partial month volume."
+    },
+    "weekly": {
+      "bar_count": 100,
+      "period": {
+        "from": 1718582400,
+        "to": 1778457600
+      },
+      "open": 0.9697,
+      "close": 1.2058,
+      "high": 5.37,
+      "low": 0.4623,
+      "range": 4.91,
+      "change_pct": "24.35%",
+      "avg_volume": 152937847,
+      "visible_range_requested": {
+        "from": 1700000000,
+        "to": 1781000000
+      },
+      "visible_range_actual": {
+        "from": 1701043200,
+        "to": 1778457600
+      },
+      "key_weeks": [
+        {
+          "role": "selling_climax",
+          "time": 1769990400,
+          "open": 1.1004,
+          "high": 1.1669,
+          "low": 0.7889,
+          "close": 0.9716,
+          "volume": 244079693.2,
+          "read": "Climactic-effort SC week: 244M volume vs 153M avg, 33% intraweek range, wick to 0.789, reversal close."
+        },
+        {
+          "role": "sos_attempt",
+          "time": 1777852800,
+          "open": 0.9199,
+          "high": 1.4153,
+          "low": 0.9128,
+          "close": 1.3327,
+          "volume": 166276377.5,
+          "read": "Weekly SOS-attempt: 166M vol vs 80M recent avg, +43% week, broke range top and AVWAP -1σ."
+        },
+        {
+          "role": "current_digestion",
+          "time": 1778457600,
+          "open": 1.3322,
+          "high": 1.3513,
+          "low": 1.1767,
+          "close": 1.2058,
+          "volume": 83966508.1,
+          "read": "Current week digesting the SOS impulse; lower volume than breakout week and narrowing range — constructive."
+        }
+      ]
+    },
+    "daily": {
+      "bar_count": 120,
+      "period": {
+        "from": 1768435200,
+        "to": 1778716800
+      },
+      "open": 1.8534,
+      "close": 1.2078,
+      "high": 2.0211,
+      "low": 0.789,
+      "avg_volume_recent": 13000000,
+      "visible_range_requested": {
+        "from": 1768435200,
+        "to": 1785024000
+      },
+      "visible_range_actual": {
+        "from": 1768435200,
+        "to": 1778716800
+      },
+      "last_5_bars": [
+        {
+          "time": 1778371200,
+          "open": 1.0702,
+          "high": 1.4153,
+          "low": 1.0649,
+          "close": 1.3327,
+          "volume": 74191060.6,
+          "read": "SOS day: +24.5% daily on ~6x average volume."
+        },
+        {
+          "time": 1778457600,
+          "open": 1.3322,
+          "high": 1.3513,
+          "low": 1.2458,
+          "close": 1.2906,
+          "volume": 41424823.5
+        },
+        {
+          "time": 1778544000,
+          "open": 1.2907,
+          "high": 1.3135,
+          "low": 1.2137,
+          "close": 1.238,
+          "volume": 20014348.9
+        },
+        {
+          "time": 1778630400,
+          "open": 1.238,
+          "high": 1.2654,
+          "low": 1.1767,
+          "close": 1.2076,
+          "volume": 17753579.9
+        },
+        {
+          "time": 1778716800,
+          "open": 1.207,
+          "high": 1.2267,
+          "low": 1.186,
+          "close": 1.2083,
+          "volume": 4898735.5,
+          "read": "Today: tight inside-day on light volume, holding above the 1.18 prior day low and the AVWAP -1σ band at 1.20."
+        }
+      ]
+    }
+  },
+  "key_bars": [
+    {
+      "role": "selling_climax",
+      "time": 1770336000,
+      "open": 0.8812,
+      "high": 1.0297,
+      "low": 0.789,
+      "close": 1.0142,
+      "volume": 64227904.3,
+      "read": "Feb 5 2026 daily SC: capitulation wick to 0.789 with 64M intraday volume (~5x avg), strong reversal close above 1.00. This is the campaign low."
+    },
+    {
+      "role": "automatic_rally",
+      "time": 1770336000,
+      "high": 1.0297,
+      "read": "AR formed same day as the SC on the W-shape reversal — high 1.03 became the upper edge of the trading range."
+    },
+    {
+      "role": "secondary_test_cluster",
+      "zone": {
+        "low": 0.82,
+        "high": 0.88
+      },
+      "read": "Multiple secondary tests in late Feb (0.86), late Feb again (0.83), late Mar (0.82), early Apr (0.84) — none broke the 0.789 SC low; all on declining volume vs the SC."
+    },
+    {
+      "role": "sos_attempt",
+      "time": 1778371200,
+      "open": 1.0702,
+      "high": 1.4153,
+      "low": 1.0649,
+      "close": 1.3327,
+      "volume": 74191060.6,
+      "read": "May 6 daily SOS-attempt: +24.5% daily on 74M volume (~6x average), cleared range top 1.05 and the prior swing high 1.18, reached 1.42 before digestion."
+    }
+  ],
+  "levels": {
+    "current_read_price": 1.2078,
+    "major_supply": {
+      "low": 2.0,
+      "high": 2.4
+    },
+    "avwap_lifetime": 2.3677,
+    "avwap_lower_band_minus_1sigma": 1.1987,
+    "sos_high": 1.42,
+    "buec_retest_zone": {
+      "low": 1.03,
+      "high": 1.18
+    },
+    "soft_invalidation": 0.95,
+    "approximate_poc": 0.92,
+    "value_area_low": 0.84,
+    "selling_climax_low_hard_invalidation": 0.789
+  },
+  "event_evidence": [
+    {
+      "event": "prior_markdown_damage",
+      "requirement": "Strong decline from upper campaign into definable range",
+      "observed": "Decline from 5.37 ATH (Jan 2025) to 0.789 (Feb 2026) — 85% drawdown over 13 months; range 0.79-1.05 then formed.",
+      "missing": "none for context",
+      "status": "confirmed_context",
+      "trade_impact": "Macro markdown is intact until SUI reclaims the 2.0-2.4 supply band and the 2.37 markdown-AVWAP."
+    },
+    {
+      "event": "selling_climax",
+      "requirement": "Heavy selling met by strong buying that stops the decline and produces a wide-range reversal on climactic volume",
+      "observed": "2026-02-05 daily: low 0.789, close 1.014, volume 64M (~5x avg); weekly same week: volume 244M vs 153M avg, intra-week range 33%, reversal close.",
+      "missing": "Single-bar SC rather than a multi-bar Phase A — slight quality penalty.",
+      "status": "confirmed",
+      "trade_impact": "Defines the campaign low at 0.789 and the AR at 1.03."
+    },
+    {
+      "event": "automatic_rally",
+      "requirement": "Immediate strong reaction off the SC defining the upper edge of the range",
+      "observed": "Same Feb 5 bar high 1.03; range top respected for the next 3 months.",
+      "missing": "none",
+      "status": "confirmed",
+      "trade_impact": "1.03-1.05 became the Creek that the May 6 SOS broke."
+    },
+    {
+      "event": "secondary_test",
+      "requirement": "Retest of climax area on reduced supply with no downside continuation",
+      "observed": "Late Feb 0.86, late Feb 0.83, late Mar 0.82, early Apr 0.84 — all higher than 0.789 SC, all on declining daily volume vs the SC.",
+      "missing": "No single 'classic' deep ST on dry volume; multiple shallow tests instead.",
+      "status": "confirmed",
+      "trade_impact": "Confirms absorption is in place at 0.82-0.88."
+    },
+    {
+      "event": "spring",
+      "requirement": "Defined boundary break and reclaim",
+      "observed": "No daily or weekly bar broke 0.789 to qualify; the STs only approached 0.82.",
+      "missing": "A formal spring did not occur; the SC was the terminal shakeout.",
+      "status": "not_applicable",
+      "trade_impact": "Not required when SC ends the markdown decisively; absence does not weaken the read."
+    },
+    {
+      "event": "sos",
+      "requirement": "Strong displacement through Creek with acceptance or constructive reaction",
+      "observed": "2026-05-06 daily: +24.5% on 74M vol (~6x avg) cleared the 1.05 Creek and 1.18 prior swing high to 1.42.",
+      "missing": "Daily/weekly acceptance via constructive retest is not yet shown; current week is the first digestion candle.",
+      "status": "probable",
+      "trade_impact": "Bullish trigger fired; needs BUEC to confirm."
+    },
+    {
+      "event": "buec",
+      "requirement": "Retest of the broken Creek that holds and turns up",
+      "observed": "Price has pulled from 1.42 back to 1.18-1.21; sitting on the AVWAP -1σ band and the broken-Creek (1.03) upper edge.",
+      "missing": "A second constructive higher-low impulse off the retest has not yet started.",
+      "status": "candidate_in_progress",
+      "trade_impact": "Highest-leverage current event; clean trade unlocks if BUEC holds and turns up."
+    },
+    {
+      "event": "lps",
+      "requirement": "Reaction after confirmed strength that holds as a higher low",
+      "observed": "Pending BUEC confirmation; if 1.18 holds and a new daily impulse prints, the 1.18-1.21 reaction becomes the first LPS.",
+      "missing": "Confirmed strength followed by reaction-up — not yet observed.",
+      "status": "pending",
+      "trade_impact": "Becomes the first active long entry zone after BUEC."
+    }
+  ],
+  "wave_effort_result": [
+    {
+      "wave": "Jan markdown leg (1.85 to 0.789)",
+      "direction": "down",
+      "distance": "-57% over 4 weeks",
+      "duration": "~22 daily bars",
+      "volume": "Declining each leg; final SC bar concentrated extreme volume",
+      "result_spread": "Wide spreads down then climactic reversal bar",
+      "reaction": "Immediate AR to 1.03 same day",
+      "conclusion": "Shortening of thrust into climactic exhaustion. Markdown ended."
+    },
+    {
+      "wave": "AR rally (0.789 to 1.03)",
+      "direction": "up",
+      "distance": "+30% intraday",
+      "duration": "1 daily bar",
+      "volume": "Climactic 64M",
+      "result_spread": "Wide reversal range",
+      "reaction": "Range establishment 0.82-1.05",
+      "conclusion": "Defines the AR/Creek as upper edge of accumulation range."
+    },
+    {
+      "wave": "Range Phase B (Feb 6 to Apr 30)",
+      "direction": "sideways",
+      "distance": "0.82-1.05 contained",
+      "duration": "~60 daily bars",
+      "volume": "Average daily volume collapsed from 25M to 8-12M over the period",
+      "result_spread": "Narrowing daily ranges; multiple shallow STs on declining volume",
+      "reaction": "Cumulative absorption visible in lower volume on each ST",
+      "conclusion": "Classic Phase B cause-building. Absorption confirmed by volume profile shifting from sell-side to buy-side."
+    },
+    {
+      "wave": "SOS impulse (Apr 30 to May 6)",
+      "direction": "up",
+      "distance": "+60% in 6 sessions (0.88 to 1.42)",
+      "duration": "5 daily bars",
+      "volume": "Peak daily 74M (6x avg), cumulative 5-day volume highest since SC week",
+      "result_spread": "Wide expansion bars",
+      "reaction": "Pullback to 1.18-1.21 in progress",
+      "conclusion": "Strong effort = strong result. Phase D begins."
+    },
+    {
+      "wave": "Current digestion (May 7-14)",
+      "direction": "sideways/down",
+      "distance": "1.42 to 1.18 retracement (-17%)",
+      "duration": "4 daily bars + today",
+      "volume": "Declining each bar (41M, 20M, 17M, 5M today)",
+      "result_spread": "Narrowing daily ranges",
+      "reaction": "Holding above the broken Creek and AVWAP -1σ",
+      "conclusion": "Constructive digestion so far. Needs an upward impulse to confirm BUEC."
+    }
+  ],
+  "value_profile": {
+    "source": "approximate_ohlcv_bins",
+    "range_anchor_from": 1770336000,
+    "range_anchor_to": 1778198400,
+    "approximate_poc": 0.92,
+    "approximate_value_area_high": 1.02,
+    "approximate_value_area_low": 0.84,
+    "hvn_zones": [
+      {
+        "low": 0.85,
+        "high": 0.97,
+        "note": "Dominant acceptance cluster across Feb-Apr base."
+      }
+    ],
+    "lvn_zones": [
+      {
+        "low": 1.05,
+        "high": 1.18,
+        "note": "Thin acceptance — cleared rapidly on May 6 SOS; now the broken-Creek BUEC retest zone."
+      }
+    ],
+    "notes": "Native Volume Profile not added. Approximation derived from 90 daily bars in the accumulation range. Confidence: moderate."
+  },
+  "acceptance_rules": {
+    "bullish_acceptance_into_markup": [
+      "Pullback holds at or above 1.05 (broken Creek) on a daily closing basis.",
+      "At least one daily close back above 1.18 (prior swing high inside the SOS impulse) on rising volume.",
+      "AVWAP -1σ band (1.20) holds as support on the retest.",
+      "SUI/BTC ratio holds above 0.0000130 (avoids losing the ratio breakout)."
+    ],
+    "bearish_acceptance_failed_sos": [
+      "Daily close back below 0.95 — re-enters the prior range = failed SOS / UTAD risk.",
+      "Two daily closes below 0.84 (VAL) — distribution risk; structure questioned.",
+      "Daily close below 0.789 — campaign low broken = thesis invalidated."
+    ]
+  },
+  "no_trade_gate": [
+    {
+      "gate": "Location",
+      "status": "pass",
+      "evidence": "Price at the broken Creek (1.05) and the AVWAP -1σ band (1.20) — high-leverage retest zone."
+    },
+    {
+      "gate": "Trigger",
+      "status": "partial",
+      "evidence": "SOS impulse fired May 6, but the BUEC retest has not yet confirmed with an upward impulse off the retest zone."
+    },
+    {
+      "gate": "Invalidation",
+      "status": "pass",
+      "evidence": "Soft invalidation 0.95 (re-enter range), hard invalidation 0.789 (SC break). Both tight relative to upside structure."
+    },
+    {
+      "gate": "Reward",
+      "status": "pass",
+      "evidence": "Entry near 1.18, stop ~0.95 (0.23 risk), first target 1.80 prior swing (0.62 reward = ~2.7R), second target 2.37 AVWAP (1.19 = ~5.2R)."
+    },
+    {
+      "gate": "Timeframe_alignment",
+      "status": "pass_with_caveat",
+      "evidence": "Daily Phase D aligns with weekly Phase B/D and monthly reversal candle; macro markdown is still intact above 2.40, so this is a swing/range trade, not a fully aligned macro trend trade."
+    }
+  ],
+  "red_team": {
+    "primary_thesis": "Phase D accumulation following confirmed SC and probable SOS; long bias on BUEC hold targeting 1.80 then 2.37.",
+    "strongest_countercase": "This may be the first SOS attempt failing as a UTAD-style trap. The 5.37 ATH leaves massive overhead supply; the 2.0-2.4 band is the next major resistance and the macro markdown is intact. Cycle bears could use the May 6 spike to distribute back to range buyers, with price losing 0.95 and re-testing or breaking 0.789. Alt seasonality post-Bitcoin-led-rally moves can fail when BTC weakens (which it has been doing, 82k → 79k since May 6).",
+    "what_would_confirm_countercase": [
+      "Failure to hold 1.05 with two daily closes below.",
+      "Weak/low-volume bounces from the retest zone (sub-15M daily).",
+      "SUI/BTC ratio losing 0.0000130 — would mean the ratio breakout is being absorbed.",
+      "BTC losing 78k support concurrently — broader risk-off."
+    ]
+  },
+  "review_triggers": [
+    {
+      "trigger": "Daily close above 1.18 on rising volume",
+      "expected": "BUEC confirmed; LPS forms at 1.18-1.21 area; clean-trade permission upgrades to allowed."
+    },
+    {
+      "trigger": "Daily close below 0.95",
+      "expected": "Failed SOS / UTAD risk; downgrade posture to no-clean-trade and watch for spring at 0.789."
+    },
+    {
+      "trigger": "Daily close below 0.789",
+      "expected": "Thesis invalidated; markdown resumes."
+    },
+    {
+      "trigger": "BTC loses 78k support",
+      "expected": "Mark thesis stale; reassess once BTC stabilizes."
+    },
+    {
+      "trigger": "7 days without resolution",
+      "expected": "Mark this report stale and re-read structure with fresh data."
+    }
+  ],
+  "missing_evidence": [
+    "Native Volume Profile (used OHLCV-binned fallback).",
+    "MACD/AO numeric values (returned empty from data_get_study_values; used bar/wave fallback).",
+    "Order-flow / CVD / footprint / OI / funding / liquidation data (not_requested for this macro/swing scope).",
+    "Campaign-anchored Anchored VWAP from the Jan 2025 ATH (5.37) or the Oct 2025 markdown high (4.30). The visible AVWAP was VERIFIED to be anchored at inception (start_time=0, May 2023) — i.e., lifetime cumulative VWAP, not the Wyckoff-strict trapped-buyer cost basis of the markdown campaign. The 2.37 level remains a plausible mean-reversion target but is downgraded in confidence as a T2."
+  ],
+  "patch_log": [
+    {
+      "patched_at": "2026-05-14T13:55:00+02:00",
+      "findings_addressed": [
+        "Screenshot alignment: journal now embeds 03_daily_clean.png as the unannotated structure chart, and 07_trade_posture_paths.png as the final trade-posture chart, so journal and evidence reference the same screenshot set.",
+        "Clean-slate proof: existing_drawings_removed flipped to true with chart_widget_collection dataSources inspection method recorded; first-pass drawings were removed via model.removeAllDrawingTools() before redrawing.",
+        "Forward-path trade-posture chart: 07_trade_posture_paths.png added showing Path A (BUEC->markup to T1 1.80) and Path B (failed SOS) trend-line segments after extending visible range by 60 forward bars via timeScale.zoomToBarsRange.",
+        "AVWAP anchor: VERIFIED via ui_evaluate on study inputs as start_time=0 = inception (May 2023). Status downgraded from 'computed' to 'fallback'; reframed as lifetime cumulative VWAP (not campaign-anchored). Checklist avwap_checked downgraded to pass_with_fallback. Campaign-anchored AVWAP added to missing_evidence."
+      ]
+    }
+  ],
+  "confidence": {
+    "macro_accumulation_thesis": "high",
+    "imminent_buec_confirmation": "medium",
+    "clean_trade_now": "low_pending_buec_retest_confirmation",
+    "summary": "Evidence stack is strong on the structural read (SC, AR, base, SOS, relative-strength shift). The unknown is whether the BUEC retest holds at 1.05-1.18 or whether the SOS attempt fails. Watchlist-only until BUEC confirms."
+  }
+}
