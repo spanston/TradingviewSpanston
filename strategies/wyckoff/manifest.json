@@ -1,0 +1,125 @@
+{
+  "strategy_id": "wyckoff",
+  "display_name": "Wyckoff Macro",
+  "contract_version": "wyckoff_stage_gated_v2",
+  "required_top_level": [
+    "journal_id",
+    "saved_at",
+    "symbol",
+    "method",
+    "workflow_version",
+    "status",
+    "stage_gates",
+    "indicator_evidence_stack",
+    "analysis_checklist",
+    "chart_prep",
+    "screenshots",
+    "event_evidence",
+    "wave_effort_result",
+    "value_profile",
+    "acceptance_rules",
+    "zone_probabilities",
+    "action_rationale",
+    "no_trade_gate",
+    "red_team",
+    "critic_review",
+    "review_triggers",
+    "missing_evidence",
+    "confidence"
+  ],
+  "stage_gates": [
+    "route_and_layout",
+    "top_down_chart_read",
+    "drawing_protocol",
+    "evidence_contract",
+    "action_output",
+    "critic_review"
+  ],
+  "id_collections": [
+    {
+      "path": "indicator_evidence_stack",
+      "required_ids": [
+        "price_structure_volume",
+        "value_profile",
+        "avwap_cost_basis",
+        "relative_strength",
+        "weis_wave_effort_result",
+        "momentum_sot",
+        "order_flow_execution"
+      ],
+      "allowed_statuses": "evidence_statuses"
+    },
+    {
+      "path": "analysis_checklist",
+      "required_ids": [
+        "source_tradingview_mcp",
+        "asset_adapter_selected",
+        "chart_fitted_before_reads",
+        "structure_volume_primary",
+        "value_profile_checked",
+        "avwap_checked",
+        "relative_strength_checked",
+        "effort_result_checked",
+        "event_evidence_ledger_complete",
+        "acceptance_rules_complete",
+        "no_trade_gate_scored",
+        "zone_probabilities_complete",
+        "action_rationale_complete",
+        "critic_review_complete"
+      ],
+      "allowed_statuses": "checklist_statuses"
+    },
+    {
+      "path": "no_trade_gate",
+      "required_ids": ["location", "trigger", "invalidation", "reward", "timeframe_alignment"],
+      "allowed_statuses": "gate_statuses"
+    }
+  ],
+  "required_screenshot_roles": ["macro_context", "trade_posture"],
+  "drawing_protocol": {
+    "path": "chart_prep.drawing_manifest",
+    "required_roles": ["macro_context", "trade_posture"],
+    "allowed_tools_by_role": {
+      "macro_context": ["rectangle", "horizontal_line", "text", "trend_line"],
+      "wyckoff_structure": ["rectangle", "horizontal_line", "trend_line", "text"],
+      "trade_posture": ["rectangle", "horizontal_line", "trend_line", "text"],
+      "event_label": ["text"],
+      "zone": ["rectangle", "text"],
+      "decision_level": ["horizontal_line", "text"]
+    },
+    "forbidden_tools_by_role": {}
+  },
+  "zone_probabilities": {
+    "required_zone_types": ["accumulation", "distribution", "no_trade"],
+    "allowed_zone_types": ["accumulation", "distribution", "no_trade"]
+  },
+  "action_rationale_fields": [
+    "selected_action",
+    "strategy_basis",
+    "why_action_follows_strategy",
+    "chart_evidence_supporting_action",
+    "what_proves_it_wrong",
+    "human_takeaway"
+  ],
+  "critic_review": {
+    "allowed_final_verdicts": ["pass", "pass_with_fixes"],
+    "allowed_max_detail_timeframes": ["daily", "weekly", "monthly"],
+    "allowed_checklist_statuses": ["pass", "pass_with_fixes", "not_applicable"],
+    "required_checklist_ids": [
+      "deliverables_complete",
+      "evidence_accuracy_checked",
+      "macro_timeframe_focus",
+      "human_actionability",
+      "invalidation_and_risk_clear",
+      "no_day_trading_leak",
+      "chart_evidence_aligned",
+      "unresolved_items_disclosed"
+    ]
+  },
+  "allowed": {
+    "evidence_statuses": ["native", "manual", "manual_proxy", "computed", "proxy", "missing", "not_applicable", "not_requested", "unavailable"],
+    "checklist_statuses": ["pass", "pass_with_fallback", "fail", "not_applicable", "not_requested"],
+    "stage_gate_statuses": ["pass", "pass_with_fallback", "not_applicable"],
+    "gate_statuses": ["pass", "pass_with_fallback", "partial", "fail", "not_applicable", "not_requested"]
+  }
+}
