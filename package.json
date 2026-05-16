@@ -1,6 +1,6 @@
 {
   "name": "konsili-tradingview-workflow",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Stage-gated TradingView analysis workflow contracts for Ian Copsey Fractal Forecasting reports",
   "type": "module",
   "scripts": {

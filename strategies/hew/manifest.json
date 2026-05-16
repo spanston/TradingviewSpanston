@@ -594,6 +594,7 @@
     ],
     "independent_reviewer": {
       "required": true,
+      "prompt_file": "agents/hew-independent-critic.md",
       "allowed_reviewer_types": [
         "subagent",
         "external_critic",
@@ -601,6 +602,7 @@
       ],
       "required_fields": [
         "reviewer_type",
+        "prompt_file",
         "scope",
         "verdict",
         "evidence"

@@ -12,7 +12,8 @@ Use the smallest set of authorities:
 2. `WORKFLOW.md` - stage-gated workflow and output standard.
 3. `strategies/hew/manifest.json` - executable HEW evidence/drawing/action contract.
 4. `agents/harmonic-elliott-wave-analyst.md` - compact HEW specialist prompt.
-5. `scripts/validate_evidence.mjs` - validator.
+5. `agents/hew-independent-critic.md` - independent final critic prompt.
+6. `scripts/validate_evidence.mjs` - validator.
 
 Do not re-create strategy contracts in ad-hoc prose. If a required field, drawing role, checklist item, screenshot role, or critic rule changes, update the HEW strategy manifest first.
 
@@ -23,6 +24,7 @@ Keep context lean. Start with `AGENTS.md`, then load only the HEW workflow files
 - `WORKFLOW.md`
 - `strategies/hew/manifest.json`
 - `agents/harmonic-elliott-wave-analyst.md`
+- `agents/hew-independent-critic.md` only for final critic review or critic-prompt edits
 
 Do not preload `analysis_journal`, screenshots, reports, or generated artifacts. Open only the current package or specific files needed for the task.
 

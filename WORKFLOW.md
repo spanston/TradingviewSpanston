@@ -7,6 +7,7 @@ Canonical files:
 - `AGENTS.md` - the boot manual every agent reads first.
 - `strategies/hew/manifest.json` - executable HEW contract.
 - `agents/harmonic-elliott-wave-analyst.md` - compact HEW specialist role.
+- `agents/hew-independent-critic.md` - independent final critic role.
 - `scripts/validate_evidence.mjs` - manifest-driven validator for journal packages.
 
 ## The stage-gated workflow

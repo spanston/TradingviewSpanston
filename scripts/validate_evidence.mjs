@@ -1350,6 +1350,9 @@ function validateCriticReview(evidence, manifest, errors) {
 
   const independentConfig = manifest.critic_review?.independent_reviewer || {};
   if (independentConfig.required) {
+    if (independentConfig.prompt_file && !existsSync(resolve(repoRoot, independentConfig.prompt_file))) {
+      errors.push(`critic_review.independent_reviewer prompt_file is missing: ${independentConfig.prompt_file}`);
+    }
     const reviewer = critic.independent_reviewer;
     if (!reviewer || typeof reviewer !== 'object' || Array.isArray(reviewer)) {
       errors.push('critic_review.independent_reviewer is required');

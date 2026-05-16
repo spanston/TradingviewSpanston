@@ -444,6 +444,7 @@ function baseEvidence(overrides = {}) {
       independent_reviewer: {
         reviewer_type: 'subagent',
         independent_from_author: true,
+        prompt_file: 'agents/hew-independent-critic.md',
         scope: 'final HEW evidence contract and actionability review',
         verdict: 'pass',
         evidence: 'Independent critic pass checked structure, pivots, drawings, and no-trade posture.'
@@ -505,6 +506,7 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.deepEqual(manifest.hypothesis_protocol.wave_iii_complete_required_measurement_types, ['triple_confluence']);
   assert.equal(manifest.hypothesis_protocol.structural_distinctness.required, true);
   assert.equal(manifest.visual_pivot_protocol.instrument_parameter_profiles.single_stock.left, 5);
+  assert.equal(manifest.critic_review.independent_reviewer.prompt_file, 'agents/hew-independent-critic.md');
 });
 
 test('HEW hypotheses are recomputed by the deterministic Copsey ratio engine', () => {
