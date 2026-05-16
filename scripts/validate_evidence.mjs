@@ -640,6 +640,7 @@ function validateChartModeProtocol(evidence, manifest, errors) {
     : (manifest.allowed?.[protocol.allowed_statuses] || ['pass', 'pass_with_fallback']);
   const allowed = new Set(allowedStatuses);
   const requiredModes = new Set(protocol.required_modes || []);
+  const scaffoldingVisibility = protocol.scaffolding_visibility || {};
   const seenModes = new Set();
 
   for (const item of modes) {
@@ -658,6 +659,17 @@ function validateChartModeProtocol(evidence, manifest, errors) {
       errors.push(`${path}.${mode || '<unknown>'} status must be one of ${[...allowed].join(', ')}: ${item.status}`);
     }
     if (!String(item.evidence || '').trim()) errors.push(`${path}.${mode || '<unknown>'} missing evidence`);
+
+    const visibilityContract = scaffoldingVisibility[mode];
+    if (visibilityContract) {
+      for (const [field, expected] of Object.entries(visibilityContract)) {
+        if (field === 'audit_mode_allows_visible') continue;
+        const auditOverride = item.audit_mode === true && visibilityContract.audit_mode_allows_visible === true;
+        if (!auditOverride && item[field] !== expected) {
+          errors.push(`${path}.${mode}.${field} must be ${expected}`);
+        }
+      }
+    }
 
     if (mode === 'presentation') {
       if (item.pivot_scaffold_visible === true) {

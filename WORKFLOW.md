@@ -47,11 +47,11 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
 5. Drawing protocol / strategy-proof and presentation modes
    - Inventory drawings after symbol/layout setup; remove or hide only drawings classified as stale clutter.
    - Preserve current proof and uncertain drawings unless Johan explicitly requested a reset. Treat `draw_clear` as destructive, not routine cleanup.
-   - In strategy-proof mode, hide or reduce pivot/scanner clutter when it obscures the structure and draw only the layer being proven.
+   - In strategy-proof mode, hide `Konsili Pivot Exporter` and reduce pivot/scanner clutter when it obscures the structure, then draw only the layer being proven.
    - Draw preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and conditional forward impulse projection with native Elliott tools. Projection and preceding impulse context must be `elliott_impulse_wave`; trend-line substitutes fail.
    - Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `role`, `tool`, `timeframe_owner`, and `screenshot`.
    - If MCP cannot set per-drawing visibility, separate macro and daily proof with temporary screenshot passes only when necessary; immediately rebuild and verify the final presentation chart afterward.
-   - In presentation mode, hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable decision proof, trigger, invalidation, and target/zone context.
+   - In presentation mode, hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable decision proof, trigger, invalidation, and target/zone context.
 
 6. Evidence contract
    - Fill exactly one `journal.md` and one `evidence.json` in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/`.
@@ -76,12 +76,12 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
 
 Agents must not stay in one visual state for the whole job. Record all four modes in `chart_prep.chart_mode_checklist`:
 
-- **Extraction**: pivot/scanner tools visible; capture `visual_pivots`; no count selection yet.
+- **Extraction**: `Konsili Pivot Exporter` and required pivot/scanner tools visible; capture `visual_pivots`; no count selection yet.
 - **Exporter data path**: `Konsili Pivot Exporter` table/label rows are the structured pivot source. If the exporter is missing or produces no KPE rows, fix the layout/exporter or downgrade; do not weaken the evidence contract by treating screenshot-only pivots as a clean pass.
 - **Verification**: OHLCV checks against pivot IDs; conflicts resolved, revised, or explicitly downgraded.
 - **Human wave map**: choose the Elliott wave anchors from chart structure; mechanical tools are limited to validating ratios/rules.
-- **Strategy proof**: extraction clutter hidden/reduced; HEW proof drawn with native Elliott tools.
-- **Presentation**: final live chart is readable; extraction scaffolding hidden; only decision proof, trigger, invalidation, zones/targets, and essential indicators remain visible.
+- **Strategy proof**: `Konsili Pivot Exporter` hidden and extraction clutter reduced; HEW proof drawn with native Elliott tools.
+- **Presentation**: final live chart is readable; `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; only decision proof, trigger, invalidation, zones/targets, and essential indicators remain visible.
 
 If presentation mode fails, the package is not done even if the screenshots and evidence file validate.
 

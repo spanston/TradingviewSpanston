@@ -37,9 +37,9 @@ Read first:
 13. Reject classical Elliott rescue devices: no extended waves, failed fifths, leading diagonals, ending diagonals, or diagonal triangles to save a count.
 14. Fit/verify visible range before each structural call.
 15. Inventory existing drawings; remove/hide only stale clutter unless preservation was requested. Do not use `draw_clear` as routine cleanup.
-16. Enter strategy-proof mode: hide or reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
+16. Enter strategy-proof mode: hide `Konsili Pivot Exporter` and reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
 17. Strategy proof must include native Elliott drawings for preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and a conditional forward impulse projection when a completed 1-5 + ABC is claimed.
-18. Enter presentation mode: hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/subwaves/projection/decision proof readable, capture a final screenshot, and verify live chart state.
+18. Enter presentation mode: hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/subwaves/projection/decision proof readable, capture a final screenshot, and verify live chart state.
 19. Record all four chart modes in `chart_prep.chart_mode_checklist`.
 19. Fill `journal.md` and `evidence.json` if a package is requested.
 20. Run `npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json`.
@@ -64,8 +64,8 @@ A failed gate blocks trade language.
 
 - **Extraction**: pivot/scanner tools visible for pivot harvest; screenshot and source text required; no HEW count selection yet.
 - **Verification**: OHLCV checks confirm or revise pivot IDs; unresolved conflicts force downgrade/stand aside.
-- **Strategy proof**: extraction clutter hidden/reduced; native Elliott tools and decision levels draw only the validated HEW proof.
-- **Presentation**: extraction scaffolding hidden; final live chart shows only readable macro count/projection, Wave-B ladder or invalidation, zones, trigger/flip/target context. If the chart is still cluttered, the package is not complete.
+- **Strategy proof**: `Konsili Pivot Exporter` hidden and extraction clutter reduced; native Elliott tools and decision levels draw only the validated HEW proof.
+- **Presentation**: `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; final live chart shows only readable macro count/projection, Wave-B ladder or invalidation, zones, trigger/flip/target context. If the chart is still cluttered, the package is not complete.
 
 ## Count and evidence requirements
 

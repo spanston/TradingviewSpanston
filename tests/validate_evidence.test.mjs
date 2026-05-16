@@ -141,10 +141,10 @@ function baseEvidence(overrides = {}) {
       drawings_cleared: true,
       visible_ranges_verified: true,
       chart_mode_checklist: [
-        { mode: 'extraction', status: 'pass', evidence: 'Pivot scaffold was visible for visual extraction and screenshot capture.' },
+        { mode: 'extraction', status: 'pass', evidence: 'Konsili Pivot Exporter was visible for visual extraction and screenshot capture.', konsili_pivot_exporter_visible: true },
         { mode: 'verification', status: 'pass', evidence: 'Extracted pivots were checked against OHLCV before HEW selection.' },
-        { mode: 'strategy_proof', status: 'pass', evidence: 'Only HEW count/projection/decision proof was drawn after verification.' },
-        { mode: 'presentation', status: 'pass', evidence: 'Pivot scaffold hidden; final readable decision chart verified.', pivot_scaffold_visible: false, final_chart_state: 'macro count, projection, invalidation, and zones visible' }
+        { mode: 'strategy_proof', status: 'pass', evidence: 'Konsili Pivot Exporter hidden; only HEW count/projection/decision proof was drawn after verification.', konsili_pivot_exporter_visible: false },
+        { mode: 'presentation', status: 'pass', evidence: 'Konsili Pivot Exporter and pivot scaffold hidden; final readable decision chart verified.', konsili_pivot_exporter_visible: false, pivot_scaffold_visible: false, final_chart_state: 'macro count, projection, invalidation, and zones visible' }
       ],
       drawing_manifest: [
         { id: 'preceding_impulse', role: 'preceding_impulse_context', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
@@ -565,6 +565,34 @@ test('presentation mode fails closed when extraction scaffolding remains visible
   ));
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.match(result.errors.join('\n'), /presentation pivot_scaffold_visible must not be true/i);
+});
+
+test('Konsili Pivot Exporter must be shown only for extraction unless audit mode is explicit', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.chart_mode_checklist = evidence.chart_prep.chart_mode_checklist.map((mode) => {
+    if (mode.mode === 'extraction') return { ...mode, konsili_pivot_exporter_visible: false };
+    if (mode.mode === 'strategy_proof') return { ...mode, konsili_pivot_exporter_visible: true };
+    if (mode.mode === 'presentation') return { ...mode, konsili_pivot_exporter_visible: true };
+    return mode;
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /chart_prep\.chart_mode_checklist\.extraction\.konsili_pivot_exporter_visible must be true/i);
+  assert.match(errors, /chart_prep\.chart_mode_checklist\.strategy_proof\.konsili_pivot_exporter_visible must be false/i);
+  assert.match(errors, /chart_prep\.chart_mode_checklist\.presentation\.konsili_pivot_exporter_visible must be false/i);
+});
+
+test('Konsili Pivot Exporter may remain visible only in explicit audit presentation mode', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.chart_mode_checklist = evidence.chart_prep.chart_mode_checklist.map((mode) => (
+    mode.mode === 'presentation'
+      ? { ...mode, audit_mode: true, konsili_pivot_exporter_visible: true, pivot_scaffold_visible: false }
+      : mode
+  ));
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.deepEqual(result.errors, []);
 });
 
 test('visual pivot evidence is mandatory before strategy analysis', () => {

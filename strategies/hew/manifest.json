@@ -353,11 +353,23 @@
       "presentation"
     ],
     "allowed_statuses": "chart_mode_statuses",
+    "scaffolding_visibility": {
+      "extraction": {
+        "konsili_pivot_exporter_visible": true
+      },
+      "strategy_proof": {
+        "konsili_pivot_exporter_visible": false
+      },
+      "presentation": {
+        "konsili_pivot_exporter_visible": false,
+        "audit_mode_allows_visible": true
+      }
+    },
     "mode_contract": {
-      "extraction": "Show pivot/scanner scaffolding, capture visual_pivots, and record source text before strategy interpretation.",
+      "extraction": "Show Konsili Pivot Exporter and any required pivot/scanner scaffolding, capture visual_pivots, and record KPE source rows before strategy interpretation.",
       "verification": "Cross-check extracted pivots against TradingView OHLCV and resolve or disclose conflicts before counting.",
-      "strategy_proof": "Hide or reduce extraction clutter, then draw HEW proof with native Elliott tools: preceding impulse context, macro count/correction, primary-degree subwaves, secondary-degree subwaves, and conditional forward impulse projection.",
-      "presentation": "Leave the live chart readable: extraction scaffolding hidden, preceding impulse/macro count/subwaves/projection/decision proof visible where not cluttered, final state verified, and no screenshot-only proof.",
+      "strategy_proof": "Hide Konsili Pivot Exporter and reduce extraction clutter, then draw HEW proof with native Elliott tools: preceding impulse context, macro count/correction, primary-degree subwaves, secondary-degree subwaves, and conditional forward impulse projection.",
+      "presentation": "Leave the live chart readable: Konsili Pivot Exporter and extraction scaffolding hidden unless audit_mode is explicitly true, preceding impulse/macro count/subwaves/projection/decision proof visible where not cluttered, final state verified, and no screenshot-only proof.",
       "top_down_hew_context": "For HEW, before accepting an ABC macro correction, identify the preceding impulse it corrects; an orphan ABC fails actionability."
     }
   },

@@ -49,9 +49,9 @@ For serious chart analysis:
 7. Enter **verification mode**: verify the extracted visual pivots with TradingView OHLCV data (`data_get_ohlcv(summary=true)`) on Monthly, Weekly, and Daily before interpreting HEW structure.
 8. If visual pivots and OHLCV disagree, iterate the pivot extraction, mark the conflict in `visual_pivot_evidence`, and downgrade or stop. Do not count from unverified pivots.
 9. Enter **Ian Copsey wave-map mode** for HEW: choose Elliott anchors from Copsey/Fractal Forecasting structure first. Do not let `hew_scan_chart`, Pivot Scanner, or any mechanical candidate choose the count. Mechanical HEW tools may validate ratios/rules only after the Copsey map is selected.
-10. Enter **strategy-proof mode** after pivot verification: hide or reduce extraction clutter when it obscures structure, use compact reads (`quote_get`, `data_get_ohlcv(summary=true)`, `data_get_study_values`, focused Pine reads with `study_filter`), and draw only the HEW proof needed for the decision.
+10. Enter **strategy-proof mode** after pivot verification: hide `Konsili Pivot Exporter` and reduce extraction clutter before drawing HEW proof; use compact reads (`quote_get`, `data_get_ohlcv(summary=true)`, `data_get_study_values`, focused Pine reads with `study_filter`) only as needed for proof.
 11. Fit or explicitly set the visible range before interpreting, drawing, or screenshotting.
-12. Enter **presentation mode** before final response: hide extraction scaffolding such as Pivot Scanner/Pivots HL when it is no longer needed, leave only readable decision proof, capture the final screenshot, and verify live chart state. Do not leave Johan with the cluttered extraction chart unless he explicitly asks for audit mode.
+12. Enter **presentation mode** before final response: hide `Konsili Pivot Exporter` plus extraction scaffolding such as Pivot Scanner/Pivots HL when it is no longer needed, leave only readable decision proof, capture the final screenshot, and verify live chart state. Do not leave Johan with the cluttered extraction chart unless he explicitly asks for audit mode.
 13. Use screenshots for visual proof, but do not rely on screenshots while the live chart is missing the final proof layer.
 
 ## Stage gates
@@ -86,13 +86,13 @@ Every serious run must explicitly move through four chart modes and record them 
    - Output: OHLCV verification rows tied to pivot IDs.
 3. **Strategy-proof mode**
    - Purpose: apply HEW/Copsey rules after pivot verification.
-   - Chart state: hide or reduce pivot/scanner clutter if it obscures the structure; draw only HEW proof needed for the decision.
+   - Chart state: `Konsili Pivot Exporter` hidden; hide or reduce pivot/scanner clutter if it obscures the structure; draw only HEW proof needed for the decision.
    - Output: macro/trade posture screenshots and drawing manifest.
 4. **Presentation mode**
    - Purpose: leave Johan with a clean, human-actionable live chart.
-   - Chart state: extraction scaffolding hidden, not deleted unless clearly stale; key count/range/zones, trigger, invalidation, and target path visible.
+   - Chart state: `Konsili Pivot Exporter` and extraction scaffolding hidden, not deleted unless clearly stale; key count/range/zones, trigger, invalidation, and target path visible.
    - Required verification: `chart_get_state`, `draw_list`, key drawing properties when available, and a final screenshot/visual check.
-   - Failure condition: if Pivot Scanner/Pivots HL or equivalent scaffolding remains visibly cluttering the decision chart, the package is not complete unless Johan explicitly requested audit mode.
+   - Failure condition: if `Konsili Pivot Exporter`, Pivot Scanner/Pivots HL, or equivalent scaffolding remains visibly cluttering the decision chart, the package is not complete unless Johan explicitly requested audit mode.
 
 ## Visual pivot protocol
 
