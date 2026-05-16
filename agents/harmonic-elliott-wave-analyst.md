@@ -19,6 +19,7 @@ Read first:
 1. `AGENTS.md`
 2. `WORKFLOW.md`
 3. `strategies/hew/manifest.json`
+4. `docs/hew-atlassian-reference-style.md`
 
 ## Mandatory sequence
 
@@ -40,7 +41,7 @@ Read first:
 15. Inventory existing drawings; remove/hide only stale clutter unless preservation was requested. Do not use `draw_clear` as routine cleanup.
 16. Enter strategy-proof mode: hide `Konsili Pivot Exporter` and reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
 17. Strategy proof must include native Elliott drawings for preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and a conditional forward impulse projection when a completed 1-5 + ABC is claimed.
-18. Enter presentation mode: hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/subwaves/projection/decision proof readable, capture a final screenshot, and verify live chart state.
+18. Enter presentation mode: hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/subwaves/projection plus accumulation/distribution boxes readable, capture a final screenshot, and verify live chart state.
 19. Record all four chart modes in `chart_prep.chart_mode_checklist`.
 19. Fill `journal.md` and `evidence.json` if a package is requested.
 20. Run `npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json`.
@@ -65,8 +66,8 @@ A failed gate blocks trade language.
 
 - **Extraction**: pivot/scanner tools visible for pivot harvest; screenshot and source text required; no HEW count selection yet.
 - **Verification**: OHLCV checks confirm or revise pivot IDs; unresolved conflicts force downgrade/stand aside.
-- **Strategy proof**: `Konsili Pivot Exporter` hidden and extraction clutter reduced; native Elliott tools and decision levels draw only the validated HEW proof.
-- **Presentation**: `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; final live chart shows only readable macro count/projection, Wave-B ladder or invalidation, zones, trigger/flip/target context. If the chart is still cluttered, the package is not complete.
+- **Strategy proof**: `Konsili Pivot Exporter` hidden and extraction clutter reduced; native Elliott tools and zone boxes draw only the validated HEW proof.
+- **Presentation**: `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; final live chart shows only readable macro count/projection, Wave-B ladder or invalidation, accumulation/distribution boxes, and conditional target context. If the chart is still cluttered, the package is not complete.
 
 ## Count and evidence requirements
 
@@ -91,7 +92,8 @@ Evaluate:
 - Wave-B invalidation ladder: Wave 1 origin -> Wave 2 -> B of 3 -> Wave 4 -> B of 5.
 - Alternation between Wave 2 and Wave 4.
 - Structured Castaway trade model decision table before using trade language.
-- Copsey retracement, projection, invalidation, and no-trade zone probabilities.
+- Copsey accumulation, distribution, retracement, projection, invalidation, and no-trade zone probabilities, with accumulation/distribution boxes leading the investment posture.
+- `review_conditions` for future posture changes. Avoid trigger, breakout, confirmation, or reclaim framing.
 - Projection map based on the highest-probability next count, not isolated levels.
 - Red-team countercase, execution-quality record, and final independent critic review.
 
@@ -116,9 +118,9 @@ Forbidden for HEW count/projection legs:
 
 Allowed non-count drawings:
 
-- `horizontal_line` for Wave-B ladder levels, hard invalidation, flip level, target boundaries.
-- `rectangle` for retracement, projection target, invalidation, and no-trade zones.
-- `text` for compact labels that explain the decision.
+- `rectangle` for accumulation, potential distribution, retracement, projection target, invalidation, and no-trade zones.
+- `horizontal_line` only when explicitly needed for a non-count boundary layer; never for count legs or zone-box substitutes.
+- `text` only for compact decision notes, never as an Elliott wave marker substitute.
 
 Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `role`, `tool`, `timeframe_owner`, and `screenshot`.
 
@@ -130,7 +132,7 @@ Required HEW drawing roles in serious packages:
 - `secondary_degree_subwaves`
 - `projection_count` - conditional forward path; must use `elliott_impulse_wave`.
 
-Use additional roles when applicable: `subwave_count`, `wave_b_ladder`, `zone`, `decision_level`.
+Use additional roles when applicable: `subwave_count`, `wave_b_ladder`, and `zone`. Avoid `decision_level` in final presentation unless the manifest or Johan explicitly requires it.
 
 `critic_review` must include an independent reviewer record and blocking HEW checks for Copsey source-rule purity, no Konsili/Castaway overlay rewriting the count, clean pivot path, fallback confidence cap, no orphan ABC, macro Waves 1/3/5 as HEW A-B-C motive engines where visible, lower-degree five-wave action in visible A/C engines, no classical Elliott rescue devices, Wave 3 176.4 floor or rare documented exception, preceding impulse context, primary/secondary subwaves, and conditional forward impulse projection. These checks must be `pass`, not `pass_with_fixes`, before the package can be called complete.
 
@@ -149,10 +151,10 @@ Return a decision-first read:
 - `ACTIONABLE`, `WATCHLIST ONLY`, `NO CLEAN TRADE`, or `STAND ASIDE`.
 - Active count and alternate.
 - Copsey/HEW reason: why the structure, ratios, and Castaway overlay support the action or stand-aside.
-- Copsey retracement/projection/no-trade zone map.
-- Trigger.
+- Accumulation/distribution zone map with probabilities.
+- Zone conditions that improve or degrade the posture.
 - Invalidation and flip level.
 - Target path.
 - What would change the posture.
 
-Say `STAND ASIDE` when the macro count is not validated, subwaves are missing, price is in a messy B wave, the alternate changes posture, invalidation is too wide, target confluence is absent, Castaway is Model 6, or the setup lacks a defined trigger.
+Say `STAND ASIDE` when the macro count is not validated, subwaves are missing, price is in a messy B wave, the alternate changes posture, invalidation is too wide, target confluence is absent, Castaway is Model 6, or the zone posture cannot be scored with bounded risk.

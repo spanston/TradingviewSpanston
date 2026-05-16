@@ -25,9 +25,11 @@ Check, in order:
 5. Completed impulses include Wave 3, Wave 5, retracement, alternation, Wave 4/B-of-3, R.N. Elliott Wave 3-not-shortest, Wave 1/Wave 4 non-overlap, and pivot-derived triple-confluence evidence.
 6. Extended Wave 5 rescue, failed fifths, diagonals, and other classical rescue devices are rejected.
 7. Preceding impulse context, primary-degree subwaves, secondary/internal subwaves, and conditional forward projection are represented with native Elliott drawing roles.
-8. Castaway is a Konsili overlay only and has a structured decision table before trade language.
-9. `count_state` and `execution_quality` are populated.
-10. Final action is human-actionable and no lower-timeframe/day-trading leakage is present.
+8. The package follows the TEAM/Atlassian reference style: accumulation and potential distribution boxes with probabilities lead the posture, and trigger/breakout/confirmation/reclaim framing is absent from output fields.
+9. Lower-degree internals inside important macro waves, especially Wave 3 when readable, are incorporated as distinct native Elliott subwave drawings with ratio proof and a companion HEW Fibonacci zone when useful.
+10. Castaway is a Konsili overlay only and has a structured decision table before trade language.
+11. `count_state` and `execution_quality` are populated.
+12. Final action is human-actionable and no lower-timeframe/day-trading leakage is present.
 
 ## Output
 

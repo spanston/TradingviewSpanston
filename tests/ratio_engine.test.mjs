@@ -216,6 +216,40 @@ test('scoreHewHypothesis hard-fails Elliott Wave 3 shortest and Wave 1-4 overlap
   assert.ok(result.violations.some((item) => item.id === 'wave1_wave4_overlap'));
 });
 
+test('scoreHewHypothesis hard-fails failed fifth rescue counts', () => {
+  const bad = primaryHypothesis({
+    pivots: [
+      ...primaryHypothesis().pivots.filter((point) => point.id !== 'p5'),
+      { id: 'p5', price: 160 }
+    ]
+  });
+
+  const result = scoreHewHypothesis(bad);
+
+  assert.equal(result.status, 'fail');
+  assert.equal(result.classification, 'invalid_diagnostic');
+  assert.ok(result.violations.some((item) => item.id === 'failed_fifth_forbidden'));
+});
+
+test('scoreHewHypothesis rejects projected Wave 3 marked complete', () => {
+  const bad = primaryHypothesis({
+    structure_type: 'conditional_forward_impulse',
+    wave3_complete: true,
+    pivots: primaryHypothesis().pivots.map((point) => (
+      point.id === 'p3'
+        ? { ...point, point_status: 'projected' }
+        : point
+    ))
+  });
+
+  const result = scoreHewHypothesis(bad);
+
+  assert.equal(result.status, 'fail');
+  assert.equal(result.lifecycle_status, 'projection');
+  assert.equal(result.classification, 'invalid_diagnostic');
+  assert.ok(result.violations.some((item) => item.id === 'projected_point_marked_complete'));
+});
+
 test('scoreHewHypotheses keeps scoring deterministic across multiple candidates', () => {
   const results = scoreHewHypotheses([
     primaryHypothesis({ id: 'candidate_a' }),

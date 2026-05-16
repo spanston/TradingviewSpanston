@@ -38,6 +38,10 @@ function number(value) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function normalizedToken(value) {
+  return String(value ?? '').trim().toLowerCase().replace(/[\s-]+/g, '_');
+}
+
 function round(value, places = 4) {
   if (!Number.isFinite(value)) return value;
   const factor = 10 ** places;
@@ -81,6 +85,50 @@ function pointMap(hypothesis) {
     if (point?.id) map.set(point.id, point);
   }
   return map;
+}
+
+function pointFromRef(ref, points) {
+  if (!ref || typeof ref === 'number' || typeof ref === 'object') return null;
+  return points.get(ref) || null;
+}
+
+function pointIsProjected(point) {
+  if (!point || typeof point !== 'object') return false;
+  const fields = [
+    point.point_status,
+    point.status,
+    point.lifecycle,
+    point.role,
+    point.date
+  ].map(normalizedToken);
+  return fields.some((field) => (
+    field === 'projected'
+    || field === 'projection'
+    || field === 'conditional'
+    || field === 'scenario'
+    || field.includes('projection')
+  ));
+}
+
+function inferLifecycle(hypothesis) {
+  const explicit = normalizedToken(hypothesis?.lifecycle || hypothesis?.count_lifecycle || hypothesis?.wave_lifecycle);
+  if (['active', 'completed', 'projection', 'rejected', 'diagnostic', 'watch'].includes(explicit)) return explicit;
+
+  const selectionRole = normalizedToken(hypothesis?.selection_role);
+  const structureType = normalizedToken(hypothesis?.structure_type);
+  if (selectionRole === 'rejected' || structureType.includes('rejected')) return 'rejected';
+  if (selectionRole === 'watch' || structureType.includes('watch')) return 'watch';
+  if (structureType.includes('conditional') || structureType.includes('projection')) return 'projection';
+  if (structureType.includes('completed')) return 'completed';
+  if (structureType.includes('active')) return 'active';
+  return 'diagnostic';
+}
+
+function classifyHypothesis(status, lifecycle) {
+  if (status === 'fail' || lifecycle === 'rejected' || lifecycle === 'diagnostic') return 'invalid_diagnostic';
+  if (lifecycle === 'projection') return 'valid_projection';
+  if (lifecycle === 'watch') return 'watch_context';
+  return 'valid_active';
 }
 
 function priceFromRef(ref, points) {
@@ -142,6 +190,12 @@ function violation(id, severity, measurement, message, extra = {}) {
     message,
     ...extra
   };
+}
+
+function structuralFailure(id, message, extra = {}) {
+  const measurement = { id, type: 'structure_rule' };
+  const item = violation(id, 'hard', measurement, message, extra);
+  return { result: failResult(measurement, null, item), violations: [item] };
 }
 
 function passResult(measurement, actual, extra = {}) {
@@ -233,6 +287,92 @@ function evaluateWave5(measurement, points, config) {
 
   const item = violation('wave5_ratio_not_in_copsey_universe', 'soft', measurement, 'Wave 5 projection missed Copsey ratio universe.', { actual_ratio: round(actual) });
   return { result: failResult(measurement, actual, item), violations: [item] };
+}
+
+function evaluateProjectionCompleteness(hypothesis, points) {
+  const measurements = Array.isArray(hypothesis?.measurements) ? hypothesis.measurements : [];
+  const lifecycle = inferLifecycle(hypothesis);
+  const claimsWave3Complete = hypothesis?.wave_iii_complete === true || hypothesis?.wave3_complete === true;
+  const claimsCompletedImpulse = lifecycle === 'completed' || normalizedToken(hypothesis?.structure_type).includes('completed');
+
+  if (claimsWave3Complete) {
+    for (const measurement of measurements) {
+      if ((measurement?.type || measurement?.kind) !== 'wave3_projection') continue;
+      const wave3Point = pointFromRef(measurement.points?.wave3_end ?? measurement.wave3_end, points);
+      if (lifecycle === 'projection' || pointIsProjected(wave3Point)) {
+        return structuralFailure(
+          'projected_point_marked_complete',
+          'A conditional/projected Wave 3 cannot be marked complete.',
+          { lifecycle, wave3_point: wave3Point?.id || null }
+        );
+      }
+    }
+  }
+
+  if (claimsCompletedImpulse) {
+    for (const measurement of measurements) {
+      const refs = Object.values(measurement?.points || {});
+      const projectedRef = refs.find((ref) => pointIsProjected(pointFromRef(ref, points)));
+      if (projectedRef) {
+        return structuralFailure(
+          'projected_point_marked_complete',
+          'A completed impulse cannot contain conditional/projected pivot points.',
+          { lifecycle, pivot_ref: projectedRef }
+        );
+      }
+    }
+  }
+
+  return null;
+}
+
+function evaluateImpulseTopology(hypothesis, points) {
+  const measurements = Array.isArray(hypothesis?.measurements) ? hypothesis.measurements : [];
+  const wave3 = measurements.find((measurement) => (measurement?.type || measurement?.kind) === 'wave3_projection');
+  const wave5 = measurements.find((measurement) => (measurement?.type || measurement?.kind) === 'wave5_projection');
+  if (!wave3 || !wave5) return null;
+
+  const wave3Prices = pricesFromKeys(['wave2_end', 'wave3_end'], wave3, points);
+  const wave5Prices = pricesFromKeys(['wave4_end', 'wave5_end'], wave5, points);
+  if (!wave3Prices || !wave5Prices) return null;
+
+  const direction = normalizedToken(hypothesis?.direction) || (wave3Prices.wave3_end >= wave3Prices.wave2_end ? 'bullish' : 'bearish');
+  const bullish = direction !== 'bearish';
+  const wave3MovesCorrectly = bullish
+    ? wave3Prices.wave3_end > wave3Prices.wave2_end
+    : wave3Prices.wave3_end < wave3Prices.wave2_end;
+  const wave5MovesCorrectly = bullish
+    ? wave5Prices.wave5_end > wave5Prices.wave4_end
+    : wave5Prices.wave5_end < wave5Prices.wave4_end;
+  if (!wave3MovesCorrectly || !wave5MovesCorrectly) {
+    return structuralFailure(
+      'motive_direction_mismatch',
+      'Motive wave endpoints move against the declared hypothesis direction.',
+      {
+        direction,
+        wave3_end: round(wave3Prices.wave3_end),
+        wave4_end: round(wave5Prices.wave4_end),
+        wave5_end: round(wave5Prices.wave5_end)
+      }
+    );
+  }
+
+  const failedFifth = bullish
+    ? wave5Prices.wave5_end <= wave3Prices.wave3_end
+    : wave5Prices.wave5_end >= wave3Prices.wave3_end;
+  if (failedFifth) {
+    return structuralFailure(
+      'failed_fifth_forbidden',
+      'Wave 5 fails to exceed Wave 3; HEW/Copsey rules forbid failed-fifth rescue counts.',
+      {
+        direction,
+        wave3_end: round(wave3Prices.wave3_end),
+        wave5_end: round(wave5Prices.wave5_end)
+      }
+    );
+  }
+
+  return null;
 }
 
 function evaluateRetracement(measurement, points, config) {
@@ -430,6 +570,7 @@ export function scoreHewHypothesis(hypothesis, ratioUniverse = {}) {
   const measurements = Array.isArray(hypothesis?.measurements) ? hypothesis.measurements : [];
   const results = [];
   const violations = [];
+  const lifecycleStatus = inferLifecycle(hypothesis);
 
   if (!measurements.length) {
     violations.push({
@@ -446,6 +587,15 @@ export function scoreHewHypothesis(hypothesis, ratioUniverse = {}) {
     violations.push(...evaluated.violations);
   }
 
+  for (const structuralCheck of [
+    evaluateProjectionCompleteness(hypothesis, points),
+    evaluateImpulseTopology(hypothesis, points)
+  ]) {
+    if (!structuralCheck) continue;
+    results.push(structuralCheck.result);
+    violations.push(...structuralCheck.violations);
+  }
+
   const hardViolations = violations.filter((item) => item.severity === 'hard');
   const softViolations = violations.filter((item) => item.severity !== 'hard');
   const rawScore = results.length
@@ -459,6 +609,8 @@ export function scoreHewHypothesis(hypothesis, ratioUniverse = {}) {
     status,
     score,
     hard_rule_pass: hardViolations.length === 0,
+    lifecycle_status: lifecycleStatus,
+    classification: classifyHypothesis(status, lifecycleStatus),
     measurements: results,
     violations
   };

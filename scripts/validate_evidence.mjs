@@ -597,6 +597,9 @@ function validateHypotheses(evidence, manifest, errors) {
   indexById(hypotheses, path, errors);
   const allowedRoles = new Set(protocol.allowed_selection_roles || []);
   const allowedStatuses = new Set(protocol.allowed_engine_statuses || ['pass', 'pass_with_warnings', 'fail']);
+  const requiredEngineFields = new Set(protocol.required_engine_result_fields || []);
+  const allowedLifecycles = normalizedSet(protocol.allowed_lifecycles || []);
+  const allowedClassifications = normalizedSet(protocol.allowed_engine_classifications || []);
   const allowedDirections = normalizedSet(protocol.allowed_directions || []);
   const allowedStructureTypes = normalizedSet(protocol.allowed_structure_types || []);
   const minimumMeasurementTypes = new Set(protocol.minimum_measurement_types || []);
@@ -627,6 +630,10 @@ function validateHypotheses(evidence, manifest, errors) {
       errors.push(`${hypothesisPath}.structure_type is required`);
     } else if (allowedStructureTypes.size && !allowedStructureTypes.has(structureType)) {
       errors.push(`${hypothesisPath}.structure_type must be one of ${[...allowedStructureTypes].join(', ')}: ${hypothesis.structure_type}`);
+    }
+    const explicitLifecycle = normalizedToken(hypothesis.lifecycle || hypothesis.count_lifecycle || hypothesis.wave_lifecycle);
+    if (explicitLifecycle && allowedLifecycles.size && !allowedLifecycles.has(explicitLifecycle)) {
+      errors.push(`${hypothesisPath}.lifecycle must be one of ${[...allowedLifecycles].join(', ')}: ${hypothesis.lifecycle || hypothesis.count_lifecycle || hypothesis.wave_lifecycle}`);
     }
 
     if (!Array.isArray(hypothesis.pivots) || hypothesis.pivots.length < 4) {
@@ -683,8 +690,29 @@ function validateHypotheses(evidence, manifest, errors) {
     }
 
     const computed = scoreHewHypothesis(hypothesis, manifest.copsey_ratio_universe);
+    for (const field of requiredEngineFields) {
+      if (!hasOwn(engine, field)) errors.push(`${hypothesisPath}.engine_result.${field} is required`);
+    }
     if (!allowedStatuses.has(engine.status)) {
       errors.push(`${hypothesisPath}.engine_result.status must be one of ${[...allowedStatuses].join(', ')}: ${engine.status}`);
+    }
+    if (hasOwn(engine, 'lifecycle_status')) {
+      const lifecycleStatus = normalizedToken(engine.lifecycle_status);
+      if (allowedLifecycles.size && !allowedLifecycles.has(lifecycleStatus)) {
+        errors.push(`${hypothesisPath}.engine_result.lifecycle_status must be one of ${[...allowedLifecycles].join(', ')}: ${engine.lifecycle_status}`);
+      }
+      if (engine.lifecycle_status !== computed.lifecycle_status) {
+        errors.push(`${hypothesisPath}.engine_result.lifecycle_status must match recomputed ratio engine lifecycle ${computed.lifecycle_status}: ${engine.lifecycle_status}`);
+      }
+    }
+    if (hasOwn(engine, 'classification')) {
+      const classification = normalizedToken(engine.classification);
+      if (allowedClassifications.size && !allowedClassifications.has(classification)) {
+        errors.push(`${hypothesisPath}.engine_result.classification must be one of ${[...allowedClassifications].join(', ')}: ${engine.classification}`);
+      }
+      if (engine.classification !== computed.classification) {
+        errors.push(`${hypothesisPath}.engine_result.classification must match recomputed ratio engine classification ${computed.classification}: ${engine.classification}`);
+      }
     }
     if (engine.status !== computed.status) {
       errors.push(`${hypothesisPath}.engine_result.status must match recomputed ratio engine status ${computed.status}: ${engine.status}`);
@@ -779,7 +807,18 @@ function validateDrawingManifest(evidence, manifest, errors) {
     return;
   }
   indexById(drawings, manifest.drawing_protocol?.path || 'chart_prep.drawing_manifest', errors);
-  const screenshotPaths = new Set(asArray(evidence.screenshots).map((screenshot) => String(screenshot?.path || '').replace(/\\/g, '/')).filter(Boolean));
+  const screenshots = asArray(evidence.screenshots);
+  const screenshotPaths = new Set(screenshots.map((screenshot) => String(screenshot?.path || '').replace(/\\/g, '/')).filter(Boolean));
+  const finalScreenshotRoles = normalizedSet(manifest.drawing_protocol?.final_screenshot_roles || ['macro_structure', 'trade_posture']);
+  const finalScreenshotPaths = new Set(screenshots
+    .filter((screenshot) => finalScreenshotRoles.has(normalizedToken(screenshot?.role)))
+    .map((screenshot) => String(screenshot?.path || '').replace(/\\/g, '/'))
+    .filter(Boolean));
+  const forbiddenFinalDrawingTerms = asArray(manifest.drawing_protocol?.forbidden_final_drawing_terms).map(normalizedToken).filter(Boolean);
+  const deprecatedFinalRoles = new Set(asArray(manifest.drawing_protocol?.deprecated_final_roles).map(normalizedToken).filter(Boolean));
+  const hypotheses = asArray(getByPath(evidence, manifest.hypothesis_protocol?.path || 'hypotheses'));
+  const hypothesesById = new Map(hypotheses.filter((hypothesis) => hypothesis?.id).map((hypothesis) => [hypothesis.id, hypothesis]));
+  const computedHypotheses = new Map(hypotheses.map((hypothesis) => [hypothesis?.id, scoreHewHypothesis(hypothesis, manifest.copsey_ratio_universe)]));
   const forbiddenByRole = manifest.drawing_protocol?.forbidden_tools_by_role || {};
   const allowedByRole = manifest.drawing_protocol?.allowed_tools_by_role || {};
   const requiredRoles = new Set(manifest.drawing_protocol?.required_roles || []);
@@ -795,6 +834,59 @@ function validateDrawingManifest(evidence, manifest, errors) {
     const drawingScreenshot = String(drawing.screenshot || '').replace(/\\/g, '/');
     if (drawingScreenshot && !screenshotPaths.has(drawingScreenshot)) {
       errors.push(`drawing_manifest.${drawing.id || role} screenshot not listed in screenshots: ${drawing.screenshot}`);
+    }
+    const auditOnly = drawing.audit_only === true || drawing.presentation_allowed === false;
+    const finalScreenshot = finalScreenshotPaths.has(drawingScreenshot);
+    const drawingDescriptor = normalizedToken([
+      drawing.id,
+      drawing.role,
+      drawing.label,
+      drawing.source_context,
+      drawing.status
+    ].filter(Boolean).join(' '));
+    if (forbiddenFinalDrawingTerms.some((term) => drawingDescriptor.includes(term)) && !auditOnly) {
+      errors.push(`drawing_manifest.${drawing.id || role} appears to be rejected/diagnostic and must be audit_only or presentation_allowed=false`);
+    }
+    if (deprecatedFinalRoles.has(normalizedToken(role)) && !auditOnly) {
+      errors.push(`drawing_manifest.${drawing.id || role} uses deprecated final role ${role}; use zone boxes or mark the drawing audit_only`);
+    }
+    if (auditOnly && finalScreenshot) {
+      errors.push(`drawing_manifest.${drawing.id || role} audit-only drawing cannot reference final presentation screenshot: ${drawing.screenshot}`);
+    }
+    if (String(drawing.source_hypothesis_id || '').trim()) {
+      const sourceId = drawing.source_hypothesis_id;
+      const sourceHypothesis = hypothesesById.get(sourceId);
+      const computed = computedHypotheses.get(sourceId);
+      if (!sourceHypothesis) {
+        errors.push(`drawing_manifest.${drawing.id || role} references missing source_hypothesis_id: ${sourceId}`);
+      } else if (
+        computed?.status === 'fail'
+        || computed?.classification === 'invalid_diagnostic'
+        || ['rejected', 'diagnostic'].includes(computed?.lifecycle_status)
+      ) {
+        if (!auditOnly) {
+          errors.push(`drawing_manifest.${drawing.id || role} references failed/rejected hypothesis ${sourceId} and must be audit_only or presentation_allowed=false`);
+        }
+        if (finalScreenshot) {
+          errors.push(`drawing_manifest.${drawing.id || role} references failed/rejected hypothesis ${sourceId} in final presentation screenshot: ${drawing.screenshot}`);
+        }
+      }
+    }
+    const drawingEngineStatus = normalizedToken(drawing.engine_status || drawing.engine_result_status);
+    if (drawingEngineStatus && drawingEngineStatus !== 'pass' && !auditOnly) {
+      errors.push(`drawing_manifest.${drawing.id || role} has non-pass engine_status and must be audit_only or presentation_allowed=false: ${drawing.engine_status || drawing.engine_result_status}`);
+    }
+    if (tool === 'elliott_impulse_wave' && !auditOnly && Array.isArray(drawing.levels) && drawing.levels.length >= 6) {
+      const levels = drawing.levels.map(Number);
+      if (levels.slice(0, 6).every(Number.isFinite)) {
+        const direction = normalizedToken(drawing.direction) || (levels[3] >= levels[0] ? 'bullish' : 'bearish');
+        const failedFifth = direction === 'bearish'
+          ? levels[5] >= levels[3]
+          : levels[5] <= levels[3];
+        if (failedFifth) {
+          errors.push(`drawing_manifest.${drawing.id || role} failed_fifth_forbidden: Elliott impulse Wave 5 must exceed Wave 3 for ${direction} counts`);
+        }
+      }
     }
     const forbidden = forbiddenByRole[role] || [];
     if (forbidden.includes(tool)) errors.push(`forbidden drawing tool for ${role}: ${tool}`);
@@ -1278,13 +1370,14 @@ function validateZoneProbabilities(evidence, manifest, errors) {
   }
   const allowedTypes = new Set(manifest.zone_probabilities.allowed_zone_types || []);
   const requiredTypes = new Set(manifest.zone_probabilities.required_zone_types || []);
+  const allowedBands = new Set(manifest.zone_probabilities.allowed_probability_bands || []);
   const seenTypes = new Set();
   indexById(zones, 'zone_probabilities', errors);
   for (const zone of zones) {
     if (!zone || typeof zone !== 'object') continue;
     if (zone.zone_type) seenTypes.add(zone.zone_type);
     if (!allowedTypes.has(zone.zone_type)) errors.push(`zone_probabilities.${zone.id || '<unknown>'} invalid zone_type: ${zone.zone_type}`);
-    for (const field of ['price_range', 'probability', 'evidence', 'invalidation', 'upgrade_trigger', 'downgrade_trigger']) {
+    for (const field of ['price_range', 'probability', 'evidence', 'invalidation', 'upgrade_condition', 'downgrade_condition']) {
       if (!hasOwn(zone, field) || (typeof zone[field] === 'string' && !zone[field].trim())) {
         errors.push(`zone_probabilities.${zone.id || '<unknown>'} missing ${field}`);
       }
@@ -1293,7 +1386,11 @@ function validateZoneProbabilities(evidence, manifest, errors) {
     if (typeof zone.probability?.value === 'number' && (zone.probability.value < 0 || zone.probability.value > 100)) {
       errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.value must be between 0 and 100: ${zone.probability.value}`);
     }
-    if (!zone.probability?.band) errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.band is required`);
+    if (!zone.probability?.band) {
+      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.band is required`);
+    } else if (allowedBands.size && !allowedBands.has(zone.probability.band)) {
+      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.band must be one of ${[...allowedBands].join(', ')}: ${zone.probability.band}`);
+    }
     const low = zone.price_range?.low;
     const high = zone.price_range?.high;
     if (typeof low !== 'number' || typeof high !== 'number') {
@@ -1304,6 +1401,46 @@ function validateZoneProbabilities(evidence, manifest, errors) {
   }
   for (const type of requiredTypes) {
     if (!seenTypes.has(type)) errors.push(`zone_probabilities missing required zone_type: ${type}`);
+  }
+}
+
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function collectForbiddenTermHits(value, path, terms, hits) {
+  if (value == null) return hits;
+  if (typeof value === 'string') {
+    for (const term of terms) {
+      const pattern = new RegExp(`\\b${escapeRegExp(term)}\\b`, 'i');
+      if (pattern.test(value)) hits.push({ path, term });
+    }
+    return hits;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectForbiddenTermHits(item, `${path}[${index}]`, terms, hits));
+    return hits;
+  }
+  if (typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      collectForbiddenTermHits(child, path ? `${path}.${key}` : key, terms, hits);
+    }
+  }
+  return hits;
+}
+
+function validateZoneFirstLanguage(evidence, manifest, errors) {
+  const config = manifest.zone_first_language;
+  if (!config) return;
+  const terms = asArray(config.forbidden_terms).map((term) => String(term).trim()).filter(Boolean);
+  if (!terms.length) return;
+  const hits = [];
+  for (const path of asArray(config.paths)) {
+    const value = getByPath(evidence, path);
+    if (value !== undefined) collectForbiddenTermHits(value, path, terms, hits);
+  }
+  for (const hit of hits) {
+    errors.push(`zone_first_language forbidden term "${hit.term}" in ${hit.path}`);
   }
 }
 
@@ -1414,6 +1551,7 @@ export function validateEvidenceFile(file, options = {}) {
   validateExecutionQuality(evidence, manifest, errors);
   validateFallbackPolicy(evidence, manifest, errors);
   validateZoneProbabilities(evidence, manifest, errors);
+  validateZoneFirstLanguage(evidence, manifest, errors);
   validateActionRationale(evidence, manifest, errors);
   validateCriticReview(evidence, manifest, errors);
   validateJournalAlignment(evidence, absoluteFile, errors, warnings);

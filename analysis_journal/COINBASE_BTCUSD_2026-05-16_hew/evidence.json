@@ -1,0 +1,1651 @@
+{
+  "journal_id": "COINBASE_BTCUSD_2026-05-16_hew",
+  "saved_at": "2026-05-16T19:46:58+02:00",
+  "symbol": "COINBASE:BTCUSD",
+  "method": "Ian Copsey Fractal Forecasting",
+  "workflow_version": "hew_stage_gated_v8_math_core",
+  "status": "watchlist_only",
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "TradingView was connected, Hew Layout was selected from saved layouts, chart state verified COINBASE:BTCUSD, and the HEW lane was used."
+    },
+    {
+      "id": "visual_pivot_extraction",
+      "status": "pass",
+      "evidence": "Konsili Pivot Exporter v2 was made visible and read with data_get_pine_tables on Monthly, Weekly, and Daily after setting crypto profile left=7/right=7/max_rows=32."
+    },
+    {
+      "id": "ohlcv_pivot_verification",
+      "status": "pass",
+      "evidence": "Accepted KPE pivots were cross-checked against TradingView OHLCV bars on Monthly, Weekly, and Daily before ratio interpretation."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass",
+      "evidence": "Monthly and weekly structure were read first, then daily structure was used only for trigger and action posture."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "The final chart uses native Elliott impulse/correction drawings for macro context, subwaves, daily impulse, and conditional projection. Horizontal lines are only decision levels."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "journal.md, evidence.json, screenshot set, KPE rows, drawing manifest, count state, critic checklist, and execution quality records are present."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "The output is WATCHLIST ONLY with trigger, invalidations, target path, and do-nothing conditions."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass",
+      "evidence": "Final checklist review passed, with B-wave overthrow and no-trade location challenged before publication."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "visual_pivots_extracted",
+      "status": "pass",
+      "evidence": "KPE rows were extracted on all required timeframes with exporter profile left=7/right=7/max_rows=32."
+    },
+    {
+      "id": "ohlcv_pivots_verified",
+      "status": "pass",
+      "evidence": "Key KPE rows at 15460, 31862.21, 24900, 73835.57, 49050.01, 109358.01, 126296, 60001, 64938.66, 79523, 74914, and 82814.23 were verified against TradingView bars."
+    },
+    {
+      "id": "pivot_conflicts_resolved",
+      "status": "pass",
+      "evidence": "The extension-to-126296 impulse was rejected as the headline count; 126296 is treated as the running-flat B-wave overthrow."
+    },
+    {
+      "id": "chart_modes_recorded",
+      "status": "pass",
+      "evidence": "Extraction, verification, strategy-proof, and presentation modes are recorded."
+    },
+    {
+      "id": "preceding_impulse_context_shown",
+      "status": "pass",
+      "evidence": "The 15460-109358 native Elliott impulse is drawn as the structure corrected by the later running flat."
+    },
+    {
+      "id": "primary_secondary_subwaves_drawn",
+      "status": "pass",
+      "evidence": "Primary macro degree plus separate Wave 3/Wave 5 internal subwave drawings and daily active impulse are visible."
+    },
+    {
+      "id": "forward_impulse_projection_drawn",
+      "status": "pass",
+      "evidence": "A conditional native Elliott projection is drawn and labeled as a scenario, not fact."
+    },
+    {
+      "id": "copsey_internal_abc_motive_engines_checked",
+      "status": "pass",
+      "evidence": "Macro Waves 1, 3, and 5 were tested as Copsey motive-engine visible equivalents; Wave 3 and Wave 5 have separate internal drawings."
+    },
+    {
+      "id": "copsey_ac_lower_degree_fives_checked",
+      "status": "pass",
+      "evidence": "A and C legs of the running flat were checked; their lower-degree internals are not used as entry proof."
+    },
+    {
+      "id": "copsey_classical_rescue_devices_rejected",
+      "status": "pass",
+      "evidence": "No failed fifth, diagonal, extension rescue, or classical Elliott shortcut was used."
+    },
+    {
+      "id": "castaway_overlay_not_copsey_source",
+      "status": "pass",
+      "evidence": "Castaway is recorded only as a Konsili overlay after the Copsey structure."
+    },
+    {
+      "id": "wave3_1764_rule_checked",
+      "status": "pass",
+      "evidence": "Macro Wave 3 is 2.9835x Wave 1 and daily Wave 3 is 3.1804x Wave 1, both above the 1.764 floor."
+    },
+    {
+      "id": "macro_count_subwaves_ratio_aligned",
+      "status": "pass",
+      "evidence": "The accepted macro impulse and active daily impulse passed HEW validation; rejected alternates are explicitly separated."
+    },
+    {
+      "id": "projection_forward_margin_next_count",
+      "status": "pass",
+      "evidence": "The forward path is conditional on 82814.23 acceptance and maps 96470-107516 first, then 111740-126296."
+    },
+    {
+      "id": "wave_b_ladder_chart_proof",
+      "status": "pass",
+      "evidence": "The running flat is tied to 109358.01-74420.69-126296-60001, with 126296 recorded as B-wave overthrow."
+    },
+    {
+      "id": "zone_probabilities_complete",
+      "status": "pass",
+      "evidence": "Retracement, projection, no-trade, and invalidation zones are scored."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "The action rationale blocks new exposure inside the no-trade band."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "Final critic checklist is complete, including pivot-path and fallback-cap checks."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_verified": "COINBASE:BTCUSD",
+    "drawings_cleared": true,
+    "cleared_drawing_count": 11,
+    "visible_ranges_verified": true,
+    "final_timeframe": "1D",
+    "chart_mode_checklist": [
+      {
+        "mode": "extraction",
+        "status": "pass",
+        "konsili_pivot_exporter_visible": true,
+        "evidence": "KPE was visible and table rows were extracted on Monthly, Weekly, and Daily."
+      },
+      {
+        "mode": "verification",
+        "status": "pass",
+        "evidence": "KPE rows were checked against TradingView OHLCV bars before HEW count selection."
+      },
+      {
+        "mode": "strategy_proof",
+        "status": "pass",
+        "konsili_pivot_exporter_visible": false,
+        "evidence": "KPE and Pivot Points High Low were hidden; native Elliott proof and decision levels were drawn."
+      },
+      {
+        "mode": "presentation",
+        "status": "pass",
+        "konsili_pivot_exporter_visible": false,
+        "pivot_scaffold_visible": false,
+        "evidence": "Final chart has no visible pivot scaffolding and shows only decision proof.",
+        "final_chart_state": "COINBASE:BTCUSD daily chart with macro impulse/correction, internal subwaves, active daily impulse, conditional projection, no-trade band, trigger 82814.23, and invalidation ladder."
+      }
+    ],
+    "drawing_manifest": [
+      {
+        "id": "macro_impulse_context",
+        "entity_id": "ZccM4t",
+        "role": "preceding_impulse_context",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          15460,
+          31862.21,
+          24900,
+          73835.57,
+          49050.01,
+          109358.01
+        ]
+      },
+      {
+        "id": "macro_running_flat",
+        "entity_id": "0udVGS",
+        "role": "macro_count",
+        "tool": "elliott_correction",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          109358.01,
+          74420.69,
+          126296,
+          60001
+        ]
+      },
+      {
+        "id": "macro_primary_degree_subwaves",
+        "entity_id": "ZccM4t",
+        "role": "primary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          15460,
+          31862.21,
+          24900,
+          73835.57,
+          49050.01,
+          109358.01
+        ]
+      },
+      {
+        "id": "macro_wave3_internal_subwaves",
+        "entity_id": "nmWf6L",
+        "role": "secondary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          24750,
+          31862.21,
+          24900,
+          49102.29,
+          38501,
+          73835.57
+        ]
+      },
+      {
+        "id": "macro_wave5_internal_subwaves",
+        "entity_id": "iEjXx8",
+        "role": "secondary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          52530,
+          66550,
+          58863.9,
+          108388.88,
+          89028.64,
+          109358.01
+        ]
+      },
+      {
+        "id": "daily_bullish_impulse",
+        "entity_id": "yE1sfH",
+        "role": "subwave_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          64938.66,
+          69285.99,
+          65696.96,
+          79523,
+          74914,
+          82814.23
+        ]
+      },
+      {
+        "id": "conditional_forward_path",
+        "entity_id": "a3ICbj",
+        "role": "projection_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          74914,
+          82814.23,
+          76000,
+          96470,
+          90000,
+          107516
+        ],
+        "label": "conditional scenario, not fact"
+      },
+      {
+        "id": "trigger_82814",
+        "entity_id": "FMUEU6",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 82814.23
+      },
+      {
+        "id": "daily_count_damage_74914",
+        "entity_id": "TuIJFJ",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 74914
+      },
+      {
+        "id": "daily_structure_invalidation_64938",
+        "entity_id": "sKWZmr",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 64938.66
+      },
+      {
+        "id": "macro_flat_invalidation_60001",
+        "entity_id": "25JuzI",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 60001
+      },
+      {
+        "id": "target_path_96470",
+        "entity_id": "DygeRS",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 96470
+      },
+      {
+        "id": "target_path_107516",
+        "entity_id": "kaSZB5",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 107516
+      },
+      {
+        "id": "current_no_trade_band",
+        "entity_id": "flO2Yw",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "price_range": {
+          "low": 75985,
+          "high": 82814.23
+        }
+      },
+      {
+        "id": "retracement_zone",
+        "entity_id": "r8tC2z",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "price_range": {
+          "low": 71766,
+          "high": 75985
+        }
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_monthly.png",
+      "purpose": "Monthly KPE pivot extraction."
+    },
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_weekly.png",
+      "purpose": "Weekly KPE pivot extraction."
+    },
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_daily.png",
+      "purpose": "Daily KPE pivot extraction."
+    },
+    {
+      "role": "macro_structure",
+      "path": "screenshots/macro_structure.png",
+      "purpose": "Macro HEW impulse, running flat, and internal subwaves."
+    },
+    {
+      "role": "trade_posture",
+      "path": "screenshots/trade_posture.png",
+      "purpose": "Daily trigger, no-trade band, invalidations, and conditional projection."
+    }
+  ],
+  "visual_pivot_evidence": {
+    "indicator_name": "Konsili Pivot Exporter",
+    "study_filter": "Konsili Pivot Exporter",
+    "extraction_method": "KPE table rows were extracted visually first with data_get_pine_tables, then OHLCV bars were used for verification before HEW interpretation.",
+    "iteration_decision": "accepted_clean_kpe_rows_after_crypto_profile_fix_left7_right7_max32",
+    "exporter": {
+      "name": "Konsili Pivot Exporter",
+      "version": 2,
+      "study_filter": "Konsili Pivot Exporter",
+      "pine_script": "tradingview/konsili_pivot_exporter.pine",
+      "row_prefix": "KPE",
+      "source_tools": [
+        "data_get_pine_tables"
+      ],
+      "instrument_class": "crypto",
+      "left_bars": 7,
+      "right_bars": 7,
+      "max_rows": 32
+    },
+    "timeframes": [
+      {
+        "timeframe": "monthly",
+        "screenshot": "screenshots/visual_pivots_monthly.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=M|id=M_1667260800000_L|type=low|date=2022-11-01 00:00|time=1667260800000|price=15460.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=M|id=M_1709251200000_H|type=high|date=2024-03-01 00:00|time=1709251200000|price=73835.57|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=M|id=M_1722470400000_L|type=low|date=2024-08-01 00:00|time=1722470400000|price=49050.01|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=M|id=M_1759276800000_H|type=high|date=2025-10-01 00:00|time=1759276800000|price=126296.00|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "M_1667260800000_L",
+            "type": "low",
+            "date": "2022-11-01 00:00",
+            "time": 1667260800000,
+            "price": 15460,
+            "exporter_row_id": "M_1667260800000_L",
+            "source_text": "Monthly KPE row verifies the cycle low used as the macro impulse origin."
+          },
+          {
+            "id": "M_1709251200000_H",
+            "type": "high",
+            "date": "2024-03-01 00:00",
+            "time": 1709251200000,
+            "price": 73835.57,
+            "exporter_row_id": "M_1709251200000_H",
+            "source_text": "Monthly KPE row verifies the Wave 3 region high."
+          },
+          {
+            "id": "M_1722470400000_L",
+            "type": "low",
+            "date": "2024-08-01 00:00",
+            "time": 1722470400000,
+            "price": 49050.01,
+            "exporter_row_id": "M_1722470400000_L",
+            "source_text": "Monthly KPE row verifies the Wave 4 region low."
+          },
+          {
+            "id": "M_1759276800000_H",
+            "type": "high",
+            "date": "2025-10-01 00:00",
+            "time": 1759276800000,
+            "price": 126296,
+            "exporter_row_id": "M_1759276800000_H",
+            "source_text": "Monthly KPE row verifies the B-wave overthrow high."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "M_1667260800000_L",
+            "status": "pass",
+            "evidence": "Monthly OHLCV bar for 2022-11 has low 15460."
+          },
+          {
+            "pivot_id": "M_1709251200000_H",
+            "status": "pass",
+            "evidence": "Monthly OHLCV bar for 2024-03 has high 73835.57."
+          },
+          {
+            "pivot_id": "M_1722470400000_L",
+            "status": "pass",
+            "evidence": "Monthly OHLCV bar for 2024-08 has low 49050.01."
+          },
+          {
+            "pivot_id": "M_1759276800000_H",
+            "status": "pass",
+            "evidence": "Monthly OHLCV bar for 2025-10 has high 126296."
+          }
+        ]
+      },
+      {
+        "timeframe": "weekly",
+        "screenshot": "screenshots/visual_pivots_weekly.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=W|id=W_1668988800000_L|type=low|date=2022-11-21 00:00|time=1668988800000|price=15460.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1688947200000_H|type=high|date=2023-07-10 00:00|time=1688947200000|price=31862.21|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1694390400000_L|type=low|date=2023-09-11 00:00|time=1694390400000|price=24900.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1710115200000_H|type=high|date=2024-03-11 00:00|time=1710115200000|price=73835.57|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1722816000000_L|type=low|date=2024-08-05 00:00|time=1722816000000|price=49050.01|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1737331200000_H|type=high|date=2025-01-20 00:00|time=1737331200000|price=109358.01|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1743984000000_L|type=low|date=2025-04-07 00:00|time=1743984000000|price=74420.69|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1759708800000_H|type=high|date=2025-10-06 00:00|time=1759708800000|price=126296.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1769990400000_L|type=low|date=2026-02-02 00:00|time=1769990400000|price=60001.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1768176000000_H|type=high|date=2026-01-12 00:00|time=1768176000000|price=97963.62|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "W_1668988800000_L",
+            "type": "low",
+            "date": "2022-11-21 00:00",
+            "time": 1668988800000,
+            "price": 15460,
+            "exporter_row_id": "W_1668988800000_L",
+            "source_text": "Weekly KPE origin of macro impulse."
+          },
+          {
+            "id": "W_1688947200000_H",
+            "type": "high",
+            "date": "2023-07-10 00:00",
+            "time": 1688947200000,
+            "price": 31862.21,
+            "exporter_row_id": "W_1688947200000_H",
+            "source_text": "Weekly KPE Wave 1 high."
+          },
+          {
+            "id": "W_1694390400000_L",
+            "type": "low",
+            "date": "2023-09-11 00:00",
+            "time": 1694390400000,
+            "price": 24900,
+            "exporter_row_id": "W_1694390400000_L",
+            "source_text": "Weekly KPE Wave 2 low."
+          },
+          {
+            "id": "W_1710115200000_H",
+            "type": "high",
+            "date": "2024-03-11 00:00",
+            "time": 1710115200000,
+            "price": 73835.57,
+            "exporter_row_id": "W_1710115200000_H",
+            "source_text": "Weekly KPE Wave 3 high."
+          },
+          {
+            "id": "W_1722816000000_L",
+            "type": "low",
+            "date": "2024-08-05 00:00",
+            "time": 1722816000000,
+            "price": 49050.01,
+            "exporter_row_id": "W_1722816000000_L",
+            "source_text": "Weekly KPE Wave 4 low."
+          },
+          {
+            "id": "W_1737331200000_H",
+            "type": "high",
+            "date": "2025-01-20 00:00",
+            "time": 1737331200000,
+            "price": 109358.01,
+            "exporter_row_id": "W_1737331200000_H",
+            "source_text": "Weekly KPE macro Wave 5 terminal high."
+          },
+          {
+            "id": "W_1743984000000_L",
+            "type": "low",
+            "date": "2025-04-07 00:00",
+            "time": 1743984000000,
+            "price": 74420.69,
+            "exporter_row_id": "W_1743984000000_L",
+            "source_text": "Weekly KPE A-wave low of running flat."
+          },
+          {
+            "id": "W_1759708800000_H",
+            "type": "high",
+            "date": "2025-10-06 00:00",
+            "time": 1759708800000,
+            "price": 126296,
+            "exporter_row_id": "W_1759708800000_H",
+            "source_text": "Weekly KPE B-wave overthrow high."
+          },
+          {
+            "id": "W_1769990400000_L",
+            "type": "low",
+            "date": "2026-02-02 00:00",
+            "time": 1769990400000,
+            "price": 60001,
+            "exporter_row_id": "W_1769990400000_L",
+            "source_text": "Weekly KPE C-wave low."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "W_1668988800000_L",
+            "status": "pass",
+            "evidence": "Weekly OHLCV low 15460 verified."
+          },
+          {
+            "pivot_id": "W_1688947200000_H",
+            "status": "pass",
+            "evidence": "Weekly OHLCV high 31862.21 verified."
+          },
+          {
+            "pivot_id": "W_1694390400000_L",
+            "status": "pass",
+            "evidence": "Weekly OHLCV low 24900 verified."
+          },
+          {
+            "pivot_id": "W_1710115200000_H",
+            "status": "pass",
+            "evidence": "Weekly OHLCV high 73835.57 verified."
+          },
+          {
+            "pivot_id": "W_1722816000000_L",
+            "status": "pass",
+            "evidence": "Weekly OHLCV low 49050.01 verified."
+          },
+          {
+            "pivot_id": "W_1737331200000_H",
+            "status": "pass",
+            "evidence": "Weekly OHLCV high 109358.01 verified."
+          },
+          {
+            "pivot_id": "W_1743984000000_L",
+            "status": "pass",
+            "evidence": "Weekly OHLCV low 74420.69 verified."
+          },
+          {
+            "pivot_id": "W_1759708800000_H",
+            "status": "pass",
+            "evidence": "Weekly OHLCV high 126296 verified."
+          },
+          {
+            "pivot_id": "W_1769990400000_L",
+            "status": "pass",
+            "evidence": "Weekly OHLCV low 60001 verified."
+          }
+        ]
+      },
+      {
+        "timeframe": "daily",
+        "screenshot": "screenshots/visual_pivots_daily.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=D|id=D_1774742400000_L|type=low|date=2026-03-29 00:00|time=1774742400000|price=64938.66|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1776816000000_H|type=high|date=2026-04-22 00:00|time=1776816000000|price=79523.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1777420800000_L|type=low|date=2026-04-29 00:00|time=1777420800000|price=74914.00|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1778025600000_H|type=high|date=2026-05-06 00:00|time=1778025600000|price=82814.23|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1768348800000_H|type=high|date=2026-01-14 00:00|time=1768348800000|price=97963.62|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1770336000000_L|type=low|date=2026-02-06 00:00|time=1770336000000|price=60001.00|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "D_1774742400000_L",
+            "type": "low",
+            "date": "2026-03-29 00:00",
+            "time": 1774742400000,
+            "price": 64938.66,
+            "exporter_row_id": "D_1774742400000_L",
+            "source_text": "Daily KPE post-C swing low."
+          },
+          {
+            "id": "D_1776816000000_H",
+            "type": "high",
+            "date": "2026-04-22 00:00",
+            "time": 1776816000000,
+            "price": 79523,
+            "exporter_row_id": "D_1776816000000_H",
+            "source_text": "Daily KPE Wave 3 high in active impulse."
+          },
+          {
+            "id": "D_1777420800000_L",
+            "type": "low",
+            "date": "2026-04-29 00:00",
+            "time": 1777420800000,
+            "price": 74914,
+            "exporter_row_id": "D_1777420800000_L",
+            "source_text": "Daily KPE Wave 4 low and damage level."
+          },
+          {
+            "id": "D_1778025600000_H",
+            "type": "high",
+            "date": "2026-05-06 00:00",
+            "time": 1778025600000,
+            "price": 82814.23,
+            "exporter_row_id": "D_1778025600000_H",
+            "source_text": "Daily KPE activation trigger high."
+          },
+          {
+            "id": "D_1770336000000_L",
+            "type": "low",
+            "date": "2026-02-06 00:00",
+            "time": 1770336000000,
+            "price": 60001,
+            "exporter_row_id": "D_1770336000000_L",
+            "source_text": "Daily KPE correction low / flat-complete invalidation reference."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "D_1774742400000_L",
+            "status": "pass",
+            "evidence": "Daily OHLCV low 64938.66 verified."
+          },
+          {
+            "pivot_id": "D_1776816000000_H",
+            "status": "pass",
+            "evidence": "Daily OHLCV high 79523 verified."
+          },
+          {
+            "pivot_id": "D_1777420800000_L",
+            "status": "pass",
+            "evidence": "Daily OHLCV low 74914 verified."
+          },
+          {
+            "pivot_id": "D_1778025600000_H",
+            "status": "pass",
+            "evidence": "Daily OHLCV high 82814.23 verified."
+          },
+          {
+            "pivot_id": "D_1770336000000_L",
+            "status": "pass",
+            "evidence": "Daily OHLCV low 60001 verified."
+          }
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "extension_to_126296_reclassified",
+        "status": "resolved",
+        "evidence": "126296 is treated as a B-wave overthrow in the running flat rather than a terminal W5."
+      }
+    ]
+  },
+  "ian_copsey_wave_map": {
+    "count_selection_authority": "ian_copsey_fractal_forecasting",
+    "mechanical_tool_boundary": "ratio_validation_only",
+    "scanner_used_for_count_selection": false,
+    "book_alignment_source": "Fractal Forecasting - Ian Copsey",
+    "selection_method": "Anchors were chosen from the verified KPE/TradingView swing sequence: 15460 cycle low, 31862.21 first major high, 24900 Wave 2, 73835.57 Wave 3, 49050.01 Wave 4, 109358.01 terminal high, then running flat 109358.01-74420.69-126296-60001.",
+    "counts": [
+      {
+        "id": "ian_copsey_macro_primary",
+        "role": "macro_primary",
+        "drawing_id": "macro_impulse_context",
+        "pivots": [
+          15460,
+          31862.21,
+          24900,
+          73835.57,
+          49050.01,
+          109358.01
+        ],
+        "ratio_validation_id": "wave3_1764_rule",
+        "copsey_rationale": "This sequence answers what the later ABC corrects and passes the HEW Wave 3 floor."
+      },
+      {
+        "id": "ian_copsey_macro_correction",
+        "role": "macro_correction",
+        "drawing_id": "macro_running_flat",
+        "pivots": [
+          109358.01,
+          74420.69,
+          126296,
+          60001
+        ],
+        "ratio_validation_id": "running_flat_c_leg",
+        "copsey_rationale": "The correction is a running-flat/expanded-flat form with B overthrow and deep C leg."
+      },
+      {
+        "id": "ian_copsey_macro_wave3_internal",
+        "role": "internal_subwave",
+        "drawing_id": "macro_wave3_internal_subwaves",
+        "pivots": [
+          24750,
+          31862.21,
+          24900,
+          49102.29,
+          38501,
+          73835.57
+        ],
+        "ratio_validation_id": "macro_wave3_internal_ratio",
+        "copsey_rationale": "Visible lower-degree Wave 3 region shows acceleration into the 2024 high."
+      },
+      {
+        "id": "ian_copsey_macro_wave5_internal",
+        "role": "internal_subwave",
+        "drawing_id": "macro_wave5_internal_subwaves",
+        "pivots": [
+          52530,
+          66550,
+          58863.9,
+          108388.88,
+          89028.64,
+          109358.01
+        ],
+        "ratio_validation_id": "macro_wave5_internal_ratio",
+        "copsey_rationale": "Visible lower-degree Wave 5 region supports the January 2025 terminal high."
+      },
+      {
+        "id": "ian_copsey_active_daily",
+        "role": "active_decision",
+        "drawing_id": "daily_bullish_impulse",
+        "pivots": [
+          64938.66,
+          69285.99,
+          65696.96,
+          79523,
+          74914,
+          82814.23
+        ],
+        "ratio_validation_id": "daily_wave3_expansion",
+        "copsey_rationale": "Daily impulse is valid, but price remains below the activation trigger."
+      }
+    ],
+    "ratio_calculations": [
+      {
+        "id": "macro_primary_wave3_ratio",
+        "formula": "(73835.57 - 24900) / (31862.21 - 15460)",
+        "actual_ratio": 2.9835,
+        "interpretation": "Macro Wave 3 exceeds the 1.764 floor."
+      },
+      {
+        "id": "running_flat_c_ratio",
+        "formula": "(126296 - 60001) / (109358.01 - 74420.69)",
+        "actual_ratio": 1.8975,
+        "interpretation": "C leg is a deep Copsey-compatible running-flat completion candidate."
+      },
+      {
+        "id": "daily_wave3_ratio",
+        "formula": "(79523 - 65696.96) / (69285.99 - 64938.66)",
+        "actual_ratio": 3.1804,
+        "interpretation": "Daily Wave 3 exceeds the 1.764 floor."
+      }
+    ],
+    "fractal_forecasting_alignment": [
+      {
+        "id": "fractal_degree_consistency",
+        "status": "pass",
+        "evidence": "Monthly and weekly context govern; daily is only the action layer."
+      },
+      {
+        "id": "three_wave_impulsive_components",
+        "status": "pass",
+        "evidence": "Motive waves are treated through Copsey motive-engine visible equivalents."
+      },
+      {
+        "id": "wave3_1764_floor",
+        "status": "pass",
+        "evidence": "Macro and daily Wave 3 ratios exceed 1.764."
+      },
+      {
+        "id": "classical_rescue_rejection",
+        "status": "pass",
+        "evidence": "The 126296 extension count and weak bearish decline are not rescued with classical devices."
+      },
+      {
+        "id": "corrective_context_before_forecast",
+        "status": "pass",
+        "evidence": "The running flat is explicitly tied to the preceding 15460-109358.01 impulse."
+      },
+      {
+        "id": "scanner_not_count_authority",
+        "status": "pass",
+        "evidence": "KPE/scanner rows supplied pivot evidence; they did not choose the count."
+      }
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "active_daily_trigger_impulse",
+      "selection_role": "primary",
+      "direction": "bullish",
+      "structure_type": "active_impulse",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 64938.66
+        },
+        {
+          "id": "p1",
+          "price": 69285.99
+        },
+        {
+          "id": "p2",
+          "price": 65696.96
+        },
+        {
+          "id": "p3",
+          "price": 82814.23
+        }
+      ],
+      "measurements": [
+        {
+          "id": "daily_trigger_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "active_daily_trigger_impulse",
+        "status": "pass",
+        "score": 100,
+        "hard_rule_pass": true,
+        "measurements": [
+          {
+            "id": "daily_trigger_wave3",
+            "type": "wave3_projection",
+            "status": "pass",
+            "score": 100,
+            "actual_ratio": 3.9374,
+            "matched_cluster": "3236_3987",
+            "nearest_anchor": 3.987,
+            "anchor_position": "max",
+            "anchor_distance": 0.0496
+          }
+        ],
+        "violations": []
+      }
+    },
+    {
+      "id": "weekly_bearish_decline_rejected",
+      "selection_role": "alternate",
+      "direction": "bearish",
+      "structure_type": "alternate_impulse",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 126296
+        },
+        {
+          "id": "p1",
+          "price": 103516.75
+        },
+        {
+          "id": "p2",
+          "price": 116410.06
+        },
+        {
+          "id": "p3",
+          "price": 80524.65
+        }
+      ],
+      "measurements": [
+        {
+          "id": "bearish_wave3_failed",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "weekly_bearish_decline_rejected",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "measurements": [
+          {
+            "id": "bearish_wave3_failed",
+            "type": "wave3_projection",
+            "status": "fail",
+            "score": 0,
+            "actual_ratio": 1.5754,
+            "violation_id": "wave3_outside_copsey_clusters"
+          }
+        ],
+        "violations": [
+          {
+            "id": "wave3_outside_copsey_clusters",
+            "severity": "hard",
+            "measurement_id": "bearish_wave3_failed",
+            "message": "Wave 3 projection is outside Copsey allowed clusters.",
+            "actual_ratio": 1.5754
+          }
+        ]
+      }
+    },
+    {
+      "id": "macro_extension_to_126296_rejected",
+      "selection_role": "rejected",
+      "direction": "bullish",
+      "structure_type": "rejected_impulse",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 15460
+        },
+        {
+          "id": "p1",
+          "price": 31862.21
+        },
+        {
+          "id": "p2",
+          "price": 24900
+        },
+        {
+          "id": "p3",
+          "price": 73835.57
+        }
+      ],
+      "measurements": [
+        {
+          "id": "macro_extension_wave3_cluster_miss",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "macro_extension_to_126296_rejected",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "measurements": [
+          {
+            "id": "macro_extension_wave3_cluster_miss",
+            "type": "wave3_projection",
+            "status": "fail",
+            "score": 0,
+            "actual_ratio": 2.9835,
+            "violation_id": "wave3_outside_copsey_clusters"
+          }
+        ],
+        "violations": [
+          {
+            "id": "wave3_outside_copsey_clusters",
+            "severity": "hard",
+            "measurement_id": "macro_extension_wave3_cluster_miss",
+            "message": "Wave 3 projection is outside Copsey allowed clusters.",
+            "actual_ratio": 2.9835
+          }
+        ]
+      }
+    }
+  ],
+  "count_state": {
+    "state_id": "COINBASE_BTCUSD_2026-05-16_hew_running_flat_watchlist",
+    "anchor_hash": "coinbase-btcusd-15460-109358-60001-82814",
+    "continuity_status": "revised",
+    "previous_state_ref": "BITSTAMP_BTCUSD_2026-05-16_hew lineage adjusted to COINBASE data",
+    "update_reason": "126296 classified as running-flat B-wave overthrow; active daily impulse is watchlist only below 82814.23.",
+    "persisted_at": "2026-05-16T16:55:00+02:00"
+  },
+  "hew_structure_context": {
+    "preceding_impulse_context": {
+      "status": "pass",
+      "drawing_id": "macro_impulse_context",
+      "evidence": "15460-109358.01 native Elliott impulse is drawn before interpreting the running flat."
+    },
+    "primary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "macro_primary_degree_subwaves",
+      "evidence": "Primary macro impulse degree is visible with native Elliott tooling."
+    },
+    "secondary_degree_subwaves": {
+      "status": "pass",
+      "drawing_ids": [
+        "macro_wave3_internal_subwaves",
+        "macro_wave5_internal_subwaves"
+      ],
+      "evidence": "Separate native Elliott drawings show the Wave 3 and Wave 5 internal regions."
+    },
+    "forward_impulse_projection": {
+      "status": "pass",
+      "drawing_id": "conditional_forward_path",
+      "conditionality": "conditional projection scenario only after 82814.23 acceptance",
+      "evidence": "The forward path is not a prediction; it activates only above the trigger."
+    }
+  },
+  "copsey_hew_purity": {
+    "internal_abc_motive_engines": {
+      "status": "pass",
+      "evidence": "Macro Waves 1, 3, and 5 were checked as Copsey motive-engine visible equivalents.",
+      "macro_waves": [
+        {
+          "wave": "1",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "15460-31862.21 acts as the first higher-degree motive segment.",
+          "drawing_id": "macro_primary_degree_subwaves",
+          "evidence": "Wave 1 is part of the verified primary macro impulse."
+        },
+        {
+          "wave": "3",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "24900-73835.57 has separate lower-degree expansion evidence.",
+          "drawing_id": "macro_wave3_internal_subwaves",
+          "evidence": "Wave 3 expands 2.9835x Wave 1."
+        },
+        {
+          "wave": "5",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "49050.01-109358.01 has separate lower-degree internal evidence.",
+          "drawing_id": "macro_wave5_internal_subwaves",
+          "evidence": "Wave 5 terminal is before the running-flat correction."
+        }
+      ]
+    },
+    "ac_lower_degree_fives": {
+      "status": "pass",
+      "evidence": "A and C lower-degree five-wave action was checked, but not promoted to trade proof.",
+      "legs": [
+        {
+          "leg": "A",
+          "visibility_status": "not_visible",
+          "visibility_reason": "The 109358.01-74420.69 A leg is visible as a macro correction leg, but lower-degree fives are not required for the watchlist-only posture.",
+          "downgrade_semantics": "No action is allowed without the daily trigger."
+        },
+        {
+          "leg": "C",
+          "visibility_status": "not_visible",
+          "visibility_reason": "The 126296-60001 C leg is ratio-clean but lower-degree fives are not fully expanded here.",
+          "downgrade_semantics": "Treat the flat-complete thesis as candidate until 82814.23 is reclaimed."
+        }
+      ]
+    },
+    "classical_rescue_devices": {
+      "status": "pass",
+      "evidence": "Classical rescue devices were rejected.",
+      "rejected_devices": [
+        "extended_waves",
+        "failed_fifths",
+        "leading_diagonals",
+        "ending_diagonals",
+        "diagonal_triangles"
+      ],
+      "used_devices": [],
+      "no_use_confirmed": true
+    },
+    "castaway_overlay": {
+      "status": "pass",
+      "source_label": "Konsili Castaway overlay",
+      "is_copsey_source": false,
+      "evidence": "Castaway does not select or alter the Copsey count."
+    },
+    "wave3_1764_rule": {
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 2.9835,
+      "evidence": "Macro Wave 3 is 2.9835x Wave 1; daily Wave 3 is 3.1804x Wave 1."
+    }
+  },
+  "primary_count": {
+    "status": "candidate_watchlist",
+    "summary": "Corrected macro Copsey impulse 15460-31862.21-24900-73835.57-49050.01-109358.01, followed by running flat 109358.01-74420.69-126296-60001. Daily 64938.66-69285.99-65696.96-79523-74914-82814.23 is valid but inactive below 82814.23.",
+    "macro_impulse": {
+      "points": [
+        15460,
+        31862.21,
+        24900,
+        73835.57,
+        49050.01,
+        109358.01
+      ],
+      "strict_validation": "full_valid_hew",
+      "wave3_vs_wave1": 2.9835,
+      "structure_invalidation": 15460
+    },
+    "macro_correction": {
+      "classification": "running_flat",
+      "quality": "clean_candidate",
+      "points": [
+        109358.01,
+        74420.69,
+        126296,
+        60001
+      ],
+      "b_over_a": 1.4843,
+      "c_over_a": 1.8975
+    },
+    "daily_impulse": {
+      "points": [
+        64938.66,
+        69285.99,
+        65696.96,
+        79523,
+        74914,
+        82814.23
+      ],
+      "strict_validation": "full_valid_hew",
+      "wave3_vs_wave1": 3.1804,
+      "count_damage": 74914,
+      "structure_invalidation": 64938.66
+    }
+  },
+  "alternate_counts": [
+    {
+      "id": "weekly_bearish_impulse_candidate_rejected",
+      "status": "rejected_for_copsey_purity",
+      "points": [
+        126296,
+        103516.75,
+        116410.06,
+        80524.65,
+        97963.62,
+        60001
+      ],
+      "activation": "Not actionable under HEW unless a new valid bearish structure develops.",
+      "invalidation": "Rejected now because Wave 3 is below the Copsey floor/cluster standard.",
+      "implication": "Do not rescue this with classical Elliott devices."
+    },
+    {
+      "id": "macro_extension_to_126296",
+      "status": "rejected",
+      "activation": "Would require treating 126296 as terminal Wave 5.",
+      "invalidation": "Rejected because running-flat interpretation better explains 109358.01-74420.69-126296-60001.",
+      "implication": "126296 is a B-wave overthrow, not the main terminal count."
+    },
+    {
+      "id": "macro_flat_not_complete",
+      "status": "watch",
+      "activation": "Loss of 64938.66 and especially 60001 reopens the macro correction.",
+      "invalidation": "Acceptance above 82814.23 and hold/retest weakens this alternate.",
+      "implication": "Below 60001, rebuild the macro count."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "wave3_1764_rule",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 2.9835,
+      "evidence": "Macro bullish Wave 3 is 2.9835x Wave 1."
+    },
+    {
+      "id": "daily_wave3_expansion",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 3.1804,
+      "evidence": "Daily Wave 3 from 65696.96 to 79523 is 3.1804x Wave 1."
+    },
+    {
+      "id": "macro_wave3_internal_ratio",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 3.4166,
+      "evidence": "Lower-degree Wave 3 region validates above the 1.764 floor."
+    },
+    {
+      "id": "macro_wave5_internal_ratio",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 3.5124,
+      "evidence": "Lower-degree Wave 5 region validates above the 1.764 floor."
+    },
+    {
+      "id": "running_flat_c_leg",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.8975,
+      "evidence": "C leg from 126296 to 60001 is a deep Copsey C-wave against A 109358.01 to 74420.69."
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "macro_impulse_origin_holds",
+      "status": "pass",
+      "evidence": "Macro Wave 2 low 24900 remains above 15460."
+    },
+    {
+      "id": "daily_wave4_non_overlap",
+      "status": "pass",
+      "evidence": "Daily Wave 4 low 74914 remains above Wave 1 high 69285.99."
+    },
+    {
+      "id": "wave3_not_shortest",
+      "status": "pass",
+      "evidence": "Macro and daily Wave 3 are not the shortest motive waves."
+    },
+    {
+      "id": "bearish_candidate_not_rescued",
+      "status": "pass",
+      "evidence": "Weak bearish candidate is rejected rather than rescued."
+    }
+  ],
+  "wave_b_invalidation_ladder": [
+    {
+      "id": "b_wave_overthrow_context",
+      "level": 126296,
+      "status": "context",
+      "violation_standard": "Macro acceptance above 126296 changes the running-flat interpretation.",
+      "evidence": "126296 is the B-wave overthrow high."
+    },
+    {
+      "id": "daily_trigger",
+      "level": 82814.23,
+      "status": "not_reclaimed",
+      "violation_standard": "Daily/weekly acceptance above 82814.23.",
+      "evidence": "Current quote 78262.51 remains below trigger."
+    },
+    {
+      "id": "daily_count_damage",
+      "level": 74914,
+      "status": "holds",
+      "violation_standard": "Daily close below 74914 damages the daily impulse.",
+      "evidence": "This level is drawn."
+    },
+    {
+      "id": "daily_structure_invalidation",
+      "level": 64938.66,
+      "status": "holds",
+      "violation_standard": "Acceptance below 64938.66 invalidates the active daily impulse.",
+      "evidence": "This level is drawn."
+    },
+    {
+      "id": "macro_flat_invalidation",
+      "level": 60001,
+      "status": "holds",
+      "violation_standard": "Acceptance below 60001 invalidates the flat-complete premise.",
+      "evidence": "This level is drawn."
+    }
+  ],
+  "zone_probabilities": [
+    {
+      "id": "retracement_71766_75985",
+      "zone_type": "retracement",
+      "price_range": {
+        "low": 71766,
+        "high": 75985
+      },
+      "probability": {
+        "value": 57,
+        "band": "moderate"
+      },
+      "evidence": "0.382-0.618 retracement of the daily 64938.66-82814.23 impulse.",
+      "invalidation": "Below 64938.66 invalidates the daily impulse.",
+      "upgrade_trigger": "Reversal from this zone followed by 82814.23 reclaim.",
+      "downgrade_trigger": "Acceptance below 71766 and 64938.66."
+    },
+    {
+      "id": "projection_96470_107516",
+      "zone_type": "projection",
+      "price_range": {
+        "low": 96470,
+        "high": 107516
+      },
+      "probability": {
+        "value": 52,
+        "band": "moderate"
+      },
+      "evidence": "Conditional projection band after 82814.23 acceptance.",
+      "invalidation": "Failure back below 82814.23 after reclaim.",
+      "upgrade_trigger": "Daily/weekly acceptance above 82814.23 with hold/retest.",
+      "downgrade_trigger": "Chop under 82814.23."
+    },
+    {
+      "id": "no_trade_75985_82814",
+      "zone_type": "no_trade",
+      "price_range": {
+        "low": 75985,
+        "high": 82814.23
+      },
+      "probability": {
+        "value": 65,
+        "band": "elevated"
+      },
+      "evidence": "Current price 78262.51 is inside this band.",
+      "invalidation": "Band ends above 82814.23 or below 75985 into deeper retracement.",
+      "upgrade_trigger": "Reclaim/hold of 82814.23.",
+      "downgrade_trigger": "Sideways rejection under 82814.23."
+    },
+    {
+      "id": "invalidation_60001_74914",
+      "zone_type": "invalidation",
+      "price_range": {
+        "low": 60001,
+        "high": 74914
+      },
+      "probability": {
+        "value": 38,
+        "band": "moderate"
+      },
+      "evidence": "Loss of 74914 damages daily impulse; loss of 64938.66/60001 invalidates active/macro premise.",
+      "invalidation": "Acceptance below 60001.",
+      "upgrade_trigger": "Hold above 74914 and reclaim 82814.23.",
+      "downgrade_trigger": "Daily close below 74914, then 64938.66."
+    }
+  ],
+  "action_rationale": {
+    "selected_action": "WATCHLIST ONLY",
+    "strategy_basis": "Corrected Copsey macro impulse plus running-flat correction and active daily impulse below trigger.",
+    "why_action_follows_strategy": "HEW allows upside only after the daily impulse proves continuation above 82814.23. Current price inside 75985-82814.23 gives poor asymmetry.",
+    "chart_evidence_supporting_action": "Macro impulse 15460-109358.01 is drawn; running flat 109358.01-74420.69-126296-60001 is drawn; daily impulse is drawn but inactive.",
+    "what_proves_it_wrong": "Below 74914 damages the daily count, below 64938.66 invalidates the active impulse, and below 60001 invalidates the flat-complete premise.",
+    "human_takeaway": "Do nothing in the current band; wait for 82814.23 reclaim/hold or a cleaner retracement reversal."
+  },
+  "trade_posture": {
+    "posture": "WATCHLIST ONLY",
+    "setup": "Candidate post-running-flat bullish continuation after C low at 60001.",
+    "trigger": "Daily/weekly acceptance above 82814.23, preferably with hold/retest.",
+    "invalidation": "74914 damages, 64938.66 invalidates active daily impulse, 60001 invalidates macro flat-complete premise.",
+    "target_path": "After trigger: 96470-107516 first, then 111740-126296.",
+    "do_nothing": "Ignore chop between 75985 and 82814.23; do not buy the middle of the range."
+  },
+  "castaway_trade_model": {
+    "model": "Konsili Castaway overlay - post-correction trigger gate",
+    "permission": "blocked_until_trigger",
+    "source_label": "Konsili Castaway overlay",
+    "is_copsey_source": false,
+    "reason": "Overlay blocks action while price is below trigger.",
+    "evidence": "Copsey HEW structure is watchlist only until 82814.23 acceptance.",
+    "decision_table": [
+      {
+        "id": "model",
+        "value": "Post-running-flat trigger gate",
+        "evidence": "Copsey structure is candidate bullish continuation."
+      },
+      {
+        "id": "permission",
+        "value": "blocked_until_trigger",
+        "evidence": "No permission inside 75985-82814.23 band."
+      },
+      {
+        "id": "trigger",
+        "value": "82814.23 daily/weekly acceptance",
+        "evidence": "This is the active daily impulse high."
+      },
+      {
+        "id": "invalidation",
+        "value": "74914 damage, 64938.66 invalidation, 60001 macro invalidation",
+        "evidence": "Escalating levels are drawn."
+      },
+      {
+        "id": "target_path",
+        "value": "96470-107516, then 111740-126296",
+        "evidence": "Projection path is conditional."
+      },
+      {
+        "id": "stand_aside_condition",
+        "value": "Failure below 74914 or no reclaim of 82814.23",
+        "evidence": "No trade until structure proves continuation."
+      }
+    ]
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "fail",
+      "evidence": "Price 78262.51 is inside 75985-82814.23 no-trade band."
+    },
+    {
+      "id": "trigger",
+      "status": "fail",
+      "evidence": "82814.23 is not reclaimed."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "74914, 64938.66, and 60001 are explicit."
+    },
+    {
+      "id": "reward",
+      "status": "partial",
+      "evidence": "Reward only activates after trigger."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "partial",
+      "evidence": "Macro and daily are constructive, but trigger is inactive."
+    }
+  ],
+  "red_team": {
+    "countercase": "The flat may not be complete and the February low may only be an interim leg.",
+    "proof_needed": "A loss of 64938.66 or 60001 forces a rebuild.",
+    "impact": "Keep watchlist only until trigger or invalidation."
+  },
+  "critic_review": {
+    "completed_at": "2026-05-16T16:55:00+02:00",
+    "reviewer": "hew-independent-critic contract checklist",
+    "scope": "COINBASE:BTCUSD HEW package, chart evidence, actionability, and macro focus",
+    "timeframe_focus": "monthly-weekly-daily",
+    "max_detail_timeframe": "daily",
+    "final_verdict": "pass",
+    "independent_reviewer": {
+      "reviewer_type": "independent_pass",
+      "prompt_file": "agents/hew-independent-critic.md",
+      "scope": "Final checklist review against HEW manifest and chart evidence.",
+      "verdict": "pass",
+      "evidence": "Rejected actionable language because price remains below 82814.23 trigger; verified KPE path and no fallback confidence cap needed.",
+      "independent_from_author": true
+    },
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "journal.md, evidence.json, and five screenshots are present."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass",
+        "evidence": "KPE rows and OHLCV verification are recorded for required timeframes."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "Monthly/weekly structure drives the thesis; daily is the action layer only."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "Decision, trigger, invalidations, target path, and do-nothing condition are explicit."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "74914, 64938.66, and 60001 are clear."
+      },
+      {
+        "id": "visual_first_sequence_checked",
+        "status": "pass",
+        "evidence": "KPE extraction preceded ratio interpretation."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "No intraday execution setup is provided."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "Journal, evidence, screenshots, and final chart describe the same count and levels."
+      },
+      {
+        "id": "final_chart_readability_checked",
+        "status": "pass",
+        "evidence": "Final chart hides KPE and pivot scaffolding."
+      },
+      {
+        "id": "hew_no_orphan_abc_checked",
+        "status": "pass",
+        "evidence": "Running flat corrects the 15460-109358.01 impulse."
+      },
+      {
+        "id": "hew_preceding_impulse_context_checked",
+        "status": "pass",
+        "evidence": "Preceding impulse drawing is present."
+      },
+      {
+        "id": "hew_primary_secondary_subwaves_checked",
+        "status": "pass",
+        "evidence": "Primary and secondary subwave drawings are present."
+      },
+      {
+        "id": "hew_forward_impulse_projection_checked",
+        "status": "pass",
+        "evidence": "Projection is native Elliott and conditional."
+      },
+      {
+        "id": "hew_copsey_internal_abc_motive_engines_checked",
+        "status": "pass",
+        "evidence": "Macro Waves 1/3/5 are documented as motive-engine visible equivalents."
+      },
+      {
+        "id": "hew_copsey_ac_lower_degree_fives_checked",
+        "status": "pass",
+        "evidence": "A/C lower-degree limitation is disclosed and blocks action."
+      },
+      {
+        "id": "hew_classical_rescue_devices_rejected",
+        "status": "pass",
+        "evidence": "No classical rescue devices used."
+      },
+      {
+        "id": "hew_castaway_overlay_not_copsey_source",
+        "status": "pass",
+        "evidence": "Castaway is labeled as Konsili overlay."
+      },
+      {
+        "id": "hew_wave3_1764_rule_checked",
+        "status": "pass",
+        "evidence": "Macro and daily Wave 3 checks pass the 1.764 floor."
+      },
+      {
+        "id": "pivot_path_clean",
+        "status": "pass",
+        "evidence": "KPE exporter path is clean after left/right/max profile correction."
+      },
+      {
+        "id": "fallback_confidence_cap_checked",
+        "status": "pass",
+        "evidence": "No pass_with_fallback status is used; confidence cap is not required."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "Lower-degree A/C internals and trigger inactivity are disclosed."
+      }
+    ],
+    "findings": [
+      {
+        "id": "current_price_inside_no_trade_band",
+        "severity": "medium",
+        "status": "resolved_by_action_block",
+        "evidence": "Posture is watchlist only."
+      }
+    ]
+  },
+  "review_triggers": [
+    {
+      "condition": "Daily/weekly acceptance above 82814.23 and hold/retest.",
+      "expected": "Upgrade from WATCHLIST ONLY to actionable candidate review.",
+      "downgrade_if": "Reclaim fails or price returns below 82814.23."
+    },
+    {
+      "condition": "Daily close below 74914.",
+      "expected": "Daily impulse damaged.",
+      "downgrade_if": "Below 64938.66 invalidates active daily count."
+    },
+    {
+      "condition": "Acceptance below 60001.",
+      "expected": "Flat-complete macro premise invalidated.",
+      "downgrade_if": "Rebuild macro count."
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "lower_degree_ac_internals_not_expanded",
+      "impact": "A/C lower-degree fives are not used as action proof; posture remains watchlist only."
+    },
+    {
+      "id": "daily_w1_w2_internal_not_kpe_rows",
+      "impact": "Some minor daily W1/W2 points are OHLCV-verified rather than exported as major KPE rows; trigger and invalidations use KPE rows."
+    }
+  ],
+  "confidence": {
+    "rating": "medium",
+    "rationale": "Clean KPE pivot path and valid macro/daily HEW checks, but price is below trigger and some lower-degree internals are not expanded."
+  },
+  "execution_quality": {
+    "vision_qa": {
+      "status": "pass",
+      "screenshot_reviewed": true,
+      "evidence": "Macro and trade posture screenshots were captured after the corrected redraw."
+    },
+    "rerun_schedule": {
+      "status": "scheduled",
+      "trigger": "Daily/weekly close above 82814.23 or below 74914/64938.66/60001.",
+      "cadence": "Review after daily close or if trigger/invalidation prints.",
+      "evidence": "Review triggers are recorded."
+    },
+    "drawing_spec": {
+      "status": "pass",
+      "manifest_roles_checked": true,
+      "source": "strategies/hew/manifest.json",
+      "evidence": "Required drawing roles are present with native Elliott tools."
+    }
+  }
+}

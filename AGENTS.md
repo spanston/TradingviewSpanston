@@ -14,6 +14,7 @@ Use the smallest set of authorities:
 4. `agents/harmonic-elliott-wave-analyst.md` - compact HEW specialist prompt.
 5. `agents/hew-independent-critic.md` - independent final critic prompt.
 6. `scripts/validate_evidence.mjs` - validator.
+7. `docs/hew-atlassian-reference-style.md` - distilled reference style from the accepted TEAM package.
 
 Do not re-create strategy contracts in ad-hoc prose. If a required field, drawing role, checklist item, screenshot role, or critic rule changes, update the HEW strategy manifest first.
 
@@ -23,10 +24,22 @@ Keep context lean. Start with `AGENTS.md`, then load only the HEW workflow files
 
 - `WORKFLOW.md`
 - `strategies/hew/manifest.json`
+- `docs/hew-atlassian-reference-style.md` when the task is HEW package creation, review, or workflow edits
 - `agents/harmonic-elliott-wave-analyst.md`
 - `agents/hew-independent-critic.md` only for final critic review or critic-prompt edits
 
-Do not preload `analysis_journal`, screenshots, reports, or generated artifacts. Open only the current package or specific files needed for the task.
+Do not preload `analysis_journal`, screenshots, reports, or generated artifacts. The accepted TEAM package at `analysis_journal/TEAM_2026-05-16_hew` is the concrete style reference, but future runs should use the distilled reference doc and manifest unless the task explicitly asks to audit the reference package.
+
+## Reference style
+
+All future HEW packages should follow the Atlassian/TEAM reference style unless Johan explicitly asks for a different output surface:
+
+- Zone-first investment posture: accumulation and potential distribution boxes with percentages before any action language.
+- Probabilities tied to HEW ratio fit, projection context, AO divergence, and volume evidence.
+- `review_conditions` and zone posture changes instead of trigger, breakout, confirmation, or reclaim language.
+- Native Elliott drawings only for macro counts, corrections, subwaves, and projections; no text-label substitutes for EW markers.
+- Lower-degree macro-wave internals, especially Wave 3, should be extracted from the macro wave's own time range on a lower timeframe when readable, then drawn as a distinct lower-degree Elliott layer with a companion HEW Fibonacci projection zone when useful.
+- Macro and lower-degree label overlap must be solved with native Elliott degree/style settings, visible-range choice, or separate screenshots. Do not falsify pivot prices to move labels.
 
 ## Routing
 
@@ -92,7 +105,7 @@ Every serious run must explicitly move through four chart modes and record them 
    - Output: macro/trade posture screenshots and drawing manifest.
 4. **Presentation mode**
    - Purpose: leave Johan with a clean, human-actionable live chart.
-   - Chart state: `Konsili Pivot Exporter` and extraction scaffolding hidden, not deleted unless clearly stale; key count/range/zones, trigger, invalidation, and target path visible.
+   - Chart state: `Konsili Pivot Exporter` and extraction scaffolding hidden, not deleted unless clearly stale; key count/range/zones, accumulation/distribution boxes, invalidation, stand-aside conditions, and conditional target path visible.
    - Required verification: `chart_get_state`, `draw_list`, key drawing properties when available, and a final screenshot/visual check.
    - Failure condition: if `Konsili Pivot Exporter`, Pivot Scanner/Pivots HL, or equivalent scaffolding remains visibly cluttering the decision chart, the package is not complete unless Johan explicitly requested audit mode.
 
@@ -160,11 +173,11 @@ HEW outputs must include:
 - Triple-confluence targets must be derived from pivot projections, not raw target numbers.
 - Wave-B invalidation ladder with chart proof.
 - Structured Castaway decision table before trade language.
-- Copsey retracement, projection, invalidation, and no-trade zone probabilities.
+- Copsey accumulation, distribution, retracement, projection, invalidation, and no-trade zone probabilities. For macro investment posture, use accumulation/distribution boxes with percentages and avoid trigger, breakout, confirmation, or reclaim framing.
 - Conditional forward impulse projection after any completed 1-5 + ABC structure; label projection as scenario, not fact.
 - Projection map tied to the highest-probability next count.
 - Hard invalidation, flip level, target path, and stand-aside condition.
-- `execution_quality` with screenshot/vision QA, rerun trigger/cadence, and manifest-driven drawing-spec confirmation.
+- `execution_quality` with screenshot/vision QA, rerun condition/cadence, and manifest-driven drawing-spec compliance.
 - If any gate or pivot verification uses `pass_with_fallback`, cap confidence to `low`/`very_low`, disclose the fallback in `confidence.cap_reason`, and avoid `ACTIONABLE` output until the clean pivot path is restored.
 
 Final `critic_review` must include an independent reviewer record. The critic is not just a prose summary; it must verify the clean pivot path, fallback confidence cap, structural proof, and actionability checks required by the manifest.
@@ -174,10 +187,13 @@ HEW drawing grammar is strict:
 - Macro counts, subwaves, and projected Elliott paths must use TradingView Elliott tools: `elliott_impulse_wave`, `elliott_correction`, `elliott_triangle_wave`, `elliott_double_combo`, or `elliott_triple_combo`.
 - Preceding impulse context and forward impulse projections must use `elliott_impulse_wave`.
 - Primary-degree subwaves and secondary/internal subwaves must be represented as their own native Elliott drawing roles, not only text labels.
+- Lower-degree subwaves inside macro waves should be visually distinct from macro counts: use a lower Elliott degree, separate color/style, and when projection proof matters, a HEW Fibonacci projection zone/annotation rather than reusing the same visual treatment as the macro count.
+- If macro Elliott labels overlap lower-degree subwave labels at shared pivots, solve it with Elliott degree/style separation, visible-range choice, or separate screenshots. Do not use text labels as Elliott wave marker substitutes, and keep the true evidence pivots and drawing-manifest levels unchanged.
 - Classical Elliott rescue devices are forbidden in HEW counts: do not use extended waves, failed fifths, leading diagonals, ending diagonals, or diagonal triangles to save a weak count.
 - `trend_line`, generic line drawings, and horizontal-line substitutes are forbidden for HEW count legs, subwave legs, and projected count legs.
-- `horizontal_line` is allowed for ladder levels, hard invalidation, flip levels, and target boundaries only.
-- `rectangle` is allowed for retracement, projection target, invalidation, and no-trade zones.
+- Prefer `rectangle` for accumulation, potential distribution, retracement, projection target, invalidation, and no-trade zones.
+- `horizontal_line` is allowed only when the manifest or package explicitly needs a non-count boundary layer; it is never a count-leg substitute or a replacement for zone boxes.
+- Final presentation should not use legacy `decision_level` drawings unless Johan explicitly asks for them or the manifest marks them audit-only.
 
 If the count cannot be proven with the correct drawing tools, mark the count `candidate`, `unclear`, or `missing` and say `STAND ASIDE`.
 
@@ -216,9 +232,9 @@ Lead with the decision:
 - Setup.
 - Active HEW count and alternate.
 - Copsey/HEW reason.
-- Trigger.
+- Accumulation and distribution zones with probabilities.
 - Invalidation and flip level.
 - Target/reward path.
 - What to ignore/do nothing on.
 
-Every action must say why it follows from the HEW count, ratio model, Wave-B ladder, and Castaway overlay. If that explanation is weak, the correct answer is no trade.
+Every action must say why it follows from the HEW count, ratio model, zone-probability model, Wave-B ladder, and Castaway overlay. If that explanation is weak, the correct answer is no trade.

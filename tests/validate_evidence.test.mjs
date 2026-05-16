@@ -379,18 +379,18 @@ function baseEvidence(overrides = {}) {
     rule_validation: [{ id: 'wave2_origin', status: 'pass', evidence: 'origin holds' }],
     wave_b_invalidation_ladder: [{ id: 'w2_holds_w1_origin', level: 100, status: 'holds', violation_standard: 'daily_close' }],
     zone_probabilities: [
-      { id: 'retracement_w4', zone_type: 'retracement', price_range: { low: 100, high: 110 }, probability: { value: 58, band: 'moderate' }, evidence: 'Wave 4 retracement support', invalidation: 'below 99', upgrade_trigger: 'accept above 120', downgrade_trigger: 'lose 99' },
-      { id: 'projection_w5', zone_type: 'projection', price_range: { low: 150, high: 160 }, probability: { value: 52, band: 'moderate' }, evidence: 'Wave 5 projection target', invalidation: 'accept above 165', upgrade_trigger: 'reject zone', downgrade_trigger: 'accept above' }
+      { id: 'accumulation_w4', zone_type: 'accumulation', price_range: { low: 100, high: 110 }, probability: { value: 58, band: 'moderate' }, evidence: 'Wave 4 accumulation support', invalidation: 'below 99', upgrade_condition: 'absorption improves above 120', downgrade_condition: 'lose 99' },
+      { id: 'distribution_w5', zone_type: 'distribution', price_range: { low: 150, high: 160 }, probability: { value: 52, band: 'moderate' }, evidence: 'Wave 5 distribution target', invalidation: 'accept above 165', upgrade_condition: 'supply appears in zone', downgrade_condition: 'accept above' }
     ],
     action_rationale: {
       selected_action: 'stand_aside',
       strategy_basis: 'Ian Copsey Fractal Forecasting ratio model and Konsili Castaway overlay',
-      why_action_follows_strategy: 'The active count is candidate and confirmation is incomplete.',
+      why_action_follows_strategy: 'The active count is candidate and the zone posture is not constructive.',
       chart_evidence_supporting_action: 'Macro count, ladder, and zones are visible.',
       what_proves_it_wrong: 'Acceptance above the flip level with valid subwaves.',
-      human_takeaway: 'No trade until trigger confirms.'
+      human_takeaway: 'No trade until the zone posture improves.'
     },
-    trade_posture: { posture: 'STAND ASIDE', trigger: 'none', invalidation: 'defined', target_path: 'conditional' },
+    trade_posture: { posture: 'STAND ASIDE', zone_focus: 'accumulation/distribution zones only', invalidation: 'defined', target_path: 'conditional' },
     castaway_trade_model: {
       model: 'Model 6',
       permission: 'blocked',
@@ -399,16 +399,16 @@ function baseEvidence(overrides = {}) {
       reason: 'stand aside',
       decision_table: [
         { id: 'model', value: 'Model 6', evidence: 'Castaway model classified after Copsey structure.' },
-        { id: 'permission', value: 'blocked', evidence: 'No clean trigger and fallback-free proof still points to stand aside.' },
-        { id: 'trigger', value: 'accept above flip level', evidence: 'Trigger tied to decision drawing.' },
+        { id: 'permission', value: 'blocked', evidence: 'No clean zone posture and fallback-free proof still points to stand aside.' },
+        { id: 'zone_focus', value: 'monitor accumulation and distribution zones', evidence: 'Zone posture tied to decision drawing.' },
         { id: 'invalidation', value: 'break hard invalidation', evidence: 'Invalidation level is charted.' },
         { id: 'target_path', value: 'conditional projection only', evidence: 'Target path follows conditional Elliott projection.' },
-        { id: 'stand_aside_condition', value: 'until trigger confirms', evidence: 'No trade while trigger and timeframe alignment are incomplete.' }
+        { id: 'stand_aside_condition', value: 'until zone posture improves', evidence: 'No trade while zone and timeframe alignment are incomplete.' }
       ]
     },
     no_trade_gate: [
       { id: 'location', status: 'fail', evidence: 'mid wave' },
-      { id: 'trigger', status: 'fail', evidence: 'not triggered' },
+      { id: 'zone_focus', status: 'fail', evidence: 'zone posture is not constructive' },
       { id: 'invalidation', status: 'pass', evidence: 'defined' },
       { id: 'reward', status: 'partial', evidence: 'conditional' },
       { id: 'timeframe_alignment', status: 'partial', evidence: 'mixed' }
@@ -450,12 +450,12 @@ function baseEvidence(overrides = {}) {
         evidence: 'Independent critic pass checked structure, pivots, drawings, and no-trade posture.'
       }
     },
-    review_triggers: [{ condition: 'trigger', expected: 'upgrade', downgrade_if: 'fail' }],
+    review_conditions: [{ condition: 'zone posture changes', expected: 'upgrade', downgrade_if: 'fail' }],
     missing_evidence: [],
     confidence: { rating: 'medium', rationale: 'candidate but gated' },
     execution_quality: {
       vision_qa: { status: 'pass', screenshot_reviewed: true, evidence: 'Final screenshot was visually reviewed for readability and alignment.' },
-      rerun_schedule: { status: 'scheduled', trigger: 'price reaches trigger or invalidation', cadence: 'manual_on_trigger_or_weekly_refresh', evidence: 'Rerun conditions are explicit for future sessions.' },
+      rerun_schedule: { status: 'scheduled', condition: 'price reaches zone boundary or invalidation', cadence: 'manual_on_zone_shift_or_weekly_refresh', evidence: 'Rerun conditions are explicit for future sessions.' },
       drawing_spec: { status: 'pass', source: 'strategies/hew/manifest.json', manifest_roles_checked: true, evidence: 'Drawing roles and allowed tools were checked against manifest.' }
     },
     ...overrides
@@ -485,6 +485,10 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.deepEqual(manifest.visual_pivot_protocol.required_timeframes, ['monthly', 'weekly', 'daily']);
   assert.equal(manifest.visual_pivot_protocol.preferred_indicator, 'Konsili Pivot Exporter');
   assert.equal(manifest.visual_pivot_protocol.required_exporter.version, 2);
+  assert.equal(manifest.reference_style.package_path, 'analysis_journal/TEAM_2026-05-16_hew');
+  assert.equal(manifest.reference_style.distilled_doc, 'docs/hew-atlassian-reference-style.md');
+  assert.ok(manifest.reference_style.required_traits.includes('zone_first_accumulation_distribution_probabilities'));
+  assert.ok(manifest.reference_style.required_traits.includes('native_elliott_wave_markers_only'));
   assert.equal(manifest.visual_pivot_protocol.required_exporter.pine_script, 'tradingview/konsili_pivot_exporter.pine');
   assert.deepEqual(manifest.visual_pivot_protocol.required_exporter.required_pivot_fields, ['date', 'time', 'price', 'exporter_row_id']);
   assert.deepEqual(manifest.visual_pivot_protocol.required_exporter.allowed_source_tools, ['data_get_pine_tables', 'data_get_pine_labels']);
@@ -504,6 +508,11 @@ test('HEW manifest requires visual-first pivot gates', () => {
     'wave1_wave4_non_overlap_rule'
   ]);
   assert.deepEqual(manifest.hypothesis_protocol.wave_iii_complete_required_measurement_types, ['triple_confluence']);
+  assert.deepEqual(manifest.hypothesis_protocol.required_engine_result_fields, ['status', 'score', 'hard_rule_pass', 'lifecycle_status', 'classification']);
+  assert.ok(manifest.hypothesis_protocol.hard_rule_violation_ids.includes('failed_fifth_forbidden'));
+  assert.ok(manifest.hypothesis_protocol.hard_rule_violation_ids.includes('projected_point_marked_complete'));
+  assert.ok(manifest.drawing_protocol.forbidden_final_drawing_terms.includes('rejected'));
+  assert.ok(manifest.drawing_protocol.deprecated_final_roles.includes('decision_level'));
   assert.equal(manifest.hypothesis_protocol.structural_distinctness.required, true);
   assert.equal(manifest.visual_pivot_protocol.instrument_parameter_profiles.single_stock.left, 5);
   assert.equal(manifest.critic_review.independent_reviewer.prompt_file, 'agents/hew-independent-critic.md');
@@ -616,6 +625,39 @@ test('HEW completed impulses hard-reject extended fifth rescue counts', () => {
   assert.match(errors, /primary hypothesis must pass deterministic Copsey ratio engine/i);
 });
 
+test('HEW completed impulses hard-reject failed fifth rescue counts', () => {
+  const evidence = baseEvidence();
+  evidence.hypotheses[0] = baseHypothesis({
+    pivots: [
+      ...baseHypothesis().pivots.filter((point) => point.id !== 'p5'),
+      { id: 'p5', price: 160 }
+    ]
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /failed_fifth_forbidden/i);
+  assert.match(errors, /primary hypothesis must pass deterministic Copsey ratio engine/i);
+});
+
+test('HEW projected Wave 3 cannot be marked complete', () => {
+  const evidence = baseEvidence();
+  evidence.hypotheses[0] = baseHypothesis({
+    structure_type: 'conditional_forward_impulse',
+    wave3_complete: true,
+    pivots: baseHypothesis().pivots.map((point) => (
+      point.id === 'p3'
+        ? { ...point, point_status: 'projected' }
+        : point
+    ))
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /projected_point_marked_complete/i);
+  assert.match(errors, /primary hypothesis must pass deterministic Copsey ratio engine/i);
+});
+
 test('HEW alternates must be structurally distinct from the primary pivot path', () => {
   const evidence = baseEvidence();
   evidence.hypotheses[1] = baseHypothesis({ id: 'hypothesis_alternate', selection_role: 'alternate', structure_type: 'alternate_impulse' });
@@ -718,6 +760,50 @@ test('Konsili Pivot Exporter may remain visible only in explicit audit presentat
 
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.deepEqual(result.errors, []);
+});
+
+test('rejected diagnostic wave drawings cannot survive into final presentation screenshots', () => {
+  const rejected = baseHypothesis({
+    id: 'rejected_daily_impulse',
+    selection_role: 'rejected',
+    structure_type: 'rejected_impulse',
+    pivots: [
+      ...baseHypothesis().pivots.filter((point) => point.id !== 'p5'),
+      { id: 'p5', price: 160 }
+    ]
+  });
+  const evidence = baseEvidence();
+  evidence.hypotheses[2] = rejected;
+  evidence.chart_prep.drawing_manifest.push({
+    id: 'daily_rejected_impulse_candidate',
+    role: 'secondary_degree_subwaves',
+    tool: 'elliott_impulse_wave',
+    timeframe_owner: 'daily',
+    screenshot: 'screenshots/trade.png',
+    source_hypothesis_id: 'rejected_daily_impulse',
+    engine_status: 'fail'
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /appears to be rejected\/diagnostic and must be audit_only/i);
+  assert.match(errors, /references failed\/rejected hypothesis rejected_daily_impulse and must be audit_only/i);
+  assert.match(errors, /references failed\/rejected hypothesis rejected_daily_impulse in final presentation screenshot/i);
+});
+
+test('Elliott impulse drawings hard-fail failed fifth topology from manifest levels', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.drawing_manifest[0] = {
+    ...evidence.chart_prep.drawing_manifest[0],
+    id: 'macro_failed_fifth_context',
+    tool: 'elliott_impulse_wave',
+    direction: 'bullish',
+    levels: [30.78, 99, 46.1, 780, 163.8, 743.5]
+  };
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+
+  assert.match(result.errors.join('\n'), /drawing_manifest\.macro_failed_fifth_context failed_fifth_forbidden/i);
 });
 
 test('visual pivot evidence is mandatory before strategy analysis', () => {
@@ -825,7 +911,7 @@ test('HEW manifest hard-codes structural proof, Copsey purity fields, and critic
   for (const role of ['preceding_impulse_context', 'primary_degree_subwaves', 'secondary_degree_subwaves', 'projection_count']) {
     assert.ok(manifest.drawing_protocol.required_roles.includes(role), `missing HEW drawing role ${role}`);
   }
-  assert.deepEqual(manifest.drawing_protocol.allowed_tools_by_role.preceding_impulse_context, ['elliott_impulse_wave']);
+  assert.deepEqual(manifest.drawing_protocol.allowed_tools_by_role.preceding_impulse_context, ['elliott_impulse_wave', 'elliott_correction']);
   assert.deepEqual(manifest.drawing_protocol.allowed_tools_by_role.projection_count, ['elliott_impulse_wave']);
   for (const id of [
     'copsey_internal_abc_motive_engines_checked',
@@ -989,23 +1075,23 @@ test('persistent count state is required for session continuity', () => {
 
 test('Castaway output must include a structured decision table', () => {
   const evidence = baseEvidence();
-  evidence.castaway_trade_model.decision_table = evidence.castaway_trade_model.decision_table.filter((row) => row.id !== 'trigger');
+  evidence.castaway_trade_model.decision_table = evidence.castaway_trade_model.decision_table.filter((row) => row.id !== 'zone_focus');
 
   const result = validateEvidenceFile(writeEvidence(evidence));
 
-  assert.match(result.errors.join('\n'), /castaway_trade_model\.decision_table missing required row: trigger/i);
+  assert.match(result.errors.join('\n'), /castaway_trade_model\.decision_table missing required row: zone_focus/i);
 });
 
 test('execution quality records vision QA, rerun schedule, and drawing spec compliance', () => {
   const evidence = baseEvidence();
   evidence.execution_quality.vision_qa.screenshot_reviewed = false;
-  delete evidence.execution_quality.rerun_schedule.trigger;
+  delete evidence.execution_quality.rerun_schedule.condition;
   evidence.execution_quality.drawing_spec.manifest_roles_checked = false;
 
   const result = validateEvidenceFile(writeEvidence(evidence));
   const errors = result.errors.join('\n');
   assert.match(errors, /execution_quality\.vision_qa\.screenshot_reviewed must be true/i);
-  assert.match(errors, /execution_quality\.rerun_schedule\.trigger is required/i);
+  assert.match(errors, /execution_quality\.rerun_schedule\.condition is required/i);
   assert.match(errors, /execution_quality\.drawing_spec\.manifest_roles_checked must be true/i);
 });
 
@@ -1022,6 +1108,20 @@ test('HEW count/projection drawings cannot use trend_line substitutes', () => {
   });
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.match(result.errors.join('\n'), /forbidden drawing tool.*trend_line/i);
+});
+
+test('zone-first final packages reject legacy decision_level drawings', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.drawing_manifest.push({
+    id: 'old_decision_line',
+    role: 'decision_level',
+    tool: 'horizontal_line',
+    timeframe_owner: 'daily',
+    screenshot: 'screenshots/trade.png'
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /deprecated final role decision_level/i);
 });
 
 test('drawing manifest screenshots must be listed in screenshots evidence', () => {
@@ -1060,7 +1160,20 @@ test('zone probabilities require sane numeric ranges', () => {
   const evidence = baseEvidence();
   evidence.zone_probabilities[0].probability.value = 130;
   evidence.zone_probabilities[0].price_range = { low: 110, high: 100 };
+  evidence.zone_probabilities[0].probability.band = 'unclear';
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.match(result.errors.join('\n'), /probability\.value must be between 0 and 100/i);
   assert.match(result.errors.join('\n'), /price_range\.low must be less than high/i);
+  assert.match(result.errors.join('\n'), /probability\.band must be one of/i);
+});
+
+test('zone-first packages reject trigger breakout confirmation language', () => {
+  const evidence = baseEvidence();
+  evidence.action_rationale.human_takeaway = 'Wait for breakout trigger confirmation before acting.';
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /zone_first_language forbidden term "trigger"/i);
+  assert.match(errors, /zone_first_language forbidden term "breakout"/i);
+  assert.match(errors, /zone_first_language forbidden term "confirmation"/i);
 });

@@ -2,6 +2,18 @@
   "strategy_id": "hew",
   "display_name": "Ian Copsey Fractal Forecasting",
   "contract_version": "hew_stage_gated_v8_math_core",
+  "reference_style": {
+    "name": "Atlassian TEAM 2026-05-16 zone-first HEW package",
+    "package_path": "analysis_journal/TEAM_2026-05-16_hew",
+    "distilled_doc": "docs/hew-atlassian-reference-style.md",
+    "required_traits": [
+      "zone_first_accumulation_distribution_probabilities",
+      "native_elliott_wave_markers_only",
+      "distinct_lower_degree_macro_subwaves",
+      "hew_fibonacci_projection_zone_for_internal_subwave_proof",
+      "review_conditions_not_trigger_language"
+    ]
+  },
   "required_top_level": [
     "journal_id",
     "saved_at",
@@ -31,7 +43,7 @@
     "no_trade_gate",
     "red_team",
     "critic_review",
-    "review_triggers",
+    "review_conditions",
     "missing_evidence",
     "confidence",
     "execution_quality"
@@ -75,7 +87,7 @@
       "path": "no_trade_gate",
       "required_ids": [
         "location",
-        "trigger",
+        "zone_focus",
         "invalidation",
         "reward",
         "timeframe_alignment"
@@ -209,6 +221,27 @@
       "pass_with_warnings",
       "fail"
     ],
+    "required_engine_result_fields": [
+      "status",
+      "score",
+      "hard_rule_pass",
+      "lifecycle_status",
+      "classification"
+    ],
+    "allowed_lifecycles": [
+      "active",
+      "completed",
+      "projection",
+      "rejected",
+      "diagnostic",
+      "watch"
+    ],
+    "allowed_engine_classifications": [
+      "valid_active",
+      "valid_projection",
+      "invalid_diagnostic",
+      "watch_context"
+    ],
     "allowed_directions": [
       "bullish",
       "bearish"
@@ -241,8 +274,7 @@
     "completed_impulse_structure_types": [
       "completed_primary_impulse",
       "completed_macro_impulse",
-      "completed_internal_impulse",
-      "conditional_forward_impulse"
+      "completed_internal_impulse"
     ],
     "completed_impulse_required_measurement_roles": [
       {
@@ -267,7 +299,10 @@
       "retracement_ratio_not_in_copsey_universe",
       "wave3_is_shortest",
       "wave1_wave4_overlap",
-      "wave4_breaks_b_of_wave3"
+      "wave4_breaks_b_of_wave3",
+      "failed_fifth_forbidden",
+      "projected_point_marked_complete",
+      "motive_direction_mismatch"
     ],
     "structural_distinctness": {
       "required": true,
@@ -440,6 +475,18 @@
       "primary_degree_subwaves",
       "secondary_degree_subwaves"
     ],
+    "forbidden_final_drawing_terms": [
+      "rejected",
+      "invalid",
+      "diagnostic"
+    ],
+    "final_screenshot_roles": [
+      "macro_structure",
+      "trade_posture"
+    ],
+    "deprecated_final_roles": [
+      "decision_level"
+    ],
     "allowed_tools_by_role": {
       "macro_count": [
         "elliott_impulse_wave",
@@ -472,7 +519,8 @@
         "text"
       ],
       "preceding_impulse_context": [
-        "elliott_impulse_wave"
+        "elliott_impulse_wave",
+        "elliott_correction"
       ],
       "primary_degree_subwaves": [
         "elliott_impulse_wave",
@@ -520,18 +568,47 @@
         "horizontal_line",
         "vertical_line"
       ]
+    },
+    "presentation_conventions": {
+      "lower_degree_macro_subwaves": "Use a visually distinct lower-degree Elliott style for subwaves inside macro waves; add a HEW Fibonacci projection zone/annotation when it clarifies the subwave proof.",
+      "macro_label_offsets": "When macro Elliott labels overlap lower-degree labels at shared pivots, solve it with Elliott degree/style separation, visible-range choice, or separate screenshots. Do not use text labels as Elliott wave marker substitutes or alter evidence pivot prices/manifest levels."
     }
   },
   "zone_probabilities": {
     "required_zone_types": [
-      "retracement",
-      "projection"
+      "accumulation",
+      "distribution"
     ],
     "allowed_zone_types": [
+      "accumulation",
+      "distribution",
       "retracement",
       "projection",
       "invalidation",
       "no_trade"
+    ],
+    "allowed_probability_bands": [
+      "low",
+      "moderate_low",
+      "moderate",
+      "moderate_high",
+      "high"
+    ]
+  },
+  "zone_first_language": {
+    "forbidden_terms": [
+      "trigger",
+      "breakout",
+      "confirmation",
+      "reclaim"
+    ],
+    "paths": [
+      "action_rationale",
+      "trade_posture",
+      "castaway_trade_model",
+      "no_trade_gate",
+      "review_conditions",
+      "execution_quality.rerun_schedule"
     ]
   },
   "action_rationale_fields": [
@@ -627,7 +704,7 @@
     "required_decision_rows": [
       "model",
       "permission",
-      "trigger",
+      "zone_focus",
       "invalidation",
       "target_path",
       "stand_aside_condition"
@@ -659,7 +736,7 @@
       {
         "id": "rerun_schedule",
         "required_fields": [
-          "trigger",
+          "condition",
           "cadence",
           "evidence"
         ]

@@ -9,6 +9,9 @@ Canonical files:
 - `agents/harmonic-elliott-wave-analyst.md` - compact HEW specialist role.
 - `agents/hew-independent-critic.md` - independent final critic role.
 - `scripts/validate_evidence.mjs` - manifest-driven validator for journal packages.
+- `docs/hew-atlassian-reference-style.md` - distilled style reference from the accepted TEAM package.
+
+Concrete reference package: `analysis_journal/TEAM_2026-05-16_hew`. Do not preload it on ordinary runs; use the reference doc and manifest by default, and open the package only when auditing the reference style or resolving a style ambiguity.
 
 ## The stage-gated workflow
 
@@ -56,19 +59,20 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Draw preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and conditional forward impulse projection with native Elliott tools. Projection and preceding impulse context must be `elliott_impulse_wave`; trend-line substitutes fail.
    - Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `role`, `tool`, `timeframe_owner`, and `screenshot`.
    - If MCP cannot set per-drawing visibility, separate macro and daily proof with temporary screenshot passes only when necessary; immediately rebuild and verify the final presentation chart afterward.
-   - In presentation mode, hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable decision proof, trigger, invalidation, and target/zone context.
+   - In presentation mode, hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable HEW proof, accumulation/distribution boxes, invalidation, stand-aside conditions, and conditional target/zone context.
 
 6. Evidence contract
    - Fill exactly one `journal.md` and one `evidence.json` in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/`.
    - Record `ian_copsey_wave_map` with the selected anchors, Copsey rationale, drawing references, ratio-validation references, Fractal Forecasting alignment checks, and `scanner_used_for_count_selection: false`.
-   - Record `count_state` lineage, three to five structurally distinct hypotheses, structured Castaway decision rows, and `execution_quality` for visual QA/rerun/drawing-spec checks.
+   - Record `count_state` lineage, three to five structurally distinct hypotheses, structured Castaway decision rows, and `execution_quality` for visual QA/rerun-condition/drawing-spec checks.
    - Screenshots live only under `screenshots/` and are referenced with package-relative paths.
    - Required sections, checklist IDs, screenshot roles, drawing roles, and critic fields come from the HEW strategy manifest, not duplicated prose.
 
 7. Action output
-   - The final call is decision-first: setup, active count, alternate, HEW reason, trigger, invalidation, target path, and no-trade condition.
+   - The final call is decision-first: setup, active count, alternate, HEW reason, accumulation/distribution zones with probabilities, invalidation, conditional target path, and no-trade condition.
    - Every action must explain why it follows from the HEW count, ratio model, Wave-B ladder, and Castaway overlay.
-   - Trade planning is zone-first after the count is proven. Copsey retracement, projection, invalidation, and no-trade zones come before action language.
+   - Trade planning is zone-first after the count is proven. Copsey accumulation, potential distribution, retracement, projection, invalidation, and no-trade zones come before action language.
+   - Avoid trigger, breakout, confirmation, or reclaim framing in the package output. Use `review_conditions` and zone-probability changes instead.
    - If the chart cannot support a HEW-derived action, say `STAND ASIDE`, `watchlist only`, or `no clean trade`.
 
 8. Critic review
@@ -87,7 +91,7 @@ Agents must not stay in one visual state for the whole job. Record all four mode
 - **Verification**: OHLCV checks against pivot IDs; conflicts resolved, revised, or explicitly downgraded.
 - **Human wave map**: choose the Elliott wave anchors from chart structure; mechanical tools are limited to validating ratios/rules.
 - **Strategy proof**: `Konsili Pivot Exporter` hidden and extraction clutter reduced; HEW proof drawn with native Elliott tools.
-- **Presentation**: final live chart is readable; `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; only decision proof, trigger, invalidation, zones/targets, and essential indicators remain visible.
+- **Presentation**: final live chart is readable; `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit; only native Elliott proof, accumulation/distribution boxes, invalidation/no-trade zones, conditional targets, and essential indicators remain visible.
 
 If presentation mode fails, the package is not done even if the screenshots and evidence file validate.
 
@@ -111,6 +115,7 @@ The validator fails closed on:
 - Screenshot paths outside `screenshots/`.
 - Drawing-manifest screenshots not listed in `evidence.json.screenshots`.
 - Zone probability values outside 0-100 or malformed price ranges.
+- Missing required accumulation/distribution zone types, invalid probability bands, or trigger/breakout/confirmation/reclaim language in zone-first output fields.
 - Missing journal/screenshot alignment.
 - Missing action rationale fields.
 - Missing critic review checklist items.
@@ -131,12 +136,14 @@ The validator fails closed on:
 - Macro counts, subwaves, and projected Elliott paths must use TradingView Elliott tools: `elliott_impulse_wave`, `elliott_correction`, `elliott_triangle_wave`, `elliott_double_combo`, or `elliott_triple_combo`.
 - Preceding impulse context and forward projections must be `elliott_impulse_wave` drawings.
 - Primary-degree and secondary/internal subwaves must each have their own native Elliott drawing role.
+- Lower-degree subwaves inside macro waves must be visually distinct from macro counts through Elliott degree, color/style, and a HEW Fibonacci projection zone when it clarifies proof.
+- If macro and lower-degree Elliott labels overlap, keep true pivot prices unchanged and solve readability through native Elliott style/degree settings, visible range, or separate screenshots.
 - Macro Waves 1, 3, and 5 must be represented as HEW A-B-C motive engines when visible; A and C require lower-degree five-wave action where chart resolution permits.
 - Do not use classical Elliott rescue devices in HEW counts: extended waves, failed fifths, leading diagonals, ending diagonals, or diagonal triangles.
 - Wave 3 176.4% is the default hard floor. Any downgrade/exception must be rare, explicit, and supported by the broader Copsey structure rather than convenience.
 - `trend_line` is forbidden for HEW count legs, subwave legs, and projected count legs.
-- `horizontal_line` is allowed for Wave-B ladder levels, hard invalidation, flip levels, and target boundaries only.
-- `rectangle` is allowed for retracement, projection target, invalidation, and no-trade zones.
+- Prefer `rectangle` for accumulation, potential distribution, retracement, projection target, invalidation, and no-trade zones.
+- `horizontal_line` is allowed only when the manifest or package explicitly needs a non-count boundary layer; it is never a substitute for count legs or zone boxes.
 - Wave-B ladder gets its own chart-proof layer.
 - Projection maps must show the highest-probability next count path or explicitly document TradingView forward-margin clamp/fallback.
 
@@ -148,7 +155,7 @@ A usable answer must let Johan act or stand aside without decoding the process:
 - What is the active HEW count and alternate?
 - Which Copsey/HEW rule says so?
 - What zone matters now?
-- What confirms it?
+- Which zone conditions improve or degrade it?
 - What invalidates it?
 - What is the target/reward path?
 - What should he do nothing on?
