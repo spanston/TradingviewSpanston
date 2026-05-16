@@ -1,0 +1,63 @@
+//@version=5
+indicator("Konsili Pivot Exporter", overlay=true, max_labels_count=500)
+
+leftBars = input.int(5, "Left bars", minval=1)
+rightBars = input.int(5, "Right bars", minval=1)
+maxRows = input.int(24, "Export rows", minval=6, maxval=80)
+showTable = input.bool(true, "Show export table")
+showLabels = input.bool(true, "Show pivot labels")
+
+var table exportTable = table.new(position.top_right, 1, maxRows + 1, bgcolor=color.new(color.black, 5), border_width=1)
+var array<string> exportRows = array.new_string()
+var array<label> pivotLabels = array.new_label()
+
+makeRow(string pivotType, float price, int pivotTime) =>
+    pivotId = str.format("{0}_{1}_{2}", timeframe.period, str.tostring(pivotTime), pivotType == "high" ? "H" : "L")
+    str.format(
+      "KPE|v=1|tf={0}|id={1}|type={2}|time={3}|price={4}|left={5}|right={6}|confirmed=true",
+      timeframe.period,
+      pivotId,
+      pivotType,
+      str.tostring(pivotTime),
+      str.tostring(price, format.mintick),
+      str.tostring(leftBars),
+      str.tostring(rightBars))
+
+recordPivot(string pivotType, float price, int pivotTime) =>
+    row = makeRow(pivotType, price, pivotTime)
+    array.push(exportRows, row)
+    if showLabels
+        labelStyle = pivotType == "high" ? label.style_label_down : label.style_label_up
+        labelColor = pivotType == "high" ? color.new(color.red, 0) : color.new(color.green, 0)
+        newLabel = label.new(
+          x=pivotTime,
+          y=price,
+          text=row,
+          xloc=xloc.bar_time,
+          yloc=yloc.price,
+          style=labelStyle,
+          color=labelColor,
+          textcolor=color.white,
+          size=size.tiny)
+        array.push(pivotLabels, newLabel)
+    while array.size(exportRows) > maxRows
+        array.shift(exportRows)
+    while array.size(pivotLabels) > maxRows
+        oldLabel = array.shift(pivotLabels)
+        label.delete(oldLabel)
+
+pivotHigh = ta.pivothigh(high, leftBars, rightBars)
+pivotLow = ta.pivotlow(low, leftBars, rightBars)
+
+if not na(pivotHigh)
+    recordPivot("high", pivotHigh, time[rightBars])
+
+if not na(pivotLow)
+    recordPivot("low", pivotLow, time[rightBars])
+
+if showTable and barstate.islast
+    table.cell(exportTable, 0, 0, "Konsili Pivot Exporter v1", text_color=color.white, bgcolor=color.new(color.blue, 15))
+    for rowIndex = 0 to maxRows - 1
+        sourceIndex = array.size(exportRows) - maxRows + rowIndex
+        rowText = sourceIndex >= 0 ? array.get(exportRows, sourceIndex) : ""
+        table.cell(exportTable, 0, rowIndex + 1, rowText, text_color=color.white, bgcolor=color.new(color.black, 0))

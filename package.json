@@ -1,13 +1,12 @@
 {
   "name": "konsili-tradingview-workflow",
-  "version": "2.0.0",
-  "description": "Stage-gated TradingView analysis workflow contracts for Wyckoff and Harmonic Elliott Wave reports",
+  "version": "2.0.1",
+  "description": "Stage-gated TradingView analysis workflow contracts for Ian Copsey Fractal Forecasting reports",
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "validate": "node scripts/validate_evidence.mjs",
-    "validate:hew": "node scripts/validate_evidence.mjs --strategy hew",
-    "validate:wyckoff": "node scripts/validate_evidence.mjs --strategy wyckoff"
+    "validate:hew": "node scripts/validate_evidence.mjs --strategy hew"
   },
   "dependencies": {}
 }

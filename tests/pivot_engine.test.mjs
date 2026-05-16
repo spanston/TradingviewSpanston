@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  KONSILI_PIVOT_EXPORTER,
   detectSwingPivots,
-  rankHewImpulseCandidates,
-  detectWyckoffRanges
+  parsePivotExporterRows,
+  rankHewImpulseCandidates
 } from '../scripts/pivot_engine.mjs';
 
 function priceBars(prices) {
@@ -16,10 +17,6 @@ function priceBars(prices) {
     close: price,
     volume: 1000 + index
   }));
-}
-
-function ohlcBars(rows) {
-  return rows.map((row, index) => ({ time: index, volume: 1000 + index, ...row }));
 }
 
 test('detectSwingPivots filters shallow noise and keeps the stronger nearby extreme', () => {
@@ -61,47 +58,29 @@ test('rankHewImpulseCandidates rejects sub-176.4% wave 3 counts and ranks the va
   assert.equal(validCandidates[0].rules.wave3_floor.status, 'pass');
 });
 
-test('detectWyckoffRanges finds strict multi-swing ranges and confirms spring reaction', () => {
-  const bars = ohlcBars([
-    { open: 100, high: 100, low: 100, close: 100 },
-    { open: 101, high: 105, low: 101, close: 105 },
-    { open: 104, high: 104, low: 96, close: 96 },
-    { open: 97, high: 104, low: 97, close: 104 },
-    { open: 103, high: 103, low: 95, close: 95 },
-    { open: 96, high: 103, low: 96, close: 103 },
-    { open: 102, high: 102, low: 94, close: 94 },
-    { open: 95, high: 102, low: 95, close: 102 },
-    { open: 94, high: 100, low: 92, close: 100 },
-    { open: 100, high: 103, low: 99, close: 103 },
-    { open: 103, high: 106, low: 102, close: 106 },
-    { open: 106, high: 106, low: 104, close: 104 }
-  ]);
-  const pivots = detectSwingPivots(bars, { left: 1, right: 1, minMovePct: 1 });
+test('parsePivotExporterRows normalizes Konsili Pivot Exporter table rows', () => {
+  const rows = [
+    'KPE|v=1|tf=1M|id=1M_1704067200000_H|type=high|time=1704067200000|price=150.25|left=5|right=5|confirmed=true',
+    'KPE|v=1|tf=1W|id=1W_1704672000000_L|type=low|time=1704672000000|price=100|left=5|right=5|confirmed=true'
+  ];
 
-  const ranges = detectWyckoffRanges(bars, {
-    pivots,
-    minTouchesPerSide: 2,
-    maxRangeHeightPct: 15,
-    boundaryTolerancePct: 2.5
-  });
+  const result = parsePivotExporterRows(rows);
 
-  assert.ok(ranges.length > 0, 'expected a strict range candidate');
-  assert.equal(ranges[0].source, 'strict_multi_swing_range');
-  assert.ok(ranges[0].touches.support >= 2);
-  assert.ok(ranges[0].touches.resistance >= 2);
-  assert.ok(ranges[0].event_candidates.some((event) => event.type === 'spring' && event.reaction === 'confirmed'));
+  assert.deepEqual(result.errors, []);
+  assert.equal(KONSILI_PIVOT_EXPORTER.studyFilter, 'Konsili Pivot Exporter');
+  assert.deepEqual(result.pivots.map((pivot) => pivot.timeframe), ['monthly', 'weekly']);
+  assert.equal(result.pivots[0].id, '1M_1704067200000_H');
+  assert.equal(result.pivots[0].type, 'high');
+  assert.equal(result.pivots[0].price, 150.25);
 });
 
-test('detectWyckoffRanges rejects broad trend-wide pseudo ranges', () => {
-  const bars = priceBars([100, 105, 102, 112, 108, 122, 116, 135, 128, 146, 140, 155, 149]);
-  const pivots = detectSwingPivots(bars, { left: 1, right: 1, minMovePct: 1 });
+test('parsePivotExporterRows fails closed on malformed exporter rows', () => {
+  const result = parsePivotExporterRows([
+    'Pivot Points High Low label with no structured data',
+    'KPE|v=1|tf=1D|id=bad|type=high|time=bad|price=120|left=5|right=5|confirmed=true'
+  ]);
 
-  const ranges = detectWyckoffRanges(bars, {
-    pivots,
-    minTouchesPerSide: 2,
-    maxRangeHeightPct: 15,
-    boundaryTolerancePct: 2.5
-  });
-
-  assert.deepEqual(ranges, []);
+  assert.equal(result.pivots.length, 0);
+  assert.match(result.errors.join('\n'), /missing KPE row prefix/i);
+  assert.match(result.errors.join('\n'), /invalid time/i);
 });

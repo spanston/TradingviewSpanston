@@ -1,53 +1,55 @@
 # KonsiliTradingview
 
-Stage-gated operating repo for Johan's TradingView analysis agents.
+Stage-gated operating repo for Johan's TradingView Ian Copsey Fractal Forecasting analysis agents.
 
-The old problem was structural drift: rules lived in too many places, agents skipped steps, HEW counts were sometimes drawn with the wrong tools, and final reports were not always clear enough to act on. This repo now keeps the workflow narrow:
+This repo prevents structural drift: rules stay in one narrow HEW/Copsey lane, agents cannot skip evidence gates, HEW counts must use the right tools, and final reports must be clear enough to act on.
 
 - `AGENTS.md` is the boot manual.
 - `WORKFLOW.md` defines the eight stage gates and four chart modes.
-- `strategies/wyckoff/manifest.json` and `strategies/hew/manifest.json` are the executable contracts.
-- `agents/*.md` are compact specialist prompts.
-- `scripts/validate_evidence.mjs` validates journal packages against the manifests.
+- `strategies/hew/manifest.json` is the executable HEW contract.
+- `agents/harmonic-elliott-wave-analyst.md` is the compact specialist prompt.
+- `scripts/validate_evidence.mjs` validates journal packages against the HEW manifest.
+- `tradingview/konsili_pivot_exporter.pine` is the required TradingView pivot data path.
 
 ## What must happen on every serious analysis
 
-1. Route to the right strategy.
-2. Load only the selected lane's manifest, specialist prompt, and strategy-specific skill material.
-3. Switch to the required TradingView layout.
-4. Enter extraction mode: keep pivot/scanner scaffolding visible and extract important pivots visually from Monthly, Weekly, and Daily.
-5. Enter verification mode: verify those visual pivots with TradingView OHLCV before strategy analysis.
+1. Route to Ian Copsey Fractal Forecasting.
+2. Load only the HEW manifest, specialist prompt, and directly relevant workflow material.
+3. Switch to `HEW layout`.
+4. Enter extraction mode: keep `Konsili Pivot Exporter` visible and extract Monthly, Weekly, and Daily pivots from structured `KPE|...` table/label rows.
+5. Enter verification mode: verify those visual pivots with TradingView OHLCV before HEW analysis.
 6. Read Monthly -> Weekly -> Daily using TradingView MCP only unless Johan asked for outside research.
-7. Enter strategy-proof mode: hide/reduce pivot clutter and draw only method-specific proof.
+7. Enter strategy-proof mode: hide/reduce pivot clutter and draw only HEW proof.
 8. Enter presentation mode: hide extraction scaffolding, leave a readable decision chart, and verify final live state.
-9. Record visual pivots in `visual_pivot_evidence`, chart modes in `chart_prep.chart_mode_checklist`, and drawings in `chart_prep.drawing_manifest`.
+9. Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, visual pivots, chart modes, and drawings in the evidence package.
 10. Produce exactly one `journal.md` and one `evidence.json` per package.
-11. Explain the action from the chosen strategy: setup, trigger, invalidation, target path, and no-trade condition.
+11. Explain the action from the HEW count: setup, active/alternate count, trigger, invalidation, target path, and no-trade condition.
 12. Run final critic review.
 13. Run the validator.
 
-Do not load both HEW and Wyckoff context unless Johan explicitly asks for both, confluence, comparison, or a dual-strategy package.
+## Required layout
 
-## Required layouts
-
-- Wyckoff: `Wyckoff Layout`
-- HEW: `HEW layout`
+- `HEW layout`
 
 If the required layout is missing, the agent should stop unless Johan explicitly overrides.
+
+## Pivot Exporter
+
+Add `tradingview/konsili_pivot_exporter.pine` to `HEW layout` as `Konsili Pivot Exporter`. During extraction, read `data_get_pine_tables` first and `data_get_pine_labels` as backup with `study_filter: "Konsili Pivot Exporter"`.
+
+If the exporter is absent or returns no `KPE|...` rows, fix the layout/exporter or downgrade. Do not treat screenshot-only pivots, Pivot Points High Low, Pivot Scanner, or `hew_scan_chart` output as a clean pivot evidence pass.
 
 ## Validation
 
 ```bash
 npm test
-npm run validate:<hew|wyckoff> -- analysis_journal/<PACKAGE>/evidence.json
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json
 ```
-
-Run the matching strategy validator. Do not run the HEW validator against a Wyckoff package or vice versa unless the package intentionally contains both methods.
 
 ## Journal package shape
 
 ```text
-analysis_journal/<SYMBOL>_<YYYY-MM-DD>_<method>/
+analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/
   journal.md
   evidence.json
   screenshots/
@@ -67,10 +69,6 @@ HEW macro counts, subwaves, and projected Elliott paths must use native TradingV
 
 `trend_line` is forbidden for HEW count legs, subwave legs, and projected count legs. If the agent cannot draw the count with the right tool, the count stays `candidate`/`unclear` and the posture is `STAND ASIDE`.
 
-## Wyckoff output rule
-
-Wyckoff reports are zone-first. The final call must identify accumulation, distribution, and no-trade zones before breakout confirmation. Event labels require event evidence ledger rows; incomplete events must be labeled `candidate`, `possible`, or `attempt`.
-
 ## Final answer standard
 
 A usable answer starts with one of:
@@ -80,4 +78,4 @@ A usable answer starts with one of:
 - `NO CLEAN TRADE`
 - `STAND ASIDE`
 
-Then it states: strategy reason, trigger, invalidation, target/reward path, and what to ignore.
+Then it states: setup, active HEW count and alternate, Copsey/HEW reason, trigger, invalidation, target/reward path, and what to ignore.

@@ -1,90 +1,62 @@
-# BITSTAMP:BTCUSD HEW Journal - 2026-05-16
+# BITSTAMP:BTCUSD - Ian Copsey Fractal Forecasting - 2026-05-16
 
 ## Decision
 
-**STAND ASIDE**
+WATCHLIST ONLY. Corrected after review.
 
-Setup: visual-first HEW revision after critical review. Monthly validates a completed macro bullish HEW impulse, but the active post-ATH structure is corrective/unclear and price is inside the 74912-82833 decision band.
+BTC has a corrected Copsey HEW primary macro bullish impulse from 15479 to 109356, followed by a clean running-flat correction from 109356 to 59930. The first package incorrectly promoted the 24756-origin segment as primary macro degree; it is now treated as lower-degree context. The daily bullish impulse from 64955 to 82833 also validates under the 1.764 Wave 3 rule, but current price near 77998 is below the 82833 activation trigger and inside the 76004-82833 no-trade band.
 
-Strategy reason: HEW needs visual pivots, a valid active count, Castaway permission, trigger, invalidation, and target path before trade language. Pivot Scanner is now readable and confirms the major pivots, but it rejects the earlier daily bullish impulse because several mechanical pivots were not visible-important labels.
+Do not buy the middle of this range. The setup activates only on daily/weekly acceptance above 82833, preferably with a hold or retest. If that happens, the first projection band is 96492-107540, then 111759-125418/126272. A daily close below 73753 damages the daily impulse, below 64955 invalidates it, and below 59930 invalidates the flat-complete macro premise.
 
-Trigger: no active trade trigger. Bullish watch trigger is daily/weekly acceptance above 82833 followed by a retest holding above 79500/78384.
+## Strategy Read
 
-Invalidation: if a future bullish trigger activates, the trigger fails on a failed retest below 79500/78384. Broader local structure fails on a daily close below 74912. Macro support/hard failure is below 59930.
+- Corrected primary macro impulse: 15479 - 31818 - 24920 - 73794 - 49577 - 109356, strict-valid HEW, Wave 3 at 2.9912x Wave 1.
+- Macro correction: 109356 - 74434 - 126272 - 59930, classified as a clean running flat, with B/A 1.484 and C/A 1.900.
+- Rejected alternate: weekly 126272 - 103530 - 116381 - 80537 - 97939 - 59930 is not a clean Copsey bearish impulse because Wave 3 is only 1.576x Wave 1.
+- Daily impulse: 64955 - 69268 - 65696 - 78384 - 73753 - 82833, strict-valid HEW, Wave 3 at 2.9418x Wave 1.
+- Visible lower-degree subwaves now drawn: Wave 3 candidate 24756 - 31818 - 24920 - 49048 - 38505 - 73794, and Wave 5 candidate 52546 - 66508 - 58867 - 108364 - 89164 - 109356.
 
-Target path: above 82833 opens checks at 97939, 109356, then 126272. Below 74912 opens 65623-64955, then 59930.
+## Ian Copsey Wave Map
 
-Do nothing on: price chopping between 74912 and 82833, or any long/short idea before a new visual-first HEW subdivision validates.
+The wave anchors were selected from Ian Copsey / Fractal Forecasting structure first, then ratio tools were used only to check whether the chosen count satisfies the method.
 
-## Visual Pivot Gate
+- Primary macro: the 15479 cycle low is the origin, 31818 is the first major rally high, 24920 holds as Wave 2, 73794 is the first broad expansion high, 49577 is Wave 4, and 109356 is the impulse terminal.
+- Macro correction: 109356 to 74434 is A, 74434 to 126272 is B overthrow, and 126272 to 59930 is C.
+- Internal proof: Wave 3 and Wave 5 regions have visible lower-degree Elliott drawings; Wave 1 internals remain unresolved.
+- Fractal Forecasting alignment: top-down degree consistency is enforced, motive waves are treated through Copsey A-B-C engines where visible, Wave 3 must satisfy the 176.4% floor, and classical Elliott rescue devices are rejected.
 
-![Visual pivots](screenshots/01_visual_pivots.png)
+## Ratio Checks
 
-Critical revision: the initial package was too conservative about the visual-pivot gate and too permissive about the daily impulse. The live chart now has readable `Pivot Scanner` output through `data_get_pine_labels`, with 503 labels extracted.
+- Macro Wave 3: `(73794 - 24920) / (31818 - 15479) = 2.9912`, above the HEW 1.764 floor.
+- Macro Wave 3 internal: `(49048 - 24920) / (31818 - 24756) = 3.4166`, above the HEW floor.
+- Macro Wave 5 internal: `(108364 - 58867) / (66508 - 52546) = 3.5451`, above the HEW floor.
+- Daily Wave 3: `(78384 - 65696) / (69268 - 64955) = 2.9418`, above the HEW floor.
+- Running-flat C leg: `(126272 - 59930) / (109356 - 74434) = 1.900`, between the 1.764 and 2.000 C targets.
 
-Primary visual pivots now used:
+## Action Map
 
-- Monthly: 15479, 31818, 24920, 73794, 49577, 109356, 126272, 59930
-- Weekly: 126272, 103530, 116381, 80537, 97939, 59930
-- Daily: 59930, 74075, 65623, 76013, 64955, 79500, 74912, 82833
+- Trigger: daily/weekly acceptance above 82833.
+- No-trade band: 76004-82833.
+- Retracement zone to watch before trigger: 71784-76004.
+- Daily count damage: below 73753.
+- Daily structure invalidation: below 64955.
+- Macro flat-complete invalidation: below 59930.
+- Projection path after trigger: 96492-107540, then 111759-125418/126272.
 
-Rejected evidence: the prior daily impulse `64955 -> 69268 -> 65696 -> 78384 -> 73753 -> 79500` came from mechanical minor pivots. Pivot Scanner does not label 69268, 65696, 78384, or 73753, so that count is not visual-first evidence and cannot carry trade bias.
+## Critic Note
 
-## Monthly Macro
+The chart was reset again after the primary-degree challenge. The corrected macro count starts at the 15479 cycle low, not the 24756 lower-degree pivot.
 
-![Monthly macro](screenshots/02_monthly_macro.png)
+Lower-degree subwaves are now visible for the macro Wave 3 and Wave 5 regions, but macro Wave 1 internals and lower-degree A/C internals of the running flat are not fully expanded. That is why the correct posture remains WATCHLIST ONLY until 82833 is reclaimed and held. The count is not delegated to an automated wave scanner; mechanics are limited to HEW ratio and rule validation.
 
-Monthly visual pivots validate the historical macro HEW impulse:
+## Screenshots
 
-- W0 15479
-- W1 31818
-- W2 24920
-- W3 73794
-- W4 49577
-- W5 109356
+![Monthly visual pivot extraction](screenshots/visual_pivots_monthly.png)
 
-W3/W1 = 2.9912, above the 1.764 HEW floor. The later 126272 high is treated as post-impulse extension/ATH context, not as an actionable current impulse by itself. The decline to 59930 and rebound into 82833 leave the active structure corrective and unresolved.
+![Weekly visual pivot extraction](screenshots/visual_pivots_weekly.png)
 
-## Weekly Bridge
+![Daily visual pivot extraction](screenshots/visual_pivots_daily.png)
 
-![Weekly bridge](screenshots/03_weekly_bridge.png)
+![Macro HEW structure](screenshots/macro_structure.png)
 
-Weekly structure from 126272 to 59930 is mechanically visible but not a clean HEW impulse:
-
-- 126272 -> 103530 -> 116381 -> 80537 -> 97939 -> 59930
-- W3/W1 = 1.5761, below the 1.764 HEW floor
-
-That keeps macro pressure unresolved. A long bias needs acceptance above 82833 first, then proof that the retest can hold above 79500/78384.
-
-## Daily Structure
-
-![Daily scan](screenshots/04_daily_scan.png)
-
-Daily visual pivots do not validate a fresh HEW impulse. The important visible pivots are:
-
-- 59930 -> 74075 -> 65623 -> 76013 -> 64955 -> 79500 -> 74912 -> 82833
-
-This sequence is useful as a decision map, not as a tradable bullish count. Current price near 78379 is between the latest visual support at 74912 and the latest visual pivot high/flip at 82833.
-
-## Trade Posture
-
-![Trade posture](screenshots/05_trade_posture.png)
-
-Decision ladder:
-
-- 59930: macro support / hard failure
-- 74912: latest visible pivot support / local invalidation
-- 78384: current decision/retest area and failed-breakout trigger invalidation
-- 82833: bullish flip and confirmation level
-- 97939: weekly supply
-- 126272: macro ATH
-
-Final posture remains **STAND ASIDE**. The improved evidence does not make the setup more actionable; it makes the no-trade call cleaner because the previously bullish daily mechanical count is not visually confirmed.
-
-External critic note: Gemini agreed with the STAND ASIDE verdict and the ratio logic, but challenged the trigger invalidation. The package is tightened so any future 82833 breakout setup fails on a lost 79500/78384 retest before waiting for the wider 74912 structural break.
-
-## Missing Evidence
-
-- W3 and W5 internals for the monthly macro count.
-- Validated visual-first daily HEW impulse after price leaves 74912-82833.
-- 4H/1H execution confirmation only after a higher-timeframe trigger appears.
+![Trade posture](screenshots/trade_posture.png)

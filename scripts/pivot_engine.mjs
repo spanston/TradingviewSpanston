@@ -3,6 +3,15 @@ function number(value) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+export const KONSILI_PIVOT_EXPORTER = Object.freeze({
+  name: 'Konsili Pivot Exporter',
+  studyFilter: 'Konsili Pivot Exporter',
+  pineScript: 'tradingview/konsili_pivot_exporter.pine',
+  rowPrefix: 'KPE',
+  version: 1,
+  sourceTools: ['data_get_pine_tables', 'data_get_pine_labels']
+});
+
 function pctMove(from, to) {
   if (!Number.isFinite(from) || from === 0 || !Number.isFinite(to)) return Infinity;
   return Math.abs((to - from) / from) * 100;
@@ -21,6 +30,103 @@ function isMoreExtreme(candidate, existing) {
 
 function normalizePivotType(type) {
   return type === 'swing_high' ? 'high' : type === 'swing_low' ? 'low' : type;
+}
+
+function rowToText(row) {
+  if (Array.isArray(row)) return row.map((value) => String(value ?? '')).join('|');
+  if (row && typeof row === 'object') {
+    return String(row.text ?? row.value ?? row.source_text ?? row.row ?? '');
+  }
+  return String(row ?? '');
+}
+
+function parseBoolean(value) {
+  const normalized = String(value ?? '').trim().toLowerCase();
+  if (normalized === 'true') return true;
+  if (normalized === 'false') return false;
+  return null;
+}
+
+export function normalizePivotExporterTimeframe(value) {
+  const raw = String(value ?? '').trim();
+  const normalized = raw.toLowerCase();
+  if (raw === 'M' || raw === '1M' || normalized === 'monthly' || normalized === 'month') return 'monthly';
+  if (raw === 'W' || raw === '1W' || normalized === 'weekly' || normalized === 'week') return 'weekly';
+  if (raw === 'D' || raw === '1D' || normalized === 'daily' || normalized === 'day') return 'daily';
+  if (raw === '240' || normalized === '4h' || normalized === '4hour' || normalized === '4hours') return '4h';
+  if (raw === '60' || normalized === '1h' || normalized === '1hour' || normalized === '1hours') return '1h';
+  return normalized;
+}
+
+export function parsePivotExporterRow(row, options = {}) {
+  const prefix = options.rowPrefix || KONSILI_PIVOT_EXPORTER.rowPrefix;
+  const rawText = rowToText(row).trim();
+  const start = rawText.indexOf(`${prefix}|`);
+  if (start < 0) {
+    return { ok: false, error: `missing ${prefix} row prefix`, raw: rawText };
+  }
+
+  const exportText = rawText.slice(start);
+  const tokens = exportText.split('|');
+  if (tokens[0] !== prefix) return { ok: false, error: `invalid row prefix: ${tokens[0]}`, raw: exportText };
+
+  const fields = {};
+  for (const token of tokens.slice(1)) {
+    const equalsAt = token.indexOf('=');
+    if (equalsAt <= 0) continue;
+    fields[token.slice(0, equalsAt)] = token.slice(equalsAt + 1);
+  }
+
+  const version = number(fields.v);
+  const price = number(fields.price);
+  const time = number(fields.time);
+  const left = number(fields.left);
+  const right = number(fields.right);
+  const confirmed = parseBoolean(fields.confirmed);
+  const type = normalizePivotType(fields.type);
+  const errors = [];
+
+  if (version !== Number(options.version ?? KONSILI_PIVOT_EXPORTER.version)) errors.push(`unsupported exporter version: ${fields.v}`);
+  if (!String(fields.tf || '').trim()) errors.push('missing tf');
+  if (!String(fields.id || '').trim()) errors.push('missing id');
+  if (!['high', 'low'].includes(type)) errors.push(`invalid type: ${fields.type}`);
+  if (price == null) errors.push(`invalid price: ${fields.price}`);
+  if (time == null) errors.push(`invalid time: ${fields.time}`);
+  if (left == null) errors.push(`invalid left: ${fields.left}`);
+  if (right == null) errors.push(`invalid right: ${fields.right}`);
+  if (confirmed !== true) errors.push(`confirmed must be true: ${fields.confirmed}`);
+
+  if (errors.length) return { ok: false, error: errors.join('; '), raw: exportText };
+
+  return {
+    ok: true,
+    pivot: {
+      id: fields.id,
+      timeframe: normalizePivotExporterTimeframe(fields.tf),
+      raw_timeframe: fields.tf,
+      type,
+      price,
+      time,
+      left,
+      right,
+      confirmed,
+      raw: exportText
+    }
+  };
+}
+
+export function parsePivotExporterRows(rows, options = {}) {
+  const pivots = [];
+  const errors = [];
+  for (const [index, row] of (Array.isArray(rows) ? rows : []).entries()) {
+    const result = parsePivotExporterRow(row, options);
+    if (result.ok) {
+      pivots.push(result.pivot);
+    } else {
+      errors.push(`row ${index}: ${result.error}`);
+    }
+  }
+  return { pivots, errors };
 }
 
 export function detectSwingPivots(bars, options = {}) {
@@ -132,83 +238,4 @@ export function rankHewImpulseCandidates(pivots, options = {}) {
   }
 
   return candidates.sort((a, b) => Number(b.valid) - Number(a.valid) || b.score - a.score || a.pivots[0].index - b.pivots[0].index);
-}
-
-function median(values) {
-  const sorted = values.filter(Number.isFinite).sort((a, b) => a - b);
-  if (!sorted.length) return null;
-  return sorted[Math.floor(sorted.length / 2)];
-}
-
-function touches(values, level, tolerancePct) {
-  return values.filter((value) => pctMove(level, value) <= tolerancePct).length;
-}
-
-function containmentRatio(bars, support, resistance, tolerancePct) {
-  const lower = support * (1 - tolerancePct / 100);
-  const upper = resistance * (1 + tolerancePct / 100);
-  const contained = bars.filter((bar) => {
-    const close = number(bar?.close);
-    return close != null && close >= lower && close <= upper;
-  }).length;
-  return bars.length ? contained / bars.length : 0;
-}
-
-function springCandidates(bars, support, tolerancePct) {
-  const breakLevel = support * (1 - tolerancePct / 100);
-  const events = [];
-  for (let index = 0; index < bars.length; index += 1) {
-    const bar = bars[index];
-    const low = number(bar?.low);
-    const close = number(bar?.close);
-    if (low == null || close == null || low >= breakLevel || close < support) continue;
-    const reactionBars = bars.slice(index + 1, index + 4);
-    const confirmed = reactionBars.some((item) => number(item?.close) >= support || number(item?.high) >= support * (1 + tolerancePct / 100));
-    events.push({
-      type: 'spring',
-      index,
-      time: bar.time,
-      low,
-      close,
-      reaction: confirmed ? 'confirmed' : 'unconfirmed'
-    });
-  }
-  return events;
-}
-
-export function detectWyckoffRanges(bars, options = {}) {
-  const pivots = options.pivots || detectSwingPivots(bars, options);
-  const minTouchesPerSide = Number(options.minTouchesPerSide ?? 2);
-  const maxRangeHeightPct = Number(options.maxRangeHeightPct ?? 20);
-  const boundaryTolerancePct = Number(options.boundaryTolerancePct ?? 2);
-
-  const lows = pivots.filter((pivot) => normalizePivotType(pivot.type) === 'low').map((pivot) => pivot.price);
-  const highs = pivots.filter((pivot) => normalizePivotType(pivot.type) === 'high').map((pivot) => pivot.price);
-  if (lows.length < minTouchesPerSide || highs.length < minTouchesPerSide) return [];
-
-  const support = median(lows);
-  const resistance = median(highs);
-  if (support == null || resistance == null || support >= resistance) return [];
-
-  const rangeHeightPct = ((resistance - support) / support) * 100;
-  if (rangeHeightPct > maxRangeHeightPct) return [];
-
-  const supportTouches = touches(lows, support, boundaryTolerancePct);
-  const resistanceTouches = touches(highs, resistance, boundaryTolerancePct);
-  if (supportTouches < minTouchesPerSide || resistanceTouches < minTouchesPerSide) return [];
-
-  if (containmentRatio(bars, support, resistance, boundaryTolerancePct) < 0.7) return [];
-
-  return [{
-    id: 'range_0',
-    source: 'strict_multi_swing_range',
-    support: round(support),
-    resistance: round(resistance),
-    range_height_pct: round(rangeHeightPct),
-    touches: {
-      support: supportTouches,
-      resistance: resistanceTouches
-    },
-    event_candidates: springCandidates(bars, support, boundaryTolerancePct)
-  }];
 }

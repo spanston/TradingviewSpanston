@@ -1,4 +1,5 @@
 node_modules/
+.codex-pdf-venv/
 screenshots/
 scripts/current.pine
 temp_*

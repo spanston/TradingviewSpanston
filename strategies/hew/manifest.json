@@ -1,7 +1,7 @@
 {
   "strategy_id": "hew",
-  "display_name": "Harmonic Elliott Wave",
-  "contract_version": "hew_stage_gated_v5",
+  "display_name": "Ian Copsey Fractal Forecasting",
+  "contract_version": "hew_stage_gated_v8_math_core",
   "required_top_level": [
     "journal_id",
     "saved_at",
@@ -14,7 +14,10 @@
     "chart_prep",
     "screenshots",
     "visual_pivot_evidence",
+    "ian_copsey_wave_map",
+    "hypotheses",
     "hew_structure_context",
+    "copsey_hew_purity",
     "primary_count",
     "alternate_counts",
     "ratio_validation",
@@ -52,6 +55,11 @@
         "preceding_impulse_context_shown",
         "primary_secondary_subwaves_drawn",
         "forward_impulse_projection_drawn",
+        "copsey_internal_abc_motive_engines_checked",
+        "copsey_ac_lower_degree_fives_checked",
+        "copsey_classical_rescue_devices_rejected",
+        "castaway_overlay_not_copsey_source",
+        "wave3_1764_rule_checked",
         "macro_count_subwaves_ratio_aligned",
         "projection_forward_margin_next_count",
         "wave_b_ladder_chart_proof",
@@ -79,6 +87,19 @@
     "trade_posture"
   ],
   "visual_pivot_protocol": {
+    "preferred_indicator": "Konsili Pivot Exporter",
+    "required_exporter": {
+      "name": "Konsili Pivot Exporter",
+      "version": 1,
+      "study_filter": "Konsili Pivot Exporter",
+      "pine_script": "tradingview/konsili_pivot_exporter.pine",
+      "row_prefix": "KPE",
+      "allowed_source_tools": [
+        "data_get_pine_tables",
+        "data_get_pine_labels"
+      ],
+      "description": "Pivots must be exported as structured KPE rows from the visible Konsili Pivot Exporter table or labels before OHLCV verification."
+    },
     "required_timeframes": [
       "monthly",
       "weekly",
@@ -105,6 +126,211 @@
       "pass",
       "pass_with_fallback"
     ]
+  },
+  "ian_copsey_wave_map_protocol": {
+    "path": "ian_copsey_wave_map",
+    "required_authority": "ian_copsey_fractal_forecasting",
+    "required_mechanical_boundary": "ratio_validation_only",
+    "forbidden_count_authority_terms": [
+      "hew_scan_chart",
+      "primary_mechanical_candidate",
+      "promoted scanner",
+      "scanner-derived",
+      "scanner selected",
+      "mechanical candidate"
+    ],
+    "required_count_roles": [
+      "macro_primary",
+      "macro_correction",
+      "internal_subwave",
+      "active_decision"
+    ],
+    "required_alignment_principles": [
+      "fractal_degree_consistency",
+      "three_wave_impulsive_components",
+      "wave3_1764_floor",
+      "classical_rescue_rejection",
+      "corrective_context_before_forecast",
+      "scanner_not_count_authority"
+    ],
+    "description": "HEW count anchors must be selected from Ian Copsey / Fractal Forecasting structure. Mechanical tools may validate ratios/rules only; they must not choose the count."
+  },
+  "hypothesis_protocol": {
+    "path": "hypotheses",
+    "min_count": 1,
+    "recommended_count_range": {
+      "min": 3,
+      "max": 5
+    },
+    "allowed_selection_roles": [
+      "primary",
+      "alternate",
+      "rejected",
+      "watch"
+    ],
+    "allowed_engine_statuses": [
+      "pass",
+      "pass_with_warnings",
+      "fail"
+    ],
+    "allowed_directions": [
+      "bullish",
+      "bearish"
+    ],
+    "allowed_structure_types": [
+      "completed_primary_impulse",
+      "completed_macro_impulse",
+      "completed_internal_impulse",
+      "active_impulse",
+      "active_correction",
+      "completed_correction",
+      "conditional_forward_impulse",
+      "alternate_impulse",
+      "rejected_impulse",
+      "watch_context"
+    ],
+    "enforce_recommended_count": true,
+    "minimum_measurement_types": [
+      "wave3_projection"
+    ],
+    "required_measurement_types": [
+      "wave3_projection",
+      "wave5_projection",
+      "retracement",
+      "alternation_sum",
+      "wave4_b3_rule"
+    ],
+    "completed_impulse_structure_types": [
+      "completed_primary_impulse",
+      "completed_macro_impulse",
+      "completed_internal_impulse",
+      "conditional_forward_impulse"
+    ],
+    "completed_impulse_required_measurement_roles": [
+      {
+        "type": "retracement",
+        "role": "wave2_retracement"
+      },
+      {
+        "type": "retracement",
+        "role": "wave4_retracement"
+      }
+    ],
+    "wave_iii_complete_required_measurement_types": [
+      "triple_confluence"
+    ],
+    "hard_rule_violation_ids": [
+      "missing_points",
+      "missing_measurements",
+      "unsupported_measurement_type",
+      "wave3_outside_copsey_clusters",
+      "wave_c_ratio_not_in_copsey_universe",
+      "retracement_ratio_not_in_copsey_universe",
+      "wave4_breaks_b_of_wave3"
+    ],
+    "description": "Agents propose structured hypotheses; deterministic math scores them. Validation recomputes from saved hypothesis pivots and measurements, never from live market data."
+  },
+  "copsey_ratio_universe": {
+    "ratio_unit": "decimal",
+    "tolerances": {
+      "exact_ratio": 0.015,
+      "wave5_ratio": 0.04,
+      "triple_confluence_pct": 0.02,
+      "wave4_b3_proximity_pct": 0.03
+    },
+    "wave3_projection": {
+      "minimum": 1.764,
+      "rare_exception_range": {
+        "min": 1.72,
+        "max": 1.764
+      },
+      "clusters": [
+        {
+          "id": "1764_1987",
+          "min": 1.764,
+          "max": 1.987
+        },
+        {
+          "id": "2236_2618",
+          "min": 2.236,
+          "max": 2.618
+        },
+        {
+          "id": "3236_3987",
+          "min": 3.236,
+          "max": 3.987
+        },
+        {
+          "id": "4236_4987",
+          "min": 4.236,
+          "max": 4.987
+        }
+      ]
+    },
+    "wave_c_projection": {
+      "ratios": [
+        0.618,
+        0.667,
+        0.764,
+        0.854,
+        0.91,
+        0.944,
+        0.987,
+        1.021,
+        1.056,
+        1.09,
+        1.146,
+        1.236,
+        1.382,
+        1.414,
+        1.5,
+        1.586,
+        1.618,
+        1.764,
+        1.854
+      ]
+    },
+    "wave5_projection": {
+      "ratios": [
+        0.3,
+        0.333,
+        0.382,
+        0.414,
+        0.5,
+        0.586,
+        0.618,
+        0.667,
+        0.764,
+        0.854
+      ]
+    },
+    "retracement": {
+      "ratios": [
+        0.236,
+        0.333,
+        0.382,
+        0.414,
+        0.5,
+        0.586,
+        0.618,
+        0.667,
+        0.764,
+        0.854,
+        0.91,
+        0.944,
+        0.987
+      ]
+    },
+    "alternation_sum": {
+      "trending": {
+        "min": 0.8,
+        "max": 1.0
+      },
+      "corrective": {
+        "min": 1.0,
+        "max": 1.2
+      }
+    }
   },
   "chart_mode_protocol": {
     "path": "chart_prep.chart_mode_checklist",
@@ -216,12 +442,13 @@
   },
   "zone_probabilities": {
     "required_zone_types": [
-      "accumulation",
-      "distribution"
+      "retracement",
+      "projection"
     ],
     "allowed_zone_types": [
-      "accumulation",
-      "distribution",
+      "retracement",
+      "projection",
+      "invalidation",
       "no_trade"
     ]
   },
@@ -262,13 +489,22 @@
       "hew_preceding_impulse_context_checked",
       "hew_primary_secondary_subwaves_checked",
       "hew_forward_impulse_projection_checked",
+      "hew_copsey_internal_abc_motive_engines_checked",
+      "hew_copsey_ac_lower_degree_fives_checked",
+      "hew_classical_rescue_devices_rejected",
+      "hew_castaway_overlay_not_copsey_source",
+      "hew_wave3_1764_rule_checked",
       "unresolved_items_disclosed"
     ],
     "blocking_checklist_ids": [
       "hew_no_orphan_abc_checked",
       "hew_preceding_impulse_context_checked",
       "hew_primary_secondary_subwaves_checked",
-      "hew_forward_impulse_projection_checked"
+      "hew_forward_impulse_projection_checked",
+      "hew_copsey_internal_abc_motive_engines_checked",
+      "hew_classical_rescue_devices_rejected",
+      "hew_castaway_overlay_not_copsey_source",
+      "hew_wave3_1764_rule_checked"
     ]
   },
   "allowed": {
@@ -328,5 +564,90 @@
         "description": "Completed 1-5 + ABC maps include a conditional forward impulse projection, not a factual prediction."
       }
     ]
+  },
+  "copsey_purity_protocol": {
+    "path": "copsey_hew_purity",
+    "allowed_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "not_applicable",
+      "rare_exception_downgraded"
+    ],
+    "required_items": [
+      "internal_abc_motive_engines",
+      "ac_lower_degree_fives",
+      "classical_rescue_devices",
+      "castaway_overlay",
+      "wave3_1764_rule"
+    ],
+    "internal_abc_motive_engines": {
+      "required_macro_waves": [
+        "1",
+        "3",
+        "5"
+      ],
+      "allowed_coverage_statuses": [
+        "visible",
+        "visible_equivalent"
+      ],
+      "description": "Macro Waves 1, 3, and 5 must identify internal A-B-C motive engines or explicit visible equivalents."
+    },
+    "ac_lower_degree_fives": {
+      "required_legs": [
+        "A",
+        "C"
+      ],
+      "visible_statuses": [
+        "visible",
+        "pass"
+      ],
+      "not_visible_statuses": [
+        "not_visible",
+        "not_applicable"
+      ],
+      "description": "A and C legs need lower-degree five-wave action where visible; if not visible, record downgrade semantics."
+    },
+    "classical_rescue_devices": {
+      "expected_rejected_devices": [
+        "extended_waves",
+        "failed_fifths",
+        "leading_diagonals",
+        "ending_diagonals",
+        "diagonal_triangles"
+      ],
+      "description": "Classical Elliott rescue devices are rejected for Copsey HEW purity."
+    },
+    "castaway_overlay": {
+      "required_terms": [
+        "konsili",
+        "castaway",
+        "overlay"
+      ],
+      "forbidden_terms": [
+        "copsey source",
+        "source: copsey",
+        "copsey-derived"
+      ],
+      "description": "Castaway is a Konsili/Castaway overlay and must not be labeled as a Copsey source."
+    },
+    "wave3_1764_rule": {
+      "ratio_validation_id": "wave3_1764_rule",
+      "minimum_ratio": 1.764,
+      "allowed_statuses": [
+        "pass",
+        "pass_with_fallback",
+        "rare_exception_downgraded"
+      ],
+      "exception_statuses": [
+        "rare_exception_downgraded"
+      ],
+      "exception_required_fields": [
+        "rarity",
+        "documentation",
+        "downgrade",
+        "resulting_posture"
+      ],
+      "description": "Wave 3 must reach at least 176.4% of Wave 1; rare exceptions require documentation and a downgrade."
+    }
   }
 }

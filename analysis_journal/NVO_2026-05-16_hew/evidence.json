@@ -1,0 +1,1129 @@
+{
+  "journal_id": "NVO_2026-05-16_hew",
+  "saved_at": "2026-05-16T18:20:00+02:00",
+  "symbol": "NYSE:NVO",
+  "method": "Ian Copsey Fractal Forecasting",
+  "workflow_version": "hew_stage_gated_v8_math_core",
+  "status": "watchlist_only",
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "HEW lane selected for Novo Nordisk ADR. TradingView switched to Hew Layout; NYSE:NVO quote resolved and the live chart routed as BATS:NVO/Cboe One."
+    },
+    {
+      "id": "visual_pivot_extraction",
+      "status": "pass_with_fallback",
+      "evidence": "Pivot Points High Low was added as extraction scaffolding and visual monthly, weekly, and daily pivot screenshots were captured. Pine label/line/table reads returned no accessible objects, so all important pivots were verified with TradingView OHLCV before structure selection."
+    },
+    {
+      "id": "ohlcv_pivot_verification",
+      "status": "pass_with_fallback",
+      "evidence": "Monthly, weekly, and daily OHLCV summaries verify the major pivot prices used in the package, including 148.15, 35.12, 64.16, 47.79, 44.2501, and 50.43."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass",
+      "evidence": "Monthly macro impulse was read first, weekly correction context second, and daily decision structure last. The 2022-2024 bullish HEW impulse is proven; the post-2024 correction and current bounce are not yet actionable."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "Macro impulse, complex correction bridge, daily internal bearish subwave, and conditional forward path use native Elliott tools. Horizontal lines are used only for trigger, flip, invalidation, and supply levels."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "Evidence file, journal, screenshots, visual pivot evidence, HEW structure context, Copsey purity checks, action rationale, and critic review are present."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "Output is WATCHLIST ONLY with explicit trigger, flip level, invalidation, target path, and do-nothing zone."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass",
+      "evidence": "Final critic review passed with fallback pivot extraction and unresolved lower-degree correction internals disclosed."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "visual_pivots_extracted",
+      "status": "pass_with_fallback",
+      "evidence": "Visual pivot screenshots were captured on monthly, weekly, and daily. Pivot Points High Low was visible for extraction, but its Pine objects were not accessible through MCP reads."
+    },
+    {
+      "id": "ohlcv_pivots_verified",
+      "status": "pass_with_fallback",
+      "evidence": "TradingView OHLCV summaries verified the selected pivot prices before ratio and rule checks."
+    },
+    {
+      "id": "pivot_conflicts_resolved",
+      "status": "pass",
+      "evidence": "No unresolved conflict remains. The bullish macro impulse is accepted; the correction completion and active long bounce remain candidate/watchlist only."
+    },
+    {
+      "id": "chart_modes_recorded",
+      "status": "pass",
+      "evidence": "Extraction, verification, strategy-proof, and presentation modes are recorded in chart_prep.chart_mode_checklist."
+    },
+    {
+      "id": "preceding_impulse_context_shown",
+      "status": "pass",
+      "evidence": "The 45.755 to 138.28 macro impulse is drawn with native Elliott impulse tooling before the later correction bridge is interpreted."
+    },
+    {
+      "id": "primary_secondary_subwaves_drawn",
+      "status": "pass",
+      "evidence": "Primary macro degree is drawn and a separate daily bearish internal subwave is drawn as secondary evidence inside the post-2024 correction."
+    },
+    {
+      "id": "forward_impulse_projection_drawn",
+      "status": "pass",
+      "evidence": "A conditional forward impulse projection from the 35.12 low is drawn as scenario only, not as a completed fact."
+    },
+    {
+      "id": "copsey_internal_abc_motive_engines_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Macro Waves 1, 3, and 5 of the accepted impulse were checked as visible-equivalent Copsey motive engines. Lower internal ABC detail is not fully expanded, so posture is watchlist only."
+    },
+    {
+      "id": "copsey_ac_lower_degree_fives_checked",
+      "status": "pass_with_fallback",
+      "evidence": "A and C lower-degree five-wave visibility inside the active correction is not clean enough for trade permission; this is disclosed and downgraded."
+    },
+    {
+      "id": "copsey_classical_rescue_devices_rejected",
+      "status": "pass",
+      "evidence": "No extended wave, failed fifth, leading diagonal, ending diagonal, or diagonal triangle was used to rescue a weak count."
+    },
+    {
+      "id": "castaway_overlay_not_copsey_source",
+      "status": "pass",
+      "evidence": "Castaway is labeled as a Konsili overlay after Copsey structure, not as a Copsey source."
+    },
+    {
+      "id": "wave3_1764_rule_checked",
+      "status": "pass",
+      "evidence": "Macro Wave 3 validates at 2.5432x Wave 1 and the daily bearish subwave validates at 1.8420x Wave 1."
+    },
+    {
+      "id": "macro_count_subwaves_ratio_aligned",
+      "status": "pass_with_fallback",
+      "evidence": "Accepted impulse ratios pass; the active correction bridge is complex and not cleanly complete, so it is not promoted into action."
+    },
+    {
+      "id": "projection_forward_margin_next_count",
+      "status": "pass",
+      "evidence": "Conditional forward path maps 47.79 reclaim, 50.43 flip, 57.47-66.60 projection band, and 72.58 stretch scenario."
+    },
+    {
+      "id": "wave_b_ladder_chart_proof",
+      "status": "pass",
+      "evidence": "Wave-B/decision ladder is charted with 35.12 hard invalidation, 47.79 trigger, 50.43 flip, and 64.16 macro supply."
+    },
+    {
+      "id": "zone_probabilities_complete",
+      "status": "pass",
+      "evidence": "Retracement, projection, no-trade, and invalidation zones are scored and linked to trigger/downgrade conditions."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "Action rationale explains why current price is watchlist only and what must change for an actionable setup."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "Final critic checklist is complete and blocks action until the trigger/flip sequence is reclaimed."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_verified": "NYSE:NVO quote, BATS:NVO TradingView routed chart",
+    "drawings_cleared": false,
+    "cleared_drawing_count": 0,
+    "visible_ranges_verified": true,
+    "final_timeframe": "1D",
+    "chart_mode_checklist": [
+      {
+        "mode": "extraction",
+        "status": "pass_with_fallback",
+        "evidence": "Pivot Points High Low was visible for monthly, weekly, and daily extraction screenshots. Pine object reads returned no labels/lines/tables, so visual pivots were verified through OHLCV."
+      },
+      {
+        "mode": "verification",
+        "status": "pass_with_fallback",
+        "evidence": "TradingView OHLCV summaries on monthly, weekly, and daily verified the selected pivot highs/lows before ratio validation."
+      },
+      {
+        "mode": "strategy_proof",
+        "status": "pass",
+        "evidence": "Pivot scaffolding was hidden. Macro impulse, complex correction bridge, daily internal subwave, conditional forward path, no-trade band, projection zone, trigger, flip, supply, and invalidation were drawn."
+      },
+      {
+        "mode": "presentation",
+        "status": "pass",
+        "evidence": "Final chart state was verified after hiding pivot scaffolding; decision proof remains visible on daily chart.",
+        "pivot_scaffold_visible": false,
+        "final_chart_state": "Daily BATS:NVO routed chart for NYSE:NVO with AO visible, pivot scaffolding hidden from values, 10 HEW/decision drawings listed, and current quote 44.74 below the 47.79 trigger."
+      }
+    ],
+    "drawing_manifest": [
+      {
+        "id": "macro_impulse_context",
+        "entity_id": "tHfr5t",
+        "role": "preceding_impulse_context",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [45.755, 61.08, 47.51, 86.485, 75.56, 138.28]
+      },
+      {
+        "id": "macro_primary_degree_subwaves",
+        "entity_id": "tHfr5t",
+        "role": "primary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [45.755, 61.08, 47.51, 86.485, 75.56, 138.28]
+      },
+      {
+        "id": "macro_complex_correction",
+        "entity_id": "LxDPov",
+        "role": "macro_count",
+        "tool": "elliott_triple_combo",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [148.15, 57, 81.44, 43.08, 64.16, 35.12],
+        "note": "Complex correction bridge after the all-time high; not a clean completed ABC."
+      },
+      {
+        "id": "daily_bearish_internal_subwave",
+        "entity_id": "DuMKMe",
+        "role": "secondary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [62.3202, 53.7697, 60.9, 45.15, 50.43, 43.08]
+      },
+      {
+        "id": "conditional_forward_path",
+        "entity_id": "KGSBW1",
+        "role": "projection_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [35.12, 47.79, 44.2501, 66.6, 57.47, 72.58],
+        "label": "conditional scenario only; activates after trigger/flip reclaim"
+      },
+      {
+        "id": "current_no_trade_band",
+        "entity_id": "rmYGrO",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "price_range": { "low": 44.25, "high": 50.43 }
+      },
+      {
+        "id": "projection_zone",
+        "entity_id": "hL7ksq",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "price_range": { "low": 57.47, "high": 66.6 }
+      },
+      {
+        "id": "trigger_47_79",
+        "entity_id": "3L4qKH",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 47.79
+      },
+      {
+        "id": "flip_50_43",
+        "entity_id": "iMwIOI",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 50.43
+      },
+      {
+        "id": "hard_invalidation_35_12",
+        "entity_id": "SLO4ax",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 35.12
+      },
+      {
+        "id": "macro_supply_64_16",
+        "entity_id": "aFhcmc",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "level": 64.16
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_monthly.png",
+      "purpose": "Monthly visual pivot extraction with pivot layer visible."
+    },
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_weekly.png",
+      "purpose": "Weekly visual pivot extraction with pivot layer visible."
+    },
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_daily.png",
+      "purpose": "Daily visual pivot extraction with pivot layer visible."
+    },
+    {
+      "role": "macro_structure",
+      "path": "screenshots/macro_structure.png",
+      "purpose": "Macro HEW impulse and complex correction bridge."
+    },
+    {
+      "role": "trade_posture",
+      "path": "screenshots/trade_posture.png",
+      "purpose": "Daily trigger, flip, invalidation, no-trade band, and conditional projection map."
+    }
+  ],
+  "visual_pivot_evidence": {
+    "indicator_name": "Pivot Points High Low",
+    "study_filter": "Pivot Points High Low",
+    "extraction_method": "Visual pivot layer was captured first; Pine label/line/table extraction returned no objects, so selected pivots were verified with OHLCV summaries and HEW ratio tools before interpretation.",
+    "iteration_decision": "accepted_with_fallback_and_action_downgrade_to_watchlist_only",
+    "timeframes": [
+      {
+        "timeframe": "monthly",
+        "screenshot": "screenshots/visual_pivots_monthly.png",
+        "pivots": [
+          {
+            "id": "m_2022_01_low_45_755",
+            "type": "low",
+            "price": 45.755,
+            "source_text": "Monthly pivot low at 45.755, 2022-01, selected as macro impulse origin."
+          },
+          {
+            "id": "m_2023_04_high_86_485",
+            "type": "high",
+            "price": 86.485,
+            "source_text": "Monthly pivot high at 86.485, 2023-04, selected as macro Wave 3."
+          },
+          {
+            "id": "m_2024_06_high_148_15",
+            "type": "high",
+            "price": 148.15,
+            "source_text": "Monthly all-time high at 148.15, 2024-06, selected as correction-start context."
+          },
+          {
+            "id": "m_2026_04_low_35_12",
+            "type": "low",
+            "price": 35.12,
+            "source_text": "Monthly low at 35.12, 2026-04, selected as the current correction low."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "m_2022_01_low_45_755",
+            "status": "pass",
+            "evidence": "Monthly scan returned 45.755 as the January 2022 pivot low."
+          },
+          {
+            "pivot_id": "m_2023_04_high_86_485",
+            "status": "pass",
+            "evidence": "Monthly scan returned 86.485 as the April 2023 pivot high."
+          },
+          {
+            "pivot_id": "m_2024_06_high_148_15",
+            "status": "pass",
+            "evidence": "Monthly OHLCV summary reports the full-period high at 148.15."
+          },
+          {
+            "pivot_id": "m_2026_04_low_35_12",
+            "status": "pass",
+            "evidence": "Monthly last bars include the 2026-04 low at 35.12."
+          }
+        ]
+      },
+      {
+        "timeframe": "weekly",
+        "screenshot": "screenshots/visual_pivots_weekly.png",
+        "pivots": [
+          {
+            "id": "w_2024_06_high_148_15",
+            "type": "high",
+            "price": 148.15,
+            "source_text": "Weekly all-time high at 148.15 before the post-2024 correction."
+          },
+          {
+            "id": "w_2025_04_low_57",
+            "type": "low",
+            "price": 57,
+            "source_text": "Weekly correction low at 57.00, 2025-04."
+          },
+          {
+            "id": "w_2025_06_high_81_44",
+            "type": "high",
+            "price": 81.44,
+            "source_text": "Weekly reaction high at 81.44, 2025-06."
+          },
+          {
+            "id": "w_2026_01_high_64_16",
+            "type": "high",
+            "price": 64.16,
+            "source_text": "Weekly reaction high at 64.16, 2026-01; macro supply and target boundary."
+          },
+          {
+            "id": "w_2026_04_low_35_12",
+            "type": "low",
+            "price": 35.12,
+            "source_text": "Weekly low at 35.12, 2026-04."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "w_2024_06_high_148_15",
+            "status": "pass",
+            "evidence": "Weekly OHLCV summary reports the high at 148.15."
+          },
+          {
+            "pivot_id": "w_2025_04_low_57",
+            "status": "pass",
+            "evidence": "Weekly pivot scan reports 57.00 as the April 2025 low."
+          },
+          {
+            "pivot_id": "w_2025_06_high_81_44",
+            "status": "pass",
+            "evidence": "Weekly pivot scan reports 81.44 as the June 2025 high."
+          },
+          {
+            "pivot_id": "w_2026_01_high_64_16",
+            "status": "pass",
+            "evidence": "Weekly pivot scan reports 64.16 as the January 2026 high."
+          },
+          {
+            "pivot_id": "w_2026_04_low_35_12",
+            "status": "pass",
+            "evidence": "Weekly OHLCV scan reports 35.12 as the April 2026 low."
+          }
+        ]
+      },
+      {
+        "timeframe": "daily",
+        "screenshot": "screenshots/visual_pivots_daily.png",
+        "pivots": [
+          {
+            "id": "d_2025_09_high_62_3202",
+            "type": "high",
+            "price": 62.3202,
+            "source_text": "Daily high at 62.3202, 2025-09, starting a valid bearish internal HEW subwave."
+          },
+          {
+            "id": "d_2025_11_low_43_08",
+            "type": "low",
+            "price": 43.08,
+            "source_text": "Daily low at 43.08, 2025-11, terminal of the valid bearish internal subwave."
+          },
+          {
+            "id": "d_2026_04_low_35_12",
+            "type": "low",
+            "price": 35.12,
+            "source_text": "Daily low at 35.12, 2026-04."
+          },
+          {
+            "id": "d_2026_05_high_47_79",
+            "type": "high",
+            "price": 47.79,
+            "source_text": "Daily/weekly high at 47.79 used as first trigger."
+          },
+          {
+            "id": "d_2026_05_low_44_2501",
+            "type": "low",
+            "price": 44.2501,
+            "source_text": "Current daily low at 44.2501; bounce pullback is not confirmed as complete."
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "d_2025_09_high_62_3202",
+            "status": "pass",
+            "evidence": "Daily pivot scan reports 62.3202 as the September 2025 high."
+          },
+          {
+            "pivot_id": "d_2025_11_low_43_08",
+            "status": "pass",
+            "evidence": "Daily pivot scan reports 43.08 as the November 2025 low."
+          },
+          {
+            "pivot_id": "d_2026_04_low_35_12",
+            "status": "pass",
+            "evidence": "Daily OHLCV summary reports the 300-bar low at 35.12."
+          },
+          {
+            "pivot_id": "d_2026_05_high_47_79",
+            "status": "pass",
+            "evidence": "NYSE:NVO quote and weekly/monthly last bars report 47.79 as the recent high."
+          },
+          {
+            "pivot_id": "d_2026_05_low_44_2501",
+            "status": "pass",
+            "evidence": "Latest NYSE:NVO quote reports low 44.2501 and close 44.74."
+          }
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "pine_objects_unavailable",
+        "status": "resolved_by_fallback",
+        "evidence": "Pine object extraction returned zero studies for labels, lines, and tables; the package uses visual screenshots plus OHLCV verification and downgrades action to watchlist only."
+      },
+      {
+        "id": "correction_completion_unproven",
+        "status": "resolved_by_action_block",
+        "evidence": "The post-148.15 correction is complex and not a clean completed ABC. It is drawn as a complex correction bridge, not used for immediate trade permission."
+      }
+    ]
+  },
+  "ian_copsey_wave_map": {
+    "count_selection_authority": "ian_copsey_fractal_forecasting",
+    "mechanical_tool_boundary": "ratio_validation_only",
+    "scanner_used_for_count_selection": false,
+    "book_alignment_source": "Fractal Forecasting - Ian Copsey",
+    "selection_method": "The count starts from the visible monthly swing sequence and Copsey/Fractal Forecasting degree logic: completed bullish impulse from 45.755 into the 2024 high area, then complex correction into 35.12. Ratio tools were used after anchor selection to check HEW compliance.",
+    "counts": [
+      {
+        "id": "ian_copsey_macro_primary",
+        "role": "macro_primary",
+        "drawing_id": "macro_impulse_context",
+        "pivots": [45.755, 61.08, 47.51, 86.485, 75.56, 138.28],
+        "ratio_validation_id": "wave3_1764_rule",
+        "copsey_rationale": "The 45.755 low is the visible origin, 61.08 caps Wave 1, 47.51 holds as Wave 2, 86.485 is the HEW Wave 3 expansion, 75.56 is Wave 4, and 138.28 is the accepted impulse terminal before the final 148.15 high area."
+      },
+      {
+        "id": "ian_copsey_macro_correction",
+        "role": "macro_correction",
+        "drawing_id": "macro_complex_correction",
+        "pivots": [148.15, 57, 81.44, 43.08, 64.16, 35.12],
+        "ratio_validation_id": "macro_complex_correction_unresolved",
+        "copsey_rationale": "After the 2024 terminal high area, NVO has a complex multi-swing correction into 35.12. It is not promoted as a clean completed ABC because the bridge contains overlapping internal swings and the active rebound has not reclaimed the trigger/flip ladder."
+      },
+      {
+        "id": "ian_copsey_daily_bearish_internal",
+        "role": "internal_subwave",
+        "drawing_id": "daily_bearish_internal_subwave",
+        "pivots": [62.3202, 53.7697, 60.9, 45.15, 50.43, 43.08],
+        "ratio_validation_id": "daily_bearish_wave3_expansion",
+        "copsey_rationale": "Inside the correction, the 62.3202 to 43.08 daily bearish leg validates as a lower-degree HEW subwave, showing that seller control was structurally real before the 35.12 low."
+      },
+      {
+        "id": "ian_copsey_active_decision",
+        "role": "active_decision",
+        "drawing_id": "conditional_forward_path",
+        "pivots": [35.12, 47.79, 44.2501, 66.6, 57.47, 72.58],
+        "ratio_validation_id": "active_bounce_partial_candidate",
+        "copsey_rationale": "The active bullish path is only a conditional projection from 35.12. Price must reclaim 47.79 and then 50.43 before the projected 57.47-66.60 path deserves action status."
+      }
+    ],
+    "ratio_calculations": [
+      {
+        "id": "macro_primary_wave3_ratio",
+        "formula": "(86.485 - 47.51) / (61.08 - 45.755)",
+        "actual_ratio": 2.5432,
+        "interpretation": "Macro Wave 3 exceeds the 1.764 HEW floor and falls in the 2.236-2.618 cluster."
+      },
+      {
+        "id": "daily_bearish_wave3_ratio",
+        "formula": "(60.9 - 45.15) / (62.3202 - 53.7697)",
+        "actual_ratio": 1.842,
+        "interpretation": "Daily bearish internal Wave 3 passes the 1.764 floor, confirming prior seller control."
+      },
+      {
+        "id": "macro_complex_c_ratio",
+        "formula": "(81.44 - 35.12) / (148.15 - 57)",
+        "actual_ratio": 0.5082,
+        "interpretation": "This correction bridge is not a clean Copsey C-leg completion; it supports watchlist only, not action."
+      },
+      {
+        "id": "active_bounce_wave3_projection",
+        "formula": "(66.60 - 44.2501) / (47.79 - 35.12)",
+        "actual_ratio": 1.764,
+        "interpretation": "Projected only: 66.60 is the first full HEW Wave 3 projection if 47.79/50.43 are reclaimed."
+      }
+    ],
+    "fractal_forecasting_alignment": [
+      {
+        "id": "fractal_degree_consistency",
+        "status": "pass",
+        "evidence": "Monthly impulse context controls the thesis; weekly and daily structures are used only to define correction state and decision levels."
+      },
+      {
+        "id": "three_wave_impulsive_components",
+        "status": "pass_with_fallback",
+        "evidence": "Macro Waves 1, 3, and 5 are treated as visible-equivalent Copsey motive engines; lower internals are not clean enough for immediate action."
+      },
+      {
+        "id": "wave3_1764_floor",
+        "status": "pass",
+        "evidence": "Macro Wave 3 validates at 2.5432x Wave 1 and daily bearish internal Wave 3 validates at 1.8420x."
+      },
+      {
+        "id": "classical_rescue_rejection",
+        "status": "pass",
+        "evidence": "The correction is not rescued with classical exceptions; unresolved structure blocks action."
+      },
+      {
+        "id": "corrective_context_before_forecast",
+        "status": "pass",
+        "evidence": "The 148.15-35.12 correction bridge is explicitly tied to the drawn 45.755-138.28 preceding impulse before any forward projection is considered."
+      },
+      {
+        "id": "scanner_not_count_authority",
+        "status": "pass",
+        "evidence": "Pivot tooling was scaffolding. The wave map was selected from Copsey structural context and checked afterward with OHLCV and ratio validation."
+      }
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "nvo_primary_structure_v8_math_audit",
+      "selection_role": "primary",
+      "direction": "mixed",
+      "structure_type": "completed_macro_impulse_with_unresolved_correction_and_daily_bearish_subwave",
+      "pivots": [
+        { "id": "p0", "price": 45.755 },
+        { "id": "p1", "price": 61.08 },
+        { "id": "p2", "price": 47.51 },
+        { "id": "p3", "price": 86.485 },
+        { "id": "p4", "price": 75.56 },
+        { "id": "p5", "price": 138.28 },
+        { "id": "d0", "price": 62.3202 },
+        { "id": "d1", "price": 53.7697 },
+        { "id": "d2", "price": 60.9 },
+        { "id": "d3", "price": 45.15 },
+        { "id": "d4", "price": 50.43 },
+        { "id": "d5", "price": 43.08 }
+      ],
+      "measurements": [
+        {
+          "id": "macro_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        },
+        {
+          "id": "daily_bearish_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "d0",
+            "wave1_end": "d1",
+            "wave2_end": "d2",
+            "wave3_end": "d3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "nvo_primary_structure_v8_math_audit",
+        "status": "pass",
+        "score": 100,
+        "hard_rule_pass": true,
+        "violation_ids": []
+      }
+    }
+  ],
+  "hew_structure_context": {
+    "preceding_impulse_context": {
+      "status": "pass",
+      "drawing_id": "macro_impulse_context",
+      "evidence": "The 45.755-61.08-47.51-86.485-75.56-138.28 native Elliott impulse is the primary structure corrected by the later decline."
+    },
+    "primary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "macro_primary_degree_subwaves",
+      "evidence": "Primary macro degree is shown by the drawn native Elliott impulse from 45.755 to 138.28."
+    },
+    "secondary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "daily_bearish_internal_subwave",
+      "evidence": "A separate daily native Elliott impulse from 62.3202 to 43.08 shows lower-degree bearish structure inside the post-2024 correction."
+    },
+    "forward_impulse_projection": {
+      "status": "pass",
+      "drawing_id": "conditional_forward_path",
+      "conditionality": "conditional projection scenario only; it activates only after 47.79 and 50.43 are reclaimed.",
+      "evidence": "The forward Elliott impulse projection maps the next bullish path only if the trigger/flip ladder is reclaimed."
+    }
+  },
+  "copsey_hew_purity": {
+    "internal_abc_motive_engines": {
+      "status": "pass_with_fallback",
+      "evidence": "Copsey HEW was kept separate from classical Elliott rescue logic. Monthly resolution supports the macro motive-engine requirement by visible equivalents, not fully expanded internal ABC labels.",
+      "macro_waves": [
+        {
+          "wave": "1",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "Macro Wave 1 from 45.755 to 61.08 is accepted as visible higher-degree motive context; lower internal A-B-C detail is not cleanly expanded.",
+          "drawing_id": "macro_primary_degree_subwaves",
+          "evidence": "The wave is part of the strict-valid 45.755-138.28 HEW impulse."
+        },
+        {
+          "wave": "3",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "Macro Wave 3 from 47.51 to 86.485 supplies the dominant HEW expansion at 2.5432x Wave 1.",
+          "drawing_id": "macro_primary_degree_subwaves",
+          "evidence": "Wave 3 falls in the 2.236-2.618 Copsey cluster."
+        },
+        {
+          "wave": "5",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "Macro Wave 5 from 75.56 to 138.28 completes the accepted impulse context before the 148.15 high area and later correction.",
+          "drawing_id": "macro_primary_degree_subwaves",
+          "evidence": "No failed fifth or diagonal logic is needed for the accepted impulse context."
+        }
+      ]
+    },
+    "ac_lower_degree_fives": {
+      "status": "pass_with_fallback",
+      "evidence": "Lower-degree five-wave action inside the active correction is not fully readable at the package timeframes, so trade permission is withheld.",
+      "legs": [
+        {
+          "leg": "A",
+          "visibility_status": "not_visible",
+          "visibility_reason": "The first correction leg after 148.15 contains overlapping weekly swings; lower-degree five-wave action is not cleanly extractable without lower-timeframe execution work.",
+          "downgrade_semantics": "Do not treat the correction as complete from this leg; keep posture watchlist only."
+        },
+        {
+          "leg": "C",
+          "visibility_status": "not_visible",
+          "visibility_reason": "The correction into 35.12 may be terminal, but lower-degree five-wave action and clean Copsey C completion are not proven.",
+          "downgrade_semantics": "Require 47.79/50.43 reclaim before upgrading any long scenario."
+        }
+      ]
+    },
+    "classical_rescue_devices": {
+      "status": "pass",
+      "evidence": "No classical Elliott rescue devices were used to force the correction or active bounce into an action count.",
+      "rejected_devices": [
+        "extended_waves",
+        "failed_fifths",
+        "leading_diagonals",
+        "ending_diagonals",
+        "diagonal_triangles"
+      ],
+      "used_devices": [],
+      "no_use_confirmed": true
+    },
+    "castaway_overlay": {
+      "status": "pass",
+      "source_label": "Konsili Castaway overlay",
+      "is_copsey_source": false,
+      "evidence": "Castaway is used only as a Konsili overlay after Copsey structure; it is not cited as an Ian Copsey source."
+    },
+    "wave3_1764_rule": {
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 2.5432,
+      "evidence": "Accepted macro impulse Wave 3 equals 2.5432x Wave 1. Daily bearish internal Wave 3 also passes at 1.8420x."
+    }
+  },
+  "primary_count": {
+    "status": "candidate_watchlist",
+    "summary": "NVO has a proven macro HEW bullish impulse from 45.755 to 138.28, followed by a complex post-148.15 correction into 35.12. Current price 44.74 is below the 47.79 trigger and below the 50.43 flip level, so the active bullish path remains watchlist only.",
+    "macro_impulse": {
+      "points": [45.755, 61.08, 47.51, 86.485, 75.56, 138.28],
+      "strict_validation": "full_valid_hew",
+      "wave3_vs_wave1": 2.5432,
+      "structure_invalidation": 45.755
+    },
+    "macro_correction": {
+      "classification": "candidate_complex_correction",
+      "quality": "incomplete_for_action",
+      "points": [148.15, 57, 81.44, 43.08, 64.16, 35.12],
+      "completion_status": "not_proven",
+      "reason_for_downgrade": "Correction bridge is complex and current bounce has not reclaimed 47.79/50.43."
+    },
+    "active_bounce": {
+      "points": [35.12, 47.79, 44.2501],
+      "strict_validation": "partial_candidate",
+      "trigger": 47.79,
+      "flip_level": 50.43,
+      "hard_invalidation": 35.12
+    }
+  },
+  "alternate_counts": [
+    {
+      "id": "bearish_continuation_under_47_79",
+      "status": "active_risk",
+      "activation": "Failure below 47.79 followed by loss of 41.41 and 38.02.",
+      "invalidation": "Daily/weekly acceptance above 50.43 weakens this alternate; acceptance above 64.16 materially damages it.",
+      "implication": "Below trigger, the bounce can remain a corrective rally inside the larger decline."
+    },
+    {
+      "id": "bullish_base_after_35_12",
+      "status": "watch",
+      "activation": "Reclaim 47.79, then hold above 50.43.",
+      "invalidation": "Daily/weekly loss of 35.12 invalidates the base attempt.",
+      "implication": "If activated, target path opens toward 57.47-66.60 first."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "wave3_1764_rule",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 2.5432,
+      "evidence": "Macro bullish HEW impulse Wave 3 is 2.5432x Wave 1, above the 1.764 floor."
+    },
+    {
+      "id": "daily_bearish_wave3_expansion",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.842,
+      "evidence": "Daily bearish internal impulse from 62.3202 to 43.08 has Wave 3 at 1.8420x Wave 1."
+    },
+    {
+      "id": "macro_complex_correction_unresolved",
+      "status": "fail_rejected_for_action",
+      "required_ratio": 0.618,
+      "actual_ratio": 0.5082,
+      "evidence": "The 148.15-57-81.44-35.12 bridge does not prove a clean Copsey C completion; correction stays candidate/complex."
+    },
+    {
+      "id": "active_bounce_partial_candidate",
+      "status": "pass_with_fallback",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.764,
+      "evidence": "Projected Wave 3 to 66.60 would satisfy the 1.764 floor only after 47.79/50.43 reclaim. It is projection, not fact."
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "macro_wave2_holds_origin",
+      "status": "pass",
+      "evidence": "Macro Wave 2 low 47.51 holds above the 45.755 origin."
+    },
+    {
+      "id": "daily_bearish_internal_valid",
+      "status": "pass",
+      "evidence": "Daily bearish internal wave validates under strict HEW Wave 3 rules and confirms prior seller control."
+    },
+    {
+      "id": "active_bounce_not_confirmed",
+      "status": "pass",
+      "evidence": "The active bullish bounce is only partial; it has not reclaimed 47.79 or 50.43."
+    }
+  ],
+  "wave_b_invalidation_ladder": [
+    {
+      "id": "hard_invalidation",
+      "level": 35.12,
+      "status": "holds",
+      "violation_standard": "Daily/weekly acceptance below 35.12 invalidates the candidate base and reopens the correction.",
+      "evidence": "35.12 is the verified daily/weekly/monthly correction low and is drawn as hard invalidation."
+    },
+    {
+      "id": "minor_damage",
+      "level": 38.02,
+      "status": "holds",
+      "violation_standard": "Loss of 38.02 after a failed bounce suggests the rally remains corrective.",
+      "evidence": "38.02 is a verified daily pullback low after the 35.12 pivot."
+    },
+    {
+      "id": "trigger",
+      "level": 47.79,
+      "status": "not_reclaimed",
+      "violation_standard": "Daily/weekly acceptance above 47.79 is required for the first bullish trigger.",
+      "evidence": "Current quote 44.74 is below 47.79."
+    },
+    {
+      "id": "flip_level",
+      "level": 50.43,
+      "status": "not_reclaimed",
+      "violation_standard": "50.43 must flip from resistance to support for cleaner long posture.",
+      "evidence": "50.43 is the daily Wave 4 high of the prior bearish internal subwave."
+    },
+    {
+      "id": "macro_supply",
+      "level": 64.16,
+      "status": "overhead",
+      "violation_standard": "Acceptance above 64.16 materially weakens the bearish continuation alternate.",
+      "evidence": "64.16 is the verified January 2026 weekly high and is drawn as macro supply."
+    }
+  ],
+  "zone_probabilities": [
+    {
+      "id": "retracement_37_68_44_79",
+      "zone_type": "retracement",
+      "price_range": { "low": 37.68, "high": 44.79 },
+      "probability": { "value": 48, "band": "moderate" },
+      "evidence": "The 64.16 to 35.12 HEW retracement map has 0.912 at 37.68, 0.854 at 39.36, 0.764 at 41.97, and 0.667 at 44.79; current close 44.74 is near the top of this lower repair zone.",
+      "invalidation": "Acceptance below 35.12 invalidates the base attempt.",
+      "upgrade_trigger": "Hold above 44.25, then reclaim 47.79 and 50.43.",
+      "downgrade_trigger": "Loss of 41.41 and 38.02, especially with expanding downside."
+    },
+    {
+      "id": "projection_57_47_66_60",
+      "zone_type": "projection",
+      "price_range": { "low": 57.47, "high": 66.6 },
+      "probability": { "value": 36, "band": "low_to_moderate" },
+      "evidence": "Conditional projection from the 35.12 to 47.79 bounce puts 1.764 extension near 57.47 and projected Wave 3 path near 66.60 only after trigger/flip reclaim.",
+      "invalidation": "Failure back below 47.79 after a reclaim, or a daily/weekly close below 35.12.",
+      "upgrade_trigger": "Daily/weekly acceptance above 50.43 with 47.79 holding on retest.",
+      "downgrade_trigger": "Chop under 47.79 or rejection at 50.43."
+    },
+    {
+      "id": "no_trade_44_25_50_43",
+      "zone_type": "no_trade",
+      "price_range": { "low": 44.25, "high": 50.43 },
+      "probability": { "value": 68, "band": "elevated" },
+      "evidence": "Current price 44.74 sits inside the drawn no-trade band, below 47.79 trigger and 50.43 flip.",
+      "invalidation": "The no-trade state ends only on clean acceptance above 50.43 or breakdown below the band with a new count.",
+      "upgrade_trigger": "47.79 reclaim followed by 50.43 flip/hold.",
+      "downgrade_trigger": "Failure under 47.79 and loss of 44.25."
+    },
+    {
+      "id": "invalidation_35_12_38_02",
+      "zone_type": "invalidation",
+      "price_range": { "low": 35.12, "high": 38.02 },
+      "probability": { "value": 31, "band": "moderate" },
+      "evidence": "35.12 is hard invalidation and 38.02 is the nearest higher-low warning level.",
+      "invalidation": "Daily/weekly close below 35.12 invalidates the active base thesis.",
+      "upgrade_trigger": "Hold above 44.25, reclaim 47.79, then 50.43.",
+      "downgrade_trigger": "Acceptance below 38.02."
+    }
+  ],
+  "action_rationale": {
+    "selected_action": "WATCHLIST ONLY",
+    "strategy_basis": "Macro HEW impulse is valid, but the post-148.15 correction is complex and current price has not reclaimed the daily trigger/flip ladder.",
+    "why_action_follows_strategy": "Copsey HEW allows a long only after the active bounce proves itself. At 44.74, price is below 47.79 and 50.43, so buying now front-runs both the ratio model and Castaway gate.",
+    "chart_evidence_supporting_action": "Macro impulse 45.755-138.28 passes Wave 3 at 2.5432x. Daily bearish subwave 62.3202-43.08 also passes, showing seller control. Active bounce is only partial from 35.12 to 47.79 to 44.2501.",
+    "what_proves_it_wrong": "Acceptance above 50.43 with 47.79 holding upgrades the setup; loss of 35.12 invalidates the base attempt.",
+    "human_takeaway": "Do nothing at current price. Watch 47.79 first, 50.43 second. Only above that does 57.47-66.60 become a credible reward path."
+  },
+  "trade_posture": {
+    "posture": "WATCHLIST ONLY",
+    "setup": "Candidate base after a complex post-2024 correction, against a proven older bullish HEW impulse but not yet confirmed by daily price acceptance.",
+    "trigger": "Daily/weekly acceptance above 47.79, then a cleaner flip/hold above 50.43.",
+    "invalidation": "Loss of 38.02 damages the base attempt; daily/weekly acceptance below 35.12 invalidates it.",
+    "target_path": "If 47.79 and 50.43 are reclaimed, first target path is 57.47, then 59.91-61.80/64.16, then 66.60-72.58 only as a stretch projection.",
+    "do_nothing": "Ignore price inside 44.25-50.43 and do not treat the 35.12 low as a confirmed macro bottom until the trigger/flip ladder is reclaimed."
+  },
+  "castaway_trade_model": {
+    "model": "Konsili Castaway overlay - trigger gate blocked",
+    "permission": "blocked_until_trigger",
+    "source_label": "Konsili Castaway overlay",
+    "is_copsey_source": false,
+    "reason": "The overlay allows readiness only after Copsey HEW structure is valid and price activates the trigger/flip ladder. Current price is below 47.79 and 50.43.",
+    "evidence": "Macro structure is valid in the older impulse, but active correction/bounce evidence is incomplete."
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "fail",
+      "evidence": "Price 44.74 is inside the 44.25-50.43 no-trade band."
+    },
+    {
+      "id": "trigger",
+      "status": "fail",
+      "evidence": "47.79 has not been reclaimed and 50.43 has not flipped."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "35.12 hard invalidation and 38.02 warning level are defined."
+    },
+    {
+      "id": "reward",
+      "status": "partial",
+      "evidence": "57.47-66.60 reward path exists only after trigger and flip confirmation."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "partial",
+      "evidence": "Monthly impulse is valid, but weekly/daily correction is unresolved and current price is below trigger."
+    }
+  ],
+  "red_team": {
+    "countercase": "The 35.12 low may be only another pause inside a larger bearish correction, not a durable macro low.",
+    "proof_needed": "A decisive reclaim of 47.79 and 50.43, with 47.79 holding on retest. Without that, the correction can continue.",
+    "impact": "Keep posture watchlist only. A breakdown below 35.12 forces a fresh count from lower levels."
+  },
+  "critic_review": {
+    "completed_at": "2026-05-16T18:20:00+02:00",
+    "reviewer": "Codex HEW critic",
+    "scope": "NVO HEW chart package",
+    "timeframe_focus": "monthly-weekly-daily",
+    "max_detail_timeframe": "daily",
+    "final_verdict": "pass",
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "journal.md, evidence.json, and five screenshots are present in the package."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass",
+        "evidence": "Levels were checked against TradingView quote, OHLCV summaries, HEW validation, and Fib tools."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "Monthly and weekly context drive the thesis; daily is used only for decision levels."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "Decision, trigger, flip, invalidation, target path, and do-nothing zone are explicit."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "35.12 hard invalidation, 38.02 warning, 47.79 trigger, 50.43 flip, and 64.16 supply are defined."
+      },
+      {
+        "id": "visual_first_sequence_checked",
+        "status": "pass",
+        "evidence": "Visual pivot screenshots were captured before HEW interpretation; missing Pine objects are disclosed."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "No intraday trigger or lower-than-daily execution setup is provided."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "Screenshot roles and drawing manifest describe the same macro impulse, correction bridge, daily subwave, projection, levels, and zones."
+      },
+      {
+        "id": "final_chart_readability_checked",
+        "status": "pass",
+        "evidence": "Final chart hides pivot scaffolding and leaves only readable HEW decision proof."
+      },
+      {
+        "id": "hew_no_orphan_abc_checked",
+        "status": "pass",
+        "evidence": "The correction bridge is explicitly tied to the preceding 45.755-138.28 impulse and is not promoted as a clean completed ABC."
+      },
+      {
+        "id": "hew_preceding_impulse_context_checked",
+        "status": "pass",
+        "evidence": "Preceding impulse context drawing macro_impulse_context is present and referenced."
+      },
+      {
+        "id": "hew_primary_secondary_subwaves_checked",
+        "status": "pass",
+        "evidence": "Primary macro degree and separate daily bearish internal subwave are present as native Elliott drawings."
+      },
+      {
+        "id": "hew_forward_impulse_projection_checked",
+        "status": "pass",
+        "evidence": "Forward projection uses native Elliott impulse drawing and is labeled conditional."
+      },
+      {
+        "id": "hew_copsey_internal_abc_motive_engines_checked",
+        "status": "pass",
+        "evidence": "Macro Waves 1, 3, and 5 have visible-equivalent motive-engine checks; unresolved internals are disclosed rather than forced."
+      },
+      {
+        "id": "hew_copsey_ac_lower_degree_fives_checked",
+        "status": "pass",
+        "evidence": "Lower-degree A/C five-wave visibility was checked and disclosed as not fully visible, which keeps action blocked."
+      },
+      {
+        "id": "hew_classical_rescue_devices_rejected",
+        "status": "pass",
+        "evidence": "Classical rescue devices were rejected and unused."
+      },
+      {
+        "id": "hew_castaway_overlay_not_copsey_source",
+        "status": "pass",
+        "evidence": "Castaway is labeled as a Konsili overlay, not a Copsey source."
+      },
+      {
+        "id": "hew_wave3_1764_rule_checked",
+        "status": "pass",
+        "evidence": "Macro Wave 3 passes at 2.5432x and daily bearish internal Wave 3 passes at 1.8420x."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "Unavailable Pine object reads, complex correction completion risk, and lower-degree A/C limitations are disclosed."
+      }
+    ],
+    "findings": [
+      {
+        "id": "pine_object_fallback",
+        "severity": "medium",
+        "status": "accepted_with_downgrade",
+        "evidence": "Pivot layer was visible but MCP Pine object reads returned zero objects; visual screenshots and OHLCV verification were used."
+      },
+      {
+        "id": "current_price_inside_no_trade_band",
+        "severity": "medium",
+        "status": "resolved_by_action_block",
+        "evidence": "Posture is watchlist only, not actionable."
+      },
+      {
+        "id": "complex_correction_not_clean_abc",
+        "severity": "medium",
+        "status": "resolved_by_candidate_label",
+        "evidence": "Correction is drawn as complex bridge and not promoted as completed ABC."
+      }
+    ]
+  },
+  "review_triggers": [
+    {
+      "condition": "Daily/weekly acceptance above 47.79 and then 50.43.",
+      "expected": "Upgrade from WATCHLIST ONLY to actionable candidate toward 57.47-66.60.",
+      "downgrade_if": "Reclaim fails or price returns below 47.79."
+    },
+    {
+      "condition": "Daily/weekly rejection below 47.79 followed by loss of 41.41/38.02.",
+      "expected": "Bearish continuation alternate gains weight.",
+      "downgrade_if": "Reclaim 47.79 and hold."
+    },
+    {
+      "condition": "Daily/weekly acceptance below 35.12.",
+      "expected": "Candidate base invalidated.",
+      "downgrade_if": "Rebuild macro correction from the new low."
+    }
+  ],
+  "missing_evidence": [
+    {
+      "id": "pine_label_tables_unavailable",
+      "impact": "Pine label, line, and table reads returned no objects from Pivot Points High Low. The package uses visual screenshots plus OHLCV fallback and downgrades action."
+    },
+    {
+      "id": "lower_degree_ac_internals_not_expanded",
+      "impact": "A and C lower-degree five-wave action inside the complex correction is not cleanly shown; action remains blocked."
+    },
+    {
+      "id": "macro_correction_not_clean_completion",
+      "impact": "The correction is complex and candidate, not a clean completed ABC. Do not buy until 47.79/50.43 are reclaimed."
+    }
+  ],
+  "confidence": {
+    "rating": "medium_low",
+    "rationale": "The older macro HEW impulse is ratio-valid, but current price sits inside a no-trade band and the post-2024 correction lacks clean completion proof."
+  }
+}
