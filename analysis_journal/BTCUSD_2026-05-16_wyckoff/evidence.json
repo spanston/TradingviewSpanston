@@ -1,0 +1,475 @@
+{
+  "journal_id": "BTCUSD_2026-05-16_wyckoff",
+  "saved_at": "2026-05-16T07:10:33Z",
+  "symbol": "COINBASE:BTCUSD",
+  "method": "Wyckoff Macro",
+  "workflow_version": "wyckoff_stage_gated_v2",
+  "status": "NO CLEAN TRADE",
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "Loaded saved layout 'Wyckoff Layout', reset symbol to COINBASE:BTCUSD, verified chart state and quote, then cleared stale drawings."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass",
+      "evidence": "TradingView MCP live reads only. Monthly 120-bar high 126296, low 483, current May high 82814.23 / low 76275.01 / close ~78500. Weekly 156-bar high 126296, low 24750, current week high 82379 / low 78421.92 / close ~78518. Daily 180-bar high 97963.62, low 60001, current close ~78516."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "Stale drawings cleared. Macro and daily proof layers were drawn separately with rectangles, horizontal decision lines, and compact text labels. Screenshots captured after each layer."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "Package has exactly one journal.md, one evidence.json, screenshots under screenshots/, and journal embeds package-relative screenshot paths."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "Final posture is NO CLEAN TRADE. Trigger, invalidation, target path, and do-nothing zone are explicit and derived from Wyckoff acceptance/rejection rules."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass_with_fallback",
+      "evidence": "Critic completed. Volume is visible; native value profile/AVWAP/order-flow are unavailable in this layout, so confidence is capped and trade language is blocked until acceptance or rejection confirms."
+    }
+  ],
+  "indicator_evidence_stack": [
+    {
+      "id": "price_structure_volume",
+      "status": "native",
+      "evidence": "Price and volume read from TradingView MCP on Monthly/Weekly/Daily. Feb 2026 washout to 60001 occurred on the heaviest recent monthly volume in the last five bars (387.9k); the recovery into 82814 has lighter monthly/weekly volume so far."
+    },
+    {
+      "id": "value_profile",
+      "status": "unavailable",
+      "evidence": "No visible value/profile study in the loaded Wyckoff Layout; structural value zones used as fallback."
+    },
+    {
+      "id": "avwap_cost_basis",
+      "status": "unavailable",
+      "evidence": "No AVWAP/cost-basis study visible in the loaded Wyckoff Layout."
+    },
+    {
+      "id": "relative_strength",
+      "status": "not_requested",
+      "evidence": "Single-symbol BTC macro read; no relative benchmark requested."
+    },
+    {
+      "id": "weis_wave_effort_result",
+      "status": "manual_proxy",
+      "evidence": "Effort/result proxied from swing volume and range: selloff into 60001 used heavy volume; recovery into 82814 made progress on lighter monthly/weekly volume; current week is pulling back from 82.8k with lower volume."
+    },
+    {
+      "id": "momentum_sot",
+      "status": "not_applicable",
+      "evidence": "No SOT-specific study visible in Wyckoff layout; not used for trigger."
+    },
+    {
+      "id": "order_flow_execution",
+      "status": "not_requested",
+      "evidence": "Macro/daily decision package only; no intraday execution requested."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "source_tradingview_mcp",
+      "status": "pass",
+      "evidence": "All market facts came from TradingView MCP and local workflow files."
+    },
+    {
+      "id": "asset_adapter_selected",
+      "status": "pass",
+      "evidence": "Bitcoin spot pair COINBASE:BTCUSD used consistently after final reset."
+    },
+    {
+      "id": "chart_fitted_before_reads",
+      "status": "pass_with_fallback",
+      "evidence": "Visible range was explicitly requested before screenshot passes; TradingView clamped forward margin to the latest bar."
+    },
+    {
+      "id": "structure_volume_primary",
+      "status": "pass",
+      "evidence": "Structure and volume/effort-result are the primary evidence stack."
+    },
+    {
+      "id": "value_profile_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Visible studies checked; profile unavailable, structural zones used with confidence penalty."
+    },
+    {
+      "id": "avwap_checked",
+      "status": "pass_with_fallback",
+      "evidence": "Visible studies checked; AVWAP unavailable and not forced."
+    },
+    {
+      "id": "relative_strength_checked",
+      "status": "not_requested",
+      "evidence": "Not relevant to this single-symbol request."
+    },
+    {
+      "id": "effort_result_checked",
+      "status": "pass",
+      "evidence": "Monthly and weekly selloff/recovery volume compared across meaningful swings."
+    },
+    {
+      "id": "event_evidence_ledger_complete",
+      "status": "pass",
+      "evidence": "Every Spring/SOS/LPS/BUEC/rejection claim is candidate/attempt language with an evidence row."
+    },
+    {
+      "id": "acceptance_rules_complete",
+      "status": "pass",
+      "evidence": "Acceptance/rejection/invalidation rules listed for 82.8k, 78.4k, 73.7k, and 60.0k."
+    },
+    {
+      "id": "no_trade_gate_scored",
+      "status": "pass",
+      "evidence": "Location, trigger, invalidation, reward, and timeframe alignment scored."
+    },
+    {
+      "id": "zone_probabilities_complete",
+      "status": "pass",
+      "evidence": "Accumulation, distribution, and no-trade zones included."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "Rationale explains why Wyckoff blocks action here."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "Critic review recorded."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Wyckoff Layout",
+    "symbol_verified": "COINBASE:BTCUSD",
+    "timeframes": [
+      "M",
+      "W",
+      "D"
+    ],
+    "drawing_manifest": [
+      {
+        "id": "macro_demand_zone",
+        "role": "macro_context",
+        "tool": "rectangle",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_context.png"
+      },
+      {
+        "id": "macro_current_supply_zone",
+        "role": "macro_context",
+        "tool": "rectangle",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_context.png"
+      },
+      {
+        "id": "macro_higher_supply_zone",
+        "role": "macro_context",
+        "tool": "rectangle",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_context.png"
+      },
+      {
+        "id": "wyckoff_trade_supply_zone",
+        "role": "trade_posture",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png"
+      },
+      {
+        "id": "lps_buec_candidate_support",
+        "role": "trade_posture",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png"
+      },
+      {
+        "id": "acceptance_trigger_82814",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png"
+      },
+      {
+        "id": "seller_control_73741",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png"
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "id": "wyckoff_macro_context",
+      "role": "macro_context",
+      "path": "screenshots/macro_context.png",
+      "timeframe": "W",
+      "description": "Macro Wyckoff context with demand, current supply/Creek attempt, higher supply, and invalidation/acceptance levels."
+    },
+    {
+      "id": "wyckoff_trade_posture",
+      "role": "trade_posture",
+      "path": "screenshots/trade_posture.png",
+      "timeframe": "D",
+      "description": "Daily trade posture with current supply, candidate support, bullish acceptance trigger, and seller-control failure level."
+    }
+  ],
+  "event_evidence": [
+    {
+      "id": "candidate_spring_test_60001",
+      "event": "candidate spring/test",
+      "status": "candidate",
+      "location": "60001 February low against 64938.66-65696.96 demand cluster",
+      "evidence": "The February washout and reclaim into April/May recovery supports a demand candidate, but the macro view does not prove a clean Spring/Test sequence by itself.",
+      "reaction": "Recovery to 82814.23 supply/Creek attempt.",
+      "confidence": "moderate-low"
+    },
+    {
+      "id": "candidate_sos_82814",
+      "event": "candidate SOS / Creek attempt",
+      "status": "attempt",
+      "location": "78400-82814.23",
+      "evidence": "Price pushed through the April highs and printed 82814.23, but the current weekly/daily reads are back around 78.5k. No weekly acceptance plus constructive retest has completed.",
+      "reaction": "Unconfirmed; current bar is testing the lower edge of supply.",
+      "confidence": "low"
+    },
+    {
+      "id": "possible_lps_buec_73741_74914",
+      "event": "possible LPS/BUEC support",
+      "status": "not_confirmed",
+      "location": "73741.53-74914",
+      "evidence": "This support band matters only after prior acceptance above 82814. Without confirmed SOS, it is candidate support, not a clean BUEC.",
+      "reaction": "Waiting.",
+      "confidence": "low"
+    },
+    {
+      "id": "supply_rejection_risk_78400_82814",
+      "event": "possible supply rejection",
+      "status": "candidate",
+      "location": "78400-82814.23",
+      "evidence": "Recovery volume is lighter than the February selloff and price is back under the 82.8k high; rejection becomes meaningful only if 73741.53 fails.",
+      "reaction": "Waiting for close below 73741.53 or reclaim above 82814.23.",
+      "confidence": "moderate"
+    }
+  ],
+  "wave_effort_result": [
+    {
+      "id": "selloff_126296_to_60001",
+      "wave": "Oct 2025-Feb 2026 markdown",
+      "effort": "high volume / wide range",
+      "result": "Clean drive from 126296 to 60001",
+      "interpretation": "Sellers had force; 60k is now the hard demand/invalidation reference."
+    },
+    {
+      "id": "recovery_60001_to_82814",
+      "wave": "Feb-May 2026 recovery",
+      "effort": "lower monthly/weekly volume than the selloff",
+      "result": "Progress into 78.4k-82.8k supply but no confirmed weekly acceptance",
+      "interpretation": "Demand improved, but effort/result does not prove markup yet."
+    },
+    {
+      "id": "current_week_supply_test",
+      "wave": "Current weekly pullback from 82814",
+      "effort": "lower weekly volume so far",
+      "result": "Price back near the lower edge of supply around 78.5k",
+      "interpretation": "Wait for acceptance/retest or rejection/failure."
+    }
+  ],
+  "value_profile": {
+    "status": "manual_proxy",
+    "value_low_proxy": 60001,
+    "value_high_proxy": 82814.23,
+    "poc_proxy": 78400,
+    "confidence_penalty": "No native profile/AVWAP visible; structural proxy only."
+  },
+  "acceptance_rules": [
+    {
+      "id": "bull_acceptance_82814",
+      "level": 82814.23,
+      "rule": "Weekly close above 82814.23 followed by a retest holding 78400 turns candidate SOS into actionable long watchlist."
+    },
+    {
+      "id": "retest_hold_78400",
+      "level": 78400,
+      "rule": "After acceptance, 78400 must hold on retest; losing it returns price to the unresolved range."
+    },
+    {
+      "id": "seller_confirmation_73741",
+      "level": 73741.53,
+      "rule": "Daily/weekly close below 73741.53 after rejecting 82.8k confirms supply control and opens 70000 then 65696/60001."
+    },
+    {
+      "id": "range_low_invalid_60001",
+      "level": 60001,
+      "rule": "Weekly close below 60001 invalidates the candidate accumulation/spring thesis."
+    }
+  ],
+  "zone_probabilities": [
+    {
+      "id": "accumulation_60001_65696",
+      "zone_type": "accumulation",
+      "price_range": {
+        "low": 60001,
+        "high": 65696.96
+      },
+      "probability": {
+        "value": 42,
+        "band": "moderate-low"
+      },
+      "evidence": "February low plus March/April demand cluster; would matter on constructive retest.",
+      "invalidation": "Weekly close below 60001",
+      "upgrade_trigger": "Higher-low reaction from 60.0k-65.7k followed by reclaim above 73.7k/78.4k",
+      "downgrade_trigger": "High-volume break below 60001"
+    },
+    {
+      "id": "distribution_78400_82814",
+      "zone_type": "distribution",
+      "price_range": {
+        "low": 78400,
+        "high": 82814.23
+      },
+      "probability": {
+        "value": 58,
+        "band": "moderate"
+      },
+      "evidence": "Current price is testing the supply/Creek band without confirmed weekly acceptance; rebound volume is not decisive.",
+      "invalidation": "Weekly acceptance above 82814.23 and retest hold above 78400",
+      "upgrade_trigger": "Rejection and daily/weekly close below 73741.53",
+      "downgrade_trigger": "Acceptance/retest above 82814.23"
+    },
+    {
+      "id": "no_trade_73741_82814",
+      "zone_type": "no_trade",
+      "price_range": {
+        "low": 73741.53,
+        "high": 82814.23
+      },
+      "probability": {
+        "value": 68,
+        "band": "high"
+      },
+      "evidence": "Current area is between candidate support and unconfirmed supply breakout; no clean asymmetric Wyckoff entry.",
+      "invalidation": "Break and retest outside this band",
+      "upgrade_trigger": "Weekly acceptance above 82.8k or rejection below 73.7k",
+      "downgrade_trigger": "Continued chop"
+    }
+  ],
+  "action_rationale": {
+    "selected_action": "NO CLEAN TRADE",
+    "strategy_basis": "Wyckoff requires location, event evidence, effort/result, acceptance rules, and no-trade gate alignment before action.",
+    "why_action_follows_strategy": "BTC is inside the 78.4k-82.8k supply/Creek attempt. The 60k washout can be treated as candidate demand, but SOS/BUEC is not confirmed because weekly acceptance above 82.8k and a successful retest above 78.4k are missing. A short also needs rejection and loss of 73.7k. Until one side proves control, Wyckoff blocks trade language.",
+    "chart_evidence_supporting_action": "Live COINBASE:BTCUSD levels: 60001 washout low, 64938.66-65696.96 demand cluster, 73741.53-74914 candidate support, 78400-82814.23 current supply/Creek attempt, 90003.46-97963.62 higher supply, 126296 macro high.",
+    "what_proves_it_wrong": "Weekly acceptance above 82814.23 plus retest holding 78400 upgrades bullish; rejection and daily/weekly close below 73741.53 upgrades bearish supply-control path.",
+    "human_takeaway": "Do nothing in the band. Let Bitcoin prove acceptance above 82.8k or failure below 73.7k."
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "partial",
+      "evidence": "Price is at the lower edge of supply/Creek attempt, not at confirmed BUEC support or clean demand."
+    },
+    {
+      "id": "trigger",
+      "status": "partial",
+      "evidence": "82.8k acceptance and 73.7k failure triggers are defined but neither is confirmed."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "82.8k/78.4k/73.7k/60.0k define acceptance, retest, failure, and hard invalidation."
+    },
+    {
+      "id": "reward",
+      "status": "partial",
+      "evidence": "Upside to 90k-98k opens only after acceptance; current entry buys into supply."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "partial",
+      "evidence": "Monthly recovery is constructive, but weekly/daily have not confirmed SOS/BUEC."
+    }
+  ],
+  "red_team": {
+    "countercase": "The daily/weekly recovery from 60k may already be Phase D strength; waiting for a retest could miss early markup.",
+    "response": "Wyckoff does not buy supply before acceptance. The method wants confirmation above 82.8k and a hold above 78.4k, or it stays out."
+  },
+  "critic_review": {
+    "final_verdict": "pass_with_fixes",
+    "max_detail_timeframe": "daily",
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "journal.md, evidence.json, and two screenshots are present."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass",
+        "evidence": "Symbol/timeframe/quote verified through TradingView MCP after layout switch and reset."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "Monthly and weekly define structure; daily only defines trade posture."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "No-clean-trade verdict, exact triggers, invalidation, and do-nothing zone stated."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "60.0k hard invalidation, 73.7k bearish confirmation, 82.8k acceptance, and 78.4k retest level separated."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "No intraday execution or scalping instructions."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "Drawings, screenshots, journal, and evidence use the same levels."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "Unavailable value/profile, AVWAP, and order-flow evidence disclosed."
+      }
+    ],
+    "findings": [
+      {
+        "id": "profile_avwap_unavailable",
+        "severity": "medium",
+        "status": "resolved",
+        "evidence": "Confidence capped and structural proxies used."
+      }
+    ]
+  },
+  "review_triggers": [
+    "Weekly close above 82814.23",
+    "Retest holds above 78400 after breakout",
+    "Daily/weekly close below 73741.53",
+    "Retest of 60001-65696.96 demand"
+  ],
+  "missing_evidence": [
+    "Native value profile",
+    "AVWAP/cost-basis study",
+    "Lower-timeframe execution confirmation",
+    "Order-flow/DOM execution evidence"
+  ],
+  "confidence": {
+    "value": 55,
+    "band": "moderate",
+    "reason": "The no-trade call is stronger than either directional trade; key zones are clear but acceptance/rejection and value evidence are incomplete."
+  }
+}

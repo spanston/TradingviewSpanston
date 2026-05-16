@@ -1,0 +1,699 @@
+{
+  "journal_id": "BITSTAMP_BTCUSD_2026-05-16_hew",
+  "saved_at": "2026-05-16T00:00:00+02:00",
+  "symbol": "BITSTAMP:BTCUSD",
+  "method": "Harmonic Elliott Wave",
+  "workflow_version": "hew_stage_gated_v3",
+  "status": "stand_aside",
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "User corrected route to HEW. Switched to saved layout 'Hew Layout', reset chart to BITSTAMP:BTCUSD, verified chart state, and cleared stale drawings."
+    },
+    {
+      "id": "visual_pivot_extraction",
+      "status": "pass",
+      "evidence": "Pivot Scanner is visible and readable through data_get_pine_labels with 503 labels. Key labels include 15479 (2022-11-21), 31818, 24920, 73794, 49577, 109356, 126272, 59930, 74912, and 82833."
+    },
+    {
+      "id": "ohlcv_pivot_verification",
+      "status": "pass",
+      "evidence": "Pivot Scanner labels were checked against TradingView OHLCV summaries and matching source bars on Monthly, Weekly, and Daily. The previous mechanical-only daily pivots 69268/65696/78384/73753 are not promoted because Pivot Scanner did not mark them as important pivots."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass",
+      "evidence": "Macro review started on Monthly, then Weekly, then Daily. Latest refreshed BITSTAMP quote last ~78379. Monthly 120-bar high 126272 / low 465.28 / close 78337. Weekly 156-bar high 126272 / low 24756 / close 78337. Daily 180-bar high 97939 / low 59930 / close 78379."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "Chart drawings were reset again after critique. Macro count uses native elliott_impulse_wave and active post-ATH correction uses native elliott_correction. Non-count decision levels use horizontal lines at 74912, 82833, 59930, and 97939."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "Package contains one journal.md, one evidence.json, and screenshots under screenshots/ with package-relative links."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "Final posture remains STAND ASIDE. The daily bullish impulse from the prior package was downgraded because it was based on mechanical minor pivots not confirmed by Pivot Scanner."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass_with_fallback",
+      "evidence": "Critical review found the prior report incorrectly treated the visual pivot gate as fallback-only while also overtrusting a mechanical daily impulse. Package was updated to use readable Pivot Scanner labels, downgrade the daily impulse, and tighten future bullish trigger invalidation around the 79500/78384 retest."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "visual_pivots_extracted",
+      "status": "pass",
+      "evidence": "Pivot Scanner returned 503 readable labels through data_get_pine_labels."
+    },
+    {
+      "id": "ohlcv_pivots_verified",
+      "status": "pass",
+      "evidence": "Key Pivot Scanner labels were verified against TradingView OHLCV summaries/source bars."
+    },
+    {
+      "id": "pivot_conflicts_resolved",
+      "status": "pass",
+      "evidence": "Conflict resolved by accepting Pivot Scanner labels as primary and rejecting the prior mechanical daily impulse pivots that were not visible-important labels."
+    },
+    {
+      "id": "macro_count_subwaves_ratio_aligned",
+      "status": "pass_with_fallback",
+      "evidence": "Monthly visual pivot sequence 15479 -> 31818 -> 24920 -> 73794 -> 49577 -> 109356 is full_valid_hew with W3/W1 = 2.9912. Later ATH 126272 starts a post-impulse corrective problem, not a fresh actionable impulse."
+    },
+    {
+      "id": "projection_forward_margin_next_count",
+      "status": "pass_with_fallback",
+      "evidence": "Active corrective path is drawn as 126272 -> 59930 -> 82833 -> current ~78379. Because C is incomplete/uncertain and price is inside 74912-82833, projection is watch-only."
+    },
+    {
+      "id": "wave_b_ladder_chart_proof",
+      "status": "pass",
+      "evidence": "Decision ladder recorded from visual pivots: 59930 macro support/hard failure, 74912 local support, 82833 flip/confirmation, 97939 weekly supply, 126272 macro high."
+    },
+    {
+      "id": "zone_probabilities_complete",
+      "status": "pass",
+      "evidence": "Accumulation, distribution, and no-trade zones are recorded."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "Rationale updated after critique: no action because daily HEW impulse is not confirmed by visual pivots and price is inside 74912-82833."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "Critic checklist completed. Gemini external review agreed with STAND ASIDE and ratio logic, then flagged the bullish trigger invalidation gap; evidence and journal were tightened."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_reset": "BITSTAMP:BTCUSD",
+    "drawings_cleared": true,
+    "visible_ranges_verified": true,
+    "indicator_state": [
+      "Volume",
+      "Awesome Oscillator",
+      "Anchored VWAP",
+      "Pivot Points High Low added but not readable through MCP Pine object extraction"
+    ],
+    "drawing_manifest": [
+      {
+        "id": "macro_impulse_15479_109356",
+        "role": "macro_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/02_monthly_macro.png"
+      },
+      {
+        "id": "active_correction_126272_78379",
+        "role": "projection_count",
+        "tool": "elliott_correction",
+        "timeframe_owner": "all",
+        "screenshot": "screenshots/05_trade_posture.png"
+      },
+      {
+        "id": "decision_levels",
+        "role": "decision_level",
+        "tool": "horizontal_line",
+        "timeframe_owner": "all",
+        "screenshot": "screenshots/05_trade_posture.png"
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/01_visual_pivots.png",
+      "purpose": "Proof of reset HEW chart with attempted pivot study."
+    },
+    {
+      "role": "macro_structure",
+      "path": "screenshots/02_monthly_macro.png",
+      "purpose": "Monthly macro HEW context."
+    },
+    {
+      "role": "weekly_bridge",
+      "path": "screenshots/03_weekly_bridge.png",
+      "purpose": "Weekly correction bridge from 126272 toward 59930."
+    },
+    {
+      "role": "daily_structure",
+      "path": "screenshots/04_daily_scan.png",
+      "purpose": "Daily lower-degree HEW scan context."
+    },
+    {
+      "role": "trade_posture",
+      "path": "screenshots/05_trade_posture.png",
+      "purpose": "Final drawn HEW posture and decision levels."
+    }
+  ],
+  "visual_pivot_evidence": {
+    "indicator_name": "Pivot Scanner",
+    "study_filter": "Pivot Scanner",
+    "extraction_method": "Readable visual extraction with data_get_pine_labels. Pivot Scanner returned 503 labels, including all major macro/weekly/current daily pivots used in the revised analysis.",
+    "iteration_decision": "accepted_after_critical_revision",
+    "timeframes": [
+      {
+        "timeframe": "monthly",
+        "screenshot": "screenshots/02_monthly_macro.png",
+        "pivots": [
+          {
+            "id": "m0",
+            "type": "low",
+            "price": 15479,
+            "source_text": "Pivot Scanner label: 15479 / 2022-11-21"
+          },
+          {
+            "id": "m1",
+            "type": "high",
+            "price": 31818,
+            "source_text": "Pivot Scanner label: 31818 / 2023-07-13"
+          },
+          {
+            "id": "m2",
+            "type": "low",
+            "price": 24920,
+            "source_text": "Pivot Scanner label: 24920 / 2023-09-11"
+          },
+          {
+            "id": "m3",
+            "type": "high",
+            "price": 73794,
+            "source_text": "Pivot Scanner label: 73794 / 2024-03-14"
+          },
+          {
+            "id": "m4",
+            "type": "low",
+            "price": 49577,
+            "source_text": "Pivot Scanner label: 49577 / 2024-08-05"
+          },
+          {
+            "id": "m5",
+            "type": "high",
+            "price": 109356,
+            "source_text": "Pivot Scanner label: 109356 / 2025-01-20"
+          },
+          {
+            "id": "m6",
+            "type": "high",
+            "price": 126272,
+            "source_text": "Pivot Scanner label: 126272 / 2025-10-06"
+          },
+          {
+            "id": "m7",
+            "type": "low",
+            "price": 59930,
+            "source_text": "Pivot Scanner label: 59930 / 2026-02-06"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "m0",
+            "status": "pass",
+            "evidence": "Monthly scan/source bar low equals 15479."
+          },
+          {
+            "pivot_id": "m3",
+            "status": "pass",
+            "evidence": "Monthly scan/source bar high equals 73794."
+          },
+          {
+            "pivot_id": "m6",
+            "status": "pass",
+            "evidence": "Monthly OHLCV summary 120-bar high equals 126272."
+          },
+          {
+            "pivot_id": "m7",
+            "status": "pass",
+            "evidence": "Monthly/weekly/daily OHLCV source low equals 59930."
+          }
+        ]
+      },
+      {
+        "timeframe": "weekly",
+        "screenshot": "screenshots/03_weekly_bridge.png",
+        "pivots": [
+          {
+            "id": "w0",
+            "type": "high",
+            "price": 126272,
+            "source_text": "Pivot Scanner label: 126272 / 2025-10-06"
+          },
+          {
+            "id": "w1",
+            "type": "low",
+            "price": 103530,
+            "source_text": "Pivot Scanner label: 103530 / 2025-10-17"
+          },
+          {
+            "id": "w2",
+            "type": "high",
+            "price": 116381,
+            "source_text": "Pivot Scanner label: 116381 / 2025-10-27"
+          },
+          {
+            "id": "w3",
+            "type": "low",
+            "price": 80537,
+            "source_text": "Pivot Scanner label: 80537 / 2025-11-21"
+          },
+          {
+            "id": "w4",
+            "type": "high",
+            "price": 97939,
+            "source_text": "Pivot Scanner label: 97939 / 2026-01-14"
+          },
+          {
+            "id": "w5",
+            "type": "low",
+            "price": 59930,
+            "source_text": "Pivot Scanner label: 59930 / 2026-02-06"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "w0",
+            "status": "pass",
+            "evidence": "Weekly OHLCV 156-bar high equals 126272."
+          },
+          {
+            "pivot_id": "w3",
+            "status": "pass",
+            "evidence": "Weekly source bar low equals 80537."
+          },
+          {
+            "pivot_id": "w4",
+            "status": "pass",
+            "evidence": "Weekly source bar high equals 97939."
+          },
+          {
+            "pivot_id": "w5",
+            "status": "pass",
+            "evidence": "Weekly source bar low equals 59930."
+          }
+        ]
+      },
+      {
+        "timeframe": "daily",
+        "screenshot": "screenshots/01_visual_pivots.png",
+        "pivots": [
+          {
+            "id": "d0",
+            "type": "low",
+            "price": 59930,
+            "source_text": "Pivot Scanner label: 59930 / 2026-02-06"
+          },
+          {
+            "id": "d1",
+            "type": "high",
+            "price": 74075,
+            "source_text": "Pivot Scanner label: 74075 / 2026-03-04"
+          },
+          {
+            "id": "d2",
+            "type": "low",
+            "price": 65623,
+            "source_text": "Pivot Scanner label: 65623 / 2026-03-08"
+          },
+          {
+            "id": "d3",
+            "type": "high",
+            "price": 76013,
+            "source_text": "Pivot Scanner label: 76013 / 2026-03-17"
+          },
+          {
+            "id": "d4",
+            "type": "low",
+            "price": 64955,
+            "source_text": "Pivot Scanner label: 64955 / 2026-03-29"
+          },
+          {
+            "id": "d5",
+            "type": "high",
+            "price": 79500,
+            "source_text": "Pivot Scanner label: 79500 / 2026-04-22"
+          },
+          {
+            "id": "d6",
+            "type": "low",
+            "price": 74912,
+            "source_text": "Pivot Scanner label: 74912 / 2026-04-29"
+          },
+          {
+            "id": "d7",
+            "type": "high",
+            "price": 82833,
+            "source_text": "Pivot Scanner label: 82833 / 2026-05-06"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "pivot_id": "d0",
+            "status": "pass",
+            "evidence": "Daily OHLCV 180-bar low equals 59930."
+          },
+          {
+            "pivot_id": "d5",
+            "status": "pass",
+            "evidence": "Pivot Scanner label and daily source high equal 79500."
+          },
+          {
+            "pivot_id": "d6",
+            "status": "pass",
+            "evidence": "Pivot Scanner label and daily source low equal 74912."
+          },
+          {
+            "pivot_id": "d7",
+            "status": "pass",
+            "evidence": "Daily OHLCV last-5-bars/current swing high includes 82833."
+          }
+        ]
+      }
+    ],
+    "conflicts": [
+      {
+        "id": "prior_daily_mechanical_impulse_rejected",
+        "status": "resolved",
+        "evidence": "Previous daily impulse 64955 -> 69268 -> 65696 -> 78384 -> 73753 -> 79500 used hew_scan_chart minor pivots. Pivot Scanner does not label 69268, 65696, 78384, or 73753, so it is not visual-first evidence."
+      }
+    ]
+  },
+  "primary_count": {
+    "status": "candidate",
+    "summary": "Primary map is a visually confirmed completed monthly bullish HEW impulse from 15479 to 109356, followed by a later 126272 ATH and an unresolved post-ATH correction now testing the 74912-82833 band.",
+    "pivots": [
+      15479,
+      31818,
+      24920,
+      73794,
+      49577,
+      109356
+    ],
+    "interpretation": "The historical monthly impulse validates, but the active structure after 126272 is corrective/unclear. Current daily visual pivots do not validate a fresh HEW impulse."
+  },
+  "alternate_counts": [
+    {
+      "id": "post_ath_bearish_correction",
+      "activation": "Daily close below 74912 followed by pressure into 65623-64955 and 59930.",
+      "invalidation": "Weekly acceptance above 97939, then 126272.",
+      "implication": "Confirms that 82833 was only a B-wave or corrective rebound inside the post-ATH decline."
+    },
+    {
+      "id": "bullish_reclaim_watch",
+      "activation": "Daily and weekly acceptance above 82833, then retest holds above 79500/78384.",
+      "invalidation": "Failed retest below 79500/78384 invalidates the trigger setup; daily close below 74912 invalidates broader local structure.",
+      "implication": "Would reopen a bullish continuation watch toward 97939 and 109356, but still needs a visual-first HEW subdivision."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "monthly_wave3_floor",
+      "status": "pass",
+      "evidence": "Visual monthly macro W3/W1 = 2.9912, above the 1.764 HEW floor."
+    },
+    {
+      "id": "weekly_bearish_wave3_floor",
+      "status": "fail",
+      "evidence": "Weekly bearish structure W3/W1 = 1.5761, below the 1.764 HEW floor."
+    },
+    {
+      "id": "daily_visual_impulse_candidate",
+      "status": "fail",
+      "evidence": "Daily visual pivots do not produce a valid HEW impulse. Example 59930 -> 76013 -> 64955 -> 79500 -> 74912 -> 82833 gives W3/W1 below the 1.764 HEW floor."
+    },
+    {
+      "id": "daily_prior_mechanical_impulse",
+      "status": "fail",
+      "evidence": "Prior mechanical daily impulse is rejected for the v3 workflow because key pivots 69268, 65696, 78384, and 73753 were not visible Pivot Scanner labels."
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "monthly_valid_impulse",
+      "status": "pass",
+      "evidence": "Pivot Scanner confirms monthly macro pivots 15479 -> 31818 -> 24920 -> 73794 -> 49577 -> 109356; W3/W1 passes HEW."
+    },
+    {
+      "id": "active_correction_unclear",
+      "status": "pass_with_fallback",
+      "evidence": "Active correction is mapped as 126272 -> 59930 -> 82833 -> current ~78379, but C is incomplete/uncertain."
+    },
+    {
+      "id": "daily_visual_impulse_rejected",
+      "status": "fail",
+      "evidence": "Daily important visual pivots do not validate a fresh HEW impulse."
+    },
+    {
+      "id": "visual_first_gate",
+      "status": "pass",
+      "evidence": "Readable Pivot Scanner labels are now the primary pivot source."
+    }
+  ],
+  "wave_b_invalidation_ladder": [
+    {
+      "id": "macro_hard_failure",
+      "level": 59930,
+      "status": "holds",
+      "violation_standard": "weekly_close_below"
+    },
+    {
+      "id": "local_support",
+      "level": 74912,
+      "status": "holds",
+      "violation_standard": "daily_close_below"
+    },
+    {
+      "id": "current_decision_band",
+      "level": 78384,
+      "status": "testing",
+      "violation_standard": "future_bullish_trigger_fails_if_retest_loses_79500_78384"
+    },
+    {
+      "id": "bullish_flip",
+      "level": 82833,
+      "status": "unconfirmed",
+      "violation_standard": "daily_and_weekly_acceptance_above"
+    },
+    {
+      "id": "weekly_supply",
+      "level": 97939,
+      "status": "unconfirmed",
+      "violation_standard": "weekly_acceptance_above"
+    },
+    {
+      "id": "ath_invalidation",
+      "level": 126272,
+      "status": "unconfirmed",
+      "violation_standard": "weekly_acceptance_above"
+    }
+  ],
+  "zone_probabilities": [
+    {
+      "id": "macro_demand_59930_65623",
+      "zone_type": "accumulation",
+      "price_range": {
+        "low": 59930,
+        "high": 65623
+      },
+      "probability": {
+        "value": 38,
+        "band": "moderate_low"
+      },
+      "evidence": "Macro support and March visual pivot low cluster; price is not currently at demand.",
+      "invalidation": "Weekly close below 59930.",
+      "upgrade_trigger": "Constructive retest after 82833 acceptance.",
+      "downgrade_trigger": "Loss of 74912 then 59930."
+    },
+    {
+      "id": "supply_82833_97939",
+      "zone_type": "distribution",
+      "price_range": {
+        "low": 82833,
+        "high": 97939
+      },
+      "probability": {
+        "value": 52,
+        "band": "moderate"
+      },
+      "evidence": "82833 is the latest visual pivot high and price is below it; 97939 is weekly supply.",
+      "invalidation": "Weekly acceptance above 97939.",
+      "upgrade_trigger": "Rejection below 82833 followed by daily loss of 74912.",
+      "downgrade_trigger": "Acceptance above 82833 and hold above 79500/78384."
+    },
+    {
+      "id": "no_trade_74912_82833",
+      "zone_type": "no_trade",
+      "price_range": {
+        "low": 74912,
+        "high": 82833
+      },
+      "probability": {
+        "value": 76,
+        "band": "high"
+      },
+      "evidence": "Current price is inside the latest visible pivot support-to-resistance band and no visual-first daily HEW impulse validates.",
+      "invalidation": "Clean break and retest outside the band.",
+      "upgrade_trigger": "Daily and weekly acceptance above 82833, then retest holds.",
+      "downgrade_trigger": "Daily close below 74912."
+    }
+  ],
+  "action_rationale": {
+    "selected_action": "STAND ASIDE",
+    "strategy_basis": "HEW requires visually verified pivots, valid active count, Castaway permission, trigger, invalidation, and target path before action.",
+    "why_action_follows_strategy": "Pivot Scanner now makes the visual gate pass, but it also rejects the prior daily mechanical impulse. The historical monthly impulse is valid; the active post-126272 structure is corrective/unclear and price is inside 74912-82833.",
+    "chart_evidence_supporting_action": "BITSTAMP:BTCUSD last read ~78379. Visual pivots show latest support 74912 and resistance/flip 82833. Weekly bearish sequence is non-HEW and daily visual pivots do not validate a new HEW impulse.",
+    "what_proves_it_wrong": "Daily/weekly acceptance above 82833 with a retest holding above 79500/78384 would reopen bullish watch. If that future trigger loses 79500/78384 on retest, the trigger fails before waiting for 74912. Daily close below 74912 shifts focus to 65623/64955 then 59930.",
+    "human_takeaway": "No trade in the middle of 74912-82833. The old 73753 invalidation was too mechanical; the visual-first support is 74912."
+  },
+  "trade_posture": {
+    "posture": "STAND ASIDE",
+    "setup": "Visual-first HEW revision: monthly impulse valid, active post-126272 correction unresolved, daily visual impulse rejected.",
+    "trigger": "No trade trigger. Bullish watch trigger is daily/weekly acceptance above 82833 with retest above 79500/78384.",
+    "invalidation": "If a future bullish trigger activates, it fails on a lost 79500/78384 retest. Broader local structure fails below 74912; macro support fails below 59930.",
+    "target_path": "Above 82833 opens 97939, 109356, then 126272. Below 74912 opens 65623-64955, then 59930.",
+    "stand_aside_condition": "Remain flat while price stays inside 74912-82833 or until a visual-first HEW subdivision validates."
+  },
+  "castaway_trade_model": {
+    "model": "Model 6",
+    "permission": "blocked",
+    "reason": "Current price is in the visual pivot no-trade band and the active daily structure does not validate as HEW."
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "fail",
+      "evidence": "Price is inside the latest visual pivot band 74912-82833, not at clean demand or confirmed breakout."
+    },
+    {
+      "id": "trigger",
+      "status": "fail",
+      "evidence": "No acceptance above 82833 and no failure below 74912."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "74912, 59930, 82833, 97939, and 126272 are defined."
+    },
+    {
+      "id": "reward",
+      "status": "partial",
+      "evidence": "Reward path exists only after 82833 acceptance or 74912 failure."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "partial",
+      "evidence": "Monthly validates a historical HEW impulse, but active weekly/daily structure is corrective or non-HEW."
+    }
+  ],
+  "red_team": {
+    "countercase": "The 82833 high could be the first visible pivot in a renewed bullish continuation.",
+    "proof_needed": "Acceptance above 82833, retest holding above 79500/78384, and a visual-first HEW subdivision.",
+    "impact": "Until then, buying inside 74912-82833 is a middle-of-range bet."
+  },
+  "critic_review": {
+    "final_verdict": "pass_with_fixes",
+    "max_detail_timeframe": "daily",
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "journal.md, evidence.json, and five screenshots are present."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass_with_fixes",
+        "evidence": "Critical review corrected the visual pivot source and rejected the prior unsupported daily mechanical impulse."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "Analysis starts Monthly, then Weekly, then Daily."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "Decision is STAND ASIDE with exact levels and what to ignore."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "74912, 59930, 82833, 97939, and 126272 define the updated decision ladder."
+      },
+      {
+        "id": "visual_first_sequence_checked",
+        "status": "pass",
+        "evidence": "Pivot Scanner labels are readable and used as primary evidence."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "No intraday execution or scalping instruction."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "Chart was redrawn after critique to match visual pivots: macro impulse, active correction, and 74912/82833/59930/97939 decision lines."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "Unresolved items now focus on active corrective ambiguity and missing lower-timeframe execution, not missing Pivot Scanner labels."
+      }
+    ],
+    "findings": [
+      {
+        "id": "pivot_scanner_not_used_initially",
+        "severity": "high",
+        "status": "resolved",
+        "evidence": "Initial package missed readable Pivot Scanner output. Evidence and journal now use Pivot Scanner labels."
+      },
+    {
+      "id": "daily_mechanical_impulse_overtrusted",
+      "severity": "high",
+      "status": "resolved",
+      "evidence": "Daily bullish impulse based on minor mechanical pivots was downgraded because visual pivots do not confirm it."
+    },
+    {
+      "id": "future_trigger_invalidation_gap",
+      "severity": "medium",
+      "status": "resolved",
+      "evidence": "Gemini critic noted that a future 82833 breakout requiring a 79500/78384 retest should fail on a lost retest, not only on 74912. The journal and trade posture now separate trigger failure from broader structural invalidation."
+    }
+  ]
+  },
+  "review_triggers": [
+    {
+      "condition": "Daily/weekly acceptance above 82833",
+      "expected": "Watch bullish continuation toward 97939 and 109356 only if retest holds above 79500/78384.",
+      "downgrade_if": "Fails back into 74912-82833."
+    },
+    {
+      "condition": "Daily close below 74912",
+      "expected": "Downgrade toward 65623-64955 then 59930.",
+      "downgrade_if": "Immediate reclaim above 79500."
+    },
+    {
+      "condition": "Weekly acceptance above 97939",
+      "expected": "Reassess whether post-126272 correction is ending.",
+      "downgrade_if": "Rejects below 97939."
+    }
+  ],
+  "missing_evidence": [
+    "W3 and W5 internals for the monthly macro count",
+    "Validated visual-first daily HEW impulse after price leaves 74912-82833",
+    "4H/1H execution confirmation"
+  ],
+  "confidence": {
+    "rating": "medium_for_stand_aside_low_for_direction",
+    "rationale": "Pivot Scanner now supports the visual-first evidence base, and it makes the no-trade call stronger by rejecting the prior daily mechanical impulse. Directional confidence remains low until 74912 or 82833 breaks and retests."
+  }
+}

@@ -1,6 +1,6 @@
 # KonsiliTradingview Agent Workflow
 
-This repo is the operating contract for Johan's TradingView chart agents. The goal is not more prose. The goal is fewer missed steps, correct drawing tools, validated evidence, and a final output a human can act on.
+This repo is the operating contract for Johan's TradingView chart agents. The goal is not more prose. The goal is fewer missed steps, correct visual pivots, correct drawing tools, validated evidence, and a final output a human can act on.
 
 Canonical files:
 
@@ -13,43 +13,70 @@ Canonical files:
 
 ## The stage-gated workflow
 
-Every serious analysis must pass six gates in order. Do not skip forward. If a gate cannot pass, stop and return a `STAND ASIDE`, `watchlist only`, or `missing evidence` result.
+Every serious analysis must pass eight gates in order. Do not skip forward. If a gate cannot pass, stop and return a `STAND ASIDE`, `watchlist only`, or `missing evidence` result.
 
 1. Route and layout
    - Choose Wyckoff by default when the method is unclear.
    - Choose HEW only when the user asks for HEW, Elliott, wave count, ratios, Wave-B ladder, Castaway, or harmonic wave work.
+   - After routing, load only the selected lane's manifest, specialist prompt, and strategy-specific skill material.
+   - Load both lanes only for explicit cross-method, confluence, comparison, or dual-strategy package work.
    - Switch to `Wyckoff Layout` or `HEW layout` before analysis.
    - If the required layout is unavailable, stop unless Johan explicitly overrides.
 
-2. Top-down chart read
+2. Visual pivot extraction / extraction mode
+   - Confirm the required TradingView pivot indicator is visible after layout switch.
+   - Use this as scaffolding: Pivot Scanner/Pivots HL may be noisy here because the purpose is pivot harvest, not final decision display.
+   - Extract important pivots visually from indicator output first, using focused Pine reads with `study_filter`: labels, tables, lines, or boxes.
+   - Capture a `visual_pivots` screenshot before strategy interpretation.
+   - Record indicator name, `study_filter`, extraction method, timeframe, pivot type, price, source text, and screenshot path in `visual_pivot_evidence`.
+
+3. OHLCV pivot verification / verification mode
+   - Retrieve TradingView OHLCV summaries for Monthly, Weekly, and Daily.
+   - Verify visual pivots against OHLCV highs/lows/ranges before Wyckoff or HEW analysis.
+   - If pivot evidence conflicts with OHLCV, iterate extraction and document the revision. If the conflict remains unresolved, stop or downgrade.
+
+4. Top-down chart read
    - Use TradingView MCP as the chart source.
    - No web/news/fundamental source unless explicitly requested.
-   - Read Monthly -> Weekly -> Daily by default.
+   - Read Monthly -> Weekly -> Daily by default. Macro review must always start on Monthly, then Weekly, for both Wyckoff and HEW.
    - Use compact reads first: quote, OHLCV summary, study values, focused Pine reads.
    - Fit/verify visible range before interpreting or drawing.
 
-3. Drawing protocol
-   - Clear stale drawings after symbol/layout setup unless preserving drawings was explicitly requested.
-   - Draw only the layer being proven.
+5. Drawing protocol / strategy-proof and presentation modes
+   - Inventory drawings after symbol/layout setup; remove or hide only drawings classified as stale clutter.
+   - Preserve current proof and uncertain drawings unless Johan explicitly requested a reset. Treat `draw_clear` as destructive, not routine cleanup.
+   - In strategy-proof mode, hide or reduce pivot/scanner clutter when it obscures the structure and draw only the layer being proven.
    - Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `role`, `tool`, `timeframe_owner`, and `screenshot`.
-   - If MCP cannot set per-drawing visibility, separate macro and daily proof with distinct clear/redraw screenshot passes.
+   - If MCP cannot set per-drawing visibility, separate macro and daily proof with temporary screenshot passes only when necessary; immediately rebuild and verify the final presentation chart afterward.
+   - In presentation mode, hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable decision proof, trigger, invalidation, and target/zone context.
 
-4. Evidence contract
+6. Evidence contract
    - Fill exactly one `journal.md` and one `evidence.json` in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_<method>/`.
    - Screenshots live only under `screenshots/` and are referenced with package-relative paths.
    - Required sections, checklist IDs, screenshot roles, drawing roles, and critic fields come from the strategy manifest, not duplicated prose.
 
-5. Action output
+7. Action output
    - The final call is decision-first: setup, strategy reason, trigger, invalidation, target path, and no-trade condition.
    - Every action must explain why it follows from the chosen strategy.
    - Trade planning is zone-first. Accumulation/distribution/no-trade zones come before breakout confirmation.
    - If the chart cannot support a strategy-derived action, say `STAND ASIDE`, `watchlist only`, or `no clean trade`.
 
-6. Critic review
+8. Critic review
    - Run a final critic before calling a package complete.
-   - The critic checks evidence accuracy, journal/evidence/screenshot alignment, human actionability, macro focus, risk clarity, disclosed missing evidence, and no day-trading leakage.
+   - The critic checks visual-first sequence, evidence accuracy, journal/evidence/screenshot alignment, human actionability, macro focus, risk clarity, disclosed missing evidence, and no day-trading leakage.
    - Record the critic result in `critic_review`.
    - Run the validator.
+
+## Chart modes and handoffs
+
+Agents must not stay in one visual state for the whole job. Record all four modes in `chart_prep.chart_mode_checklist`:
+
+- **Extraction**: pivot/scanner tools visible; capture `visual_pivots`; no strategy conclusion yet.
+- **Verification**: OHLCV checks against pivot IDs; conflicts resolved, revised, or explicitly downgraded.
+- **Strategy proof**: extraction clutter hidden/reduced; method-specific proof drawn with the right tools.
+- **Presentation**: final live chart is readable; extraction scaffolding hidden; only decision proof, trigger, invalidation, zones/targets, and essential indicators remain visible.
+
+If presentation mode fails, the package is not done even if the screenshots and evidence file validate.
 
 ## Validation
 
@@ -63,6 +90,8 @@ Run the strategy-specific validator only, unless the package intentionally conta
 The validator fails closed on:
 
 - Missing stage gates.
+- Missing visual pivot evidence, missing Monthly/Weekly/Daily pivot extraction, or unverified OHLCV pivot checks.
+- Missing `chart_prep.chart_mode_checklist`, missing extraction/verification/strategy_proof/presentation modes, or presentation mode that leaves pivot scaffolding visible.
 - Mandatory stage gates with `fail`, `partial`, or `not_requested` status.
 - `workflow_version` drift from the strategy manifest `contract_version`.
 - Duplicate checklist IDs.

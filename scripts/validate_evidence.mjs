@@ -156,6 +156,143 @@ function validateScreenshots(evidence, manifest, file, errors) {
   }
 }
 
+function validateVisualPivotEvidence(evidence, manifest, errors) {
+  const protocol = manifest.visual_pivot_protocol;
+  if (!protocol) return;
+
+  const pivotEvidence = evidence.visual_pivot_evidence;
+  if (!pivotEvidence || typeof pivotEvidence !== 'object') {
+    errors.push('missing top-level field: visual_pivot_evidence');
+    return;
+  }
+
+  for (const field of ['indicator_name', 'study_filter', 'extraction_method', 'iteration_decision']) {
+    if (!String(pivotEvidence[field] || '').trim()) errors.push(`visual_pivot_evidence.${field} is required`);
+  }
+
+  const screenshotPaths = new Set(asArray(evidence.screenshots).map((screenshot) => String(screenshot?.path || '').replace(/\\/g, '/')).filter(Boolean));
+  const allowedTimeframes = new Set(protocol.allowed_timeframes || []);
+  const requiredTimeframes = new Set(protocol.required_timeframes || []);
+  const allowedPivotTypes = new Set(protocol.allowed_pivot_types || []);
+  const allowedVerificationStatuses = new Set(protocol.allowed_verification_statuses || ['pass', 'pass_with_fallback']);
+  const seenTimeframes = new Set();
+
+  const timeframeEvidence = pivotEvidence.timeframes;
+  if (!Array.isArray(timeframeEvidence)) {
+    errors.push('visual_pivot_evidence.timeframes must be an array');
+    return;
+  }
+
+  for (const item of timeframeEvidence) {
+    if (!item || typeof item !== 'object') {
+      errors.push('visual_pivot_evidence.timeframes item must be an object');
+      continue;
+    }
+
+    const timeframe = String(item.timeframe || '').toLowerCase();
+    if (!timeframe) {
+      errors.push('visual_pivot_evidence.timeframes item missing timeframe');
+    } else {
+      seenTimeframes.add(timeframe);
+      if (allowedTimeframes.size && !allowedTimeframes.has(timeframe)) {
+        errors.push(`visual_pivot_evidence.${timeframe} invalid timeframe`);
+      }
+    }
+
+    const screenshot = String(item.screenshot || '').replace(/\\/g, '/');
+    if (!screenshot) {
+      errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'} missing screenshot`);
+    } else if (!screenshotPaths.has(screenshot)) {
+      errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'} screenshot not listed in screenshots: ${item.screenshot}`);
+    }
+
+    const pivots = item.pivots;
+    if (!Array.isArray(pivots) || pivots.length === 0) {
+      errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots must be a non-empty array`);
+    } else {
+      indexById(pivots, `visual_pivot_evidence.${timeframe || '<unknown>'}.pivots`, errors);
+      for (const pivot of pivots) {
+        if (!pivot || typeof pivot !== 'object') continue;
+        if (!String(pivot.type || '').trim()) errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing type`);
+        if (pivot.type && allowedPivotTypes.size && !allowedPivotTypes.has(pivot.type)) {
+          errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} invalid type: ${pivot.type}`);
+        }
+        if (typeof pivot.price !== 'number') errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'}.price must be a number`);
+        if (!String(pivot.source_text || '').trim()) errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing source_text`);
+      }
+    }
+
+    const verifications = item.ohlcv_verification;
+    if (!Array.isArray(verifications) || verifications.length === 0) {
+      errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.ohlcv_verification must be a non-empty array`);
+    } else {
+      for (const verification of verifications) {
+        if (!verification || typeof verification !== 'object') continue;
+        const status = String(verification.status || '').toLowerCase();
+        if (!allowedVerificationStatuses.has(status)) {
+          errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.ohlcv_verification.${verification.pivot_id || '<unknown>'} status must be one of ${[...allowedVerificationStatuses].join(', ')}: ${verification.status}`);
+        }
+        if (!String(verification.pivot_id || '').trim()) errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.ohlcv_verification item missing pivot_id`);
+        if (!String(verification.evidence || '').trim()) errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.ohlcv_verification.${verification.pivot_id || '<unknown>'} missing evidence`);
+      }
+    }
+  }
+
+  for (const timeframe of requiredTimeframes) {
+    if (!seenTimeframes.has(timeframe)) errors.push(`visual_pivot_evidence missing required timeframe: ${timeframe}`);
+  }
+}
+
+function validateChartModeProtocol(evidence, manifest, errors) {
+  const protocol = manifest.chart_mode_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'chart_prep.chart_mode_checklist';
+  const modes = getByPath(evidence, path);
+  if (!Array.isArray(modes)) {
+    errors.push(`${path} must be an array`);
+    return;
+  }
+
+  const allowedStatuses = Array.isArray(protocol.allowed_statuses)
+    ? protocol.allowed_statuses
+    : (manifest.allowed?.[protocol.allowed_statuses] || ['pass', 'pass_with_fallback']);
+  const allowed = new Set(allowedStatuses);
+  const requiredModes = new Set(protocol.required_modes || []);
+  const seenModes = new Set();
+
+  for (const item of modes) {
+    if (!item || typeof item !== 'object') {
+      errors.push(`${path} item must be an object`);
+      continue;
+    }
+    const mode = String(item.mode || item.id || '').trim();
+    if (!mode) {
+      errors.push(`${path} item missing mode`);
+    } else {
+      seenModes.add(mode);
+    }
+    const status = String(item.status || '').toLowerCase();
+    if (!allowed.has(status)) {
+      errors.push(`${path}.${mode || '<unknown>'} status must be one of ${[...allowed].join(', ')}: ${item.status}`);
+    }
+    if (!String(item.evidence || '').trim()) errors.push(`${path}.${mode || '<unknown>'} missing evidence`);
+
+    if (mode === 'presentation') {
+      if (item.pivot_scaffold_visible === true) {
+        errors.push(`${path}.presentation pivot_scaffold_visible must not be true`);
+      }
+      if (!String(item.final_chart_state || '').trim()) {
+        errors.push(`${path}.presentation missing final_chart_state`);
+      }
+    }
+  }
+
+  for (const mode of requiredModes) {
+    if (!seenModes.has(mode)) errors.push(`${path} missing required mode: ${mode}`);
+  }
+}
+
 function validateDrawingManifest(evidence, manifest, errors) {
   const drawings = getByPath(evidence, manifest.drawing_protocol?.path || 'chart_prep.drawing_manifest');
   if (!Array.isArray(drawings)) {
@@ -308,6 +445,8 @@ export function validateEvidenceFile(file, options = {}) {
   validateStageGates(evidence, manifest, errors);
   validateIdCollections(evidence, manifest, errors);
   validateScreenshots(evidence, manifest, absoluteFile, errors);
+  validateVisualPivotEvidence(evidence, manifest, errors);
+  validateChartModeProtocol(evidence, manifest, errors);
   validateDrawingManifest(evidence, manifest, errors);
   validateZoneProbabilities(evidence, manifest, errors);
   validateActionRationale(evidence, manifest, errors);

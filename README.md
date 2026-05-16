@@ -5,7 +5,7 @@ Stage-gated operating repo for Johan's TradingView analysis agents.
 The old problem was structural drift: rules lived in too many places, agents skipped steps, HEW counts were sometimes drawn with the wrong tools, and final reports were not always clear enough to act on. This repo now keeps the workflow narrow:
 
 - `AGENTS.md` is the boot manual.
-- `WORKFLOW.md` defines the six stage gates.
+- `WORKFLOW.md` defines the eight stage gates and four chart modes.
 - `strategies/wyckoff/manifest.json` and `strategies/hew/manifest.json` are the executable contracts.
 - `agents/*.md` are compact specialist prompts.
 - `scripts/validate_evidence.mjs` validates journal packages against the manifests.
@@ -13,14 +13,20 @@ The old problem was structural drift: rules lived in too many places, agents ski
 ## What must happen on every serious analysis
 
 1. Route to the right strategy.
-2. Switch to the required TradingView layout.
-3. Read Monthly -> Weekly -> Daily using TradingView MCP only unless Johan asked for outside research.
-4. Clear stale drawings and draw the correct chart-proof layer.
-5. Record drawings in `chart_prep.drawing_manifest`.
-6. Produce exactly one `journal.md` and one `evidence.json` per package.
-7. Explain the action from the chosen strategy: setup, trigger, invalidation, target path, and no-trade condition.
-8. Run final critic review.
-9. Run the validator.
+2. Load only the selected lane's manifest, specialist prompt, and strategy-specific skill material.
+3. Switch to the required TradingView layout.
+4. Enter extraction mode: keep pivot/scanner scaffolding visible and extract important pivots visually from Monthly, Weekly, and Daily.
+5. Enter verification mode: verify those visual pivots with TradingView OHLCV before strategy analysis.
+6. Read Monthly -> Weekly -> Daily using TradingView MCP only unless Johan asked for outside research.
+7. Enter strategy-proof mode: hide/reduce pivot clutter and draw only method-specific proof.
+8. Enter presentation mode: hide extraction scaffolding, leave a readable decision chart, and verify final live state.
+9. Record visual pivots in `visual_pivot_evidence`, chart modes in `chart_prep.chart_mode_checklist`, and drawings in `chart_prep.drawing_manifest`.
+10. Produce exactly one `journal.md` and one `evidence.json` per package.
+11. Explain the action from the chosen strategy: setup, trigger, invalidation, target path, and no-trade condition.
+12. Run final critic review.
+13. Run the validator.
+
+Do not load both HEW and Wyckoff context unless Johan explicitly asks for both, confluence, comparison, or a dual-strategy package.
 
 ## Required layouts
 
@@ -37,13 +43,6 @@ npm run validate:<hew|wyckoff> -- analysis_journal/<PACKAGE>/evidence.json
 ```
 
 Run the matching strategy validator. Do not run the HEW validator against a Wyckoff package or vice versa unless the package intentionally contains both methods.
-
-Compatibility wrappers also exist:
-
-```bash
-node scripts/validate_wyckoff_evidence.js analysis_journal/<PACKAGE>/evidence.json
-node scripts/validate_hew_evidence.js analysis_journal/<PACKAGE>/evidence.json
-```
 
 ## Journal package shape
 

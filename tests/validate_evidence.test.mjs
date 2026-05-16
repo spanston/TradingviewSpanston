@@ -1,17 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 import { validateEvidenceFile } from '../scripts/validate_evidence.mjs';
 
+const requiredVisualFirstGates = ['visual_pivot_extraction', 'ohlcv_pivot_verification'];
+
 function packageDir(method = 'hew') {
   const dir = mkdtempSync(join(tmpdir(), `konsili-${method}-`));
   mkdirSync(join(dir, 'screenshots'));
+  writeFileSync(join(dir, 'screenshots', 'pivots.png'), 'fake');
   writeFileSync(join(dir, 'screenshots', 'macro.png'), 'fake');
   writeFileSync(join(dir, 'screenshots', 'trade.png'), 'fake');
-  writeFileSync(join(dir, 'journal.md'), '# Journal\n\n![Macro](screenshots/macro.png)\n![Trade](screenshots/trade.png)\n');
+  writeFileSync(join(dir, 'journal.md'), '# Journal\n\n![Pivots](screenshots/pivots.png)\n![Macro](screenshots/macro.png)\n![Trade](screenshots/trade.png)\n');
   return dir;
 }
 
@@ -21,10 +24,12 @@ function baseEvidence(overrides = {}) {
     saved_at: '2026-05-16T08:00:00+02:00',
     symbol: 'TEST:SYMBOL',
     method: 'HEW macro',
-    workflow_version: 'hew_stage_gated_v2',
+    workflow_version: 'hew_stage_gated_v4',
     status: 'watchlist_only',
     stage_gates: [
       { id: 'route_and_layout', status: 'pass', evidence: 'HEW layout loaded.' },
+      { id: 'visual_pivot_extraction', status: 'pass', evidence: 'Visible pivot indicator extracted on Monthly/Weekly/Daily.' },
+      { id: 'ohlcv_pivot_verification', status: 'pass', evidence: 'TradingView OHLCV verified the visual pivots.' },
       { id: 'top_down_chart_read', status: 'pass', evidence: 'M/W/D read.' },
       { id: 'drawing_protocol', status: 'pass', evidence: 'Native Elliott drawings used.' },
       { id: 'evidence_contract', status: 'pass', evidence: 'Required fields filled.' },
@@ -32,6 +37,10 @@ function baseEvidence(overrides = {}) {
       { id: 'critic_review', status: 'pass', evidence: 'Final critic passed.' }
     ],
     analysis_checklist: [
+      { id: 'visual_pivots_extracted', status: 'pass', evidence: 'indicator pivots extracted visually first' },
+      { id: 'ohlcv_pivots_verified', status: 'pass', evidence: 'pivots verified against OHLCV' },
+      { id: 'pivot_conflicts_resolved', status: 'pass', evidence: 'no unresolved pivot conflict' },
+      { id: 'chart_modes_recorded', status: 'pass', evidence: 'extraction, verification, strategy-proof, and presentation modes recorded' },
       { id: 'macro_count_subwaves_ratio_aligned', status: 'pass', evidence: 'macro and subwaves drawn with native Elliott tools' },
       { id: 'projection_forward_margin_next_count', status: 'pass', evidence: 'projection path drawn with Elliott tool' },
       { id: 'wave_b_ladder_chart_proof', status: 'pass', evidence: 'ladder screenshot present' },
@@ -43,15 +52,49 @@ function baseEvidence(overrides = {}) {
       layout: 'HEW layout',
       drawings_cleared: true,
       visible_ranges_verified: true,
+      chart_mode_checklist: [
+        { mode: 'extraction', status: 'pass', evidence: 'Pivot scaffold was visible for visual extraction and screenshot capture.' },
+        { mode: 'verification', status: 'pass', evidence: 'Extracted pivots were checked against OHLCV before HEW selection.' },
+        { mode: 'strategy_proof', status: 'pass', evidence: 'Only HEW count/projection/decision proof was drawn after verification.' },
+        { mode: 'presentation', status: 'pass', evidence: 'Pivot scaffold hidden; final readable decision chart verified.', pivot_scaffold_visible: false, final_chart_state: 'macro count, projection, invalidation, and zones visible' }
+      ],
       drawing_manifest: [
         { id: 'macro', role: 'macro_count', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
         { id: 'projection', role: 'projection_count', tool: 'elliott_correction', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' }
       ]
     },
     screenshots: [
+      { role: 'visual_pivots', path: 'screenshots/pivots.png', purpose: 'Visible indicator pivot extraction proof.' },
       { role: 'macro_structure', path: 'screenshots/macro.png', purpose: 'Macro count proof.' },
       { role: 'trade_posture', path: 'screenshots/trade.png', purpose: 'Action map.' }
     ],
+    visual_pivot_evidence: {
+      indicator_name: 'Konsili Pivot Map',
+      study_filter: 'Konsili Pivot Map',
+      extraction_method: 'TradingView visible indicator labels/tables extracted before OHLCV verification',
+      iteration_decision: 'accepted',
+      timeframes: [
+        {
+          timeframe: 'monthly',
+          screenshot: 'screenshots/pivots.png',
+          pivots: [{ id: 'm_high', type: 'high', price: 150, source_text: 'Monthly pivot high 150' }],
+          ohlcv_verification: [{ pivot_id: 'm_high', status: 'pass', evidence: 'Monthly OHLCV high verified 150.' }]
+        },
+        {
+          timeframe: 'weekly',
+          screenshot: 'screenshots/pivots.png',
+          pivots: [{ id: 'w_low', type: 'low', price: 100, source_text: 'Weekly pivot low 100' }],
+          ohlcv_verification: [{ pivot_id: 'w_low', status: 'pass', evidence: 'Weekly OHLCV low verified 100.' }]
+        },
+        {
+          timeframe: 'daily',
+          screenshot: 'screenshots/pivots.png',
+          pivots: [{ id: 'd_high', type: 'high', price: 125, source_text: 'Daily pivot high 125' }],
+          ohlcv_verification: [{ pivot_id: 'd_high', status: 'pass_with_fallback', evidence: 'Daily OHLCV summary verified nearest high.' }]
+        }
+      ],
+      conflicts: []
+    },
     primary_count: { status: 'candidate', summary: 'Macro count attempted.' },
     alternate_counts: [{ id: 'alt1', activation: 'level', invalidation: 'level', implication: 'stand aside' }],
     ratio_validation: [{ id: 'wave3_floor', status: 'pass', evidence: '176.4 checked' }],
@@ -88,8 +131,10 @@ function baseEvidence(overrides = {}) {
         { id: 'macro_timeframe_focus', status: 'pass', evidence: 'macro first' },
         { id: 'human_actionability', status: 'pass', evidence: 'action clear' },
         { id: 'invalidation_and_risk_clear', status: 'pass', evidence: 'risk clear' },
+        { id: 'visual_first_sequence_checked', status: 'pass', evidence: 'visual pivots were verified before HEW analysis' },
         { id: 'no_day_trading_leak', status: 'pass', evidence: 'no intraday' },
         { id: 'chart_evidence_aligned', status: 'pass', evidence: 'screenshots match' },
+        { id: 'final_chart_readability_checked', status: 'pass', evidence: 'presentation chart hides extraction scaffold and keeps decision proof visible' },
         { id: 'unresolved_items_disclosed', status: 'pass', evidence: 'limitations disclosed' }
       ],
       findings: []
@@ -114,6 +159,19 @@ test('valid HEW package passes the stage-gated workflow contract', () => {
   assert.deepEqual(result.errors, []);
 });
 
+test('both strategy manifests require visual-first pivot gates', () => {
+  for (const strategy of ['hew', 'wyckoff']) {
+    const manifest = JSON.parse(readFileSync(join('strategies', strategy, 'manifest.json'), 'utf8'));
+    for (const gate of requiredVisualFirstGates) {
+      assert.ok(manifest.stage_gates.includes(gate), `${strategy} missing ${gate}`);
+    }
+    assert.ok(manifest.required_top_level.includes('visual_pivot_evidence'), `${strategy} missing visual_pivot_evidence`);
+    assert.deepEqual(manifest.visual_pivot_protocol.required_timeframes, ['monthly', 'weekly', 'daily']);
+    assert.ok(manifest.required_screenshot_roles.includes('visual_pivots'), `${strategy} missing visual_pivots screenshot role`);
+    assert.deepEqual(manifest.chart_mode_protocol.required_modes, ['extraction', 'verification', 'strategy_proof', 'presentation']);
+  }
+});
+
 test('mandatory stage gates fail closed when a gate is failed or partial', () => {
   const evidence = baseEvidence();
   evidence.stage_gates = evidence.stage_gates.map((gate) => (
@@ -127,7 +185,25 @@ test('mandatory stage gates fail closed when a gate is failed or partial', () =>
 
 test('workflow_version must match the strategy manifest contract version', () => {
   const result = validateEvidenceFile(writeEvidence(baseEvidence({ workflow_version: 'old_or_wrong_contract' })));
-  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_stage_gated_v2/i);
+  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_stage_gated_v4/i);
+});
+
+test('presentation mode fails closed when extraction scaffolding remains visible', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.chart_mode_checklist = evidence.chart_prep.chart_mode_checklist.map((mode) => (
+    mode.mode === 'presentation'
+      ? { ...mode, pivot_scaffold_visible: true, final_chart_state: 'pivot scanner still visible over decision levels' }
+      : mode
+  ));
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /presentation pivot_scaffold_visible must not be true/i);
+});
+
+test('visual pivot evidence is mandatory before strategy analysis', () => {
+  const evidence = baseEvidence();
+  delete evidence.visual_pivot_evidence;
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /missing top-level field: visual_pivot_evidence/i);
 });
 
 test('HEW count/projection drawings cannot use trend_line substitutes', () => {

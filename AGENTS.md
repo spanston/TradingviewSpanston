@@ -16,6 +16,15 @@ Use the smallest set of authorities:
 
 Do not re-create strategy contracts in ad-hoc prose. If a required field, drawing role, checklist item, screenshot role, or critic rule changes, update the strategy manifest first.
 
+## Context budget and lane loading
+
+Keep context lean. Start with `AGENTS.md`, route the request, then load only the files for the selected strategy lane.
+
+- Wyckoff lane: load `WORKFLOW.md`, `strategies/wyckoff/manifest.json`, and `agents/wyckoff-macro-analyst.md`. Do not load HEW prompts, manifests, skills, old reports, or templates unless Johan explicitly asks for HEW or cross-method confluence.
+- HEW lane: load `WORKFLOW.md`, `strategies/hew/manifest.json`, and `agents/harmonic-elliott-wave-analyst.md`. Do not load Wyckoff prompts, manifests, skills, old reports, or templates unless Johan explicitly asks for Wyckoff or cross-method confluence.
+- Load both lanes only when the request explicitly asks for both methods, confluence, comparison, or a package intentionally containing both strategies. State that reason before expanding context.
+- Do not preload `analysis_journal`, screenshots, reports, or generated artifacts. Open only the current package or specific files needed for the task.
+
 ## Routing
 
 Default to Wyckoff macro analysis when the user asks for general symbol analysis, macro structure, accumulation/distribution, buyer/seller control, springs, UTAD, LPS/LPSY, Creek/Ice, or value/effort work.
@@ -34,27 +43,66 @@ For serious chart analysis:
 2. If the layout is missing, run `layout_list`, report the missing layout, and stop unless Johan explicitly overrides.
 3. After layout switch, call `chart_get_state` because symbol, studies, drawings, and entity IDs may have changed.
 4. Set/verify symbol and timeframe.
-5. Work top down: Monthly -> Weekly -> Daily. Add 4H/1H only for explicit execution work.
-6. Use compact reads first: `quote_get`, `data_get_ohlcv(summary=true)`, `data_get_study_values`, and focused Pine reads with `study_filter`.
-7. Fit or explicitly set the visible range before interpreting, drawing, or screenshotting.
-8. Use screenshots for visual proof.
+5. Work top down: Monthly -> Weekly -> Daily. Macro review always starts on Monthly, then Weekly, for both Wyckoff and HEW. Add 4H/1H only for explicit execution work.
+6. Enter **extraction mode**: make the required pivot/scanner indicator visible, hide only non-essential proof drawings if they block labels, extract pivots with focused Pine reads (`data_get_pine_labels`, `data_get_pine_tables`, `data_get_pine_lines`, or `data_get_pine_boxes`), and screenshot the visible pivot layer. Pivot/scanner tools are scaffolding, not final presentation.
+7. Enter **verification mode**: verify the extracted visual pivots with TradingView OHLCV data (`data_get_ohlcv(summary=true)`) on Monthly, Weekly, and Daily before interpreting Wyckoff or HEW structure.
+8. If visual pivots and OHLCV disagree, iterate the pivot extraction, mark the conflict in `visual_pivot_evidence`, and downgrade or stop. Do not analyze the strategy from unverified pivots.
+9. Enter **strategy-proof mode** after pivot verification: hide or reduce extraction clutter when it obscures structure, use compact reads (`quote_get`, `data_get_ohlcv(summary=true)`, `data_get_study_values`, focused Pine reads with `study_filter`), and draw only the method proof needed for the decision.
+10. Fit or explicitly set the visible range before interpreting, drawing, or screenshotting.
+11. Enter **presentation mode** before final response: hide extraction scaffolding such as Pivot Scanner/Pivots HL when it is no longer needed, leave only readable decision proof, capture the final screenshot, and verify live chart state. Do not leave Johan with the cluttered extraction chart unless he explicitly asks for audit mode.
+12. Use screenshots for visual proof, but do not rely on screenshots while the live chart is missing the final proof layer.
 
 ## Stage gates
 
 Every serious report must record and pass these gates in `evidence.json.stage_gates`:
 
 1. `route_and_layout`
-2. `top_down_chart_read`
-3. `drawing_protocol`
-4. `evidence_contract`
-5. `action_output`
-6. `critic_review`
+2. `visual_pivot_extraction`
+3. `ohlcv_pivot_verification`
+4. `top_down_chart_read`
+5. `drawing_protocol`
+6. `evidence_contract`
+7. `action_output`
+8. `critic_review`
 
 If a gate cannot pass, stop or downgrade. Do not keep producing confident trade language after a failed gate.
 
+## Chart mode protocol
+
+Every serious run must explicitly move through four chart modes and record them in `chart_prep.chart_mode_checklist`:
+
+1. **Extraction mode**
+   - Purpose: harvest pivots from the visible TradingView pivot/scanner layer.
+   - Required visible tools: the selected pivot indicator/scanner and any Pine labels/tables/lines/boxes used for extraction.
+   - Forbidden conclusion: no strategy call, trade posture, or final chart claim from this mode alone.
+   - Output: `visual_pivots` screenshot plus `visual_pivot_evidence` source text.
+2. **Verification mode**
+   - Purpose: test the extracted pivots against OHLCV highs/lows/ranges on Monthly, Weekly, and Daily.
+   - Required action: resolve or disclose conflicts before applying strategy rules.
+   - Output: OHLCV verification rows tied to pivot IDs.
+3. **Strategy-proof mode**
+   - Purpose: apply Wyckoff or HEW rules after pivot verification.
+   - Chart state: hide or reduce pivot/scanner clutter if it obscures the structure; draw only proof needed for the selected method.
+   - Output: macro/trade posture screenshots and drawing manifest.
+4. **Presentation mode**
+   - Purpose: leave Johan with a clean, human-actionable live chart.
+   - Chart state: extraction scaffolding hidden, not deleted unless clearly stale; key count/range/zones, trigger, invalidation, and target path visible.
+   - Required verification: `chart_get_state`, `draw_list`, key drawing properties when available, and a final screenshot/visual check.
+   - Failure condition: if Pivot Scanner/Pivots HL or equivalent scaffolding remains visibly cluttering the decision chart, the package is not complete unless Johan explicitly requested audit mode.
+
+## Visual pivot protocol
+
+Institutional-grade analysis is visual-first:
+
+1. Load the selected strategy layout and confirm the pivot indicator is visible.
+2. Extract important pivots from the visible indicator layer on Monthly, Weekly, and Daily. Use indicator labels, tables, lines, or boxes with `study_filter`; do not infer the first pivot map from raw OHLCV alone.
+3. Capture a `visual_pivots` screenshot and record the indicator name, `study_filter`, extraction method, timeframe, pivot type, price, source text, and screenshot path in `visual_pivot_evidence`.
+4. Retrieve TradingView OHLCV summaries for the same timeframes and verify that each visual pivot matches the relevant high/low/support/resistance evidence.
+5. Only after the visual pivots are verified may the agent apply Wyckoff or HEW rules. If verification changes the pivots, repeat the extraction/verification loop and document the revision.
+
 ## Drawing protocol
 
-Clear stale drawings after loading the requested symbol/layout unless Johan asked to preserve them.
+Inventory drawings after loading the requested symbol/layout. Remove or hide only drawings classified as stale clutter; preserve current proof and uncertain drawings unless Johan explicitly requested a reset. Treat `draw_clear` as destructive.
 
 Record meaningful drawings in `chart_prep.drawing_manifest`:
 
@@ -75,7 +123,7 @@ Timeframe ownership:
 - `execution`: lower-timeframe execution proof only when requested.
 - `all`: allowed only when the same drawing intentionally belongs to every layer.
 
-If TradingView MCP cannot set per-drawing visibility, use separate screenshot passes: draw/clear macro layer, then draw/clear daily layer. Record the intended visibility in evidence.
+If TradingView MCP cannot set per-drawing visibility, separate proof with temporary screenshot passes only when necessary: capture the screenshot, immediately rebuild the final presentation chart, then verify the final live chart. Never finish immediately after `draw_clear` or leave the macro/decision proof as screenshot-only evidence.
 
 ## Wyckoff rules
 

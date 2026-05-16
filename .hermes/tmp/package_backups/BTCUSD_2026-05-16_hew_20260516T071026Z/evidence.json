@@ -1,0 +1,123 @@
+{
+  "journal_id": "BTCUSD_2026-05-16_hew",
+  "saved_at": "2026-05-16T06:40:29Z",
+  "symbol": "BITSTAMP:BTCUSD",
+  "method": "Harmonic Elliott Wave",
+  "workflow_version": "hew_stage_gated_v2",
+  "status": "STAND ASIDE",
+  "stage_gates": [
+    { "id": "route_and_layout", "status": "pass_with_fallback", "evidence": "Requested HEW was routed to the HEW layout. TradingView saved layout is named 'Hew Layout' rather than the AGENTS.md capitalization 'HEW layout'; the layout loaded successfully and chart state was verified after pane_set_symbol to BITSTAMP:BTCUSD." },
+    { "id": "top_down_chart_read", "status": "pass", "evidence": "TradingView MCP live reads used only: Monthly high 126272, Feb-2026 low 59930, current May-2026 last about 78845-78865; Weekly last 5 bars show current 78.6-82.8k supply interaction; Daily 120-bar range high 95603 low 59930 close about 78849." },
+    { "id": "drawing_protocol", "status": "pass_with_fallback", "evidence": "Stale drawings were cleared. Candidate macro count was drawn with TradingView elliott_impulse_wave and conditional alternate/projection with elliott_correction. Decision/invalidation/zone levels used rectangles and horizontal lines only." },
+    { "id": "evidence_contract", "status": "pass", "evidence": "Package contains one journal.md, one evidence.json, and screenshots under screenshots/ with paths embedded in the journal." },
+    { "id": "action_output", "status": "pass", "evidence": "Final posture is STAND ASIDE. Trigger, invalidation, target path, and no-trade condition are separated. Trade language is blocked because the candidate impulse fails HEW ratio quality." },
+    { "id": "critic_review", "status": "pass_with_fallback", "evidence": "Critic review completed. Main limitation is TradingView symbol/timeframe tools intermittently changed symbols; final evidence was repeatedly reset and verified on BITSTAMP:BTCUSD before screenshots and package writing." }
+  ],
+  "analysis_checklist": [
+    { "id": "macro_count_subwaves_ratio_aligned", "status": "pass_with_fallback", "evidence": "Macro candidate from 59930 -> 76013 -> 64955 -> 79500 -> 65696 -> 82833 was mapped. W3 vs W1 is about 0.90x, below the 1.764 HEW floor; subwave internals are not sufficient for a validated HEW impulse." },
+    { "id": "projection_forward_margin_next_count", "status": "pass_with_fallback", "evidence": "Conditional projection drawn as alternate correction path from 82.8k toward 65.7k/59.9k. Upside projection is withheld until acceptance above 82.8k." },
+    { "id": "wave_b_ladder_chart_proof", "status": "pass_with_fallback", "evidence": "Ladder levels recorded: 59930 origin/hard invalidation, 64955-65696 demand, 78600-82833 decision/supply, 90000-97939 next supply, 126272 macro high." },
+    { "id": "zone_probabilities_complete", "status": "pass", "evidence": "Accumulation and distribution zones are recorded with probabilities and invalidation/upgrade/downgrade rules." },
+    { "id": "action_rationale_complete", "status": "pass", "evidence": "Action rationale explicitly explains why HEW says stand aside rather than long/short." },
+    { "id": "critic_review_complete", "status": "pass", "evidence": "Critic checklist completed with unresolved limitations disclosed." }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_verified": "BITSTAMP:BTCUSD",
+    "timeframes": ["M", "W", "D"],
+    "drawing_manifest": [
+      { "id": "macro_candidate_impulse", "role": "macro_count", "tool": "elliott_impulse_wave", "timeframe_owner": "macro", "screenshot": "screenshots/macro_structure.png", "note": "Candidate only; ratio failure blocks action." },
+      { "id": "conditional_alt_correction", "role": "projection_count", "tool": "elliott_correction", "timeframe_owner": "macro", "screenshot": "screenshots/macro_structure.png", "note": "Conditional downside path if current supply rejects." },
+      { "id": "demand_zone_59930_65696", "role": "zone", "tool": "rectangle", "timeframe_owner": "daily", "screenshot": "screenshots/trade_posture.png" },
+      { "id": "supply_zone_78600_82833", "role": "zone", "tool": "rectangle", "timeframe_owner": "daily", "screenshot": "screenshots/trade_posture.png" },
+      { "id": "flip_level_82833", "role": "decision_level", "tool": "horizontal_line", "timeframe_owner": "daily", "screenshot": "screenshots/trade_posture.png" }
+    ]
+  },
+  "screenshots": [
+    { "id": "hew_macro_structure", "role": "macro_structure", "path": "screenshots/macro_structure.png", "timeframe": "M", "description": "Candidate HEW count and conditional projection path." },
+    { "id": "hew_trade_posture", "role": "trade_posture", "path": "screenshots/trade_posture.png", "timeframe": "D", "description": "Decision zones around 59.9-65.7k demand and 78.6-82.8k supply." }
+  ],
+  "primary_count": {
+    "id": "primary_candidate_recovery_from_59930",
+    "status": "candidate_not_tradeable",
+    "direction": "bullish_recovery_inside_larger_correction",
+    "pivots": [59930, 76013, 64955, 79500, 65696, 82833],
+    "interpretation": "The rebound from the February 2026 low can be sketched as a five-swing recovery, but Wave 3 is too short against Wave 1 for a clean HEW impulse. Treat it as corrective/B-wave or early base work, not a validated impulsive long setup."
+  },
+  "alternate_counts": [
+    { "id": "alt_distribution_rejection", "activation": "Failure to hold 78600 followed by a daily/weekly close below 74912", "invalidation": "Sustained weekly acceptance above 82833", "implication": "Retest 70584 then 65696/59930 demand." },
+    { "id": "alt_bullish_reclaim", "activation": "Weekly acceptance above 82833 and constructive retest holding above 78600", "invalidation": "Back below 78600 after breakout", "implication": "Opens 90000-97939, then 108388 and 126272 retest path." }
+  ],
+  "ratio_validation": [
+    { "id": "wave3_floor", "status": "fail_as_trade_signal", "evidence": "Candidate W1 = 76013 - 59930 = 16083. Candidate W3 = 79500 - 64955 = 14545, roughly 0.90x W1, below the 1.764 HEW floor." },
+    { "id": "wave5_extension", "status": "weak", "evidence": "Candidate W5 reaches 82833 but does not resolve the larger overhead supply from 90k-97.9k or the 126272 macro high." }
+  ],
+  "rule_validation": [
+    { "id": "wave2_origin", "status": "holds", "evidence": "Candidate W2 low 64955 holds above 59930 origin." },
+    { "id": "wave4_overlap", "status": "warning", "evidence": "Candidate W4 low 65696 overlaps deeply with W1 territory; acceptable only as a corrective candidate, not as high-confidence impulse proof." },
+    { "id": "macro_context", "status": "warning", "evidence": "Price remains far below 126272 macro high and below 90k-97.9k supply, so macro impulse continuation is unproven." }
+  ],
+  "wave_b_invalidation_ladder": [
+    { "id": "w1_origin_hard", "level": 59930, "status": "must_hold", "violation_standard": "weekly close below" },
+    { "id": "w2_demand", "level": 64955, "status": "nearby support", "violation_standard": "daily close below and failed reclaim" },
+    { "id": "b_of_3_proxy", "level": 65696, "status": "nearby support", "violation_standard": "daily close below and failed reclaim" },
+    { "id": "w4_or_flip", "level": 78600, "status": "decision band lower edge", "violation_standard": "daily acceptance below" },
+    { "id": "b_of_5_proxy", "level": 82833, "status": "flip/confirmation level", "violation_standard": "weekly acceptance above upgrades; rejection downgrades" }
+  ],
+  "zone_probabilities": [
+    { "id": "accumulation_59930_65696", "zone_type": "accumulation", "price_range": { "low": 59930, "high": 65696 }, "probability": { "value": 42, "band": "moderate-low" }, "evidence": "February/March 2026 low cluster and hard invalidation area; would matter on retest with constructive reaction.", "invalidation": "Weekly close below 59930", "upgrade_trigger": "Reclaim from the zone followed by higher low and acceptance back above 78600", "downgrade_trigger": "High-volume break below 59930" },
+    { "id": "distribution_78600_82833", "zone_type": "distribution", "price_range": { "low": 78600, "high": 82833 }, "probability": { "value": 58, "band": "moderate" }, "evidence": "Current price is pressing into May high/weekly supply while HEW impulse validation is weak.", "invalidation": "Weekly acceptance above 82833 plus successful retest", "upgrade_trigger": "Rejection from 82.8k followed by loss of 74.9k", "downgrade_trigger": "Acceptance above 82.8k" },
+    { "id": "no_trade_middle", "zone_type": "no_trade", "price_range": { "low": 65696, "high": 78600 }, "probability": { "value": 65, "band": "high" }, "evidence": "Inside corrective recovery range with no validated HEW impulse.", "invalidation": "Clean break and retest outside the range", "upgrade_trigger": "Defined break/retest above 82.8k or rejection/loss below 74.9k", "downgrade_trigger": "Continued chop inside range" }
+  ],
+  "action_rationale": {
+    "selected_action": "STAND ASIDE",
+    "strategy_basis": "HEW requires macro-first ratio/rule validation and Castaway model before trade language.",
+    "why_action_follows_strategy": "The visible five-swing rebound from 59.9k fails the HEW Wave 3 expansion floor and sits directly under 78.6-82.8k decision supply. HEW does not permit forcing a long from an unvalidated count or shorting without confirmed rejection.",
+    "chart_evidence_supporting_action": "Live TradingView levels: 59930 low, 64955/65696 demand, 78600-82833 current supply/flip, 90000-97939 higher supply, 126272 macro high.",
+    "what_proves_it_wrong": "Weekly acceptance above 82833 and a retest that holds above 78600 would upgrade the bullish alternate; daily/weekly loss of 74912 would activate the bearish rejection path.",
+    "human_takeaway": "No HEW trade here. Wait for 82.8k acceptance or a clean rejection/loss of 74.9k."
+  },
+  "trade_posture": {
+    "verdict": "STAND ASIDE",
+    "trigger": "Weekly acceptance above 82833 with retest holding 78600, or bearish rejection confirmed by daily/weekly close below 74912.",
+    "invalidation": "Hard bullish invalidation below 59930; bullish breakout invalidates if it loses 78600 after acceptance.",
+    "targets": ["90000-97939", "108388", "126272"],
+    "downside_path": ["74912", "70584", "65696", "59930"]
+  },
+  "castaway_trade_model": {
+    "model": "Model 6",
+    "label": "Stand aside / no validated count",
+    "reason": "Ratio failure, deep overlap, and unresolved supply block clean HEW execution."
+  },
+  "no_trade_gate": [
+    { "id": "location", "status": "fail", "evidence": "Price is inside/just under decision supply 78.6-82.8k, not at clean demand or post-breakout retest." },
+    { "id": "trigger", "status": "partial", "evidence": "82.8k acceptance and 74.9k loss are defined, but neither is confirmed." },
+    { "id": "invalidation", "status": "pass", "evidence": "Hard invalidation 59.93k and tactical 78.6k/74.9k levels defined." },
+    { "id": "reward", "status": "partial", "evidence": "Upside exists to 90-97.9k only after 82.8k acceptance; current entry would buy into supply." },
+    { "id": "timeframe_alignment", "status": "partial", "evidence": "Monthly recovery is up from 59.9k but weekly/daily are not cleanly through supply." }
+  ],
+  "red_team": {
+    "countercase": "This could be early bullish base construction after the 59.9k washout; if 82.8k accepts and 78.6k holds as support, the weak HEW count may be less important than buyer control.",
+    "response": "That is a Wyckoff-style acceptance argument, not a clean HEW count. HEW stays stand aside until structure and ratios improve."
+  },
+  "critic_review": {
+    "final_verdict": "pass_with_fixes",
+    "max_detail_timeframe": "daily",
+    "checklist": [
+      { "id": "deliverables_complete", "status": "pass", "evidence": "journal.md, evidence.json, and two screenshots present." },
+      { "id": "evidence_accuracy_checked", "status": "pass_with_fixes", "evidence": "Final symbol reset/verification was required because some TradingView MCP symbol/timeframe calls drifted; package uses verified BITSTAMP:BTCUSD reads." },
+      { "id": "macro_timeframe_focus", "status": "pass", "evidence": "Monthly/weekly context drives the decision; daily only defines trigger posture." },
+      { "id": "human_actionability", "status": "pass", "evidence": "Stand-aside action, triggers, invalidation, and target path are explicit." },
+      { "id": "invalidation_and_risk_clear", "status": "pass", "evidence": "59930 hard invalidation, 78600/82833 breakout band, 74912 rejection trigger listed." },
+      { "id": "no_day_trading_leak", "status": "pass", "evidence": "No intraday entries or scalping instructions." },
+      { "id": "chart_evidence_aligned", "status": "pass_with_fixes", "evidence": "Screenshots show the same zones/levels recorded in evidence." },
+      { "id": "unresolved_items_disclosed", "status": "pass", "evidence": "Missing subwave internals, HEW ratio failure, and MCP symbol drift disclosed." }
+    ],
+    "findings": [
+      { "id": "mcp_symbol_drift", "severity": "medium", "status": "resolved", "evidence": "Used pane_set_symbol and chart_get_state verification before final screenshot/read." }
+    ]
+  },
+  "review_triggers": ["Weekly acceptance above 82833", "Daily/weekly close below 74912", "Retest of 59930-65696 demand"],
+  "missing_evidence": ["Validated subwave internals inside the candidate recovery", "Volume profile/value-area read was not available in HEW layout", "Forward Elliott projection is conditional because current count is not validated"],
+  "confidence": { "value": 43, "band": "low-moderate", "reason": "Levels are clear, but HEW count quality is weak; actionability depends on future acceptance/rejection." }
+}
