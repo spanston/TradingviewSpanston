@@ -330,6 +330,68 @@ function validateDrawingManifest(evidence, manifest, errors) {
   }
 }
 
+function validateHewStructureContext(evidence, manifest, errors) {
+  const protocol = manifest.hew_structure_context_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'hew_structure_context';
+  const context = getByPath(evidence, path);
+  if (!context || typeof context !== 'object' || Array.isArray(context)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  const drawings = asArray(getByPath(evidence, manifest.drawing_protocol?.path || 'chart_prep.drawing_manifest'));
+  const drawingsById = new Map();
+  for (const drawing of drawings) {
+    if (drawing?.id) drawingsById.set(drawing.id, drawing);
+  }
+
+  const allowedStatuses = new Set(protocol.allowed_statuses || ['pass', 'pass_with_fallback']);
+  for (const itemContract of protocol.required_items || []) {
+    const id = itemContract.id;
+    const item = context[id];
+    if (!item || typeof item !== 'object' || Array.isArray(item)) {
+      errors.push(`${path}.${id} is required`);
+      continue;
+    }
+
+    const status = String(item.status || '').toLowerCase();
+    if (!allowedStatuses.has(status)) {
+      errors.push(`${path}.${id}.status must be one of ${[...allowedStatuses].join(', ')}: ${item.status}`);
+    }
+    if (!String(item.evidence || '').trim()) errors.push(`${path}.${id} missing evidence`);
+
+    const rawDrawingIds = item.drawing_ids ?? item.drawing_id;
+    const drawingIds = Array.isArray(rawDrawingIds) ? rawDrawingIds : (rawDrawingIds ? [rawDrawingIds] : []);
+    if (!drawingIds.length) {
+      errors.push(`${path}.${id} missing drawing_id or drawing_ids`);
+      continue;
+    }
+
+    const requiredRole = itemContract.required_drawing_role;
+    let requiredRoleSeen = false;
+    for (const drawingId of drawingIds) {
+      const drawing = drawingsById.get(drawingId);
+      if (!drawing) {
+        errors.push(`${path}.${id} references missing drawing_manifest id: ${drawingId}`);
+        continue;
+      }
+      if (requiredRole && drawing.role === requiredRole) requiredRoleSeen = true;
+    }
+    if (requiredRole && !requiredRoleSeen) {
+      errors.push(`${path}.${id} must reference a drawing with role ${requiredRole}`);
+    }
+
+    if (itemContract.requires_conditionality) {
+      const conditionality = String(item.conditionality || item.label || item.evidence || '').toLowerCase();
+      if (!/conditional|projection|scenario/.test(conditionality)) {
+        errors.push(`${path}.${id} must label the forward path as conditional/projection/scenario, not fact`);
+      }
+    }
+  }
+}
+
 function validateActionRationale(evidence, manifest, errors) {
   const action = evidence.action_rationale;
   if (!action || typeof action !== 'object') {
@@ -403,6 +465,15 @@ function validateCriticReview(evidence, manifest, errors) {
     if (!allowedStatuses.has(status)) errors.push(`critic_review.checklist.${id} status must be one of ${[...allowedStatuses].join(', ')}: ${item.status}`);
     if (!String(item.evidence || '').trim()) errors.push(`critic_review.checklist.${id} missing evidence`);
   }
+  const blockingChecklistIds = new Set(manifest.critic_review?.blocking_checklist_ids || []);
+  for (const id of blockingChecklistIds) {
+    const item = checklist.get(id);
+    if (!item) continue;
+    const status = String(item.status || '').toLowerCase();
+    if (status !== 'pass') {
+      errors.push(`critic_review.checklist.${id} is blocking and must be pass: ${item.status}`);
+    }
+  }
   for (const finding of asArray(critic.findings)) {
     const severity = String(finding.severity || '').toLowerCase();
     const status = String(finding.status || '').toLowerCase();
@@ -448,6 +519,7 @@ export function validateEvidenceFile(file, options = {}) {
   validateVisualPivotEvidence(evidence, manifest, errors);
   validateChartModeProtocol(evidence, manifest, errors);
   validateDrawingManifest(evidence, manifest, errors);
+  validateHewStructureContext(evidence, manifest, errors);
   validateZoneProbabilities(evidence, manifest, errors);
   validateActionRationale(evidence, manifest, errors);
   validateCriticReview(evidence, manifest, errors);

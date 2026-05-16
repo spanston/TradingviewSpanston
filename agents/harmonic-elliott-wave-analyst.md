@@ -28,14 +28,16 @@ Do not load Wyckoff prompts, manifests, skills, reports, or templates during a H
 6. Enter verification mode: retrieve TradingView OHLCV summaries for the same timeframes and verify the visual pivots before HEW count selection.
 7. If visual pivots and OHLCV conflict, iterate extraction or downgrade; do not build HEW counts from unverified pivots.
 8. Read Monthly -> Weekly -> Daily. Macro review always starts on Monthly, then Weekly.
-9. Fit/verify visible range before each structural call.
-10. Inventory existing drawings; remove/hide only stale clutter unless preservation was requested. Do not use `draw_clear` as routine cleanup.
-11. Enter strategy-proof mode: hide or reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
-12. Enter presentation mode: hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/projection/decision proof readable, capture a final screenshot, and verify live chart state.
-13. Record all four chart modes in `chart_prep.chart_mode_checklist`.
-14. Fill `journal.md` and `evidence.json` if a package is requested.
-15. Run `npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json`.
-16. If validation fails, fix the package or downgrade; do not call it complete.
+9. Before accepting any macro ABC/correction, identify and draw the preceding impulse it corrects. If you cannot answer “ABC correcting what?”, the count is incomplete and actionability downgrades to `STAND ASIDE`.
+10. Fit/verify visible range before each structural call.
+11. Inventory existing drawings; remove/hide only stale clutter unless preservation was requested. Do not use `draw_clear` as routine cleanup.
+12. Enter strategy-proof mode: hide or reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
+13. Strategy proof must include native Elliott drawings for preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and a conditional forward impulse projection when a completed 1-5 + ABC is claimed.
+14. Enter presentation mode: hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan requested audit mode, leave macro count/subwaves/projection/decision proof readable, capture a final screenshot, and verify live chart state.
+15. Record all four chart modes in `chart_prep.chart_mode_checklist`.
+16. Fill `journal.md` and `evidence.json` if a package is requested.
+17. Run `npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json`.
+18. If validation fails, fix the package or downgrade; do not call it complete.
 
 ## Analysis gates
 
@@ -64,8 +66,10 @@ A failed gate blocks trade language.
 Evaluate:
 
 - Highest-degree usable macro count before lower-timeframe counts.
+- Preceding impulse context for every macro ABC/correction claim; no orphan ABC labels.
 - Monthly, Weekly, and Daily visual pivot map verified against TradingView OHLCV before choosing primary or alternate counts.
 - Primary count and meaningful alternate count.
+- Primary-degree subwaves plus secondary/internal subwaves drawn as separate visible native Elliott proof layers.
 - Subwaves inside macro Waves 1, 3, and 5 where visible.
 - Corrective classification for Waves 2 and 4.
 - Ratio model: Model 1, Model 2, or Model 3; start from Model 1 and upgrade only when price proves it.
@@ -103,10 +107,15 @@ Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `rol
 
 Required HEW drawing roles in serious packages:
 
+- `preceding_impulse_context` — the impulse that the macro ABC/correction is correcting; must use `elliott_impulse_wave`.
 - `macro_count`
-- `projection_count`
+- `primary_degree_subwaves`
+- `secondary_degree_subwaves`
+- `projection_count` — conditional forward path; must use `elliott_impulse_wave`.
 
 Use additional roles when applicable: `subwave_count`, `wave_b_ladder`, `zone`, `decision_level`.
+
+`critic_review` must include blocking HEW checks for no orphan ABC, preceding impulse context, primary/secondary subwaves, and conditional forward impulse projection. These checks must be `pass`, not `pass_with_fixes`, before the package can be called complete.
 
 ## Output
 

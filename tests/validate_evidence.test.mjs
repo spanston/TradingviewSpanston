@@ -24,7 +24,7 @@ function baseEvidence(overrides = {}) {
     saved_at: '2026-05-16T08:00:00+02:00',
     symbol: 'TEST:SYMBOL',
     method: 'HEW macro',
-    workflow_version: 'hew_stage_gated_v4',
+    workflow_version: 'hew_stage_gated_v5',
     status: 'watchlist_only',
     stage_gates: [
       { id: 'route_and_layout', status: 'pass', evidence: 'HEW layout loaded.' },
@@ -41,6 +41,9 @@ function baseEvidence(overrides = {}) {
       { id: 'ohlcv_pivots_verified', status: 'pass', evidence: 'pivots verified against OHLCV' },
       { id: 'pivot_conflicts_resolved', status: 'pass', evidence: 'no unresolved pivot conflict' },
       { id: 'chart_modes_recorded', status: 'pass', evidence: 'extraction, verification, strategy-proof, and presentation modes recorded' },
+      { id: 'preceding_impulse_context_shown', status: 'pass', evidence: 'preceding impulse drawn with native Elliott impulse tool before ABC context' },
+      { id: 'primary_secondary_subwaves_drawn', status: 'pass', evidence: 'primary and secondary subwaves drawn with native Elliott tools' },
+      { id: 'forward_impulse_projection_drawn', status: 'pass', evidence: 'conditional forward impulse projection drawn with Elliott impulse tool' },
       { id: 'macro_count_subwaves_ratio_aligned', status: 'pass', evidence: 'macro and subwaves drawn with native Elliott tools' },
       { id: 'projection_forward_margin_next_count', status: 'pass', evidence: 'projection path drawn with Elliott tool' },
       { id: 'wave_b_ladder_chart_proof', status: 'pass', evidence: 'ladder screenshot present' },
@@ -59,8 +62,11 @@ function baseEvidence(overrides = {}) {
         { mode: 'presentation', status: 'pass', evidence: 'Pivot scaffold hidden; final readable decision chart verified.', pivot_scaffold_visible: false, final_chart_state: 'macro count, projection, invalidation, and zones visible' }
       ],
       drawing_manifest: [
-        { id: 'macro', role: 'macro_count', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
-        { id: 'projection', role: 'projection_count', tool: 'elliott_correction', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' }
+        { id: 'preceding_impulse', role: 'preceding_impulse_context', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
+        { id: 'macro', role: 'macro_count', tool: 'elliott_correction', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
+        { id: 'primary_subwaves', role: 'primary_degree_subwaves', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
+        { id: 'secondary_subwaves', role: 'secondary_degree_subwaves', tool: 'elliott_impulse_wave', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' },
+        { id: 'projection', role: 'projection_count', tool: 'elliott_impulse_wave', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' }
       ]
     },
     screenshots: [
@@ -94,6 +100,29 @@ function baseEvidence(overrides = {}) {
         }
       ],
       conflicts: []
+    },
+    hew_structure_context: {
+      preceding_impulse_context: {
+        status: 'pass',
+        drawing_id: 'preceding_impulse',
+        evidence: 'The impulse leading into the macro correction is shown before the ABC context.'
+      },
+      primary_degree_subwaves: {
+        status: 'pass',
+        drawing_id: 'primary_subwaves',
+        evidence: 'Primary-degree subwaves are drawn with native Elliott tooling.'
+      },
+      secondary_degree_subwaves: {
+        status: 'pass',
+        drawing_id: 'secondary_subwaves',
+        evidence: 'Secondary/internal subwaves are drawn with native Elliott tooling.'
+      },
+      forward_impulse_projection: {
+        status: 'pass',
+        drawing_id: 'projection',
+        conditionality: 'conditional projection, not fact',
+        evidence: 'A conditional forward impulse projection is shown after the completed impulse/correction structure.'
+      }
     },
     primary_count: { status: 'candidate', summary: 'Macro count attempted.' },
     alternate_counts: [{ id: 'alt1', activation: 'level', invalidation: 'level', implication: 'stand aside' }],
@@ -135,6 +164,10 @@ function baseEvidence(overrides = {}) {
         { id: 'no_day_trading_leak', status: 'pass', evidence: 'no intraday' },
         { id: 'chart_evidence_aligned', status: 'pass', evidence: 'screenshots match' },
         { id: 'final_chart_readability_checked', status: 'pass', evidence: 'presentation chart hides extraction scaffold and keeps decision proof visible' },
+        { id: 'hew_no_orphan_abc_checked', status: 'pass', evidence: 'ABC context was checked against the preceding impulse drawing.' },
+        { id: 'hew_preceding_impulse_context_checked', status: 'pass', evidence: 'The preceding impulse context drawing is present and referenced by structure context.' },
+        { id: 'hew_primary_secondary_subwaves_checked', status: 'pass', evidence: 'Both primary and secondary subwave drawing roles are present and referenced.' },
+        { id: 'hew_forward_impulse_projection_checked', status: 'pass', evidence: 'The forward projection is an Elliott impulse drawing and marked conditional.' },
         { id: 'unresolved_items_disclosed', status: 'pass', evidence: 'limitations disclosed' }
       ],
       findings: []
@@ -185,7 +218,7 @@ test('mandatory stage gates fail closed when a gate is failed or partial', () =>
 
 test('workflow_version must match the strategy manifest contract version', () => {
   const result = validateEvidenceFile(writeEvidence(baseEvidence({ workflow_version: 'old_or_wrong_contract' })));
-  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_stage_gated_v4/i);
+  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_stage_gated_v5/i);
 });
 
 test('presentation mode fails closed when extraction scaffolding remains visible', () => {
@@ -204,6 +237,43 @@ test('visual pivot evidence is mandatory before strategy analysis', () => {
   delete evidence.visual_pivot_evidence;
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.match(result.errors.join('\n'), /missing top-level field: visual_pivot_evidence/i);
+});
+
+test('HEW manifest hard-codes preceding impulse, dual-degree subwaves, forward impulse projection, and critic checks', () => {
+  const manifest = JSON.parse(readFileSync(join('strategies', 'hew', 'manifest.json'), 'utf8'));
+  assert.ok(manifest.required_top_level.includes('hew_structure_context'));
+  for (const role of ['preceding_impulse_context', 'primary_degree_subwaves', 'secondary_degree_subwaves', 'projection_count']) {
+    assert.ok(manifest.drawing_protocol.required_roles.includes(role), `missing HEW drawing role ${role}`);
+  }
+  assert.deepEqual(manifest.drawing_protocol.allowed_tools_by_role.preceding_impulse_context, ['elliott_impulse_wave']);
+  assert.deepEqual(manifest.drawing_protocol.allowed_tools_by_role.projection_count, ['elliott_impulse_wave']);
+  for (const id of ['hew_no_orphan_abc_checked', 'hew_preceding_impulse_context_checked', 'hew_primary_secondary_subwaves_checked', 'hew_forward_impulse_projection_checked']) {
+    assert.ok(manifest.critic_review.required_checklist_ids.includes(id), `missing critic check ${id}`);
+    assert.ok(manifest.critic_review.blocking_checklist_ids.includes(id), `critic check must block ${id}`);
+  }
+});
+
+test('HEW structure context fails closed without preceding impulse evidence', () => {
+  const evidence = baseEvidence();
+  delete evidence.hew_structure_context.preceding_impulse_context;
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /hew_structure_context\.preceding_impulse_context is required/i);
+});
+
+test('HEW forward projection must be an Elliott impulse drawing and marked conditional', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.drawing_manifest.find((drawing) => drawing.id === 'projection').tool = 'elliott_correction';
+  evidence.hew_structure_context.forward_impulse_projection.conditionality = 'future path';
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /drawing_manifest\.projection must use one of elliott_impulse_wave/i);
+  assert.match(result.errors.join('\n'), /forward_impulse_projection must label the forward path as conditional/i);
+});
+
+test('HEW critic phase blocks if structural proof checks are not pass', () => {
+  const evidence = baseEvidence();
+  evidence.critic_review.checklist.find((item) => item.id === 'hew_forward_impulse_projection_checked').status = 'pass_with_fixes';
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /hew_forward_impulse_projection_checked is blocking and must be pass/i);
 });
 
 test('HEW count/projection drawings cannot use trend_line substitutes', () => {
@@ -225,7 +295,7 @@ test('drawing manifest screenshots must be listed in screenshots evidence', () =
   const evidence = baseEvidence();
   evidence.chart_prep.drawing_manifest[0].screenshot = 'screenshots/not-listed.png';
   const result = validateEvidenceFile(writeEvidence(evidence));
-  assert.match(result.errors.join('\n'), /drawing_manifest\.macro screenshot not listed in screenshots/i);
+  assert.match(result.errors.join('\n'), /drawing_manifest\.preceding_impulse screenshot not listed in screenshots/i);
 });
 
 test('duplicate checklist IDs fail closed', () => {

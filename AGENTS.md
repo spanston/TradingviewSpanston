@@ -65,6 +65,8 @@ Every serious report must record and pass these gates in `evidence.json.stage_ga
 7. `action_output`
 8. `critic_review`
 
+HEW packages also hard-code the structural proof inside the phase/evidence contract: `hew_structure_context` must reference drawings for preceding impulse context, primary-degree subwaves, secondary/internal subwaves, and the conditional forward impulse projection. The `critic_review` gate must explicitly check those items; if any HEW structural critic check is not `pass`, the package fails.
+
 If a gate cannot pass, stop or downgrade. Do not keep producing confident trade language after a failed gate.
 
 ## Chart mode protocol
@@ -156,17 +158,22 @@ HEW outputs must include:
 
 - Primary and alternate count.
 - Macro-first count before micro-counts.
+- Preceding impulse context for any macro ABC/correction claim; an ABC that does not answer “correcting what?” fails chart proof.
+- Primary-degree subwaves and secondary/internal subwaves drawn as separate visible evidence layers when evidence permits.
 - Subwave evidence inside macro waves where visible.
 - Ratio validation and rule validation.
 - Wave-B invalidation ladder with chart proof.
 - Castaway model before trade language.
 - Accumulation/distribution zone probabilities.
+- Conditional forward impulse projection after any completed 1-5 + ABC structure; label projection as scenario, not fact.
 - Projection map tied to the highest-probability next count.
 - Hard invalidation, flip level, target path, and stand-aside condition.
 
 HEW drawing grammar is strict:
 
 - Macro counts, subwaves, and projected Elliott paths must use TradingView Elliott tools: `elliott_impulse_wave`, `elliott_correction`, `elliott_triangle_wave`, `elliott_double_combo`, or `elliott_triple_combo`.
+- Preceding impulse context and forward impulse projections must use `elliott_impulse_wave`.
+- Primary-degree subwaves and secondary/internal subwaves must be represented as their own native Elliott drawing roles, not only text labels.
 - `trend_line`, generic line drawings, and horizontal-line substitutes are forbidden for HEW count legs, subwave legs, and projected count legs.
 - `horizontal_line` is allowed for ladder levels, hard invalidation, flip levels, and target boundaries only.
 - `rectangle` is allowed for retracement, target, invalidation, accumulation, and distribution zones.

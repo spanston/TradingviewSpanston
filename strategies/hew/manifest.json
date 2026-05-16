@@ -1,7 +1,7 @@
 {
   "strategy_id": "hew",
   "display_name": "Harmonic Elliott Wave",
-  "contract_version": "hew_stage_gated_v4",
+  "contract_version": "hew_stage_gated_v5",
   "required_top_level": [
     "journal_id",
     "saved_at",
@@ -14,6 +14,7 @@
     "chart_prep",
     "screenshots",
     "visual_pivot_evidence",
+    "hew_structure_context",
     "primary_count",
     "alternate_counts",
     "ratio_validation",
@@ -48,6 +49,9 @@
         "ohlcv_pivots_verified",
         "pivot_conflicts_resolved",
         "chart_modes_recorded",
+        "preceding_impulse_context_shown",
+        "primary_secondary_subwaves_drawn",
+        "forward_impulse_projection_drawn",
         "macro_count_subwaves_ratio_aligned",
         "projection_forward_margin_next_count",
         "wave_b_ladder_chart_proof",
@@ -59,48 +63,167 @@
     },
     {
       "path": "no_trade_gate",
-      "required_ids": ["location", "trigger", "invalidation", "reward", "timeframe_alignment"],
+      "required_ids": [
+        "location",
+        "trigger",
+        "invalidation",
+        "reward",
+        "timeframe_alignment"
+      ],
       "allowed_statuses": "gate_statuses"
     }
   ],
-  "required_screenshot_roles": ["visual_pivots", "macro_structure", "trade_posture"],
+  "required_screenshot_roles": [
+    "visual_pivots",
+    "macro_structure",
+    "trade_posture"
+  ],
   "visual_pivot_protocol": {
-    "required_timeframes": ["monthly", "weekly", "daily"],
-    "allowed_timeframes": ["monthly", "weekly", "daily", "4h", "1h"],
-    "allowed_pivot_types": ["high", "low", "swing_high", "swing_low", "support", "resistance", "wave_pivot", "invalidation_pivot"],
-    "allowed_verification_statuses": ["pass", "pass_with_fallback"]
+    "required_timeframes": [
+      "monthly",
+      "weekly",
+      "daily"
+    ],
+    "allowed_timeframes": [
+      "monthly",
+      "weekly",
+      "daily",
+      "4h",
+      "1h"
+    ],
+    "allowed_pivot_types": [
+      "high",
+      "low",
+      "swing_high",
+      "swing_low",
+      "support",
+      "resistance",
+      "wave_pivot",
+      "invalidation_pivot"
+    ],
+    "allowed_verification_statuses": [
+      "pass",
+      "pass_with_fallback"
+    ]
   },
   "chart_mode_protocol": {
     "path": "chart_prep.chart_mode_checklist",
-    "required_modes": ["extraction", "verification", "strategy_proof", "presentation"],
+    "required_modes": [
+      "extraction",
+      "verification",
+      "strategy_proof",
+      "presentation"
+    ],
     "allowed_statuses": "chart_mode_statuses",
     "mode_contract": {
       "extraction": "Show pivot/scanner scaffolding, capture visual_pivots, and record source text before strategy interpretation.",
       "verification": "Cross-check extracted pivots against TradingView OHLCV and resolve or disclose conflicts before counting.",
-      "strategy_proof": "Hide or reduce extraction clutter, then draw only HEW count/projection/decision proof that passes the strategy rules.",
-      "presentation": "Leave the live chart readable: extraction scaffolding hidden, decision proof visible, final state verified, and no screenshot-only proof."
+      "strategy_proof": "Hide or reduce extraction clutter, then draw HEW proof with native Elliott tools: preceding impulse context, macro count/correction, primary-degree subwaves, secondary-degree subwaves, and conditional forward impulse projection.",
+      "presentation": "Leave the live chart readable: extraction scaffolding hidden, preceding impulse/macro count/subwaves/projection/decision proof visible where not cluttered, final state verified, and no screenshot-only proof.",
+      "top_down_hew_context": "For HEW, before accepting an ABC macro correction, identify the preceding impulse it corrects; an orphan ABC fails actionability."
     }
   },
   "drawing_protocol": {
     "path": "chart_prep.drawing_manifest",
-    "required_roles": ["macro_count", "projection_count"],
+    "required_roles": [
+      "macro_count",
+      "projection_count",
+      "preceding_impulse_context",
+      "primary_degree_subwaves",
+      "secondary_degree_subwaves"
+    ],
     "allowed_tools_by_role": {
-      "macro_count": ["elliott_impulse_wave", "elliott_correction", "elliott_triangle_wave", "elliott_double_combo", "elliott_triple_combo"],
-      "subwave_count": ["elliott_impulse_wave", "elliott_correction", "elliott_triangle_wave", "elliott_double_combo", "elliott_triple_combo"],
-      "projection_count": ["elliott_impulse_wave", "elliott_correction", "elliott_triangle_wave", "elliott_double_combo", "elliott_triple_combo"],
-      "wave_b_ladder": ["horizontal_line", "text", "rectangle"],
-      "zone": ["rectangle", "text"],
-      "decision_level": ["horizontal_line", "text"]
+      "macro_count": [
+        "elliott_impulse_wave",
+        "elliott_correction",
+        "elliott_triangle_wave",
+        "elliott_double_combo",
+        "elliott_triple_combo"
+      ],
+      "subwave_count": [
+        "elliott_impulse_wave",
+        "elliott_correction",
+        "elliott_triangle_wave",
+        "elliott_double_combo",
+        "elliott_triple_combo"
+      ],
+      "projection_count": [
+        "elliott_impulse_wave"
+      ],
+      "wave_b_ladder": [
+        "horizontal_line",
+        "text",
+        "rectangle"
+      ],
+      "zone": [
+        "rectangle",
+        "text"
+      ],
+      "decision_level": [
+        "horizontal_line",
+        "text"
+      ],
+      "preceding_impulse_context": [
+        "elliott_impulse_wave"
+      ],
+      "primary_degree_subwaves": [
+        "elliott_impulse_wave",
+        "elliott_correction",
+        "elliott_triangle_wave",
+        "elliott_double_combo",
+        "elliott_triple_combo"
+      ],
+      "secondary_degree_subwaves": [
+        "elliott_impulse_wave",
+        "elliott_correction",
+        "elliott_triangle_wave",
+        "elliott_double_combo",
+        "elliott_triple_combo"
+      ]
     },
     "forbidden_tools_by_role": {
-      "macro_count": ["trend_line", "horizontal_line", "vertical_line"],
-      "subwave_count": ["trend_line", "horizontal_line", "vertical_line"],
-      "projection_count": ["trend_line", "horizontal_line", "vertical_line"]
+      "macro_count": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ],
+      "subwave_count": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ],
+      "projection_count": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ],
+      "preceding_impulse_context": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ],
+      "primary_degree_subwaves": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ],
+      "secondary_degree_subwaves": [
+        "trend_line",
+        "horizontal_line",
+        "vertical_line"
+      ]
     }
   },
   "zone_probabilities": {
-    "required_zone_types": ["accumulation", "distribution"],
-    "allowed_zone_types": ["accumulation", "distribution", "no_trade"]
+    "required_zone_types": [
+      "accumulation",
+      "distribution"
+    ],
+    "allowed_zone_types": [
+      "accumulation",
+      "distribution",
+      "no_trade"
+    ]
   },
   "action_rationale_fields": [
     "selected_action",
@@ -111,9 +234,20 @@
     "human_takeaway"
   ],
   "critic_review": {
-    "allowed_final_verdicts": ["pass", "pass_with_fixes"],
-    "allowed_max_detail_timeframes": ["daily", "weekly", "monthly"],
-    "allowed_checklist_statuses": ["pass", "pass_with_fixes", "not_applicable"],
+    "allowed_final_verdicts": [
+      "pass",
+      "pass_with_fixes"
+    ],
+    "allowed_max_detail_timeframes": [
+      "daily",
+      "weekly",
+      "monthly"
+    ],
+    "allowed_checklist_statuses": [
+      "pass",
+      "pass_with_fixes",
+      "not_applicable"
+    ],
     "required_checklist_ids": [
       "deliverables_complete",
       "evidence_accuracy_checked",
@@ -124,14 +258,75 @@
       "no_day_trading_leak",
       "chart_evidence_aligned",
       "final_chart_readability_checked",
+      "hew_no_orphan_abc_checked",
+      "hew_preceding_impulse_context_checked",
+      "hew_primary_secondary_subwaves_checked",
+      "hew_forward_impulse_projection_checked",
       "unresolved_items_disclosed"
+    ],
+    "blocking_checklist_ids": [
+      "hew_no_orphan_abc_checked",
+      "hew_preceding_impulse_context_checked",
+      "hew_primary_secondary_subwaves_checked",
+      "hew_forward_impulse_projection_checked"
     ]
   },
   "allowed": {
-    "chart_mode_statuses": ["pass", "pass_with_fallback"],
-    "checklist_statuses": ["pass", "pass_with_fallback", "not_applicable"],
-    "stage_gate_statuses": ["pass", "pass_with_fallback", "not_applicable"],
-    "pivot_verification_statuses": ["pass", "pass_with_fallback"],
-    "gate_statuses": ["pass", "pass_with_fallback", "partial", "fail", "not_applicable", "not_requested"]
+    "chart_mode_statuses": [
+      "pass",
+      "pass_with_fallback"
+    ],
+    "checklist_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "not_applicable"
+    ],
+    "stage_gate_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "not_applicable"
+    ],
+    "pivot_verification_statuses": [
+      "pass",
+      "pass_with_fallback"
+    ],
+    "gate_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "partial",
+      "fail",
+      "not_applicable",
+      "not_requested"
+    ]
+  },
+  "hew_structure_context_protocol": {
+    "path": "hew_structure_context",
+    "allowed_statuses": [
+      "pass",
+      "pass_with_fallback"
+    ],
+    "required_items": [
+      {
+        "id": "preceding_impulse_context",
+        "required_drawing_role": "preceding_impulse_context",
+        "description": "The impulse that produced the macro ABC/correction is drawn or the package fails."
+      },
+      {
+        "id": "primary_degree_subwaves",
+        "required_drawing_role": "primary_degree_subwaves",
+        "description": "Primary-degree subwaves are visible with native Elliott tools."
+      },
+      {
+        "id": "secondary_degree_subwaves",
+        "required_drawing_role": "secondary_degree_subwaves",
+        "description": "Secondary/internal subwaves are visible with native Elliott tools."
+      },
+      {
+        "id": "forward_impulse_projection",
+        "required_drawing_role": "projection_count",
+        "requires_conditionality": true,
+        "description": "Completed 1-5 + ABC maps include a conditional forward impulse projection, not a factual prediction."
+      }
+    ]
   }
 }

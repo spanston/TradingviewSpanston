@@ -39,6 +39,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Use TradingView MCP as the chart source.
    - No web/news/fundamental source unless explicitly requested.
    - Read Monthly -> Weekly -> Daily by default. Macro review must always start on Monthly, then Weekly, for both Wyckoff and HEW.
+   - HEW-specific: before calling a macro leg an ABC/correction, identify the preceding impulse it corrects. An orphan ABC fails the phase because it does not answer “correcting what?”
    - Use compact reads first: quote, OHLCV summary, study values, focused Pine reads.
    - Fit/verify visible range before interpreting or drawing.
 
@@ -46,6 +47,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Inventory drawings after symbol/layout setup; remove or hide only drawings classified as stale clutter.
    - Preserve current proof and uncertain drawings unless Johan explicitly requested a reset. Treat `draw_clear` as destructive, not routine cleanup.
    - In strategy-proof mode, hide or reduce pivot/scanner clutter when it obscures the structure and draw only the layer being proven.
+   - HEW-specific: draw preceding impulse context, macro count/correction, primary-degree subwaves, secondary/internal subwaves, and conditional forward impulse projection with native Elliott tools. Projection and preceding impulse context must be `elliott_impulse_wave`; trend-line substitutes fail.
    - Record every meaningful drawing in `chart_prep.drawing_manifest` with `id`, `role`, `tool`, `timeframe_owner`, and `screenshot`.
    - If MCP cannot set per-drawing visibility, separate macro and daily proof with temporary screenshot passes only when necessary; immediately rebuild and verify the final presentation chart afterward.
    - In presentation mode, hide extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable decision proof, trigger, invalidation, and target/zone context.
@@ -64,6 +66,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
 8. Critic review
    - Run a final critic before calling a package complete.
    - The critic checks visual-first sequence, evidence accuracy, journal/evidence/screenshot alignment, human actionability, macro focus, risk clarity, disclosed missing evidence, and no day-trading leakage.
+   - HEW critic checks are blocking: no orphan ABC, preceding impulse context present, primary and secondary subwaves present, and forward impulse projection drawn/marked conditional. A `pass_with_fixes` on those items is still a failure until fixed.
    - Record the critic result in `critic_review`.
    - Run the validator.
 
@@ -101,6 +104,8 @@ The validator fails closed on:
 - Missing journal/screenshot alignment.
 - Missing action rationale fields.
 - Missing critic review checklist items.
+- Missing HEW `hew_structure_context` proof for preceding impulse, primary-degree subwaves, secondary/internal subwaves, or conditional forward impulse projection.
+- HEW critic structural checks that are anything other than `pass`.
 - HEW macro/subwave/projection counts drawn with `trend_line` or other generic substitutes.
 
 ## Drawing rules that matter
@@ -115,6 +120,8 @@ Wyckoff:
 HEW:
 
 - Macro counts, subwaves, and projected Elliott paths must use TradingView Elliott tools: `elliott_impulse_wave`, `elliott_correction`, `elliott_triangle_wave`, `elliott_double_combo`, or `elliott_triple_combo`.
+- Preceding impulse context and forward projections must be `elliott_impulse_wave` drawings.
+- Primary-degree and secondary/internal subwaves must each have their own native Elliott drawing role.
 - `trend_line` is forbidden for HEW count legs, subwave legs, and projected count legs.
 - Wave-B ladder gets its own chart-proof layer.
 - Projection maps must show the highest-probability next count path or explicitly document TradingView forward-margin clamp/fallback.
