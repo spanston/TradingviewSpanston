@@ -100,7 +100,7 @@ Institutional-grade analysis is visual-first:
 
 1. Load `HEW layout` and confirm `Konsili Pivot Exporter` is visible.
 2. Extract important pivots from the exporter on Monthly, Weekly, and Daily. Use `study_filter: "Konsili Pivot Exporter"` and read structured `KPE|...` rows from Pine tables or labels; do not infer the first pivot map from raw OHLCV alone.
-3. Capture a `visual_pivots` screenshot and record the exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, date, timestamp, price, source text, and screenshot path in `visual_pivot_evidence`. The pivot date/time/price must match the referenced KPE row.
+3. Capture a `visual_pivots` screenshot and record the exporter metadata, pinned `instrument_class`/`left_bars`/`right_bars`/`max_rows`, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, date, timestamp, price, source text, and screenshot path in `visual_pivot_evidence`. The pivot date/time/price and left/right settings must match the referenced KPE row and the manifest profile.
 4. Retrieve TradingView OHLCV summaries for the same timeframes and verify that each visual pivot matches the relevant high/low/support/resistance evidence.
 5. Only after the visual pivots are verified may the agent apply HEW rules. If verification changes the pivots, repeat the extraction/verification loop and document the revision.
 
@@ -142,6 +142,8 @@ Copsey HEW source rules are the counting authority. Konsili/Castaway is an execu
 HEW outputs must include:
 
 - Primary and alternate count.
+- Three to five hypotheses, with each alternate using a structurally different pivot path from the primary. Do not relabel the same anchors as an alternate.
+- `count_state` lineage so future sessions can tell whether the count is new, continued, revised, or invalidated.
 - Macro-first count before micro-counts.
 - `ian_copsey_wave_map` with Copsey/Fractal Forecasting-selected Elliott anchors, rationale for each anchor, a book-alignment ledger, and a clear boundary that mechanical tools were used only for HEW ratio/rule validation.
 - Preceding impulse context for any macro ABC/correction claim; an ABC that does not answer "correcting what?" fails chart proof.
@@ -151,12 +153,19 @@ HEW outputs must include:
 - Subwave evidence inside macro waves where visible.
 - Ratio validation and rule validation.
 - Wave 3 176.4% projection is the default hard floor. Downgrade or exception is rare and must be documented as an explicit exception only when the broader Copsey structure, neighboring motive engines, ratios, and verified pivots support it; otherwise say `STAND ASIDE`.
+- Wave 5 above the Copsey Wave 5 universe is a hard extended-fifth rejection for completed impulses, not a soft warning.
+- R.N. Elliott rules 2 and 3 are explicit checks: Wave 3 cannot be the shortest motive wave, and Wave 4 cannot overlap Wave 1 territory.
+- Triple-confluence targets must be derived from pivot projections, not raw target numbers.
 - Wave-B invalidation ladder with chart proof.
-- Castaway model before trade language.
+- Structured Castaway decision table before trade language.
 - Copsey retracement, projection, invalidation, and no-trade zone probabilities.
 - Conditional forward impulse projection after any completed 1-5 + ABC structure; label projection as scenario, not fact.
 - Projection map tied to the highest-probability next count.
 - Hard invalidation, flip level, target path, and stand-aside condition.
+- `execution_quality` with screenshot/vision QA, rerun trigger/cadence, and manifest-driven drawing-spec confirmation.
+- If any gate or pivot verification uses `pass_with_fallback`, cap confidence to `low`/`very_low`, disclose the fallback in `confidence.cap_reason`, and avoid `ACTIONABLE` output until the clean pivot path is restored.
+
+Final `critic_review` must include an independent reviewer record. The critic is not just a prose summary; it must verify the clean pivot path, fallback confidence cap, structural proof, and actionability checks required by the manifest.
 
 HEW drawing grammar is strict:
 

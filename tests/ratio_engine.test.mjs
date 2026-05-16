@@ -46,6 +46,11 @@ function primaryHypothesis(overrides = {}) {
         points: { prior_start: 'p0', prior_end: 'p1', retracement_end: 'p2' }
       },
       {
+        id: 'wave4_retracement',
+        type: 'retracement',
+        points: { prior_start: 'p2', prior_end: 'p3', retracement_end: 'p4' }
+      },
+      {
         id: 'alternation',
         type: 'alternation_sum',
         trend_context: 'corrective',
@@ -54,13 +59,28 @@ function primaryHypothesis(overrides = {}) {
       {
         id: 'triple_target',
         type: 'triple_confluence',
-        targets: [200, 202, 201]
+        targets: [
+          { id: 't1', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.4, direction: 'bullish' },
+          { id: 't2', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.48, direction: 'bullish' },
+          { id: 't3', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.44, direction: 'bullish' }
+        ]
       },
       {
         id: 'wave4_b3',
         type: 'wave4_b3_rule',
         direction: 'bullish',
         points: { wave4_extreme: 'p4', b_of_3_extreme: 'b_of_3' }
+      },
+      {
+        id: 'wave3_not_shortest',
+        type: 'wave3_not_shortest_rule',
+        points: { wave1_start: 'p0', wave1_end: 'p1', wave2_end: 'p2', wave3_end: 'p3', wave4_end: 'p4', wave5_end: 'p5' }
+      },
+      {
+        id: 'wave1_wave4_non_overlap',
+        type: 'wave1_wave4_non_overlap_rule',
+        direction: 'bullish',
+        points: { wave1_start: 'p0', wave1_end: 'p1', wave4_extreme: 'p4' }
       }
     ],
     ...overrides
@@ -75,6 +95,8 @@ test('scoreHewHypothesis passes a Copsey-aligned hypothesis with convergent meas
   assert.equal(result.violations.length, 0);
   assert.ok(result.score > 95);
   assert.equal(result.measurements.find((item) => item.id === 'macro_wave3').matched_cluster, '2236_2618');
+  assert.equal(result.measurements.find((item) => item.id === 'macro_wave3').nearest_anchor, 2.427);
+  assert.equal(result.measurements.find((item) => item.id === 'triple_target').derived_targets.length, 3);
 });
 
 test('scoreHewHypothesis rejects classical 127.2 percent C-wave rescue ratios', () => {
@@ -150,16 +172,48 @@ test('scoreHewHypothesis exposes the NVO macro impulse failure when full measure
   });
 
   assert.equal(result.status, 'fail');
-  assert.equal(result.score, 45);
+  assert.equal(result.score, 40);
   assert.equal(result.hard_rule_pass, false);
   assert.deepEqual(result.violations.map((item) => item.id).sort(), [
+    'extended_wave5_rejected_by_copsey',
     'retracement_ratio_not_in_copsey_universe',
-    'retracement_ratio_not_in_copsey_universe',
-    'wave5_ratio_not_in_copsey_universe'
+    'retracement_ratio_not_in_copsey_universe'
   ]);
   assert.equal(result.measurements.find((item) => item.id === 'macro_wave5').actual_ratio, 1.5399);
   assert.equal(result.measurements.find((item) => item.id === 'wave2_retracement').actual_ratio, 0.8855);
   assert.equal(result.measurements.find((item) => item.id === 'wave4_retracement').actual_ratio, 0.2803);
+});
+
+test('scoreHewHypothesis rejects raw triple-confluence targets', () => {
+  const bad = primaryHypothesis({
+    measurements: primaryHypothesis().measurements.map((measurement) => (
+      measurement.id === 'triple_target'
+        ? { ...measurement, targets: [200, 202, 201] }
+        : measurement
+    ))
+  });
+
+  const result = scoreHewHypothesis(bad);
+
+  assert.equal(result.status, 'fail');
+  assert.ok(result.violations.some((item) => item.id === 'triple_confluence_target_not_pivot_derived'));
+});
+
+test('scoreHewHypothesis hard-fails Elliott Wave 3 shortest and Wave 1-4 overlap rules', () => {
+  const bad = primaryHypothesis({
+    pivots: [
+      ...primaryHypothesis().pivots.filter((point) => !['p3', 'p5', 'p4'].includes(point.id)),
+      { id: 'p3', price: 130 },
+      { id: 'p4', price: 124 },
+      { id: 'p5', price: 190 }
+    ]
+  });
+
+  const result = scoreHewHypothesis(bad);
+
+  assert.equal(result.status, 'fail');
+  assert.ok(result.violations.some((item) => item.id === 'wave3_is_shortest'));
+  assert.ok(result.violations.some((item) => item.id === 'wave1_wave4_overlap'));
 });
 
 test('scoreHewHypotheses keeps scoring deterministic across multiple candidates', () => {

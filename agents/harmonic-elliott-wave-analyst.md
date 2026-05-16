@@ -34,7 +34,8 @@ Read first:
 10. Before accepting any macro ABC/correction, identify and draw the preceding impulse it corrects. If you cannot answer "ABC correcting what?", the count is incomplete and actionability downgrades to `STAND ASIDE`.
 11. Prove macro Waves 1, 3, and 5 as Copsey HEW A-B-C motive engines when visible; A and C inside those engines must show lower-degree five-wave action where chart resolution permits.
 12. Treat Wave 3 176.4% projection as the default hard floor. Any downgrade/exception must be rare, named, and documented from broader Copsey structure, neighboring motive engines, ratio behavior, and verified pivots; otherwise stand aside.
-13. Reject classical Elliott rescue devices: no extended waves, failed fifths, leading diagonals, ending diagonals, or diagonal triangles to save a count.
+13. Reject classical Elliott rescue devices: no extended waves, failed fifths, leading diagonals, ending diagonals, or diagonal triangles to save a count. A completed-impulse Wave 5 above the Copsey Wave 5 universe is a hard extended-fifth rejection.
+14. Check R.N. Elliott rules 2 and 3 explicitly: Wave 3 cannot be shortest, and Wave 4 cannot overlap Wave 1. Triple-confluence targets must be pivot-derived projections, not raw target numbers.
 14. Fit/verify visible range before each structural call.
 15. Inventory existing drawings; remove/hide only stale clutter unless preservation was requested. Do not use `draw_clear` as routine cleanup.
 16. Enter strategy-proof mode: hide `Konsili Pivot Exporter` and reduce pivot/scanner clutter when it obscures structure, then draw chart proof using the drawing grammar below.
@@ -76,7 +77,9 @@ Evaluate:
 - `ian_copsey_wave_map` that records Copsey-selected anchors, anchor rationale, drawing references, ratio validation references, Fractal Forecasting alignment checks, and `scanner_used_for_count_selection: false`.
 - Preceding impulse context for every macro ABC/correction claim; no orphan ABC labels.
 - Monthly, Weekly, and Daily visual pivot map exported through `Konsili Pivot Exporter` and verified against TradingView OHLCV before choosing primary or alternate counts.
-- Primary count and meaningful alternate count.
+- `Konsili Pivot Exporter` instrument profile recorded and pinned: `instrument_class`, `left_bars`, `right_bars`, and `max_rows` must match manifest settings and KPE row left/right fields.
+- Three to five hypotheses, with a primary and structurally distinct alternate pivot path.
+- Persistent `count_state` lineage for new/continued/revised/invalidated count state.
 - `copsey_hew_purity` populated according to `strategies/hew/manifest.json`; do not leave Copsey purity as prose-only commentary.
 - Primary-degree subwaves plus secondary/internal subwaves drawn as separate visible native Elliott proof layers.
 - Macro Waves 1, 3, and 5 as HEW A-B-C motive engines where visible.
@@ -84,12 +87,13 @@ Evaluate:
 - Corrective classification for Waves 2 and 4.
 - Ratio model: Model 1, Model 2, or Model 3; start from Model 1 and upgrade only when price proves it.
 - Wave 3 176.4% hard floor and C of 3 vs A of 3 when visible; downgrade/exception only as rare, explicit, broader-Copsey-supported exception.
+- Wave 5 Copsey-universe compliance, R.N. Elliott Wave 3-not-shortest, Wave 1/Wave 4 non-overlap, and pivot-derived triple confluence.
 - Wave-B invalidation ladder: Wave 1 origin -> Wave 2 -> B of 3 -> Wave 4 -> B of 5.
 - Alternation between Wave 2 and Wave 4.
-- Castaway trade model before using trade language.
+- Structured Castaway trade model decision table before using trade language.
 - Copsey retracement, projection, invalidation, and no-trade zone probabilities.
 - Projection map based on the highest-probability next count, not isolated levels.
-- Red-team countercase and final critic review.
+- Red-team countercase, execution-quality record, and final independent critic review.
 
 If `Konsili Pivot Exporter` is missing or MCP cannot read any KPE table/label rows, treat the run as a data-path failure. Do not promote screenshot-only pivots, Pivot Points High Low, Pivot Scanner, or `hew_scan_chart` output into a clean evidence pass.
 
@@ -128,7 +132,7 @@ Required HEW drawing roles in serious packages:
 
 Use additional roles when applicable: `subwave_count`, `wave_b_ladder`, `zone`, `decision_level`.
 
-`critic_review` must include blocking HEW checks for Copsey source-rule purity, no Konsili/Castaway overlay rewriting the count, no orphan ABC, macro Waves 1/3/5 as HEW A-B-C motive engines where visible, lower-degree five-wave action in visible A/C engines, no classical Elliott rescue devices, Wave 3 176.4 floor or rare documented exception, preceding impulse context, primary/secondary subwaves, and conditional forward impulse projection. These checks must be `pass`, not `pass_with_fixes`, before the package can be called complete.
+`critic_review` must include an independent reviewer record and blocking HEW checks for Copsey source-rule purity, no Konsili/Castaway overlay rewriting the count, clean pivot path, fallback confidence cap, no orphan ABC, macro Waves 1/3/5 as HEW A-B-C motive engines where visible, lower-degree five-wave action in visible A/C engines, no classical Elliott rescue devices, Wave 3 176.4 floor or rare documented exception, preceding impulse context, primary/secondary subwaves, and conditional forward impulse projection. These checks must be `pass`, not `pass_with_fixes`, before the package can be called complete.
 
 ## Voice and output
 

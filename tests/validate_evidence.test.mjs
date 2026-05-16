@@ -14,6 +14,14 @@ function kpeRow(tf, id, type, time, price, date) {
   return `KPE|v=2|tf=${tf}|id=${id}|type=${type}|date=${date}|time=${time}|price=${price}|timezone=Etc/UTC|left=5|right=5|confirmed=true`;
 }
 
+function derivedTripleTargets() {
+  return [
+    { id: 't1', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.4, direction: 'bullish' },
+    { id: 't2', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.48, direction: 'bullish' },
+    { id: 't3', points: { start: 'p0', end: 'p1', anchor: 'p4' }, ratio: 2.44, direction: 'bullish' }
+  ];
+}
+
 function baseHypothesis(overrides = {}) {
   const hypothesis = {
     id: 'hypothesis_primary',
@@ -71,13 +79,24 @@ function baseHypothesis(overrides = {}) {
       {
         id: 'triple_target',
         type: 'triple_confluence',
-        targets: [200, 202, 201]
+        targets: derivedTripleTargets()
       },
       {
         id: 'wave4_b3',
         type: 'wave4_b3_rule',
         direction: 'bullish',
         points: { wave4_extreme: 'p4', b_of_3_extreme: 'b_of_3' }
+      },
+      {
+        id: 'wave3_not_shortest',
+        type: 'wave3_not_shortest_rule',
+        points: { wave1_start: 'p0', wave1_end: 'p1', wave2_end: 'p2', wave3_end: 'p3', wave4_end: 'p4', wave5_end: 'p5' }
+      },
+      {
+        id: 'wave1_wave4_non_overlap',
+        type: 'wave1_wave4_non_overlap_rule',
+        direction: 'bullish',
+        points: { wave1_start: 'p0', wave1_end: 'p1', wave4_extreme: 'p4' }
       }
     ],
     ...overrides
@@ -170,7 +189,11 @@ function baseEvidence(overrides = {}) {
         study_filter: 'Konsili Pivot Exporter',
         pine_script: 'tradingview/konsili_pivot_exporter.pine',
         row_prefix: 'KPE',
-        source_tools: ['data_get_pine_tables']
+        source_tools: ['data_get_pine_tables'],
+        instrument_class: 'single_stock',
+        left_bars: 5,
+        right_bars: 5,
+        max_rows: 24
       },
       timeframes: [
         {
@@ -192,7 +215,7 @@ function baseEvidence(overrides = {}) {
           screenshot: 'screenshots/pivots.png',
           exporter_rows: [kpeRow('1D', '1D_1704844800000_H', 'high', 1704844800000, 125, '2024-01-10 00:00')],
           pivots: [{ id: 'd_high', type: 'high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, exporter_row_id: '1D_1704844800000_H', source_text: 'KPE daily pivot high 125' }],
-          ohlcv_verification: [{ pivot_id: 'd_high', status: 'pass_with_fallback', evidence: 'Daily OHLCV summary verified nearest high.' }]
+          ohlcv_verification: [{ pivot_id: 'd_high', status: 'pass', evidence: 'Daily OHLCV summary verified nearest high.' }]
         }
       ],
       conflicts: []
@@ -256,9 +279,34 @@ function baseEvidence(overrides = {}) {
     },
     hypotheses: [
       baseHypothesis(),
-      baseHypothesis({ id: 'hypothesis_alternate', selection_role: 'alternate', structure_type: 'alternate_impulse' }),
+      baseHypothesis({
+        id: 'hypothesis_alternate',
+        selection_role: 'alternate',
+        structure_type: 'alternate_impulse',
+        pivots: [
+          { id: 'p0', price: 100 },
+          { id: 'p1', price: 125 },
+          { id: 'p2', price: 110 },
+          { id: 'p3', price: 170 },
+          { id: 'p4', price: 140 },
+          { id: 'p5', price: 182 },
+          { id: 'a0', price: 190 },
+          { id: 'a1', price: 150 },
+          { id: 'b1', price: 210 },
+          { id: 'c1', price: 145 },
+          { id: 'b_of_3', price: 130 }
+        ]
+      }),
       baseHypothesis({ id: 'hypothesis_watch', selection_role: 'watch', structure_type: 'watch_context' })
     ],
+    count_state: {
+      state_id: 'TEST_2026-05-16_hew_state',
+      anchor_hash: 'abc123def456',
+      continuity_status: 'new',
+      previous_state_ref: 'none',
+      update_reason: 'new validated package',
+      persisted_at: '2026-05-16T08:00:00+02:00'
+    },
     hew_structure_context: {
       preceding_impulse_context: {
         status: 'pass',
@@ -343,7 +391,21 @@ function baseEvidence(overrides = {}) {
       human_takeaway: 'No trade until trigger confirms.'
     },
     trade_posture: { posture: 'STAND ASIDE', trigger: 'none', invalidation: 'defined', target_path: 'conditional' },
-    castaway_trade_model: { model: 'Model 6', permission: 'blocked', source_label: 'Konsili Castaway overlay', is_copsey_source: false, reason: 'stand aside' },
+    castaway_trade_model: {
+      model: 'Model 6',
+      permission: 'blocked',
+      source_label: 'Konsili Castaway overlay',
+      is_copsey_source: false,
+      reason: 'stand aside',
+      decision_table: [
+        { id: 'model', value: 'Model 6', evidence: 'Castaway model classified after Copsey structure.' },
+        { id: 'permission', value: 'blocked', evidence: 'No clean trigger and fallback-free proof still points to stand aside.' },
+        { id: 'trigger', value: 'accept above flip level', evidence: 'Trigger tied to decision drawing.' },
+        { id: 'invalidation', value: 'break hard invalidation', evidence: 'Invalidation level is charted.' },
+        { id: 'target_path', value: 'conditional projection only', evidence: 'Target path follows conditional Elliott projection.' },
+        { id: 'stand_aside_condition', value: 'until trigger confirms', evidence: 'No trade while trigger and timeframe alignment are incomplete.' }
+      ]
+    },
     no_trade_gate: [
       { id: 'location', status: 'fail', evidence: 'mid wave' },
       { id: 'trigger', status: 'fail', evidence: 'not triggered' },
@@ -374,13 +436,27 @@ function baseEvidence(overrides = {}) {
         { id: 'hew_classical_rescue_devices_rejected', status: 'pass', evidence: 'Classical Elliott rescue devices were rejected and unused.' },
         { id: 'hew_castaway_overlay_not_copsey_source', status: 'pass', evidence: 'Castaway is labeled as a Konsili overlay and not a Copsey source.' },
         { id: 'hew_wave3_1764_rule_checked', status: 'pass', evidence: 'Wave 3 176.4% rule passed without exception.' },
+        { id: 'pivot_path_clean', status: 'pass', evidence: 'KPE pivot path is clean with no fallback in the accepted package.' },
+        { id: 'fallback_confidence_cap_checked', status: 'pass', evidence: 'No fallback was used, so confidence was not capped by fallback policy.' },
         { id: 'unresolved_items_disclosed', status: 'pass', evidence: 'limitations disclosed' }
       ],
-      findings: []
+      findings: [],
+      independent_reviewer: {
+        reviewer_type: 'subagent',
+        independent_from_author: true,
+        scope: 'final HEW evidence contract and actionability review',
+        verdict: 'pass',
+        evidence: 'Independent critic pass checked structure, pivots, drawings, and no-trade posture.'
+      }
     },
     review_triggers: [{ condition: 'trigger', expected: 'upgrade', downgrade_if: 'fail' }],
     missing_evidence: [],
     confidence: { rating: 'medium', rationale: 'candidate but gated' },
+    execution_quality: {
+      vision_qa: { status: 'pass', screenshot_reviewed: true, evidence: 'Final screenshot was visually reviewed for readability and alignment.' },
+      rerun_schedule: { status: 'scheduled', trigger: 'price reaches trigger or invalidation', cadence: 'manual_on_trigger_or_weekly_refresh', evidence: 'Rerun conditions are explicit for future sessions.' },
+      drawing_spec: { status: 'pass', source: 'strategies/hew/manifest.json', manifest_roles_checked: true, evidence: 'Drawing roles and allowed tools were checked against manifest.' }
+    },
     ...overrides
   };
 }
@@ -422,9 +498,13 @@ test('HEW manifest requires visual-first pivot gates', () => {
     'wave5_projection',
     'retracement',
     'alternation_sum',
-    'wave4_b3_rule'
+    'wave4_b3_rule',
+    'wave3_not_shortest_rule',
+    'wave1_wave4_non_overlap_rule'
   ]);
   assert.deepEqual(manifest.hypothesis_protocol.wave_iii_complete_required_measurement_types, ['triple_confluence']);
+  assert.equal(manifest.hypothesis_protocol.structural_distinctness.required, true);
+  assert.equal(manifest.visual_pivot_protocol.instrument_parameter_profiles.single_stock.left, 5);
 });
 
 test('HEW hypotheses are recomputed by the deterministic Copsey ratio engine', () => {
@@ -484,7 +564,24 @@ test('HEW completed primary impulse hypotheses require full Copsey measurement c
   const evidence = baseEvidence({
     hypotheses: [
       weakPrimary,
-      baseHypothesis({ id: 'hypothesis_alternate', selection_role: 'alternate', structure_type: 'alternate_impulse' }),
+      baseHypothesis({
+        id: 'hypothesis_alternate',
+        selection_role: 'alternate',
+        structure_type: 'alternate_impulse',
+        pivots: [
+          { id: 'p0', price: 100 },
+          { id: 'p1', price: 125 },
+          { id: 'p2', price: 110 },
+          { id: 'p3', price: 170 },
+          { id: 'p4', price: 140 },
+          { id: 'p5', price: 182 },
+          { id: 'a0', price: 190 },
+          { id: 'a1', price: 150 },
+          { id: 'b1', price: 210 },
+          { id: 'c1', price: 145 },
+          { id: 'b_of_3', price: 130 }
+        ]
+      }),
       baseHypothesis({ id: 'hypothesis_watch', selection_role: 'watch', structure_type: 'watch_context' })
     ]
   });
@@ -495,9 +592,35 @@ test('HEW completed primary impulse hypotheses require full Copsey measurement c
   assert.match(errors, /measurements missing required type: retracement/i);
   assert.match(errors, /measurements missing required type: alternation_sum/i);
   assert.match(errors, /measurements missing required type: wave4_b3_rule/i);
+  assert.match(errors, /measurements missing required type: wave3_not_shortest_rule/i);
+  assert.match(errors, /measurements missing required type: wave1_wave4_non_overlap_rule/i);
   assert.match(errors, /missing required Wave III complete type: triple_confluence/i);
   assert.match(errors, /missing required completed-impulse measurement: retracement:wave2_retracement/i);
   assert.match(errors, /missing required completed-impulse measurement: retracement:wave4_retracement/i);
+});
+
+test('HEW completed impulses hard-reject extended fifth rescue counts', () => {
+  const evidence = baseEvidence();
+  evidence.hypotheses[0] = baseHypothesis({
+    pivots: [
+      ...baseHypothesis().pivots.filter((point) => point.id !== 'p5'),
+      { id: 'p5', price: 250 }
+    ]
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /extended_wave5_rejected_by_copsey/i);
+  assert.match(errors, /primary hypothesis must pass deterministic Copsey ratio engine/i);
+});
+
+test('HEW alternates must be structurally distinct from the primary pivot path', () => {
+  const evidence = baseEvidence();
+  evidence.hypotheses[1] = baseHypothesis({ id: 'hypothesis_alternate', selection_role: 'alternate', structure_type: 'alternate_impulse' });
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+
+  assert.match(result.errors.join('\n'), /hypotheses\.hypothesis_alternate must be structurally distinct from primary hypothesis_primary/i);
 });
 
 test('non-HEW evidence is not routed to a removed strategy manifest', () => {
@@ -639,6 +762,32 @@ test('Konsili Pivot Exporter confirms date, time, type, and price for every acce
   assert.match(errors, /visual_pivot_evidence\.weekly\.pivots\.w_low\.time must match exporter row 1W_1704672000000_L/i);
   assert.match(errors, /visual_pivot_evidence\.daily\.pivots\.d_high\.price must match exporter row 1D_1704844800000_H/i);
   assert.match(errors, /visual_pivot_evidence\.daily\.pivots\.d_high\.type must match exporter row 1D_1704844800000_H/i);
+});
+
+test('Konsili Pivot Exporter parameters are pinned per instrument class', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.exporter.left_bars = 7;
+  evidence.visual_pivot_evidence.timeframes[0].exporter_rows = [
+    kpeRow('1M', '1M_1704067200000_H', 'high', 1704067200000, 150, '2024-01-01 00:00').replace('left=5', 'left=7')
+  ];
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /visual_pivot_evidence\.exporter\.left_bars must match single_stock profile 5: 7/i);
+  assert.match(errors, /visual_pivot_evidence\.monthly\.exporter_rows\.1M_1704067200000_H left must match single_stock profile 5: 7/i);
+});
+
+test('fallback pivot path caps confidence and blocks actionable output', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.timeframes[2].ohlcv_verification[0].status = 'pass_with_fallback';
+  evidence.confidence.rating = 'medium';
+  evidence.action_rationale.selected_action = 'actionable';
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /confidence\.rating must be capped to low or very_low when fallback is used/i);
+  assert.match(errors, /confidence\.cap_reason must disclose fallback usage/i);
+  assert.match(errors, /action_rationale\.selected_action must be non-actionable when fallback is used/i);
 });
 
 test('Ian Copsey wave map is mandatory and keeps scanners out of count selection', () => {
@@ -814,6 +963,48 @@ test('HEW critic phase blocks if structural proof checks are not pass', () => {
   evidence.critic_review.checklist.find((item) => item.id === 'hew_forward_impulse_projection_checked').status = 'pass_with_fixes';
   const result = validateEvidenceFile(writeEvidence(evidence));
   assert.match(result.errors.join('\n'), /hew_forward_impulse_projection_checked is blocking and must be pass/i);
+});
+
+test('HEW critic phase requires an independent reviewer record', () => {
+  const evidence = baseEvidence();
+  delete evidence.critic_review.independent_reviewer;
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+
+  assert.match(result.errors.join('\n'), /critic_review\.independent_reviewer is required/i);
+});
+
+test('persistent count state is required for session continuity', () => {
+  const evidence = baseEvidence();
+  evidence.count_state.anchor_hash = 'short';
+  evidence.count_state.continuity_status = 'unknown';
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /count_state\.continuity_status must be one of new, continued, revised, invalidated/i);
+  assert.match(errors, /count_state\.anchor_hash must be at least 12 characters/i);
+});
+
+test('Castaway output must include a structured decision table', () => {
+  const evidence = baseEvidence();
+  evidence.castaway_trade_model.decision_table = evidence.castaway_trade_model.decision_table.filter((row) => row.id !== 'trigger');
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+
+  assert.match(result.errors.join('\n'), /castaway_trade_model\.decision_table missing required row: trigger/i);
+});
+
+test('execution quality records vision QA, rerun schedule, and drawing spec compliance', () => {
+  const evidence = baseEvidence();
+  evidence.execution_quality.vision_qa.screenshot_reviewed = false;
+  delete evidence.execution_quality.rerun_schedule.trigger;
+  evidence.execution_quality.drawing_spec.manifest_roles_checked = false;
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /execution_quality\.vision_qa\.screenshot_reviewed must be true/i);
+  assert.match(errors, /execution_quality\.rerun_schedule\.trigger is required/i);
+  assert.match(errors, /execution_quality\.drawing_spec\.manifest_roles_checked must be true/i);
 });
 
 test('HEW count/projection drawings cannot use trend_line substitutes', () => {

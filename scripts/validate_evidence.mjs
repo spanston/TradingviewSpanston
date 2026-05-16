@@ -206,6 +206,47 @@ function validateScreenshots(evidence, manifest, file, errors) {
   }
 }
 
+function finiteNumber(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function validatePivotExporterParameterProfile(pivotEvidence, protocol, required, errors) {
+  const profiles = protocol.instrument_parameter_profiles || {};
+  if (!Object.keys(profiles).length) return required;
+
+  const exporter = pivotEvidence.exporter || {};
+  const instrumentClass = String(exporter.instrument_class || '').trim();
+  if (!instrumentClass) {
+    errors.push('visual_pivot_evidence.exporter.instrument_class is required for pinned Konsili Pivot Exporter parameters');
+    return { ...required, parameter_profile: null };
+  }
+
+  const profile = profiles[instrumentClass];
+  if (!profile) {
+    errors.push(`visual_pivot_evidence.exporter.instrument_class must be one of ${Object.keys(profiles).join(', ')}: ${instrumentClass}`);
+    return { ...required, parameter_profile: null };
+  }
+
+  const checks = [
+    ['left_bars', 'left'],
+    ['right_bars', 'right'],
+    ['max_rows', 'max_rows']
+  ];
+  for (const [field, profileField] of checks) {
+    const actual = finiteNumber(exporter[field]);
+    const expected = finiteNumber(profile[profileField]);
+    if (expected == null) continue;
+    if (actual == null) {
+      errors.push(`visual_pivot_evidence.exporter.${field} is required for ${instrumentClass} profile`);
+    } else if (actual !== expected) {
+      errors.push(`visual_pivot_evidence.exporter.${field} must match ${instrumentClass} profile ${expected}: ${actual}`);
+    }
+  }
+
+  return { ...required, parameter_profile: profile, instrument_class: instrumentClass };
+}
+
 function validateRequiredPivotExporter(pivotEvidence, protocol, errors) {
   const required = protocol.required_exporter;
   if (!required) return null;
@@ -243,7 +284,7 @@ function validateRequiredPivotExporter(pivotEvidence, protocol, errors) {
     errors.push(`visual_pivot_evidence.study_filter must be ${expectedStudyFilter}: ${pivotEvidence.study_filter}`);
   }
 
-  return required;
+  return validatePivotExporterParameterProfile(pivotEvidence, protocol, required, errors);
 }
 
 function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, errors) {
@@ -266,6 +307,18 @@ function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, e
   const matchingRows = parsed.pivots.filter((pivot) => pivot.timeframe === timeframe);
   if (!matchingRows.length) {
     errors.push(`${itemPath}.exporter_rows must include at least one ${timeframe} KPE row`);
+  }
+
+  const profile = requiredExporter.parameter_profile;
+  if (profile) {
+    for (const row of parsed.pivots) {
+      if (finiteNumber(profile.left) != null && row.left !== finiteNumber(profile.left)) {
+        errors.push(`${itemPath}.exporter_rows.${row.id} left must match ${requiredExporter.instrument_class} profile ${profile.left}: ${row.left}`);
+      }
+      if (finiteNumber(profile.right) != null && row.right !== finiteNumber(profile.right)) {
+        errors.push(`${itemPath}.exporter_rows.${row.id} right must match ${requiredExporter.instrument_class} profile ${profile.right}: ${row.right}`);
+      }
+    }
   }
 
   return rowsById;
@@ -486,6 +539,37 @@ function validateIanCopseyWaveMap(evidence, manifest, errors) {
   }
 }
 
+function pivotSignature(hypothesis) {
+  return asArray(hypothesis?.pivots).map((pivot) => {
+    if (!pivot || typeof pivot !== 'object') return '<invalid>';
+    const price = typeof pivot.price === 'number' && Number.isFinite(pivot.price) ? pivot.price.toFixed(6) : '<no-price>';
+    return `${pivot.id || '<no-id>'}:${price}`;
+  }).join('|');
+}
+
+function validateHypothesisDistinctness(hypotheses, path, protocol, errors) {
+  const distinctness = protocol.structural_distinctness || {};
+  if (distinctness.required !== true) return;
+
+  const primaryRoles = new Set(distinctness.primary_roles || ['primary']);
+  const alternateRoles = new Set(distinctness.alternate_roles || ['alternate']);
+  const primaries = hypotheses.filter((hypothesis) => primaryRoles.has(normalizedToken(hypothesis?.selection_role)));
+  const alternates = hypotheses.filter((hypothesis) => alternateRoles.has(normalizedToken(hypothesis?.selection_role)));
+
+  if (!primaries.length) errors.push(`${path} must include a primary hypothesis for structural distinctness checks`);
+  if (!alternates.length) errors.push(`${path} must include at least one alternate hypothesis for structural distinctness checks`);
+
+  for (const primary of primaries) {
+    const primarySignature = pivotSignature(primary);
+    for (const alternate of alternates) {
+      const alternateSignature = pivotSignature(alternate);
+      if (primarySignature && primarySignature === alternateSignature) {
+        errors.push(`${path}.${alternate.id || '<unknown>'} must be structurally distinct from primary ${primary.id || '<unknown>'}; pivot path is identical`);
+      }
+    }
+  }
+}
+
 function validateHypotheses(evidence, manifest, errors) {
   const protocol = manifest.hypothesis_protocol;
   if (!protocol) return;
@@ -622,6 +706,8 @@ function validateHypotheses(evidence, manifest, errors) {
       errors.push(`${hypothesisPath} primary hypothesis must pass deterministic Copsey ratio engine before selection: ${expectedViolationIds.join(', ') || computed.status}`);
     }
   }
+
+  validateHypothesisDistinctness(hypotheses, path, protocol, errors);
 }
 
 function validateChartModeProtocol(evidence, manifest, errors) {
@@ -1063,6 +1149,126 @@ function validateActionRationale(evidence, manifest, errors) {
   }
 }
 
+function validateCountState(evidence, manifest, errors) {
+  const protocol = manifest.count_state_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'count_state';
+  const state = getByPath(evidence, path);
+  if (!state || typeof state !== 'object' || Array.isArray(state)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  for (const field of protocol.required_fields || []) {
+    if (!String(state[field] || '').trim()) errors.push(`${path}.${field} is required`);
+  }
+  const allowedStatuses = new Set(protocol.allowed_continuity_statuses || []);
+  if (allowedStatuses.size && !allowedStatuses.has(String(state.continuity_status || '').toLowerCase())) {
+    errors.push(`${path}.continuity_status must be one of ${[...allowedStatuses].join(', ')}: ${state.continuity_status}`);
+  }
+  const minHashLength = Number(protocol.anchor_hash_min_length || 0);
+  if (minHashLength && String(state.anchor_hash || '').length < minHashLength) {
+    errors.push(`${path}.anchor_hash must be at least ${minHashLength} characters`);
+  }
+}
+
+function validateCastawayTradeModelContract(evidence, manifest, errors) {
+  const protocol = manifest.castaway_trade_model_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'castaway_trade_model';
+  const model = getByPath(evidence, path);
+  if (!model || typeof model !== 'object' || Array.isArray(model)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  const table = model.decision_table;
+  if (!Array.isArray(table)) {
+    errors.push(`${path}.decision_table must be an array`);
+    return;
+  }
+  const rows = indexById(table, `${path}.decision_table`, errors);
+  for (const rowId of protocol.required_decision_rows || []) {
+    const row = rows.get(rowId);
+    if (!row) {
+      errors.push(`${path}.decision_table missing required row: ${rowId}`);
+      continue;
+    }
+    for (const field of protocol.required_row_fields || []) {
+      if (!String(row[field] || '').trim()) errors.push(`${path}.decision_table.${rowId}.${field} is required`);
+    }
+  }
+}
+
+function validateExecutionQuality(evidence, manifest, errors) {
+  const protocol = manifest.execution_quality_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'execution_quality';
+  const quality = getByPath(evidence, path);
+  if (!quality || typeof quality !== 'object' || Array.isArray(quality)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  const allowedStatuses = new Set(protocol.allowed_statuses || ['pass', 'scheduled', 'not_required']);
+  for (const item of protocol.required_items || []) {
+    const id = item.id;
+    const section = quality[id];
+    if (!section || typeof section !== 'object' || Array.isArray(section)) {
+      errors.push(`${path}.${id} is required`);
+      continue;
+    }
+    const status = String(section.status || '').toLowerCase();
+    if (!allowedStatuses.has(status)) errors.push(`${path}.${id}.status must be one of ${[...allowedStatuses].join(', ')}: ${section.status}`);
+    for (const field of item.required_fields || []) {
+      if (!String(section[field] || '').trim()) errors.push(`${path}.${id}.${field} is required`);
+    }
+    for (const field of item.required_true_fields || []) {
+      if (section[field] !== true) errors.push(`${path}.${id}.${field} must be true`);
+    }
+  }
+}
+
+function collectFallbackPaths(value, path = '', results = []) {
+  if (!value || typeof value !== 'object') return results;
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectFallbackPaths(item, `${path}[${index}]`, results));
+    return results;
+  }
+  if (String(value.status || '').toLowerCase() === 'pass_with_fallback') results.push(path || '<root>');
+  for (const [key, child] of Object.entries(value)) {
+    if (child && typeof child === 'object') collectFallbackPaths(child, path ? `${path}.${key}` : key, results);
+  }
+  return results;
+}
+
+function validateFallbackPolicy(evidence, manifest, errors) {
+  const policy = manifest.fallback_policy;
+  if (!policy) return;
+
+  const fallbackPaths = collectFallbackPaths(evidence);
+  if (!fallbackPaths.length) return;
+
+  const confidence = evidence.confidence;
+  const allowedRatings = new Set(policy.allowed_confidence_ratings || ['low', 'very_low']);
+  const rating = String(confidence?.rating || '').toLowerCase();
+  if (!allowedRatings.has(rating)) {
+    errors.push(`confidence.rating must be capped to ${[...allowedRatings].join(' or ')} when fallback is used: ${confidence?.rating || '<missing>'}`);
+  }
+  if (!String(confidence?.cap_reason || '').toLowerCase().includes('fallback')) {
+    errors.push('confidence.cap_reason must disclose fallback usage');
+  }
+
+  const allowedActions = new Set((policy.allowed_actions || []).map((action) => normalizedToken(action)));
+  const action = normalizedToken(evidence.action_rationale?.selected_action || evidence.trade_posture?.posture);
+  if (allowedActions.size && !allowedActions.has(action)) {
+    errors.push(`action_rationale.selected_action must be non-actionable when fallback is used: ${evidence.action_rationale?.selected_action || evidence.trade_posture?.posture || '<missing>'}`);
+  }
+}
+
 function validateZoneProbabilities(evidence, manifest, errors) {
   if (!manifest.zone_probabilities) return;
   const zones = evidence.zone_probabilities;
@@ -1141,6 +1347,23 @@ function validateCriticReview(evidence, manifest, errors) {
       errors.push(`critic_review unresolved ${severity} finding: ${finding.id || '<unknown>'}`);
     }
   }
+
+  const independentConfig = manifest.critic_review?.independent_reviewer || {};
+  if (independentConfig.required) {
+    const reviewer = critic.independent_reviewer;
+    if (!reviewer || typeof reviewer !== 'object' || Array.isArray(reviewer)) {
+      errors.push('critic_review.independent_reviewer is required');
+    } else {
+      if (reviewer.independent_from_author !== true) errors.push('critic_review.independent_reviewer.independent_from_author must be true');
+      const allowedTypes = new Set(independentConfig.allowed_reviewer_types || []);
+      if (allowedTypes.size && !allowedTypes.has(String(reviewer.reviewer_type || '').toLowerCase())) {
+        errors.push(`critic_review.independent_reviewer.reviewer_type must be one of ${[...allowedTypes].join(', ')}: ${reviewer.reviewer_type}`);
+      }
+      for (const field of independentConfig.required_fields || []) {
+        if (!String(reviewer[field] || '').trim()) errors.push(`critic_review.independent_reviewer.${field} is required`);
+      }
+    }
+  }
 }
 
 function validateJournalAlignment(evidence, file, errors, warnings) {
@@ -1179,10 +1402,14 @@ export function validateEvidenceFile(file, options = {}) {
   validateVisualPivotEvidence(evidence, manifest, errors);
   validateIanCopseyWaveMap(evidence, manifest, errors);
   validateHypotheses(evidence, manifest, errors);
+  validateCountState(evidence, manifest, errors);
   validateChartModeProtocol(evidence, manifest, errors);
   validateDrawingManifest(evidence, manifest, errors);
   validateHewStructureContext(evidence, manifest, errors);
   validateHewCopseyPurity(evidence, manifest, errors);
+  validateCastawayTradeModelContract(evidence, manifest, errors);
+  validateExecutionQuality(evidence, manifest, errors);
+  validateFallbackPolicy(evidence, manifest, errors);
   validateZoneProbabilities(evidence, manifest, errors);
   validateActionRationale(evidence, manifest, errors);
   validateCriticReview(evidence, manifest, errors);

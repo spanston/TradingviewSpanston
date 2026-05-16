@@ -16,6 +16,7 @@
     "visual_pivot_evidence",
     "ian_copsey_wave_map",
     "hypotheses",
+    "count_state",
     "hew_structure_context",
     "copsey_hew_purity",
     "primary_count",
@@ -32,7 +33,8 @@
     "critic_review",
     "review_triggers",
     "missing_evidence",
-    "confidence"
+    "confidence",
+    "execution_quality"
   ],
   "stage_gates": [
     "route_and_layout",
@@ -111,6 +113,28 @@
         "data_get_pine_labels"
       ],
       "description": "Pivots must be exported as structured KPE rows from the visible Konsili Pivot Exporter table or labels before OHLCV verification. Each accepted pivot must carry date, time, and price copied from its exporter row."
+    },
+    "instrument_parameter_profiles": {
+      "single_stock": {
+        "left": 5,
+        "right": 5,
+        "max_rows": 24
+      },
+      "levered_equity": {
+        "left": 5,
+        "right": 5,
+        "max_rows": 24
+      },
+      "crypto": {
+        "left": 7,
+        "right": 7,
+        "max_rows": 32
+      },
+      "index_or_etf": {
+        "left": 6,
+        "right": 6,
+        "max_rows": 24
+      }
     },
     "required_timeframes": [
       "monthly",
@@ -210,7 +234,9 @@
       "wave5_projection",
       "retracement",
       "alternation_sum",
-      "wave4_b3_rule"
+      "wave4_b3_rule",
+      "wave3_not_shortest_rule",
+      "wave1_wave4_non_overlap_rule"
     ],
     "completed_impulse_structure_types": [
       "completed_primary_impulse",
@@ -237,10 +263,42 @@
       "unsupported_measurement_type",
       "wave3_outside_copsey_clusters",
       "wave_c_ratio_not_in_copsey_universe",
+      "extended_wave5_rejected_by_copsey",
       "retracement_ratio_not_in_copsey_universe",
+      "wave3_is_shortest",
+      "wave1_wave4_overlap",
       "wave4_breaks_b_of_wave3"
     ],
+    "structural_distinctness": {
+      "required": true,
+      "primary_roles": [
+        "primary"
+      ],
+      "alternate_roles": [
+        "alternate"
+      ],
+      "description": "Alternates must use a genuinely different pivot path from the selected primary, not the same anchors with a new label."
+    },
     "description": "Agents propose structured hypotheses; deterministic math scores them. Validation recomputes from saved hypothesis pivots and measurements, never from live market data."
+  },
+  "count_state_protocol": {
+    "path": "count_state",
+    "required_fields": [
+      "state_id",
+      "anchor_hash",
+      "continuity_status",
+      "previous_state_ref",
+      "update_reason",
+      "persisted_at"
+    ],
+    "allowed_continuity_statuses": [
+      "new",
+      "continued",
+      "revised",
+      "invalidated"
+    ],
+    "anchor_hash_min_length": 12,
+    "description": "Every package must record the persistent count-state lineage so future sessions can audit whether the count is new, continued, revised, or invalidated."
   },
   "copsey_ratio_universe": {
     "ratio_unit": "decimal",
@@ -518,6 +576,8 @@
       "hew_classical_rescue_devices_rejected",
       "hew_castaway_overlay_not_copsey_source",
       "hew_wave3_1764_rule_checked",
+      "pivot_path_clean",
+      "fallback_confidence_cap_checked",
       "unresolved_items_disclosed"
     ],
     "blocking_checklist_ids": [
@@ -528,8 +588,92 @@
       "hew_copsey_internal_abc_motive_engines_checked",
       "hew_classical_rescue_devices_rejected",
       "hew_castaway_overlay_not_copsey_source",
-      "hew_wave3_1764_rule_checked"
-    ]
+      "hew_wave3_1764_rule_checked",
+      "pivot_path_clean",
+      "fallback_confidence_cap_checked"
+    ],
+    "independent_reviewer": {
+      "required": true,
+      "allowed_reviewer_types": [
+        "subagent",
+        "external_critic",
+        "independent_pass"
+      ],
+      "required_fields": [
+        "reviewer_type",
+        "scope",
+        "verdict",
+        "evidence"
+      ],
+      "description": "The final critic must be recorded as an independent pass from the authoring analysis path."
+    }
+  },
+  "fallback_policy": {
+    "allowed_confidence_ratings": [
+      "low",
+      "very_low"
+    ],
+    "allowed_actions": [
+      "stand_aside",
+      "watchlist_only",
+      "no_clean_trade"
+    ],
+    "description": "Any pass_with_fallback status caps confidence and forbids actionable output until a clean pivot path is restored."
+  },
+  "castaway_trade_model_protocol": {
+    "path": "castaway_trade_model",
+    "required_decision_rows": [
+      "model",
+      "permission",
+      "trigger",
+      "invalidation",
+      "target_path",
+      "stand_aside_condition"
+    ],
+    "required_row_fields": [
+      "id",
+      "value",
+      "evidence"
+    ],
+    "description": "Castaway output must be a structured decision table, not only prose."
+  },
+  "execution_quality_protocol": {
+    "path": "execution_quality",
+    "allowed_statuses": [
+      "pass",
+      "scheduled",
+      "not_required"
+    ],
+    "required_items": [
+      {
+        "id": "vision_qa",
+        "required_fields": [
+          "evidence"
+        ],
+        "required_true_fields": [
+          "screenshot_reviewed"
+        ]
+      },
+      {
+        "id": "rerun_schedule",
+        "required_fields": [
+          "trigger",
+          "cadence",
+          "evidence"
+        ]
+      },
+      {
+        "id": "drawing_spec",
+        "required_fields": [
+          "source",
+          "evidence"
+        ],
+        "required_true_fields": [
+          "manifest_roles_checked"
+        ]
+      }
+    ],
+    "description": "Packages must record visual QA, rerun conditions, and manifest-driven drawing-spec compliance."
   },
   "allowed": {
     "chart_mode_statuses": [

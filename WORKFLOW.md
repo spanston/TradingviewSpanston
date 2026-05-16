@@ -23,6 +23,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Confirm `Konsili Pivot Exporter` from `tradingview/konsili_pivot_exporter.pine` is visible after layout switch.
    - Use this as scaffolding: the exporter may be noisy here because the purpose is pivot harvest, not final decision display.
    - Extract important pivots visually from exporter output first, using focused Pine reads with `study_filter: "Konsili Pivot Exporter"` and structured `KPE|...` rows from tables or labels.
+   - Use the manifest-pinned exporter profile for the instrument class; record `instrument_class`, `left_bars`, `right_bars`, and `max_rows`, and reject rows whose left/right settings drift from that profile.
    - Capture a `visual_pivots` screenshot before HEW interpretation.
    - Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, date, timestamp, price, source text, and screenshot path in `visual_pivot_evidence`; each accepted pivot must match the referenced KPE row.
 
@@ -41,6 +42,9 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Macro Waves 1, 3, and 5 must be tested as HEW A-B-C motive engines, with A and C showing lower-degree five-wave action where visible.
    - Reject classical Elliott rescue devices in HEW counts, including extended waves, failed fifths, leading diagonals, ending diagonals, and diagonal triangles.
    - Treat Wave 3 176.4% as the default hard floor. A downgrade or exception is allowed only as a rare, named, evidence-backed exception when the broader Copsey structure supports it.
+   - Treat Wave 5 beyond the Copsey Wave 5 universe as a hard extended-fifth rejection on completed impulses.
+   - Check R.N. Elliott rules 2 and 3 explicitly: Wave 3 cannot be shortest, and Wave 4 cannot overlap Wave 1.
+   - Derive triple-confluence targets from pivot projections, not raw target numbers.
    - Use compact reads first: quote, OHLCV summary, study values, focused Pine reads.
    - Fit/verify visible range before interpreting or drawing.
 
@@ -56,6 +60,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
 6. Evidence contract
    - Fill exactly one `journal.md` and one `evidence.json` in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/`.
    - Record `ian_copsey_wave_map` with the selected anchors, Copsey rationale, drawing references, ratio-validation references, Fractal Forecasting alignment checks, and `scanner_used_for_count_selection: false`.
+   - Record `count_state` lineage, three to five structurally distinct hypotheses, structured Castaway decision rows, and `execution_quality` for visual QA/rerun/drawing-spec checks.
    - Screenshots live only under `screenshots/` and are referenced with package-relative paths.
    - Required sections, checklist IDs, screenshot roles, drawing roles, and critic fields come from the HEW strategy manifest, not duplicated prose.
 
@@ -69,7 +74,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Run a final critic before calling a package complete.
    - The critic checks visual-first sequence, evidence accuracy, journal/evidence/screenshot alignment, human actionability, macro focus, risk clarity, disclosed missing evidence, and no day-trading leakage.
    - HEW critic checks are blocking: Copsey source rules not overwritten by Konsili/Castaway overlay, no orphan ABC, macro Waves 1/3/5 tested as HEW A-B-C motive engines, A/C lower-degree five-wave action recorded where visible, no classical Elliott rescue devices, Wave 3 176.4 floor honored or rare exception documented, preceding impulse context present, primary and secondary subwaves present, and forward impulse projection drawn/marked conditional. A `pass_with_fixes` on those items is still a failure until fixed.
-   - Record the critic result in `critic_review`.
+   - Record the critic result in `critic_review` with an independent reviewer record, clean-pivot-path check, and fallback confidence-cap check.
    - Run the validator.
 
 ## Chart modes and handoffs
@@ -106,6 +111,11 @@ The validator fails closed on:
 - Missing journal/screenshot alignment.
 - Missing action rationale fields.
 - Missing critic review checklist items.
+- Missing independent critic reviewer, count-state lineage, execution-quality record, or structured Castaway decision table.
+- Missing pinned Konsili Pivot Exporter parameters or KPE rows whose left/right settings drift from the manifest instrument profile.
+- Hypotheses outside the 3-5 range, alternates that reuse the primary pivot path, raw-number triple-confluence targets, or missing R.N. Elliott rules 2/3 measurements.
+- Completed-impulse Wave 5 projections above the Copsey universe.
+- `pass_with_fallback` without `low`/`very_low` confidence, fallback disclosure, and non-actionable output.
 - Missing HEW `hew_structure_context` proof for preceding impulse, primary-degree subwaves, secondary/internal subwaves, or conditional forward impulse projection.
 - Missing HEW `copsey_hew_purity` proof for Copsey A-B-C motive engines, A/C lower-degree five-wave action where visible, classical-rescue-device rejection, Castaway-as-overlay boundary, or the Wave 3 176.4 rule.
 - HEW critic structural checks that are anything other than `pass`.

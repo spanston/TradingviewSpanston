@@ -120,6 +120,20 @@ function nearestAllowedRatio(value, ratios, tolerance) {
   return nearest;
 }
 
+function nearestClusterAnchor(value, cluster) {
+  const anchors = [
+    { label: 'min', value: cluster.min },
+    { label: 'mid', value: (cluster.min + cluster.max) / 2 },
+    { label: 'max', value: cluster.max }
+  ].filter((anchor) => Number.isFinite(anchor.value));
+  let nearest = null;
+  for (const anchor of anchors) {
+    const distance = Math.abs(value - anchor.value);
+    if (!nearest || distance < nearest.distance) nearest = { ...anchor, distance };
+  }
+  return nearest;
+}
+
 function violation(id, severity, measurement, message, extra = {}) {
   return {
     id,
@@ -159,7 +173,18 @@ function evaluateWave3(measurement, points, config) {
   const actual = absoluteRatio(prices.wave3_end - prices.wave2_end, prices.wave1_end - prices.wave1_start);
   const rule = config.wave3_projection;
   const matchedCluster = (rule.clusters || []).find((cluster) => within(actual, cluster));
-  if (matchedCluster) return { result: passResult(measurement, actual, { matched_cluster: matchedCluster.id }), violations: [] };
+  if (matchedCluster) {
+    const anchor = nearestClusterAnchor(actual, matchedCluster);
+    return {
+      result: passResult(measurement, actual, {
+        matched_cluster: matchedCluster.id,
+        nearest_anchor: anchor ? round(anchor.value) : null,
+        anchor_position: anchor ? anchor.label : null,
+        anchor_distance: anchor ? round(anchor.distance) : null
+      }),
+      violations: []
+    };
+  }
 
   if (within(actual, rule.rare_exception_range || {}, 0)) {
     const item = violation('wave3_rare_exception_range', 'soft', measurement, 'Wave 3 is in Copsey rare exception range below 176.4%.', { actual_ratio: round(actual) });
@@ -200,6 +225,12 @@ function evaluateWave5(measurement, points, config) {
   const nearest = nearestAllowedRatio(actual, config.wave5_projection.ratios, config.tolerances.wave5_ratio);
   if (nearest) return { result: passResult(measurement, actual, { matched_ratio: nearest.ratio }), violations: [] };
 
+  const maxRatio = Math.max(...(config.wave5_projection.ratios || []).filter(Number.isFinite));
+  if (Number.isFinite(maxRatio) && actual > maxRatio + config.tolerances.wave5_ratio) {
+    const item = violation('extended_wave5_rejected_by_copsey', 'hard', measurement, 'Wave 5 exceeds the Copsey Wave 5 universe and is treated as a forbidden extended-fifth rescue.', { actual_ratio: round(actual), max_allowed_ratio: maxRatio });
+    return { result: failResult(measurement, actual, item), violations: [item] };
+  }
+
   const item = violation('wave5_ratio_not_in_copsey_universe', 'soft', measurement, 'Wave 5 projection missed Copsey ratio universe.', { actual_ratio: round(actual) });
   return { result: failResult(measurement, actual, item), violations: [item] };
 }
@@ -233,8 +264,43 @@ function evaluateAlternation(measurement, points, config) {
   return { result: failResult(measurement, actual, item), violations: [item] };
 }
 
+function projectionTargetFromPivots(target, points) {
+  if (typeof target === 'number' || typeof target === 'string') return { error: 'triple confluence targets must be pivot-derived projection objects, not raw prices or pivot refs' };
+  if (!target || typeof target !== 'object') return { error: 'triple confluence target must be an object' };
+
+  const refs = target.points || {};
+  const start = priceFromRef(refs.start ?? refs.base_start ?? target.start ?? target.base_start, points);
+  const end = priceFromRef(refs.end ?? refs.base_end ?? target.end ?? target.base_end, points);
+  const anchor = priceFromRef(refs.anchor ?? refs.projection_start ?? target.anchor ?? target.projection_start, points);
+  const ratio = number(target.ratio);
+  if (start == null || end == null || anchor == null || ratio == null) {
+    return { error: 'triple confluence target requires start, end, anchor, and ratio pivot inputs' };
+  }
+
+  const direction = String(target.direction || '').toLowerCase();
+  const signedMove = end - start;
+  const sign = direction === 'bearish' ? -1 : direction === 'bullish' ? 1 : Math.sign(signedMove) || 1;
+  return {
+    price: anchor + Math.abs(signedMove) * ratio * sign,
+    source: {
+      id: target.id || null,
+      start: refs.start ?? refs.base_start ?? target.start ?? target.base_start,
+      end: refs.end ?? refs.base_end ?? target.end ?? target.base_end,
+      anchor: refs.anchor ?? refs.projection_start ?? target.anchor ?? target.projection_start,
+      ratio
+    }
+  };
+}
+
 function evaluateTripleConfluence(measurement, points, config) {
-  const targets = (measurement.targets || []).map((target) => priceFromRef(target, points)).filter((target) => target != null);
+  const targetResults = (measurement.targets || []).map((target) => projectionTargetFromPivots(target, points));
+  const targetErrors = targetResults.filter((target) => target.error);
+  if (targetErrors.length) {
+    const item = violation('triple_confluence_target_not_pivot_derived', 'hard', measurement, targetErrors[0].error);
+    return { result: failResult(measurement, null, item), violations: [item] };
+  }
+
+  const targets = targetResults.map((target) => target.price).filter((target) => target != null);
   if (targets.length < 3) {
     return { result: failResult(measurement, null, { id: 'missing_targets', severity: 'hard' }), violations: [violation('missing_targets', 'hard', measurement, 'Triple confluence requires at least three projection targets.')] };
   }
@@ -244,11 +310,53 @@ function evaluateTripleConfluence(measurement, points, config) {
   const spreadPct = Math.abs(mean) === 0 ? Infinity : spread / Math.abs(mean);
   const tolerance = number(measurement.tolerance_pct) ?? config.tolerances.triple_confluence_pct;
   if (spreadPct <= tolerance) {
-    return { result: passResult(measurement, spreadPct, { spread_pct: round(spreadPct), tolerance_pct: tolerance }), violations: [] };
+    return {
+      result: passResult(measurement, spreadPct, {
+        spread_pct: round(spreadPct),
+        tolerance_pct: tolerance,
+        derived_targets: targetResults.map((target) => ({ ...target.source, price: round(target.price) }))
+      }),
+      violations: []
+    };
   }
 
   const item = violation('triple_confluence_targets_diverge', 'soft', measurement, 'Copsey triple-confluence targets do not converge within tolerance.', { spread_pct: round(spreadPct), tolerance_pct: tolerance });
   return { result: failResult(measurement, spreadPct, item), violations: [item] };
+}
+
+function evaluateWave3NotShortest(measurement, points) {
+  const prices = pricesFromKeys(['wave1_start', 'wave1_end', 'wave2_end', 'wave3_end', 'wave4_end', 'wave5_end'], measurement, points);
+  if (!prices) return { result: failResult(measurement, null, { id: 'missing_points', severity: 'hard' }), violations: [violation('missing_points', 'hard', measurement, 'Wave 3-not-shortest rule requires wave1_start, wave1_end, wave2_end, wave3_end, wave4_end, and wave5_end.')] };
+
+  const wave1 = Math.abs(prices.wave1_end - prices.wave1_start);
+  const wave3 = Math.abs(prices.wave3_end - prices.wave2_end);
+  const wave5 = Math.abs(prices.wave5_end - prices.wave4_end);
+  if (wave3 < wave1 && wave3 < wave5) {
+    const item = violation('wave3_is_shortest', 'hard', measurement, 'R.N. Elliott rule 2 failed: Wave 3 is the shortest motive wave.', { wave1: round(wave1), wave3: round(wave3), wave5: round(wave5) });
+    return { result: failResult(measurement, wave3, item), violations: [item] };
+  }
+
+  return { result: passResult(measurement, wave3, { wave1: round(wave1), wave3: round(wave3), wave5: round(wave5) }), violations: [] };
+}
+
+function evaluateWave1Wave4NonOverlap(measurement, points) {
+  const prices = pricesFromKeys(['wave1_start', 'wave1_end', 'wave4_extreme'], measurement, points);
+  if (!prices) return { result: failResult(measurement, null, { id: 'missing_points', severity: 'hard' }), violations: [violation('missing_points', 'hard', measurement, 'Wave 1/Wave 4 non-overlap rule requires wave1_start, wave1_end, and wave4_extreme.')] };
+
+  const direction = String(measurement.direction || '').toLowerCase() || (prices.wave1_end > prices.wave1_start ? 'bullish' : 'bearish');
+  const wave1Boundary = direction === 'bearish'
+    ? Math.min(prices.wave1_start, prices.wave1_end)
+    : Math.max(prices.wave1_start, prices.wave1_end);
+  const overlaps = direction === 'bearish'
+    ? prices.wave4_extreme >= wave1Boundary
+    : prices.wave4_extreme <= wave1Boundary;
+  const distance = Math.abs(prices.wave4_extreme - wave1Boundary);
+  if (overlaps) {
+    const item = violation('wave1_wave4_overlap', 'hard', measurement, 'R.N. Elliott rule 3 failed: Wave 4 overlaps Wave 1 price territory.', { wave1_boundary: round(wave1Boundary), wave4_extreme: round(prices.wave4_extreme) });
+    return { result: failResult(measurement, distance, item), violations: [item] };
+  }
+
+  return { result: passResult(measurement, distance, { wave1_boundary: round(wave1Boundary), wave4_extreme: round(prices.wave4_extreme) }), violations: [] };
 }
 
 function evaluateWave4B3Rule(measurement, points, config) {
@@ -302,6 +410,10 @@ function evaluateMeasurement(measurement, points, config) {
       return evaluateTripleConfluence({ ...measurement, type }, points, config);
     case 'wave4_b3_rule':
       return evaluateWave4B3Rule({ ...measurement, type }, points, config);
+    case 'wave3_not_shortest_rule':
+      return evaluateWave3NotShortest({ ...measurement, type }, points);
+    case 'wave1_wave4_non_overlap_rule':
+      return evaluateWave1Wave4NonOverlap({ ...measurement, type }, points);
     default: {
       const fallback = { ...measurement, type: type || '<unknown>' };
       return {
