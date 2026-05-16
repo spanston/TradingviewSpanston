@@ -62,17 +62,17 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - In presentation mode, hide `Konsili Pivot Exporter` and extraction scaffolding such as Pivot Scanner/Pivots HL unless Johan explicitly requested audit mode. Leave only readable HEW proof, accumulation/distribution boxes, invalidation, stand-aside conditions, and conditional target/zone context.
 
 6. Evidence contract
-   - Fill exactly one `journal.md` and one `evidence.json` in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/`.
+   - Fill exactly one `journal.md`, one `evidence.json`, one `committee_brief.md`, and the manifest-required `raw/` artifacts in `analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/`.
    - Record `ian_copsey_wave_map` with the selected anchors, Copsey rationale, drawing references, ratio-validation references, Fractal Forecasting alignment checks, and `scanner_used_for_count_selection: false`.
    - Record `count_state` lineage, three to five structurally distinct hypotheses, structured Castaway decision rows, and `execution_quality` for visual QA/rerun-condition/drawing-spec checks.
-   - Screenshots live only under `screenshots/` and are referenced with package-relative paths.
+   - Screenshots live only under `screenshots/` and raw audit files live only under `raw/`; both are referenced with package-relative paths.
    - Required sections, checklist IDs, screenshot roles, drawing roles, and critic fields come from the HEW strategy manifest, not duplicated prose.
 
 7. Action output
-   - The final call is decision-first: setup, active count, alternate, HEW reason, accumulation/distribution zones with probabilities, invalidation, conditional target path, and no-trade condition.
+   - The final call is decision-first: setup, active count, alternate, HEW reason, accumulation/distribution zones with uncalibrated zone scores, invalidation, conditional target path, and no-trade condition.
    - Every action must explain why it follows from the HEW count, ratio model, Wave-B ladder, and Castaway overlay.
    - Trade planning is zone-first after the count is proven. Copsey accumulation, potential distribution, retracement, projection, invalidation, and no-trade zones come before action language.
-   - Avoid trigger, breakout, confirmation, or reclaim framing in the package output. Use `review_conditions` and zone-probability changes instead.
+   - Avoid trigger, breakout, confirmation, or reclaim framing in the package output. Use `review_conditions` and zone-score changes instead.
    - If the chart cannot support a HEW-derived action, say `STAND ASIDE`, `watchlist only`, or `no clean trade`.
 
 8. Critic review
@@ -114,8 +114,8 @@ The validator fails closed on:
 - Duplicate checklist IDs.
 - Screenshot paths outside `screenshots/`.
 - Drawing-manifest screenshots not listed in `evidence.json.screenshots`.
-- Zone probability values outside 0-100 or malformed price ranges.
-- Missing required accumulation/distribution zone types, invalid probability bands, or trigger/breakout/confirmation/reclaim language in zone-first output fields.
+- Zone score values outside 0-100 or malformed price ranges.
+- Missing required accumulation/distribution zone types, invalid score bands, or trigger/breakout/confirmation/reclaim language in zone-first output fields.
 - Missing journal/screenshot alignment.
 - Missing action rationale fields.
 - Missing critic review checklist items.
@@ -145,7 +145,7 @@ The validator fails closed on:
 - Prefer `rectangle` for accumulation, potential distribution, retracement, projection target, invalidation, and no-trade zones.
 - `horizontal_line` is allowed only when the manifest or package explicitly needs a non-count boundary layer; it is never a substitute for count legs or zone boxes.
 - Wave-B ladder gets its own chart-proof layer.
-- Projection maps must show the highest-probability next count path or explicitly document TradingView forward-margin clamp/fallback.
+- Projection maps must show the highest-scored next count path or explicitly document TradingView forward-margin clamp/fallback.
 
 ## Output standard
 

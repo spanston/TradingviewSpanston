@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -41,6 +42,14 @@ function getByPath(object, path) {
     if (value == null) return undefined;
     return value[part];
   }, object);
+}
+
+function sha256File(file) {
+  return createHash('sha256').update(readFileSync(file)).digest('hex');
+}
+
+function isObject(value) {
+  return value && typeof value === 'object' && !Array.isArray(value);
 }
 
 function indexById(items, path, errors) {
@@ -203,6 +212,90 @@ function validateScreenshots(evidence, manifest, file, errors) {
   }
   for (const role of manifest.required_screenshot_roles || []) {
     if (!roles.has(role)) errors.push(`missing screenshot role: ${role}`);
+  }
+}
+
+function validatePackageArtifacts(evidence, manifest, file, errors) {
+  const protocol = manifest.package_artifacts_protocol;
+  if (!protocol) return;
+
+  const packageDir = dirname(file);
+  for (const relative of protocol.required_top_level_files || []) {
+    const absolute = resolve(packageDir, relative);
+    if (!existsSync(absolute)) errors.push(`package artifact missing: ${relative}`);
+  }
+  for (const relative of protocol.required_directories || []) {
+    const absolute = resolve(packageDir, relative);
+    if (!existsSync(absolute)) errors.push(`package directory missing: ${relative}`);
+  }
+
+  const rawArtifacts = getByPath(evidence, protocol.raw_artifacts_path || 'raw_artifacts');
+  if (!rawArtifacts || typeof rawArtifacts !== 'object' || Array.isArray(rawArtifacts)) {
+    errors.push('raw_artifacts must be an object');
+    return;
+  }
+  const files = asArray(rawArtifacts.files);
+  if (!files.length) errors.push('raw_artifacts.files must be a non-empty array');
+  const byPath = new Map();
+  const byRole = new Map();
+  for (const artifact of files) {
+    if (!artifact || typeof artifact !== 'object') continue;
+    const rawPath = String(artifact.path || '').replace(/\\/g, '/');
+    const role = String(artifact.role || '').trim();
+    if (!rawPath) errors.push('raw_artifacts.files item missing path');
+    if (!role) errors.push(`raw_artifacts.files.${rawPath || '<unknown>'} missing role`);
+    if (!String(artifact.sha256 || '').trim()) errors.push(`raw_artifacts.files.${rawPath || '<unknown>'} missing sha256`);
+    if (rawPath) byPath.set(rawPath, artifact);
+    if (role) byRole.set(role, artifact);
+    if (rawPath && !rawPath.startsWith('raw/')) {
+      errors.push(`raw artifact path must be package-relative under raw/: ${rawPath}`);
+      continue;
+    }
+    if (rawPath) {
+      const absolute = resolve(packageDir, rawPath);
+      const rawDir = resolve(packageDir, 'raw');
+      const rawPrefix = rawDir.endsWith(sep) ? rawDir : `${rawDir}${sep}`;
+      if (!(absolute === rawDir || absolute.startsWith(rawPrefix))) {
+        errors.push(`raw artifact path escapes package: ${rawPath}`);
+        continue;
+      }
+      if (!existsSync(absolute)) {
+        errors.push(`raw artifact file is missing: ${rawPath}`);
+      } else if (artifact.sha256 && sha256File(absolute) !== artifact.sha256) {
+        errors.push(`raw_artifacts.files.${rawPath} sha256 does not match file contents`);
+      }
+    }
+  }
+  for (const role of protocol.required_raw_roles || []) {
+    if (!byRole.has(role)) errors.push(`raw_artifacts missing required role: ${role}`);
+  }
+  for (const rawPath of protocol.required_raw_files || []) {
+    if (!existsSync(resolve(packageDir, rawPath))) errors.push(`required raw file missing: ${rawPath}`);
+  }
+
+  const hashesPath = resolve(packageDir, protocol.hashes_path || 'raw/hashes.json');
+  if (existsSync(hashesPath)) {
+    const hashErrors = [];
+    const hashes = parseJson(hashesPath, hashErrors);
+    for (const error of hashErrors) errors.push(error);
+    const fileHashes = hashes?.files || hashes;
+    if (fileHashes && typeof fileHashes === 'object' && !Array.isArray(fileHashes)) {
+      for (const [rawPath, expectedHash] of Object.entries(fileHashes)) {
+        const normalized = String(rawPath).replace(/\\/g, '/');
+        const absolute = resolve(packageDir, normalized);
+        if (!existsSync(absolute)) {
+          errors.push(`raw/hashes.json references missing file: ${normalized}`);
+          continue;
+        }
+        if (sha256File(absolute) !== expectedHash) errors.push(`raw/hashes.json hash mismatch for ${normalized}`);
+        const artifact = byPath.get(normalized);
+        if (artifact && artifact.sha256 !== expectedHash) {
+          errors.push(`raw_artifacts/files hash disagrees with raw/hashes.json for ${normalized}`);
+        }
+      }
+    } else {
+      errors.push('raw/hashes.json must contain a file hash object');
+    }
   }
 }
 
@@ -800,6 +893,101 @@ function validateChartModeProtocol(evidence, manifest, errors) {
   }
 }
 
+function collectVerifiedPivotMaps(evidence) {
+  const pivots = new Map();
+  const ohlcvChecks = new Map();
+  for (const timeframe of asArray(evidence.visual_pivot_evidence?.timeframes)) {
+    for (const pivot of asArray(timeframe?.pivots)) {
+      if (pivot?.id) pivots.set(pivot.id, pivot);
+    }
+    for (const check of asArray(timeframe?.ohlcv_verification)) {
+      if (check?.pivot_id) ohlcvChecks.set(check.pivot_id, check);
+      if (check?.id) ohlcvChecks.set(check.id, check);
+    }
+  }
+  return { pivots, ohlcvChecks };
+}
+
+function validateDrawingPointLocking(drawing, role, protocol, pivotMaps, errors) {
+  const pointLocking = protocol?.point_locking;
+  if (!pointLocking) return;
+  const requiredRoles = new Set(pointLocking.required_for_roles || []);
+  const isRequired = requiredRoles.has(role);
+  const path = `drawing_manifest.${drawing.id || role || '<unknown>'}`;
+
+  if (isRequired && (!Array.isArray(drawing.points) || drawing.points.length === 0)) {
+    errors.push(`${path}.points must be a non-empty pivot-locked geometry array`);
+    return;
+  }
+  if (Array.isArray(drawing.levels) && Array.isArray(drawing.points) && drawing.points.length) {
+    const prices = drawing.points.map((point) => Number(point?.price)).filter(Number.isFinite);
+    const levels = drawing.levels.map(Number).filter(Number.isFinite);
+    if (prices.length === levels.length) {
+      for (let index = 0; index < levels.length; index += 1) {
+        if (Math.abs(prices[index] - levels[index]) > 0.000001) {
+          errors.push(`${path}.levels[${index}] must match points[${index}].price`);
+        }
+      }
+    }
+  }
+
+  for (const [index, point] of asArray(drawing.points).entries()) {
+    if (!point || typeof point !== 'object') {
+      errors.push(`${path}.points[${index}] must be an object`);
+      continue;
+    }
+    const pointPath = `${path}.points.${point.label || index}`;
+    if (typeof point.price !== 'number' || !Number.isFinite(point.price)) errors.push(`${pointPath}.price must be a finite number`);
+    const status = normalizedToken(point.point_status || 'verified');
+    if (status === 'projected') {
+      for (const field of pointLocking.projection_required_fields || []) {
+        if (field === 'source_pivots') {
+          if (!Array.isArray(point.source_pivots) || !point.source_pivots.length) errors.push(`${pointPath}.source_pivots must be a non-empty array`);
+        } else if (!String(point[field] || '').trim()) {
+          errors.push(`${pointPath}.${field} is required for projected points`);
+        }
+      }
+      continue;
+    }
+    for (const field of pointLocking.real_point_required_fields || []) {
+      if (!String(point[field] || '').trim()) errors.push(`${pointPath}.${field} is required for verified points`);
+    }
+    if (point.pivot_id && !pivotMaps.pivots.has(point.pivot_id)) {
+      errors.push(`${pointPath}.pivot_id not found in visual_pivot_evidence: ${point.pivot_id}`);
+    }
+    if (point.pivot_id && point.source_row_id) {
+      const pivot = pivotMaps.pivots.get(point.pivot_id);
+      if (pivot && pivot.exporter_row_id !== point.source_row_id) {
+        errors.push(`${pointPath}.source_row_id must match pivot exporter_row_id ${pivot.exporter_row_id}: ${point.source_row_id}`);
+      }
+    }
+    if (point.ohlcv_check_id && !pivotMaps.ohlcvChecks.has(point.ohlcv_check_id)) {
+      errors.push(`${pointPath}.ohlcv_check_id not found in visual_pivot_evidence OHLCV checks: ${point.ohlcv_check_id}`);
+    }
+  }
+}
+
+function validateZoneBoundaryProvenance(zone, path, errors) {
+  if (!isObject(zone.price_range)) return;
+  const refs = zone.boundary_refs;
+  if (!isObject(refs)) {
+    errors.push(`${path}.boundary_refs is required to pivot-lock zone boundaries`);
+    return;
+  }
+  for (const side of ['low', 'high']) {
+    const ref = refs[side];
+    if (!isObject(ref)) {
+      errors.push(`${path}.boundary_refs.${side} is required`);
+      continue;
+    }
+    const hasPivot = String(ref.pivot_id || '').trim();
+    const hasProjection = String(ref.projection_formula_id || '').trim();
+    if (!hasPivot && !hasProjection) {
+      errors.push(`${path}.boundary_refs.${side} must reference pivot_id or projection_formula_id`);
+    }
+  }
+}
+
 function validateDrawingManifest(evidence, manifest, errors) {
   const drawings = getByPath(evidence, manifest.drawing_protocol?.path || 'chart_prep.drawing_manifest');
   if (!Array.isArray(drawings)) {
@@ -822,6 +1010,7 @@ function validateDrawingManifest(evidence, manifest, errors) {
   const forbiddenByRole = manifest.drawing_protocol?.forbidden_tools_by_role || {};
   const allowedByRole = manifest.drawing_protocol?.allowed_tools_by_role || {};
   const requiredRoles = new Set(manifest.drawing_protocol?.required_roles || []);
+  const pivotMaps = collectVerifiedPivotMaps(evidence);
   const seenRoles = new Set();
   for (const drawing of drawings) {
     if (!drawing || typeof drawing !== 'object') continue;
@@ -892,6 +1081,7 @@ function validateDrawingManifest(evidence, manifest, errors) {
     if (forbidden.includes(tool)) errors.push(`forbidden drawing tool for ${role}: ${tool}`);
     const allowed = allowedByRole[role];
     if (allowed && !allowed.includes(tool)) errors.push(`drawing_manifest.${drawing.id || role} must use one of ${allowed.join(', ')}: ${tool}`);
+    validateDrawingPointLocking(drawing, role, manifest.drawing_protocol, pivotMaps, errors);
     if (!['macro', 'daily', 'execution', 'all'].includes(drawing.timeframe_owner)) {
       errors.push(`drawing_manifest.${drawing.id || role} has invalid timeframe_owner: ${drawing.timeframe_owner}`);
     }
@@ -1316,7 +1506,10 @@ function validateExecutionQuality(evidence, manifest, errors) {
     const status = String(section.status || '').toLowerCase();
     if (!allowedStatuses.has(status)) errors.push(`${path}.${id}.status must be one of ${[...allowedStatuses].join(', ')}: ${section.status}`);
     for (const field of item.required_fields || []) {
-      if (!String(section[field] || '').trim()) errors.push(`${path}.${id}.${field} is required`);
+      const value = section[field];
+      if (!hasOwn(section, field) || value == null || (typeof value === 'string' && !value.trim())) {
+        errors.push(`${path}.${id}.${field} is required`);
+      }
     }
     for (const field of item.required_true_fields || []) {
       if (section[field] !== true) errors.push(`${path}.${id}.${field} must be true`);
@@ -1361,6 +1554,59 @@ function validateFallbackPolicy(evidence, manifest, errors) {
   }
 }
 
+function statusIsActionable(value) {
+  return normalizedToken(value) === 'actionable';
+}
+
+function validateVerdict(evidence, manifest, errors) {
+  const protocol = manifest.verdict_protocol;
+  if (!protocol) return;
+  const path = protocol.path || 'verdict';
+  const verdict = getByPath(evidence, path);
+  if (!verdict || typeof verdict !== 'object' || Array.isArray(verdict)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+  const packageValidity = String(verdict.package_validity || '').toLowerCase();
+  const evidenceGrade = String(verdict.evidence_grade || '').toLowerCase();
+  const tradePermission = String(verdict.trade_permission || '').toLowerCase();
+  const confidence = String(verdict.confidence || '').toLowerCase();
+  if (!(protocol.allowed_package_validity || []).includes(packageValidity)) {
+    errors.push(`${path}.package_validity must be one of ${(protocol.allowed_package_validity || []).join(', ')}: ${verdict.package_validity}`);
+  }
+  if (!(protocol.allowed_evidence_grades || []).includes(evidenceGrade)) {
+    errors.push(`${path}.evidence_grade must be one of ${(protocol.allowed_evidence_grades || []).join(', ')}: ${verdict.evidence_grade}`);
+  }
+  if (!(protocol.allowed_trade_permission || []).includes(tradePermission)) {
+    errors.push(`${path}.trade_permission must be one of ${(protocol.allowed_trade_permission || []).join(', ')}: ${verdict.trade_permission}`);
+  }
+  if (!(protocol.allowed_confidence || []).includes(confidence)) {
+    errors.push(`${path}.confidence must be one of ${(protocol.allowed_confidence || []).join(', ')}: ${verdict.confidence}`);
+  }
+  if (!String(verdict.posture || '').trim()) errors.push(`${path}.posture is required`);
+  if (tradePermission === 'blocked') {
+    if (statusIsActionable(evidence.status) || statusIsActionable(verdict.posture) || statusIsActionable(evidence.trade_posture?.posture)) {
+      errors.push(`${path}.trade_permission blocked cannot use ACTIONABLE status/posture`);
+    }
+    const blockedPostures = new Set(protocol.blocked_postures || []);
+    if (verdict.posture && !blockedPostures.has(verdict.posture)) {
+      errors.push(`${path}.posture must be a blocked posture when trade_permission is blocked: ${verdict.posture}`);
+    }
+  }
+  if (evidenceGrade === 'qualified' && !['low', 'very_low'].includes(confidence)) {
+    errors.push(`${path}.confidence must be low or very_low when evidence_grade is qualified: ${verdict.confidence}`);
+  }
+  if (confidence === 'high') {
+    const zones = asArray(evidence.zone_scores);
+    if (zones.some((zone) => zone?.zone_score?.calibrated_probability === false)) {
+      errors.push(`${path}.confidence cannot be high while zone_scores are uncalibrated`);
+    }
+  }
+  if (evidence.confidence?.rating && normalizedToken(evidence.confidence.rating) !== normalizedToken(verdict.confidence)) {
+    errors.push(`${path}.confidence must match confidence.rating: ${evidence.confidence.rating}`);
+  }
+}
+
 function validateZoneProbabilities(evidence, manifest, errors) {
   if (!manifest.zone_probabilities) return;
   const zones = evidence.zone_probabilities;
@@ -1401,6 +1647,54 @@ function validateZoneProbabilities(evidence, manifest, errors) {
   }
   for (const type of requiredTypes) {
     if (!seenTypes.has(type)) errors.push(`zone_probabilities missing required zone_type: ${type}`);
+  }
+}
+
+function validateZoneScores(evidence, manifest, errors) {
+  const config = manifest.zone_scores;
+  if (!config) return;
+  const zones = evidence.zone_scores;
+  if (!Array.isArray(zones)) {
+    errors.push('zone_scores must be an array');
+    return;
+  }
+  const allowedTypes = new Set(config.allowed_zone_types || []);
+  const requiredTypes = new Set(config.required_zone_types || []);
+  const allowedBands = new Set(config.allowed_score_bands || []);
+  const seenTypes = new Set();
+  indexById(zones, 'zone_scores', errors);
+  for (const zone of zones) {
+    if (!zone || typeof zone !== 'object') continue;
+    const path = `zone_scores.${zone.id || '<unknown>'}`;
+    if (zone.zone_type) seenTypes.add(zone.zone_type);
+    if (!allowedTypes.has(zone.zone_type)) errors.push(`${path} invalid zone_type: ${zone.zone_type}`);
+    for (const field of ['price_range', 'zone_score', 'evidence', 'invalidation', 'upgrade_condition', 'downgrade_condition']) {
+      if (!hasOwn(zone, field) || (typeof zone[field] === 'string' && !zone[field].trim())) errors.push(`${path} missing ${field}`);
+    }
+    const score = zone.zone_score || {};
+    for (const field of config.required_score_fields || []) {
+      if (field === 'drivers') {
+        if (!Array.isArray(score.drivers) || !score.drivers.length) errors.push(`${path}.zone_score.drivers must be a non-empty array`);
+      } else if (!hasOwn(score, field) || (typeof score[field] === 'string' && !score[field].trim())) {
+        errors.push(`${path}.zone_score.${field} is required`);
+      }
+    }
+    if (typeof score.score !== 'number' || score.score < 0 || score.score > 100) errors.push(`${path}.zone_score.score must be a number between 0 and 100`);
+    if (allowedBands.size && !allowedBands.has(score.band)) errors.push(`${path}.zone_score.band must be one of ${[...allowedBands].join(', ')}: ${score.band}`);
+    if (score.calibrated_probability !== false && !score.calibration_set) {
+      errors.push(`${path}.zone_score.calibrated_probability cannot be true without calibration_set`);
+    }
+    const low = zone.price_range?.low;
+    const high = zone.price_range?.high;
+    if (typeof low !== 'number' || typeof high !== 'number') {
+      errors.push(`${path}.price_range.low/high must be numbers`);
+    } else if (!(low < high)) {
+      errors.push(`${path}.price_range.low must be less than high`);
+    }
+    validateZoneBoundaryProvenance(zone, path, errors);
+  }
+  for (const type of requiredTypes) {
+    if (!seenTypes.has(type)) errors.push(`zone_scores missing required zone_type: ${type}`);
   }
 }
 
@@ -1453,6 +1747,33 @@ function validateCriticReview(evidence, manifest, errors) {
   const allowedVerdicts = new Set(manifest.critic_review?.allowed_final_verdicts || ['pass', 'pass_with_fixes']);
   const verdict = String(critic.final_verdict || '').toLowerCase();
   if (!allowedVerdicts.has(verdict)) errors.push(`critic_review.final_verdict must be one of ${[...allowedVerdicts].join(', ')}: ${critic.final_verdict}`);
+  for (const field of manifest.critic_review?.required_top_level_fields || []) {
+    if (!hasOwn(critic, field)) errors.push(`critic_review.${field} is required`);
+  }
+  const criticEnums = [
+    ['package_validity_verdict', manifest.critic_review?.allowed_package_validity_verdicts],
+    ['evidence_grade_verdict', manifest.critic_review?.allowed_evidence_grade_verdicts],
+    ['trade_permission_verdict', manifest.critic_review?.allowed_trade_permission_verdicts],
+    ['visual_readability_verdict', manifest.critic_review?.allowed_visual_readability_verdicts]
+  ];
+  for (const [field, allowedValues] of criticEnums) {
+    const value = String(critic[field] || '').toLowerCase();
+    if (allowedValues?.length && !allowedValues.includes(value)) {
+      errors.push(`critic_review.${field} must be one of ${allowedValues.join(', ')}: ${critic[field]}`);
+    }
+  }
+  for (const field of ['blocking_issues', 'material_non_blocking_issues', 'required_followups']) {
+    if (hasOwn(critic, field) && !Array.isArray(critic[field])) errors.push(`critic_review.${field} must be an array`);
+  }
+  for (const field of ['strongest_bear_case_against_package', 'strongest_bull_case_against_package']) {
+    if (hasOwn(critic, field) && !String(critic[field] || '').trim()) errors.push(`critic_review.${field} is required`);
+  }
+  if (evidence.verdict?.evidence_grade === 'qualified' && asArray(critic.material_non_blocking_issues).length === 0) {
+    errors.push('critic_review.material_non_blocking_issues must name caveats when evidence_grade is qualified');
+  }
+  if (evidence.verdict?.trade_permission && critic.trade_permission_verdict && evidence.verdict.trade_permission !== critic.trade_permission_verdict) {
+    errors.push(`critic_review.trade_permission_verdict must match verdict.trade_permission: ${evidence.verdict.trade_permission}`);
+  }
   const allowedTimeframes = new Set(manifest.critic_review?.allowed_max_detail_timeframes || ['daily', 'weekly', 'monthly']);
   const maxTf = String(critic.max_detail_timeframe || '').toLowerCase();
   if (!allowedTimeframes.has(maxTf)) errors.push(`critic_review.max_detail_timeframe must be one of ${[...allowedTimeframes].join(', ')}: ${critic.max_detail_timeframe}`);
@@ -1533,11 +1854,19 @@ export function validateEvidenceFile(file, options = {}) {
   }
   const manifest = loadManifest(strategy, errors);
   if (!manifest) return { file: absoluteFile, strategy, errors, warnings };
+  if (options.stage) {
+    const supportedStages = new Set(manifest.stage_validation?.supported_stages || []);
+    if (!supportedStages.has(options.stage)) {
+      errors.push(`unsupported validation stage: ${options.stage}`);
+      return { file: absoluteFile, strategy, errors, warnings };
+    }
+  }
 
   validateTopLevel(evidence, manifest, errors);
   validateContractVersion(evidence, manifest, errors);
   validateStageGates(evidence, manifest, errors);
   validateIdCollections(evidence, manifest, errors);
+  validatePackageArtifacts(evidence, manifest, absoluteFile, errors);
   validateScreenshots(evidence, manifest, absoluteFile, errors);
   validateVisualPivotEvidence(evidence, manifest, errors);
   validateIanCopseyWaveMap(evidence, manifest, errors);
@@ -1550,7 +1879,9 @@ export function validateEvidenceFile(file, options = {}) {
   validateCastawayTradeModelContract(evidence, manifest, errors);
   validateExecutionQuality(evidence, manifest, errors);
   validateFallbackPolicy(evidence, manifest, errors);
+  validateVerdict(evidence, manifest, errors);
   validateZoneProbabilities(evidence, manifest, errors);
+  validateZoneScores(evidence, manifest, errors);
   validateZoneFirstLanguage(evidence, manifest, errors);
   validateActionRationale(evidence, manifest, errors);
   validateCriticReview(evidence, manifest, errors);
@@ -1563,20 +1894,29 @@ function discoverEvidenceFiles(strategy) {
   const base = resolve(repoRoot, 'analysis_journal');
   if (!existsSync(base)) return [];
   const suffix = `_${strategy}`;
+  const manifestErrors = [];
+  const manifest = loadManifest(strategy, manifestErrors);
+  const currentContract = manifest?.contract_version;
   return readdirSync(base, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && entry.name.endsWith(suffix))
     .map((entry) => join(base, entry.name, 'evidence.json'))
     .filter((file) => existsSync(file))
+    .filter((file) => {
+      if (!currentContract) return true;
+      const evidence = parseJson(file, []);
+      return evidence?.workflow_version === currentContract;
+    })
     .sort();
 }
 
 function parseArgs(argv) {
   const args = [...argv];
   let strategy = null;
+  let stage = null;
   const files = [];
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
-    if (arg === '--help' || arg === '-h') return { help: true, strategy, files };
+    if (arg === '--help' || arg === '-h') return { help: true, strategy, stage, files };
     if (arg === '--strategy') {
       strategy = args[index + 1];
       index += 1;
@@ -1586,18 +1926,27 @@ function parseArgs(argv) {
       strategy = arg.slice('--strategy='.length);
       continue;
     }
+    if (arg === '--stage') {
+      stage = args[index + 1];
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith('--stage=')) {
+      stage = arg.slice('--stage='.length);
+      continue;
+    }
     if (arg.startsWith('--')) continue;
     files.push(arg);
   }
-  return { help: false, strategy, files };
+  return { help: false, strategy, stage, files };
 }
 
 function printHelp() {
-  console.log(`Usage: node scripts/validate_evidence.mjs [--strategy hew] [evidence.json ...]\n\nIf no files are provided, validates analysis_journal/*_hew/evidence.json.`);
+  console.log(`Usage: node scripts/validate_evidence.mjs [--strategy hew] [--stage extraction|verification|anchors|ratios|drawings|writing|critic|final] [evidence.json ...]\n\nIf no files are provided, validates analysis_journal/*_hew/evidence.json.`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const { help, strategy, files } = parseArgs(process.argv.slice(2));
+  const { help, strategy, stage, files } = parseArgs(process.argv.slice(2));
   if (help) {
     printHelp();
     process.exit(0);
@@ -1612,7 +1961,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     console.log(`No evidence files found for strategy ${activeStrategy}; nothing to validate.`);
     process.exit(0);
   }
-  const results = inputFiles.map((file) => validateEvidenceFile(file, { strategy }));
+  const results = inputFiles.map((file) => validateEvidenceFile(file, { strategy, stage }));
   let errorCount = 0;
   let warningCount = 0;
   for (const result of results) {

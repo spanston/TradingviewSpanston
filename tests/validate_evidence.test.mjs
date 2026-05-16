@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
 import { scoreHewHypothesis } from '../scripts/ratio_engine.mjs';
 import { validateEvidenceFile } from '../scripts/validate_evidence.mjs';
@@ -110,11 +111,62 @@ function baseHypothesis(overrides = {}) {
 function packageDir(method = 'hew') {
   const dir = mkdtempSync(join(tmpdir(), `konsili-${method}-`));
   mkdirSync(join(dir, 'screenshots'));
+  mkdirSync(join(dir, 'raw'));
   writeFileSync(join(dir, 'screenshots', 'pivots.png'), 'fake');
   writeFileSync(join(dir, 'screenshots', 'macro.png'), 'fake');
   writeFileSync(join(dir, 'screenshots', 'trade.png'), 'fake');
   writeFileSync(join(dir, 'journal.md'), '# Journal\n\n![Pivots](screenshots/pivots.png)\n![Macro](screenshots/macro.png)\n![Trade](screenshots/trade.png)\n');
+  writeFileSync(join(dir, 'committee_brief.md'), '# Committee Brief\n\nPosture: STAND ASIDE\n');
+  const rawFiles = {
+    'raw/kpe_monthly.jsonl': '{"row":"monthly"}\n',
+    'raw/kpe_weekly.jsonl': '{"row":"weekly"}\n',
+    'raw/kpe_daily.jsonl': '{"row":"daily"}\n',
+    'raw/ohlcv_monthly.csv': 'time,open,high,low,close\n',
+    'raw/ohlcv_weekly.csv': 'time,open,high,low,close\n',
+    'raw/ohlcv_daily.csv': 'time,open,high,low,close\n',
+    'raw/draw_list_before.json': '[]\n',
+    'raw/draw_list_after.json': '[]\n',
+    'raw/chart_state_final.json': '{}\n'
+  };
+  const hashes = {};
+  for (const [relative, content] of Object.entries(rawFiles)) {
+    writeFileSync(join(dir, relative), content);
+    hashes[relative] = createHash('sha256').update(content).digest('hex');
+  }
+  writeFileSync(join(dir, 'raw', 'hashes.json'), JSON.stringify({ files: hashes }, null, 2));
   return dir;
+}
+
+function rawArtifacts() {
+  const roles = {
+    'raw/kpe_monthly.jsonl': 'kpe_monthly',
+    'raw/kpe_weekly.jsonl': 'kpe_weekly',
+    'raw/kpe_daily.jsonl': 'kpe_daily',
+    'raw/ohlcv_monthly.csv': 'ohlcv_monthly',
+    'raw/ohlcv_weekly.csv': 'ohlcv_weekly',
+    'raw/ohlcv_daily.csv': 'ohlcv_daily',
+    'raw/draw_list_before.json': 'draw_list_before',
+    'raw/draw_list_after.json': 'draw_list_after',
+    'raw/chart_state_final.json': 'chart_state_final'
+  };
+  return {
+    generated_at: '2026-05-16T08:00:00+02:00',
+    files: Object.entries(roles).map(([path, role]) => ({
+      role,
+      path,
+      sha256: createHash('sha256').update({
+        'raw/kpe_monthly.jsonl': '{"row":"monthly"}\n',
+        'raw/kpe_weekly.jsonl': '{"row":"weekly"}\n',
+        'raw/kpe_daily.jsonl': '{"row":"daily"}\n',
+        'raw/ohlcv_monthly.csv': 'time,open,high,low,close\n',
+        'raw/ohlcv_weekly.csv': 'time,open,high,low,close\n',
+        'raw/ohlcv_daily.csv': 'time,open,high,low,close\n',
+        'raw/draw_list_before.json': '[]\n',
+        'raw/draw_list_after.json': '[]\n',
+        'raw/chart_state_final.json': '{}\n'
+      }[path]).digest('hex')
+    }))
+  };
 }
 
 function baseEvidence(overrides = {}) {
@@ -123,8 +175,16 @@ function baseEvidence(overrides = {}) {
     saved_at: '2026-05-16T08:00:00+02:00',
     symbol: 'TEST:SYMBOL',
     method: 'Ian Copsey Fractal Forecasting macro',
-    workflow_version: 'hew_stage_gated_v8_math_core',
+    workflow_version: 'hew_institutional_v1',
     status: 'watchlist_only',
+    verdict: {
+      package_validity: 'pass',
+      evidence_grade: 'qualified',
+      trade_permission: 'blocked',
+      posture: 'STAND ASIDE',
+      confidence: 'low',
+      confidence_cap_reason: 'Institutional fixture uses qualified evidence to exercise material critic caveats.'
+    },
     stage_gates: [
       { id: 'route_and_layout', status: 'pass', evidence: 'HEW layout loaded.' },
       { id: 'visual_pivot_extraction', status: 'pass', evidence: 'Visible pivot indicator extracted on Monthly/Weekly/Daily.' },
@@ -155,6 +215,7 @@ function baseEvidence(overrides = {}) {
       { id: 'action_rationale_complete', status: 'pass', evidence: 'rationale complete' },
       { id: 'critic_review_complete', status: 'pass', evidence: 'critic complete' }
     ],
+    raw_artifacts: rawArtifacts(),
     chart_prep: {
       layout: 'HEW layout',
       drawings_cleared: true,
@@ -166,11 +227,70 @@ function baseEvidence(overrides = {}) {
         { mode: 'presentation', status: 'pass', evidence: 'Konsili Pivot Exporter and pivot scaffold hidden; final readable decision chart verified.', konsili_pivot_exporter_visible: false, pivot_scaffold_visible: false, final_chart_state: 'macro count, projection, invalidation, and zones visible' }
       ],
       drawing_manifest: [
-        { id: 'preceding_impulse', role: 'preceding_impulse_context', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
-        { id: 'macro', role: 'macro_count', tool: 'elliott_correction', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
-        { id: 'primary_subwaves', role: 'primary_degree_subwaves', tool: 'elliott_impulse_wave', timeframe_owner: 'macro', screenshot: 'screenshots/macro.png' },
-        { id: 'secondary_subwaves', role: 'secondary_degree_subwaves', tool: 'elliott_impulse_wave', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' },
-        { id: 'projection', role: 'projection_count', tool: 'elliott_impulse_wave', timeframe_owner: 'daily', screenshot: 'screenshots/trade.png' }
+        {
+          id: 'preceding_impulse',
+          role: 'preceding_impulse_context',
+          tool: 'elliott_impulse_wave',
+          timeframe_owner: 'macro',
+          screenshot: 'screenshots/macro.png',
+          points: [
+            { label: '0', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '1', pivot_id: 'd_high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, source_row_id: '1D_1704844800000_H', ohlcv_check_id: 'd_high' },
+            { label: '2', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '3', pivot_id: 'm_high', date: '2024-01-01 00:00', time: 1704067200000, price: 150, source_row_id: '1M_1704067200000_H', ohlcv_check_id: 'm_high' }
+          ]
+        },
+        {
+          id: 'macro',
+          role: 'macro_count',
+          tool: 'elliott_correction',
+          timeframe_owner: 'macro',
+          screenshot: 'screenshots/macro.png',
+          points: [
+            { label: 'A', pivot_id: 'm_high', date: '2024-01-01 00:00', time: 1704067200000, price: 150, source_row_id: '1M_1704067200000_H', ohlcv_check_id: 'm_high' },
+            { label: 'B', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: 'C', point_status: 'projected', price: 145, projection_formula_id: 'macro_c_projection', source_pivots: ['m_high', 'w_low'] }
+          ]
+        },
+        {
+          id: 'primary_subwaves',
+          role: 'primary_degree_subwaves',
+          tool: 'elliott_impulse_wave',
+          timeframe_owner: 'macro',
+          screenshot: 'screenshots/macro.png',
+          points: [
+            { label: '0', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '1', pivot_id: 'd_high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, source_row_id: '1D_1704844800000_H', ohlcv_check_id: 'd_high' },
+            { label: '2', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '3', pivot_id: 'm_high', date: '2024-01-01 00:00', time: 1704067200000, price: 150, source_row_id: '1M_1704067200000_H', ohlcv_check_id: 'm_high' }
+          ]
+        },
+        {
+          id: 'secondary_subwaves',
+          role: 'secondary_degree_subwaves',
+          tool: 'elliott_impulse_wave',
+          timeframe_owner: 'daily',
+          screenshot: 'screenshots/trade.png',
+          points: [
+            { label: '0', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '1', pivot_id: 'd_high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, source_row_id: '1D_1704844800000_H', ohlcv_check_id: 'd_high' },
+            { label: '2', point_status: 'projected', price: 110, projection_formula_id: 'secondary_wave2_projection', source_pivots: ['w_low', 'd_high'] },
+            { label: '3', point_status: 'projected', price: 170, projection_formula_id: 'secondary_wave3_projection', source_pivots: ['w_low', 'd_high'] }
+          ]
+        },
+        {
+          id: 'projection',
+          role: 'projection_count',
+          tool: 'elliott_impulse_wave',
+          timeframe_owner: 'daily',
+          screenshot: 'screenshots/trade.png',
+          points: [
+            { label: '0', pivot_id: 'w_low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, source_row_id: '1W_1704672000000_L', ohlcv_check_id: 'w_low' },
+            { label: '1', pivot_id: 'd_high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, source_row_id: '1D_1704844800000_H', ohlcv_check_id: 'd_high' },
+            { label: '2', point_status: 'projected', price: 140, projection_formula_id: 'conditional_projection_wave2', source_pivots: ['w_low', 'd_high'] },
+            { label: '3', point_status: 'projected', price: 180, projection_formula_id: 'conditional_projection_wave3', source_pivots: ['w_low', 'd_high'] }
+          ]
+        }
       ]
     },
     screenshots: [
@@ -382,6 +502,48 @@ function baseEvidence(overrides = {}) {
       { id: 'accumulation_w4', zone_type: 'accumulation', price_range: { low: 100, high: 110 }, probability: { value: 58, band: 'moderate' }, evidence: 'Wave 4 accumulation support', invalidation: 'below 99', upgrade_condition: 'absorption improves above 120', downgrade_condition: 'lose 99' },
       { id: 'distribution_w5', zone_type: 'distribution', price_range: { low: 150, high: 160 }, probability: { value: 52, band: 'moderate' }, evidence: 'Wave 5 distribution target', invalidation: 'accept above 165', upgrade_condition: 'supply appears in zone', downgrade_condition: 'accept above' }
     ],
+    zone_scores: [
+      {
+        id: 'accumulation_w4',
+        zone_type: 'accumulation',
+        price_range: { low: 100, high: 110 },
+        boundary_refs: {
+          low: { pivot_id: 'w_low' },
+          high: { projection_formula_id: 'wave4_accumulation_upper' }
+        },
+        zone_score: {
+          model_version: 'zone_score_v1',
+          calibrated_probability: false,
+          score: 58,
+          band: 'moderate',
+          drivers: ['verified_weekly_low', 'wave4_accumulation_support']
+        },
+        evidence: 'Wave 4 accumulation support',
+        invalidation: 'below 99',
+        upgrade_condition: 'absorption improves above 120',
+        downgrade_condition: 'lose 99'
+      },
+      {
+        id: 'distribution_w5',
+        zone_type: 'distribution',
+        price_range: { low: 150, high: 160 },
+        boundary_refs: {
+          low: { pivot_id: 'm_high' },
+          high: { projection_formula_id: 'wave5_distribution_upper' }
+        },
+        zone_score: {
+          model_version: 'zone_score_v1',
+          calibrated_probability: false,
+          score: 52,
+          band: 'moderate',
+          drivers: ['verified_monthly_high', 'wave5_distribution_target']
+        },
+        evidence: 'Wave 5 distribution target',
+        invalidation: 'accept above 165',
+        upgrade_condition: 'supply appears in zone',
+        downgrade_condition: 'accept above'
+      }
+    ],
     action_rationale: {
       selected_action: 'stand_aside',
       strategy_basis: 'Ian Copsey Fractal Forecasting ratio model and Konsili Castaway overlay',
@@ -416,6 +578,22 @@ function baseEvidence(overrides = {}) {
     red_team: { countercase: 'Alternate count changes posture.', proof_needed: 'break level', impact: 'stand aside' },
     critic_review: {
       final_verdict: 'pass',
+      package_validity_verdict: 'pass',
+      evidence_grade_verdict: 'qualified',
+      trade_permission_verdict: 'blocked',
+      visual_readability_verdict: 'pass_with_notes',
+      blocking_issues: [],
+      material_non_blocking_issues: [
+        {
+          id: 'fixture_qualified_evidence',
+          severity: 'material',
+          evidence: 'Fixture is valid but deliberately qualified to test institutional caveat handling.',
+          effect: 'Confidence remains low and trade permission remains blocked.'
+        }
+      ],
+      strongest_bear_case_against_package: 'Qualified evidence and blocked trade permission mean no clean investment action yet.',
+      strongest_bull_case_against_package: 'Verified pivots and pivot-locked drawings keep the structure reviewable if conditions improve.',
+      required_followups: [],
       max_detail_timeframe: 'daily',
       checklist: [
         { id: 'deliverables_complete', status: 'pass', evidence: 'files present' },
@@ -452,8 +630,20 @@ function baseEvidence(overrides = {}) {
     },
     review_conditions: [{ condition: 'zone posture changes', expected: 'upgrade', downgrade_if: 'fail' }],
     missing_evidence: [],
-    confidence: { rating: 'medium', rationale: 'candidate but gated' },
+    confidence: { rating: 'low', rationale: 'candidate but gated' },
     execution_quality: {
+      visual_qa: {
+        status: 'pass',
+        final_chart_stands_alone: true,
+        sidebars_hidden: true,
+        exporter_hidden_in_presentation: true,
+        zone_labels_visible: true,
+        zone_price_ranges_visible: true,
+        zone_scores_visible: true,
+        elliott_labels_readable: true,
+        audit_screenshots_marked_audit_only: true,
+        issues: []
+      },
       vision_qa: { status: 'pass', screenshot_reviewed: true, evidence: 'Final screenshot was visually reviewed for readability and alignment.' },
       rerun_schedule: { status: 'scheduled', condition: 'price reaches zone boundary or invalidation', cadence: 'manual_on_zone_shift_or_weekly_refresh', evidence: 'Rerun conditions are explicit for future sessions.' },
       drawing_spec: { status: 'pass', source: 'strategies/hew/manifest.json', manifest_roles_checked: true, evidence: 'Drawing roles and allowed tools were checked against manifest.' }
@@ -516,6 +706,19 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.equal(manifest.hypothesis_protocol.structural_distinctness.required, true);
   assert.equal(manifest.visual_pivot_protocol.instrument_parameter_profiles.single_stock.left, 5);
   assert.equal(manifest.critic_review.independent_reviewer.prompt_file, 'agents/hew-independent-critic.md');
+});
+
+test('institutional regression fixture directories exist for validator drift cases', () => {
+  const fixtureDirs = [
+    'fixtures/hew/good/team_no_clean_trade',
+    'fixtures/hew/bad/unreadable_kpe',
+    'fixtures/hew/bad/drawing_without_pivot_ids',
+    'fixtures/hew/bad/actionable_with_fallback',
+    'fixtures/hew/bad/conditional_wave3_marked_live_pass'
+  ];
+  for (const dir of fixtureDirs) {
+    assert.ok(existsSync(join(dir, 'README.md')), `missing fixture README: ${dir}`);
+  }
 });
 
 test('HEW hypotheses are recomputed by the deterministic Copsey ratio engine', () => {
@@ -720,7 +923,7 @@ test('mandatory stage gates fail closed when a gate is failed or partial', () =>
 
 test('workflow_version must match the strategy manifest contract version', () => {
   const result = validateEvidenceFile(writeEvidence(baseEvidence({ workflow_version: 'wrong_contract' })));
-  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_stage_gated_v8_math_core/i);
+  assert.match(result.errors.join('\n'), /workflow_version must equal manifest contract_version hew_institutional_v1/i);
 });
 
 test('presentation mode fails closed when extraction scaffolding remains visible', () => {

@@ -23,7 +23,7 @@ This repo prevents structural drift: rules stay in one narrow HEW/Copsey lane, a
 8. Enter presentation mode: keep `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit, leave a readable decision chart, and verify final live state.
 9. Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, visual pivots with matching indicator date/time/price, chart modes, and drawings in the evidence package.
 10. Produce exactly one `journal.md` and one `evidence.json` per package.
-11. Explain the action from the HEW count: setup, active/alternate count, trigger, invalidation, target path, and no-trade condition.
+11. Explain the action from the HEW count: setup, active/alternate count, zone score, invalidation, target path, and no-trade condition.
 12. Run final critic review.
 13. Run the validator.
 
@@ -52,10 +52,12 @@ npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json
 analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/
   journal.md
   evidence.json
+  committee_brief.md
+  raw/
   screenshots/
 ```
 
-No extra top-level reports, sidecars, or orphan screenshots unless Johan explicitly asks for an export format.
+Raw artifacts must preserve KPE rows, OHLCV checks, draw lists, final chart state, and `raw/hashes.json`. Do not add extra top-level reports, sidecars, or orphan screenshots unless Johan explicitly asks for an export format.
 
 ## HEW drawing rule
 
@@ -78,4 +80,4 @@ A usable answer starts with one of:
 - `NO CLEAN TRADE`
 - `STAND ASIDE`
 
-Then it states: setup, active HEW count and alternate, Copsey/HEW reason, trigger, invalidation, target/reward path, and what to ignore.
+Then it states: setup, active HEW count and alternate, Copsey/HEW reason, zone score/read, invalidation, target/reward path, and what to ignore.

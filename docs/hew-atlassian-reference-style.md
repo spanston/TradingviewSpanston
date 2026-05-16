@@ -2,13 +2,13 @@
 
 Reference package: `analysis_journal/TEAM_2026-05-16_hew`.
 
-Use this style for future HEW packages. Do not preload the TEAM package on every run; use it as the concrete example when updating style rules, auditing a package, or resolving ambiguity. The durable workflow rules live in `AGENTS.md`, `WORKFLOW.md`, and `strategies/hew/manifest.json`.
+Use this style for future HEW packages. Do not preload the TEAM package on every run; use it as the concrete example when updating style rules, auditing a package, or resolving ambiguity. The durable workflow rules live in `strategies/hew/manifest.json`; `AGENTS.md` and `WORKFLOW.md` are routing/index summaries.
 
 ## Required Style
 
 - Lead with `NO CLEAN TRADE`, `STAND ASIDE`, `WATCHLIST ONLY`, or `ACTIONABLE`.
-- Express the investment posture through accumulation and potential distribution boxes with percentages.
-- Derive probabilities from HEW ratio fit, projection context, AO divergence, and volume evidence.
+- Express the investment posture through accumulation and potential distribution boxes with uncalibrated `zone_score` values.
+- Derive zone scores from HEW ratio fit, projection context, AO divergence, and volume evidence; do not call them calibrated probabilities without a calibration set.
 - Use `review_conditions`, not trigger language, for future posture changes.
 - Keep the final chart clean: `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit.
 
@@ -36,4 +36,4 @@ The TEAM reference package used:
 - Internal Wave 3 sequence: `23.80 -> 53.45 -> 43.11 -> 98.21 -> 65.17 -> 149.80`.
 - Internal Wave 3 validation: `1.8583x` Wave 1, above the `1.764` floor.
 - Final chart objects: native Elliott drawings plus accumulation/distribution rectangles only.
-- Final posture: zone-first and non-actionable because distribution probability exceeded accumulation probability.
+- Final posture: zone-first and non-actionable because distribution score exceeded accumulation score.

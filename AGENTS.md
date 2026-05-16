@@ -34,7 +34,7 @@ Do not preload `analysis_journal`, screenshots, reports, or generated artifacts.
 
 All future HEW packages should follow the Atlassian/TEAM reference style unless Johan explicitly asks for a different output surface:
 
-- Zone-first investment posture: accumulation and potential distribution boxes with percentages before any action language.
+- Zone-first investment posture: accumulation and potential distribution boxes with uncalibrated zone scores before any action language.
 - Probabilities tied to HEW ratio fit, projection context, AO divergence, and volume evidence.
 - `review_conditions` and zone posture changes instead of trigger, breakout, confirmation, or reclaim language.
 - Native Elliott drawings only for macro counts, corrections, subwaves, and projections; no text-label substitutes for EW markers.
@@ -173,9 +173,9 @@ HEW outputs must include:
 - Triple-confluence targets must be derived from pivot projections, not raw target numbers.
 - Wave-B invalidation ladder with chart proof.
 - Structured Castaway decision table before trade language.
-- Copsey accumulation, distribution, retracement, projection, invalidation, and no-trade zone probabilities. For macro investment posture, use accumulation/distribution boxes with percentages and avoid trigger, breakout, confirmation, or reclaim framing.
+- Copsey accumulation, distribution, retracement, projection, invalidation, and no-trade zone scores. For macro investment posture, use accumulation/distribution boxes with uncalibrated scores and avoid trigger, breakout, confirmation, or reclaim framing.
 - Conditional forward impulse projection after any completed 1-5 + ABC structure; label projection as scenario, not fact.
-- Projection map tied to the highest-probability next count.
+- Projection map tied to the highest-scored next count.
 - Hard invalidation, flip level, target path, and stand-aside condition.
 - `execution_quality` with screenshot/vision QA, rerun condition/cadence, and manifest-driven drawing-spec compliance.
 - If any gate or pivot verification uses `pass_with_fallback`, cap confidence to `low`/`very_low`, disclose the fallback in `confidence.cap_reason`, and avoid `ACTIONABLE` output until the clean pivot path is restored.
@@ -205,6 +205,18 @@ Each HEW analysis package has exactly this shape:
 analysis_journal/<SYMBOL>_<YYYY-MM-DD>_hew/
   journal.md
   evidence.json
+  committee_brief.md
+  raw/
+    kpe_monthly.jsonl
+    kpe_weekly.jsonl
+    kpe_daily.jsonl
+    ohlcv_monthly.csv
+    ohlcv_weekly.csv
+    ohlcv_daily.csv
+    draw_list_before.json
+    draw_list_after.json
+    chart_state_final.json
+    hashes.json
   screenshots/
 ```
 
@@ -212,6 +224,8 @@ Rules:
 
 - Exactly one top-level `journal.md`.
 - Exactly one top-level `evidence.json`.
+- Exactly one top-level `committee_brief.md`.
+- Raw audit artifacts live only under `raw/` and must be hash-recorded in `raw/hashes.json` plus `evidence.json.raw_artifacts`.
 - Screenshots only under `screenshots/`.
 - `journal.md` embeds screenshots with package-relative links.
 - `evidence.json.screenshots[*].path` must match files in `screenshots/`.
@@ -232,9 +246,9 @@ Lead with the decision:
 - Setup.
 - Active HEW count and alternate.
 - Copsey/HEW reason.
-- Accumulation and distribution zones with probabilities.
+- Accumulation and distribution zones with uncalibrated zone scores.
 - Invalidation and flip level.
 - Target/reward path.
 - What to ignore/do nothing on.
 
-Every action must say why it follows from the HEW count, ratio model, zone-probability model, Wave-B ladder, and Castaway overlay. If that explanation is weak, the correct answer is no trade.
+Every action must say why it follows from the HEW count, ratio model, zone-score model, Wave-B ladder, and Castaway overlay. If that explanation is weak, the correct answer is no trade.

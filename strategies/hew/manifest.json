@@ -1,7 +1,7 @@
 {
   "strategy_id": "hew",
   "display_name": "Ian Copsey Fractal Forecasting",
-  "contract_version": "hew_stage_gated_v8_math_core",
+  "contract_version": "hew_institutional_v1",
   "reference_style": {
     "name": "Atlassian TEAM 2026-05-16 zone-first HEW package",
     "package_path": "analysis_journal/TEAM_2026-05-16_hew",
@@ -21,10 +21,12 @@
     "method",
     "workflow_version",
     "status",
+    "verdict",
     "stage_gates",
     "analysis_checklist",
     "chart_prep",
     "screenshots",
+    "raw_artifacts",
     "visual_pivot_evidence",
     "ian_copsey_wave_map",
     "hypotheses",
@@ -37,6 +39,7 @@
     "rule_validation",
     "wave_b_invalidation_ladder",
     "zone_probabilities",
+    "zone_scores",
     "action_rationale",
     "trade_posture",
     "castaway_trade_model",
@@ -48,6 +51,103 @@
     "confidence",
     "execution_quality"
   ],
+  "package_artifacts_protocol": {
+    "required_top_level_files": [
+      "journal.md",
+      "evidence.json",
+      "committee_brief.md"
+    ],
+    "required_directories": [
+      "raw",
+      "screenshots"
+    ],
+    "raw_artifacts_path": "raw_artifacts",
+    "hashes_path": "raw/hashes.json",
+    "required_raw_roles": [
+      "kpe_monthly",
+      "kpe_weekly",
+      "kpe_daily",
+      "ohlcv_monthly",
+      "ohlcv_weekly",
+      "ohlcv_daily",
+      "draw_list_before",
+      "draw_list_after",
+      "chart_state_final"
+    ],
+    "required_raw_files": [
+      "raw/kpe_monthly.jsonl",
+      "raw/kpe_weekly.jsonl",
+      "raw/kpe_daily.jsonl",
+      "raw/ohlcv_monthly.csv",
+      "raw/ohlcv_weekly.csv",
+      "raw/ohlcv_daily.csv",
+      "raw/draw_list_before.json",
+      "raw/draw_list_after.json",
+      "raw/chart_state_final.json",
+      "raw/hashes.json"
+    ],
+    "description": "Institutional packages preserve raw KPE, OHLCV, drawing, final chart-state, and file-hash evidence next to journal/evidence artifacts."
+  },
+  "stage_validation": {
+    "supported_stages": [
+      "extraction",
+      "verification",
+      "anchors",
+      "ratios",
+      "drawings",
+      "writing",
+      "critic",
+      "final"
+    ],
+    "order": [
+      "extraction",
+      "verification",
+      "anchors",
+      "ratios",
+      "drawings",
+      "writing",
+      "critic",
+      "final"
+    ],
+    "gate_by_stage": {
+      "extraction": "visual_pivot_extraction",
+      "verification": "ohlcv_pivot_verification",
+      "anchors": "top_down_chart_read",
+      "ratios": "top_down_chart_read",
+      "drawings": "drawing_protocol",
+      "writing": "evidence_contract",
+      "critic": "critic_review",
+      "final": "action_output"
+    }
+  },
+  "verdict_protocol": {
+    "path": "verdict",
+    "allowed_package_validity": [
+      "pass",
+      "fail"
+    ],
+    "allowed_evidence_grades": [
+      "clean",
+      "qualified",
+      "failed"
+    ],
+    "allowed_trade_permission": [
+      "allowed",
+      "blocked"
+    ],
+    "allowed_confidence": [
+      "high",
+      "medium",
+      "low",
+      "very_low"
+    ],
+    "blocked_postures": [
+      "STAND ASIDE",
+      "WATCHLIST ONLY",
+      "NO CLEAN TRADE"
+    ],
+    "description": "Package validity, evidence grade, trade permission, posture, and confidence are separate decisions. A valid package can still block trade permission."
+  },
   "stage_gates": [
     "route_and_layout",
     "visual_pivot_extraction",
@@ -572,6 +672,28 @@
     "presentation_conventions": {
       "lower_degree_macro_subwaves": "Use a visually distinct lower-degree Elliott style for subwaves inside macro waves; add a HEW Fibonacci projection zone/annotation when it clarifies the subwave proof.",
       "macro_label_offsets": "When macro Elliott labels overlap lower-degree labels at shared pivots, solve it with Elliott degree/style separation, visible-range choice, or separate screenshots. Do not use text labels as Elliott wave marker substitutes or alter evidence pivot prices/manifest levels."
+    },
+    "point_locking": {
+      "required_for_roles": [
+        "macro_count",
+        "projection_count",
+        "preceding_impulse_context",
+        "primary_degree_subwaves",
+        "secondary_degree_subwaves",
+        "subwave_count"
+      ],
+      "real_point_required_fields": [
+        "pivot_id",
+        "source_row_id",
+        "ohlcv_check_id"
+      ],
+      "projection_required_fields": [
+        "projection_formula_id",
+        "source_pivots"
+      ],
+      "zone_boundary_required_fields": [
+        "boundary_refs"
+      ]
     }
   },
   "zone_probabilities": {
@@ -594,6 +716,35 @@
       "moderate_high",
       "high"
     ]
+  },
+  "zone_scores": {
+    "required_zone_types": [
+      "accumulation",
+      "distribution"
+    ],
+    "allowed_zone_types": [
+      "accumulation",
+      "distribution",
+      "retracement",
+      "projection",
+      "invalidation",
+      "no_trade"
+    ],
+    "allowed_score_bands": [
+      "low",
+      "moderate_low",
+      "moderate",
+      "moderate_high",
+      "high"
+    ],
+    "required_score_fields": [
+      "model_version",
+      "calibrated_probability",
+      "score",
+      "band",
+      "drivers"
+    ],
+    "description": "Zone values are uncalibrated zone scores unless calibrated_probability is true and calibration evidence is supplied."
   },
   "zone_first_language": {
     "forbidden_terms": [
@@ -633,6 +784,35 @@
       "pass",
       "pass_with_fixes",
       "not_applicable"
+    ],
+    "required_top_level_fields": [
+      "package_validity_verdict",
+      "evidence_grade_verdict",
+      "trade_permission_verdict",
+      "visual_readability_verdict",
+      "blocking_issues",
+      "material_non_blocking_issues",
+      "strongest_bear_case_against_package",
+      "strongest_bull_case_against_package",
+      "required_followups"
+    ],
+    "allowed_package_validity_verdicts": [
+      "pass",
+      "fail"
+    ],
+    "allowed_evidence_grade_verdicts": [
+      "clean",
+      "qualified",
+      "failed"
+    ],
+    "allowed_trade_permission_verdicts": [
+      "allowed",
+      "blocked"
+    ],
+    "allowed_visual_readability_verdicts": [
+      "pass",
+      "pass_with_notes",
+      "fail"
     ],
     "required_checklist_ids": [
       "deliverables_complete",
@@ -724,6 +904,22 @@
       "not_required"
     ],
     "required_items": [
+      {
+        "id": "visual_qa",
+        "required_fields": [
+          "issues"
+        ],
+        "required_true_fields": [
+          "final_chart_stands_alone",
+          "sidebars_hidden",
+          "exporter_hidden_in_presentation",
+          "zone_labels_visible",
+          "zone_price_ranges_visible",
+          "zone_scores_visible",
+          "elliott_labels_readable",
+          "audit_screenshots_marked_audit_only"
+        ]
+      },
       {
         "id": "vision_qa",
         "required_fields": [
