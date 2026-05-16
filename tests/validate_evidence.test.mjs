@@ -10,8 +10,8 @@ import { validateEvidenceFile } from '../scripts/validate_evidence.mjs';
 
 const requiredVisualFirstGates = ['visual_pivot_extraction', 'ohlcv_pivot_verification'];
 
-function kpeRow(tf, id, type, time, price) {
-  return `KPE|v=1|tf=${tf}|id=${id}|type=${type}|time=${time}|price=${price}|left=5|right=5|confirmed=true`;
+function kpeRow(tf, id, type, time, price, date) {
+  return `KPE|v=2|tf=${tf}|id=${id}|type=${type}|date=${date}|time=${time}|price=${price}|timezone=Etc/UTC|left=5|right=5|confirmed=true`;
 }
 
 function baseHypothesis(overrides = {}) {
@@ -166,7 +166,7 @@ function baseEvidence(overrides = {}) {
       iteration_decision: 'accepted',
       exporter: {
         name: 'Konsili Pivot Exporter',
-        version: 1,
+        version: 2,
         study_filter: 'Konsili Pivot Exporter',
         pine_script: 'tradingview/konsili_pivot_exporter.pine',
         row_prefix: 'KPE',
@@ -176,22 +176,22 @@ function baseEvidence(overrides = {}) {
         {
           timeframe: 'monthly',
           screenshot: 'screenshots/pivots.png',
-          exporter_rows: [kpeRow('1M', '1M_1704067200000_H', 'high', 1704067200000, 150)],
-          pivots: [{ id: 'm_high', type: 'high', price: 150, exporter_row_id: '1M_1704067200000_H', source_text: 'KPE monthly pivot high 150' }],
+          exporter_rows: [kpeRow('1M', '1M_1704067200000_H', 'high', 1704067200000, 150, '2024-01-01 00:00')],
+          pivots: [{ id: 'm_high', type: 'high', date: '2024-01-01 00:00', time: 1704067200000, price: 150, exporter_row_id: '1M_1704067200000_H', source_text: 'KPE monthly pivot high 150' }],
           ohlcv_verification: [{ pivot_id: 'm_high', status: 'pass', evidence: 'Monthly OHLCV high verified 150.' }]
         },
         {
           timeframe: 'weekly',
           screenshot: 'screenshots/pivots.png',
-          exporter_rows: [kpeRow('1W', '1W_1704672000000_L', 'low', 1704672000000, 100)],
-          pivots: [{ id: 'w_low', type: 'low', price: 100, exporter_row_id: '1W_1704672000000_L', source_text: 'KPE weekly pivot low 100' }],
+          exporter_rows: [kpeRow('1W', '1W_1704672000000_L', 'low', 1704672000000, 100, '2024-01-08 00:00')],
+          pivots: [{ id: 'w_low', type: 'low', date: '2024-01-08 00:00', time: 1704672000000, price: 100, exporter_row_id: '1W_1704672000000_L', source_text: 'KPE weekly pivot low 100' }],
           ohlcv_verification: [{ pivot_id: 'w_low', status: 'pass', evidence: 'Weekly OHLCV low verified 100.' }]
         },
         {
           timeframe: 'daily',
           screenshot: 'screenshots/pivots.png',
-          exporter_rows: [kpeRow('1D', '1D_1704844800000_H', 'high', 1704844800000, 125)],
-          pivots: [{ id: 'd_high', type: 'high', price: 125, exporter_row_id: '1D_1704844800000_H', source_text: 'KPE daily pivot high 125' }],
+          exporter_rows: [kpeRow('1D', '1D_1704844800000_H', 'high', 1704844800000, 125, '2024-01-10 00:00')],
+          pivots: [{ id: 'd_high', type: 'high', date: '2024-01-10 00:00', time: 1704844800000, price: 125, exporter_row_id: '1D_1704844800000_H', source_text: 'KPE daily pivot high 125' }],
           ohlcv_verification: [{ pivot_id: 'd_high', status: 'pass_with_fallback', evidence: 'Daily OHLCV summary verified nearest high.' }]
         }
       ],
@@ -407,7 +407,9 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.ok(manifest.required_top_level.includes('hypotheses'), 'hew missing hypotheses');
   assert.deepEqual(manifest.visual_pivot_protocol.required_timeframes, ['monthly', 'weekly', 'daily']);
   assert.equal(manifest.visual_pivot_protocol.preferred_indicator, 'Konsili Pivot Exporter');
+  assert.equal(manifest.visual_pivot_protocol.required_exporter.version, 2);
   assert.equal(manifest.visual_pivot_protocol.required_exporter.pine_script, 'tradingview/konsili_pivot_exporter.pine');
+  assert.deepEqual(manifest.visual_pivot_protocol.required_exporter.required_pivot_fields, ['date', 'time', 'price', 'exporter_row_id']);
   assert.deepEqual(manifest.visual_pivot_protocol.required_exporter.allowed_source_tools, ['data_get_pine_tables', 'data_get_pine_labels']);
   assert.ok(manifest.required_screenshot_roles.includes('visual_pivots'), 'hew missing visual_pivots screenshot role');
   assert.deepEqual(manifest.chart_mode_protocol.required_modes, ['extraction', 'verification', 'strategy_proof', 'presentation']);
@@ -588,12 +590,27 @@ test('Konsili Pivot Exporter pivot references must match parsed rows', () => {
   const evidence = baseEvidence();
   evidence.visual_pivot_evidence.timeframes[2].pivots[0].exporter_row_id = 'missing_row';
   evidence.visual_pivot_evidence.timeframes[2].exporter_rows = [
-    'KPE|v=1|tf=1D|id=broken|type=high|time=bad|price=125|left=5|right=5|confirmed=true'
+    'KPE|v=2|tf=1D|id=broken|type=high|date=2024-01-10 00:00|time=bad|price=125|timezone=Etc/UTC|left=5|right=5|confirmed=true'
   ];
   const result = validateEvidenceFile(writeEvidence(evidence));
   const errors = result.errors.join('\n');
   assert.match(errors, /visual_pivot_evidence\.daily\.exporter_rows row 0: invalid time/i);
   assert.match(errors, /exporter_row_id not found in exporter_rows: missing_row/i);
+});
+
+test('Konsili Pivot Exporter confirms date, time, type, and price for every accepted pivot', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.timeframes[0].pivots[0].date = '2024-01-02 00:00';
+  evidence.visual_pivot_evidence.timeframes[1].pivots[0].time = 1704758400000;
+  evidence.visual_pivot_evidence.timeframes[2].pivots[0].price = 126;
+  evidence.visual_pivot_evidence.timeframes[2].pivots[0].type = 'low';
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /visual_pivot_evidence\.monthly\.pivots\.m_high\.date must match exporter row 1M_1704067200000_H/i);
+  assert.match(errors, /visual_pivot_evidence\.weekly\.pivots\.w_low\.time must match exporter row 1W_1704672000000_L/i);
+  assert.match(errors, /visual_pivot_evidence\.daily\.pivots\.d_high\.price must match exporter row 1D_1704844800000_H/i);
+  assert.match(errors, /visual_pivot_evidence\.daily\.pivots\.d_high\.type must match exporter row 1D_1704844800000_H/i);
 });
 
 test('Ian Copsey wave map is mandatory and keeps scanners out of count selection', () => {

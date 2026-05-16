@@ -21,7 +21,7 @@ Rules:
 - `journal.md` embeds screenshots with package-relative paths.
 - `evidence.json.screenshots[*].path` points to those same files.
 - `evidence.json.stage_gates` records route/layout, visual pivot extraction, OHLCV pivot verification, top-down read, drawing protocol, evidence contract, action output, and critic review.
-- `evidence.json.visual_pivot_evidence` records `Konsili Pivot Exporter` metadata, raw `KPE|...` exporter rows, pivot `exporter_row_id` links, Monthly/Weekly/Daily visual proof screenshots, and OHLCV verification.
+- `evidence.json.visual_pivot_evidence` records `Konsili Pivot Exporter` metadata, raw `KPE|...` exporter rows, pivot `exporter_row_id` links, indicator-confirmed pivot date/time/price, Monthly/Weekly/Daily visual proof screenshots, and OHLCV verification.
 - `chart_prep.chart_mode_checklist` records extraction, verification, strategy-proof, and presentation modes; presentation mode must hide pivot scaffolding unless the package is explicitly audit-only.
 - `chart_prep.drawing_manifest` records every meaningful drawing tool and timeframe owner.
 

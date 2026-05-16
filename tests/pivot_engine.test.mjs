@@ -60,8 +60,8 @@ test('rankHewImpulseCandidates rejects sub-176.4% wave 3 counts and ranks the va
 
 test('parsePivotExporterRows normalizes Konsili Pivot Exporter table rows', () => {
   const rows = [
-    'KPE|v=1|tf=1M|id=1M_1704067200000_H|type=high|time=1704067200000|price=150.25|left=5|right=5|confirmed=true',
-    'KPE|v=1|tf=1W|id=1W_1704672000000_L|type=low|time=1704672000000|price=100|left=5|right=5|confirmed=true'
+    'KPE|v=2|tf=1M|id=1M_1704067200000_H|type=high|date=2024-01-01 00:00|time=1704067200000|price=150.25|timezone=Etc/UTC|left=5|right=5|confirmed=true',
+    'KPE|v=2|tf=1W|id=1W_1704672000000_L|type=low|date=2024-01-08 00:00|time=1704672000000|price=100|timezone=Etc/UTC|left=5|right=5|confirmed=true'
   ];
 
   const result = parsePivotExporterRows(rows);
@@ -71,16 +71,27 @@ test('parsePivotExporterRows normalizes Konsili Pivot Exporter table rows', () =
   assert.deepEqual(result.pivots.map((pivot) => pivot.timeframe), ['monthly', 'weekly']);
   assert.equal(result.pivots[0].id, '1M_1704067200000_H');
   assert.equal(result.pivots[0].type, 'high');
+  assert.equal(result.pivots[0].date, '2024-01-01 00:00');
+  assert.equal(result.pivots[0].time, 1704067200000);
   assert.equal(result.pivots[0].price, 150.25);
 });
 
 test('parsePivotExporterRows fails closed on malformed exporter rows', () => {
   const result = parsePivotExporterRows([
     'Pivot Points High Low label with no structured data',
-    'KPE|v=1|tf=1D|id=bad|type=high|time=bad|price=120|left=5|right=5|confirmed=true'
+    'KPE|v=2|tf=1D|id=bad|type=high|date=2024-01-10 00:00|time=bad|price=120|timezone=Etc/UTC|left=5|right=5|confirmed=true'
   ]);
 
   assert.equal(result.pivots.length, 0);
   assert.match(result.errors.join('\n'), /missing KPE row prefix/i);
   assert.match(result.errors.join('\n'), /invalid time/i);
+});
+
+test('parsePivotExporterRows requires the indicator date field', () => {
+  const result = parsePivotExporterRows([
+    'KPE|v=2|tf=1D|id=bad|type=high|time=1704844800000|price=120|timezone=Etc/UTC|left=5|right=5|confirmed=true'
+  ]);
+
+  assert.equal(result.pivots.length, 0);
+  assert.match(result.errors.join('\n'), /missing date/i);
 });

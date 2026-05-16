@@ -26,7 +26,7 @@ Read first:
 2. Call `chart_get_state` after layout switch.
 3. Set/verify symbol.
 4. Enter extraction mode: confirm `Konsili Pivot Exporter` from `tradingview/konsili_pivot_exporter.pine` is visible, extract important pivots visually on Monthly, Weekly, and Daily using `study_filter: "Konsili Pivot Exporter"` reads from Pine tables or labels, and treat the noisy pivot layer as scaffolding only.
-5. Capture a `visual_pivots` screenshot and record the exporter metadata, raw `KPE|...` rows, and pivot row IDs in `visual_pivot_evidence`.
+5. Capture a `visual_pivots` screenshot and record the exporter metadata, raw `KPE|...` rows, pivot row IDs, and indicator-confirmed date/time/price in `visual_pivot_evidence`.
 6. Enter verification mode: retrieve TradingView OHLCV summaries for the same timeframes and verify the visual pivots before HEW count selection.
 7. If visual pivots and OHLCV conflict, iterate extraction or downgrade; do not build HEW counts from unverified pivots.
 8. Read Monthly -> Weekly -> Daily. Macro review always starts on Monthly, then Weekly.

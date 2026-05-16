@@ -24,7 +24,7 @@ Every serious analysis must pass eight gates in order. Do not skip forward. If a
    - Use this as scaffolding: the exporter may be noisy here because the purpose is pivot harvest, not final decision display.
    - Extract important pivots visually from exporter output first, using focused Pine reads with `study_filter: "Konsili Pivot Exporter"` and structured `KPE|...` rows from tables or labels.
    - Capture a `visual_pivots` screenshot before HEW interpretation.
-   - Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, price, source text, and screenshot path in `visual_pivot_evidence`.
+   - Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, date, timestamp, price, source text, and screenshot path in `visual_pivot_evidence`; each accepted pivot must match the referenced KPE row.
 
 3. OHLCV pivot verification / verification mode
    - Retrieve TradingView OHLCV summaries for Monthly, Weekly, and Daily.

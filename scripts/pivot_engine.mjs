@@ -8,7 +8,7 @@ export const KONSILI_PIVOT_EXPORTER = Object.freeze({
   studyFilter: 'Konsili Pivot Exporter',
   pineScript: 'tradingview/konsili_pivot_exporter.pine',
   rowPrefix: 'KPE',
-  version: 1,
+  version: 2,
   sourceTools: ['data_get_pine_tables', 'data_get_pine_labels']
 });
 
@@ -89,6 +89,7 @@ export function parsePivotExporterRow(row, options = {}) {
   if (version !== Number(options.version ?? KONSILI_PIVOT_EXPORTER.version)) errors.push(`unsupported exporter version: ${fields.v}`);
   if (!String(fields.tf || '').trim()) errors.push('missing tf');
   if (!String(fields.id || '').trim()) errors.push('missing id');
+  if (!String(fields.date || '').trim()) errors.push('missing date');
   if (!['high', 'low'].includes(type)) errors.push(`invalid type: ${fields.type}`);
   if (price == null) errors.push(`invalid price: ${fields.price}`);
   if (time == null) errors.push(`invalid time: ${fields.time}`);
@@ -105,8 +106,10 @@ export function parsePivotExporterRow(row, options = {}) {
       timeframe: normalizePivotExporterTimeframe(fields.tf),
       raw_timeframe: fields.tf,
       type,
+      date: fields.date,
       price,
       time,
+      timezone: fields.timezone || null,
       left,
       right,
       confirmed,

@@ -247,13 +247,13 @@ function validateRequiredPivotExporter(pivotEvidence, protocol, errors) {
 }
 
 function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, errors) {
-  if (!requiredExporter) return new Set();
+  if (!requiredExporter) return new Map();
 
   const rows = item.exporter_rows;
   const itemPath = `visual_pivot_evidence.${timeframe || '<unknown>'}`;
   if (!Array.isArray(rows) || rows.length === 0) {
     errors.push(`${itemPath}.exporter_rows must be a non-empty array from Konsili Pivot Exporter`);
-    return new Set();
+    return new Map();
   }
 
   const parsed = parsePivotExporterRows(rows, {
@@ -262,13 +262,30 @@ function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, e
   });
   for (const error of parsed.errors) errors.push(`${itemPath}.exporter_rows ${error}`);
 
-  const rowIds = new Set(parsed.pivots.map((pivot) => pivot.id));
+  const rowsById = new Map(parsed.pivots.map((pivot) => [pivot.id, pivot]));
   const matchingRows = parsed.pivots.filter((pivot) => pivot.timeframe === timeframe);
   if (!matchingRows.length) {
     errors.push(`${itemPath}.exporter_rows must include at least one ${timeframe} KPE row`);
   }
 
-  return rowIds;
+  return rowsById;
+}
+
+function validatePivotMatchesExporterRow(pivot, exporterRow, path, requiredExporter, errors) {
+  const tolerance = Number(requiredExporter.price_tolerance_abs ?? 0.000001);
+  const requiredFields = new Set(requiredExporter.required_pivot_fields || ['date', 'time', 'price', 'exporter_row_id']);
+
+  if (requiredFields.has('date') && !String(pivot.date || '').trim()) errors.push(`${path}.date is required from exporter row`);
+  if (requiredFields.has('time') && typeof pivot.time !== 'number') errors.push(`${path}.time must be the exporter row timestamp number`);
+  if (requiredFields.has('price') && typeof pivot.price !== 'number') errors.push(`${path}.price must be the exporter row price number`);
+  if (!exporterRow) return;
+
+  if (pivot.type && pivot.type !== exporterRow.type) errors.push(`${path}.type must match exporter row ${exporterRow.id}: ${exporterRow.type}`);
+  if (String(pivot.date || '') !== exporterRow.date) errors.push(`${path}.date must match exporter row ${exporterRow.id}: ${exporterRow.date}`);
+  if (typeof pivot.time === 'number' && pivot.time !== exporterRow.time) errors.push(`${path}.time must match exporter row ${exporterRow.id}: ${exporterRow.time}`);
+  if (typeof pivot.price === 'number' && Math.abs(pivot.price - exporterRow.price) > tolerance) {
+    errors.push(`${path}.price must match exporter row ${exporterRow.id}: ${exporterRow.price}`);
+  }
 }
 
 function validateVisualPivotEvidence(evidence, manifest, errors) {
@@ -314,7 +331,7 @@ function validateVisualPivotEvidence(evidence, manifest, errors) {
         errors.push(`visual_pivot_evidence.${timeframe} invalid timeframe`);
       }
     }
-    const exporterRowIds = validateTimeframePivotExporterRows(item, timeframe, requiredExporter, errors);
+    const exporterRowsById = validateTimeframePivotExporterRows(item, timeframe, requiredExporter, errors);
 
     const screenshot = String(item.screenshot || '').replace(/\\/g, '/');
     if (!screenshot) {
@@ -340,8 +357,16 @@ function validateVisualPivotEvidence(evidence, manifest, errors) {
           const exporterRowId = String(pivot.exporter_row_id || '').trim();
           if (!exporterRowId) {
             errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing exporter_row_id`);
-          } else if (!exporterRowIds.has(exporterRowId)) {
+          } else if (!exporterRowsById.has(exporterRowId)) {
             errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} exporter_row_id not found in exporter_rows: ${exporterRowId}`);
+          } else {
+            validatePivotMatchesExporterRow(
+              pivot,
+              exporterRowsById.get(exporterRowId),
+              `visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'}`,
+              requiredExporter,
+              errors
+            );
           }
         }
       }

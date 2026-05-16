@@ -21,7 +21,7 @@ This repo prevents structural drift: rules stay in one narrow HEW/Copsey lane, a
 6. Read Monthly -> Weekly -> Daily using TradingView MCP only unless Johan asked for outside research.
 7. Enter strategy-proof mode: hide/reduce pivot clutter and draw only HEW proof.
 8. Enter presentation mode: hide extraction scaffolding, leave a readable decision chart, and verify final live state.
-9. Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, visual pivots, chart modes, and drawings in the evidence package.
+9. Record exporter metadata, raw `exporter_rows`, `exporter_row_id`, visual pivots with matching indicator date/time/price, chart modes, and drawings in the evidence package.
 10. Produce exactly one `journal.md` and one `evidence.json` per package.
 11. Explain the action from the HEW count: setup, active/alternate count, trigger, invalidation, target path, and no-trade condition.
 12. Run final critic review.

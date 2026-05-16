@@ -100,7 +100,7 @@ Institutional-grade analysis is visual-first:
 
 1. Load `HEW layout` and confirm `Konsili Pivot Exporter` is visible.
 2. Extract important pivots from the exporter on Monthly, Weekly, and Daily. Use `study_filter: "Konsili Pivot Exporter"` and read structured `KPE|...` rows from Pine tables or labels; do not infer the first pivot map from raw OHLCV alone.
-3. Capture a `visual_pivots` screenshot and record the exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, price, source text, and screenshot path in `visual_pivot_evidence`.
+3. Capture a `visual_pivots` screenshot and record the exporter metadata, raw `exporter_rows`, `exporter_row_id`, timeframe, pivot type, date, timestamp, price, source text, and screenshot path in `visual_pivot_evidence`. The pivot date/time/price must match the referenced KPE row.
 4. Retrieve TradingView OHLCV summaries for the same timeframes and verify that each visual pivot matches the relevant high/low/support/resistance evidence.
 5. Only after the visual pivots are verified may the agent apply HEW rules. If verification changes the pivots, repeat the extraction/verification loop and document the revision.
 

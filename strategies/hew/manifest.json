@@ -90,15 +90,27 @@
     "preferred_indicator": "Konsili Pivot Exporter",
     "required_exporter": {
       "name": "Konsili Pivot Exporter",
-      "version": 1,
+      "version": 2,
       "study_filter": "Konsili Pivot Exporter",
       "pine_script": "tradingview/konsili_pivot_exporter.pine",
       "row_prefix": "KPE",
+      "required_row_fields": [
+        "date",
+        "time",
+        "price"
+      ],
+      "required_pivot_fields": [
+        "date",
+        "time",
+        "price",
+        "exporter_row_id"
+      ],
+      "price_tolerance_abs": 0.000001,
       "allowed_source_tools": [
         "data_get_pine_tables",
         "data_get_pine_labels"
       ],
-      "description": "Pivots must be exported as structured KPE rows from the visible Konsili Pivot Exporter table or labels before OHLCV verification."
+      "description": "Pivots must be exported as structured KPE rows from the visible Konsili Pivot Exporter table or labels before OHLCV verification. Each accepted pivot must carry date, time, and price copied from its exporter row."
     },
     "required_timeframes": [
       "monthly",

@@ -13,13 +13,16 @@ var array<label> pivotLabels = array.new_label()
 
 makeRow(string pivotType, float price, int pivotTime) =>
     pivotId = str.format("{0}_{1}_{2}", timeframe.period, str.tostring(pivotTime), pivotType == "high" ? "H" : "L")
+    pivotDate = str.format_time(pivotTime, "yyyy-MM-dd HH:mm", syminfo.timezone)
     str.format(
-      "KPE|v=1|tf={0}|id={1}|type={2}|time={3}|price={4}|left={5}|right={6}|confirmed=true",
+      "KPE|v=2|tf={0}|id={1}|type={2}|date={3}|time={4}|price={5}|timezone={6}|left={7}|right={8}|confirmed=true",
       timeframe.period,
       pivotId,
       pivotType,
+      pivotDate,
       str.tostring(pivotTime),
       str.tostring(price, format.mintick),
+      syminfo.timezone,
       str.tostring(leftBars),
       str.tostring(rightBars))
 
@@ -56,7 +59,7 @@ if not na(pivotLow)
     recordPivot("low", pivotLow, time[rightBars])
 
 if showTable and barstate.islast
-    table.cell(exportTable, 0, 0, "Konsili Pivot Exporter v1", text_color=color.white, bgcolor=color.new(color.blue, 15))
+    table.cell(exportTable, 0, 0, "Konsili Pivot Exporter v2", text_color=color.white, bgcolor=color.new(color.blue, 15))
     for rowIndex = 0 to maxRows - 1
         sourceIndex = array.size(exportRows) - maxRows + rowIndex
         rowText = sourceIndex >= 0 ? array.get(exportRows, sourceIndex) : ""
