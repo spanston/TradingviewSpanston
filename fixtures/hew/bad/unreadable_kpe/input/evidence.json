@@ -4,15 +4,6 @@
   "symbol": "NASDAQ:TEAM",
   "method": "Ian Copsey Fractal Forecasting",
   "workflow_version": "hew_institutional_v1",
-  "migration_policy": {
-    "is_migrated_package": true,
-    "source_contract_version": "hew_stage_gated_v8_math_core",
-    "target_contract_version": "hew_institutional_v1",
-    "allowed_exemptions": [
-      "draw_list_before_original_not_available"
-    ],
-    "exemption_effect": "evidence_grade_qualified_trade_permission_blocked"
-  },
   "status": "no_clean_trade",
   "stage_gates": [
     {
@@ -416,17 +407,9 @@
         "tool": "rectangle",
         "timeframe_owner": "macro",
         "screenshot": "screenshots/wave3_internals.png",
-        "zone_function": "projection",
         "price_range": {
           "low": 95.41,
           "high": 98.21
-        },
-        "visible_label": {
-          "text": "PROJECTION 95.41-98.21 | score n/a | HEW fib",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "source": "HEW Fibonacci projection zone for lower-degree Wave 3: 1.764 projection from 23.80 -> 53.45, projected from 43.11, to the actual internal Wave 3 high.",
         "boundary_refs": {
@@ -660,13 +643,6 @@
           "low": 78.2,
           "high": 96.32
         },
-        "visible_label": {
-          "text": "ACC 78.20-96.32 | score 44 | moderate",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
-        },
         "boundary_refs": {
           "low": {
             "projection_formula_id": "primary_accumulation_box_low_boundary"
@@ -688,13 +664,6 @@
         "price_range": {
           "low": 43.88,
           "high": 56.01
-        },
-        "visible_label": {
-          "text": "ACC 43.88-56.01 | score 38 | moderate_low",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "boundary_refs": {
           "low": {
@@ -718,13 +687,6 @@
           "low": 96.32,
           "high": 119.73
         },
-        "visible_label": {
-          "text": "DIST 96.32-119.73 | score 61 | high",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
-        },
         "boundary_refs": {
           "low": {
             "pivot_id": "d_2026_05_high_96_32"
@@ -746,13 +708,6 @@
         "price_range": {
           "low": 149.31,
           "high": 166.48
-        },
-        "visible_label": {
-          "text": "DIST 149.31-166.48 | score 48 | moderate",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "boundary_refs": {
           "low": {
@@ -891,7 +846,7 @@
         "timeframe": "monthly",
         "screenshot": "screenshots/visual_pivots_monthly.png",
         "exporter_rows": [
-          "KPE|v=2|tf=M|id=M_1480602600000_L|type=low|date=2016-12-01 09:30|time=1480602600000|price=23.80|timezone=America/New_York|left=5|right=5|confirmed=true",
+          "KPE|v=2|tf=M|id=broken|type=high|date=2024-01-01 00:00|time=bad|price=bad",
           "KPE|v=2|tf=M|id=M_1561987800000_H|type=high|date=2019-07-01 09:30|time=1561987800000|price=149.80|timezone=America/New_York|left=5|right=5|confirmed=true",
           "KPE|v=2|tf=M|id=M_1633095000000_H|type=high|date=2021-10-01 09:30|time=1633095000000|price=483.13|timezone=America/New_York|left=5|right=5|confirmed=true",
           "KPE|v=2|tf=M|id=M_1667309400000_L|type=low|date=2022-11-01 09:30|time=1667309400000|price=113.86|timezone=America/New_York|left=5|right=5|confirmed=true",
@@ -1929,12 +1884,6 @@
     "visual_readability_verdict": "pass_with_notes",
     "blocking_issues": [],
     "material_non_blocking_issues": [
-      {
-        "id": "draw_list_before_original_not_available",
-        "severity": "material",
-        "evidence": "TEAM is a migrated v8 package; the original pre-run draw_list_before was not captured at package creation time, so this exemption keeps evidence qualified and trade permission blocked.",
-        "effect": "Does not permit ACTIONABLE output; new packages must capture the original draw_list_before."
-      },
       {
         "id": "migrated_v8_raw_draw_state",
         "severity": "material",

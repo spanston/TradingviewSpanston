@@ -99,10 +99,21 @@ If presentation mode fails, the package is not done even if the screenshots and 
 
 ```bash
 npm test
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage extraction
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage verification
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage anchors
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage ratios
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage drawings
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage writing
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage critic
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage final
 npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json
 ```
 
 `npm test` starts with `scripts/check_integrity.mjs`, which fails on NUL-corrupted tracked text files or invalid JSON before unit/contract tests run.
+Stage validation runs only the validator groups relevant to that construction stage. `--stage final` and the no-stage command run the full suite and remain the acceptance gate.
+`zone_scores` are canonical. Legacy `zone_probabilities` may remain in migrated packages only as compatibility data, and if present they must match the corresponding `zone_scores` entries.
+Migration exemptions are allowed only for explicitly migrated packages through `migration_policy`. Any exemption must force `verdict.evidence_grade = qualified`, `verdict.trade_permission = blocked`, and disclosure in `critic_review.material_non_blocking_issues`; new packages cannot use migration exemptions.
 
 The validator fails closed on:
 

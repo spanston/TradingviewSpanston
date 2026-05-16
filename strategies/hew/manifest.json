@@ -7,7 +7,7 @@
     "package_path": "analysis_journal/TEAM_2026-05-16_hew",
     "distilled_doc": "docs/hew-atlassian-reference-style.md",
     "required_traits": [
-      "zone_first_accumulation_distribution_probabilities",
+      "zone_first_accumulation_distribution_scores",
       "native_elliott_wave_markers_only",
       "distinct_lower_degree_macro_subwaves",
       "hew_fibonacci_projection_zone_for_internal_subwave_proof",
@@ -38,7 +38,6 @@
     "ratio_validation",
     "rule_validation",
     "wave_b_invalidation_ladder",
-    "zone_probabilities",
     "zone_scores",
     "action_rationale",
     "trade_posture",
@@ -177,7 +176,7 @@
         "macro_count_subwaves_ratio_aligned",
         "projection_forward_margin_next_count",
         "wave_b_ladder_chart_proof",
-        "zone_probabilities_complete",
+        "zone_scores_complete",
         "action_rationale_complete",
         "critic_review_complete"
       ],
@@ -273,7 +272,20 @@
     "allowed_verification_statuses": [
       "pass",
       "pass_with_fallback"
-    ]
+    ],
+    "historical_drilldowns": {
+      "path": "visual_pivot_evidence.historical_drilldowns",
+      "required_fields": [
+        "id",
+        "timeframe",
+        "date_range",
+        "screenshot",
+        "accepted_scope",
+        "exporter_rows",
+        "ohlcv_verification"
+      ],
+      "description": "Focused historical KPE drilldowns are first-class verified pivot sources for macro internals when they carry KPE rows and OHLCV checks."
+    }
   },
   "ian_copsey_wave_map_protocol": {
     "path": "ian_copsey_wave_map",
@@ -694,9 +706,33 @@
       "zone_boundary_required_fields": [
         "boundary_refs"
       ]
+    },
+    "visible_label": {
+      "required_for_final_zone_drawings": true,
+      "required_fields": [
+        "text",
+        "includes_zone_type",
+        "includes_range",
+        "includes_score",
+        "visible_on_final_chart"
+      ],
+      "zone_type_terms": {
+        "accumulation": [
+          "acc",
+          "accumulation"
+        ],
+        "distribution": [
+          "dist",
+          "distribution"
+        ]
+      },
+      "description": "Final accumulation/distribution/retracement/projection zone drawings must carry visible label metadata with type, range, score, and band where available."
     }
   },
   "zone_probabilities": {
+    "legacy_compatibility": true,
+    "canonical_replacement": "zone_scores",
+    "description": "Legacy compatibility only. New package logic must use zone_scores; if present, legacy values must match the canonical zone_scores entries.",
     "required_zone_types": [
       "accumulation",
       "distribution"
@@ -761,6 +797,14 @@
       "review_conditions",
       "execution_quality.rerun_schedule"
     ]
+  },
+  "migration_policy": {
+    "path": "migration_policy",
+    "allowed_exemptions": [
+      "draw_list_before_original_not_available"
+    ],
+    "required_exemption_effect": "evidence_grade_qualified_trade_permission_blocked",
+    "description": "Migration exemptions preserve accepted legacy packages without weakening new-package standards. Exemptions require explicit migrated-package metadata, qualified evidence, blocked trade permission, and critic disclosure."
   },
   "action_rationale_fields": [
     "selected_action",

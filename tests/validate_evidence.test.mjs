@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
@@ -211,7 +211,7 @@ function baseEvidence(overrides = {}) {
       { id: 'macro_count_subwaves_ratio_aligned', status: 'pass', evidence: 'macro and subwaves drawn with native Elliott tools' },
       { id: 'projection_forward_margin_next_count', status: 'pass', evidence: 'projection path drawn with Elliott tool' },
       { id: 'wave_b_ladder_chart_proof', status: 'pass', evidence: 'ladder screenshot present' },
-      { id: 'zone_probabilities_complete', status: 'pass', evidence: 'zones scored' },
+      { id: 'zone_scores_complete', status: 'pass', evidence: 'zones scored' },
       { id: 'action_rationale_complete', status: 'pass', evidence: 'rationale complete' },
       { id: 'critic_review_complete', status: 'pass', evidence: 'critic complete' }
     ],
@@ -665,6 +665,90 @@ test('valid HEW package passes the stage-gated workflow contract', () => {
   assert.deepEqual(result.errors, []);
 });
 
+test('stage validation dispatch does not require later-stage fields early', () => {
+  const cases = [
+    ['extraction', ['hypotheses', 'chart_prep', 'critic_review', 'action_rationale']],
+    ['verification', ['hypotheses', 'chart_prep', 'critic_review', 'action_rationale']],
+    ['anchors', ['chart_prep', 'critic_review', 'action_rationale']],
+    ['ratios', ['critic_review']],
+    ['drawings', ['critic_review', 'action_rationale']],
+    ['writing', ['critic_review']],
+    ['critic', ['visual_pivot_evidence', 'chart_prep']]
+  ];
+
+  for (const [stage, fieldsToRemove] of cases) {
+    const evidence = baseEvidence();
+    for (const field of fieldsToRemove) delete evidence[field];
+    evidence.stage_gates = evidence.stage_gates.filter((gate) =>
+      ['route_and_layout', 'visual_pivot_extraction', 'ohlcv_pivot_verification', 'top_down_chart_read', 'drawing_protocol', 'evidence_contract', 'critic_review'].includes(gate.id)
+    );
+    const result = validateEvidenceFile(writeEvidence(evidence), { stage });
+    assert.deepEqual(result.errors, [], `${stage} errors:\n${result.errors.join('\n')}`);
+  }
+});
+
+test('final stage still runs the complete validator suite', () => {
+  const evidence = baseEvidence();
+  delete evidence.critic_review;
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'final' });
+  assert.match(result.errors.join('\n'), /missing top-level field: critic_review/i);
+});
+
+test('drawings stage fails if Elliott drawings lack pivot-locked points', () => {
+  const evidence = baseEvidence();
+  delete evidence.chart_prep.drawing_manifest[0].points;
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'drawings' });
+  assert.match(result.errors.join('\n'), /drawing_manifest\.preceding_impulse\.points must be a non-empty pivot-locked geometry array/i);
+});
+
+test('historical drilldown KPE pivots cannot be downgraded to projected drawing points', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.historical_drilldowns = [
+    {
+      id: 'focused_weekly_drilldown',
+      timeframe: 'weekly',
+      date_range: '2024-01-01 to 2024-02-01',
+      screenshot: 'screenshots/pivots.png',
+      accepted_scope: 'Fixture drilldown',
+      exporter_rows: [kpeRow('1W', '1W_1705276800000_H', 'high', 1705276800000, 110, '2024-01-15 00:00')],
+      ohlcv_verification: [{ pivot_id: 'w_2024_01_high_110', status: 'pass', evidence: 'Historical weekly KPE row verified.' }]
+    }
+  ];
+
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'drawings' });
+
+  assert.match(result.errors.join('\n'), /is marked projected but matches verified KPE pivot w_2024_01_high_110/i);
+});
+
+test('historical drilldown KPE pivots can lock drawing geometry as verified points', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.historical_drilldowns = [
+    {
+      id: 'focused_weekly_drilldown',
+      timeframe: 'weekly',
+      date_range: '2024-01-01 to 2024-02-01',
+      screenshot: 'screenshots/pivots.png',
+      accepted_scope: 'Fixture drilldown',
+      exporter_rows: [kpeRow('1W', '1W_1705276800000_H', 'high', 1705276800000, 110, '2024-01-15 00:00')],
+      ohlcv_verification: [{ pivot_id: 'w_2024_01_high_110', status: 'pass', evidence: 'Historical weekly KPE row verified.' }]
+    }
+  ];
+  const drawing = evidence.chart_prep.drawing_manifest.find((item) => item.id === 'secondary_subwaves');
+  drawing.points[2] = {
+    label: '2',
+    pivot_id: 'w_2024_01_high_110',
+    date: '2024-01-15 00:00',
+    time: 1705276800000,
+    price: 110,
+    source_row_id: '1W_1705276800000_H',
+    ohlcv_check_id: 'w_2024_01_high_110'
+  };
+
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'drawings' });
+
+  assert.deepEqual(result.errors, []);
+});
+
 test('HEW manifest requires visual-first pivot gates', () => {
   const manifest = JSON.parse(readFileSync(join('strategies', 'hew', 'manifest.json'), 'utf8'));
   for (const gate of requiredVisualFirstGates) {
@@ -677,7 +761,7 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.equal(manifest.visual_pivot_protocol.required_exporter.version, 2);
   assert.equal(manifest.reference_style.package_path, 'analysis_journal/TEAM_2026-05-16_hew');
   assert.equal(manifest.reference_style.distilled_doc, 'docs/hew-atlassian-reference-style.md');
-  assert.ok(manifest.reference_style.required_traits.includes('zone_first_accumulation_distribution_probabilities'));
+  assert.ok(manifest.reference_style.required_traits.includes('zone_first_accumulation_distribution_scores'));
   assert.ok(manifest.reference_style.required_traits.includes('native_elliott_wave_markers_only'));
   assert.equal(manifest.visual_pivot_protocol.required_exporter.pine_script, 'tradingview/konsili_pivot_exporter.pine');
   assert.deepEqual(manifest.visual_pivot_protocol.required_exporter.required_pivot_fields, ['date', 'time', 'price', 'exporter_row_id']);
@@ -708,16 +792,28 @@ test('HEW manifest requires visual-first pivot gates', () => {
   assert.equal(manifest.critic_review.independent_reviewer.prompt_file, 'agents/hew-independent-critic.md');
 });
 
-test('institutional regression fixture directories exist for validator drift cases', () => {
-  const fixtureDirs = [
-    'fixtures/hew/good/team_no_clean_trade',
-    'fixtures/hew/bad/unreadable_kpe',
-    'fixtures/hew/bad/drawing_without_pivot_ids',
-    'fixtures/hew/bad/actionable_with_fallback',
-    'fixtures/hew/bad/conditional_wave3_marked_live_pass'
-  ];
-  for (const dir of fixtureDirs) {
+function fixtureDirs(kind) {
+  const root = join('fixtures', 'hew', kind);
+  return readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => join(root, entry.name));
+}
+
+test('institutional regression fixtures validate expected pass and fail behavior', () => {
+  for (const dir of [...fixtureDirs('good'), ...fixtureDirs('bad')]) {
     assert.ok(existsSync(join(dir, 'README.md')), `missing fixture README: ${dir}`);
+    const input = join(dir, 'input', 'evidence.json');
+    const expectedFile = join(dir, 'expected', 'validator.json');
+    assert.ok(existsSync(input), `missing fixture input: ${input}`);
+    assert.ok(existsSync(expectedFile), `missing fixture expected output: ${expectedFile}`);
+
+    const expected = JSON.parse(readFileSync(expectedFile, 'utf8'));
+    const result = validateEvidenceFile(input, { stage: expected.stage || 'final' });
+    const passed = result.errors.length === 0;
+    assert.equal(passed, expected.should_pass, `${dir} expected should_pass=${expected.should_pass} errors:\n${result.errors.join('\n')}`);
+    for (const pattern of expected.expected_error_patterns || []) {
+      assert.match(result.errors.join('\n'), new RegExp(pattern, 'i'), `${dir} missing expected error pattern ${pattern}`);
+    }
   }
 });
 
@@ -1081,6 +1177,41 @@ test('fallback pivot path caps confidence and blocks actionable output', () => {
   assert.match(errors, /action_rationale\.selected_action must be non-actionable when fallback is used/i);
 });
 
+test('fallback evidence cannot claim clean grade or allowed trade permission', () => {
+  const evidence = baseEvidence();
+  evidence.visual_pivot_evidence.timeframes[2].ohlcv_verification[0].status = 'pass_with_fallback';
+  evidence.verdict.evidence_grade = 'clean';
+  evidence.verdict.trade_permission = 'allowed';
+  evidence.verdict.confidence = 'medium';
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /verdict\.evidence_grade must be qualified when fallback is used/i);
+  assert.match(errors, /verdict\.trade_permission must be blocked when fallback is used/i);
+  assert.match(errors, /verdict\.confidence must be low or very_low when fallback is used/i);
+});
+
+test('live actual Wave 3 failure blocks actionable trade permission', () => {
+  const evidence = baseEvidence();
+  evidence.ratio_validation.push({
+    id: 'live_actual_wave3_rebound',
+    status: 'fail',
+    required_ratio: 1.764,
+    actual_ratio: 1.2,
+    evidence: 'Live rebound Wave 3 failed the 176.4 floor.'
+  });
+  evidence.verdict.evidence_grade = 'clean';
+  evidence.verdict.trade_permission = 'allowed';
+  evidence.verdict.confidence = 'medium';
+  evidence.verdict.posture = 'ACTIONABLE';
+  evidence.status = 'ACTIONABLE';
+  evidence.confidence.rating = 'medium';
+  evidence.action_rationale.selected_action = 'actionable';
+
+  const result = validateEvidenceFile(writeEvidence(evidence));
+
+  assert.match(result.errors.join('\n'), /verdict\.trade_permission must be blocked when live actual Wave 3 validation fails/i);
+});
+
 test('Ian Copsey wave map is mandatory and keeps scanners out of count selection', () => {
   const evidence = baseEvidence();
   delete evidence.ian_copsey_wave_map;
@@ -1327,6 +1458,57 @@ test('zone-first final packages reject legacy decision_level drawings', () => {
   assert.match(result.errors.join('\n'), /deprecated final role decision_level/i);
 });
 
+test('final zone drawings require visible label metadata', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.drawing_manifest.push({
+    id: 'accumulation_w4',
+    role: 'zone',
+    tool: 'rectangle',
+    timeframe_owner: 'daily',
+    screenshot: 'screenshots/trade.png',
+    zone_function: 'accumulation',
+    price_range: { low: 100, high: 110 },
+    boundary_refs: {
+      low: { pivot_id: 'w_low' },
+      high: { projection_formula_id: 'wave4_accumulation_upper' }
+    }
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'drawings' });
+
+  assert.match(result.errors.join('\n'), /drawing_manifest\.accumulation_w4\.visible_label is required for final zone drawings/i);
+});
+
+test('final zone visible labels must include range, score, and band', () => {
+  const evidence = baseEvidence();
+  evidence.chart_prep.drawing_manifest.push({
+    id: 'accumulation_w4',
+    role: 'zone',
+    tool: 'rectangle',
+    timeframe_owner: 'daily',
+    screenshot: 'screenshots/trade.png',
+    zone_function: 'accumulation',
+    price_range: { low: 100, high: 110 },
+    visible_label: {
+      text: 'ACC box',
+      includes_zone_type: true,
+      includes_range: true,
+      includes_score: true,
+      visible_on_final_chart: true
+    },
+    boundary_refs: {
+      low: { pivot_id: 'w_low' },
+      high: { projection_formula_id: 'wave4_accumulation_upper' }
+    }
+  });
+
+  const result = validateEvidenceFile(writeEvidence(evidence), { stage: 'drawings' });
+  const errors = result.errors.join('\n');
+  assert.match(errors, /visible_label\.text must include price range 100-110/i);
+  assert.match(errors, /visible_label\.text must include zone score 58/i);
+  assert.match(errors, /visible_label\.text must include zone score band moderate/i);
+});
+
 test('drawing manifest screenshots must be listed in screenshots evidence', () => {
   const evidence = baseEvidence();
   evidence.chart_prep.drawing_manifest[0].screenshot = 'screenshots/not-listed.png';
@@ -1368,6 +1550,55 @@ test('zone probabilities require sane numeric ranges', () => {
   assert.match(result.errors.join('\n'), /probability\.value must be between 0 and 100/i);
   assert.match(result.errors.join('\n'), /price_range\.low must be less than high/i);
   assert.match(result.errors.join('\n'), /probability\.band must be one of/i);
+});
+
+test('zone scores are canonical and legacy zone probabilities are optional', () => {
+  const evidence = baseEvidence();
+  delete evidence.zone_probabilities;
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.deepEqual(result.errors, []);
+});
+
+test('legacy zone probabilities cannot diverge from canonical zone scores', () => {
+  const evidence = baseEvidence();
+  evidence.zone_probabilities[0].probability.value = 57;
+  evidence.zone_probabilities[1].price_range.high = 161;
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /zone_probabilities\.accumulation_w4\.probability\.value must match canonical zone_scores\.accumulation_w4\.zone_score\.score/i);
+  assert.match(errors, /zone_probabilities\.distribution_w5\.price_range\.high must match canonical zone_scores\.distribution_w5\.price_range\.high/i);
+});
+
+test('migration exemptions are blocked for new packages', () => {
+  const evidence = baseEvidence();
+  evidence.migration_policy = {
+    is_migrated_package: false,
+    source_contract_version: 'hew_stage_gated_v8_math_core',
+    target_contract_version: 'hew_institutional_v1',
+    allowed_exemptions: ['draw_list_before_original_not_available'],
+    exemption_effect: 'evidence_grade_qualified_trade_permission_blocked'
+  };
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  assert.match(result.errors.join('\n'), /migration_policy\.allowed_exemptions cannot be used by new packages/i);
+});
+
+test('migration exemptions require qualified blocked verdict and critic disclosure', () => {
+  const evidence = baseEvidence();
+  evidence.migration_policy = {
+    is_migrated_package: true,
+    source_contract_version: 'hew_stage_gated_v8_math_core',
+    target_contract_version: 'hew_institutional_v1',
+    allowed_exemptions: ['draw_list_before_original_not_available'],
+    exemption_effect: 'evidence_grade_qualified_trade_permission_blocked'
+  };
+  evidence.verdict.evidence_grade = 'clean';
+  evidence.verdict.trade_permission = 'allowed';
+  evidence.critic_review.material_non_blocking_issues = [];
+  const result = validateEvidenceFile(writeEvidence(evidence));
+  const errors = result.errors.join('\n');
+  assert.match(errors, /migration_policy exemptions require verdict\.evidence_grade qualified/i);
+  assert.match(errors, /migration_policy exemptions require verdict\.trade_permission blocked/i);
+  assert.match(errors, /migration_policy exemption must be disclosed in critic_review\.material_non_blocking_issues/i);
 });
 
 test('zone-first packages reject trigger breakout confirmation language', () => {

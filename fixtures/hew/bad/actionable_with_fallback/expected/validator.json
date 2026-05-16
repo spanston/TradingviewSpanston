@@ -1,0 +1,8 @@
+{
+  "should_pass": false,
+  "expected_error_patterns": [
+    "verdict\\.evidence_grade must be qualified when fallback is used",
+    "verdict\\.trade_permission must be blocked when fallback is used",
+    "action_rationale\\.selected_action must be non-actionable when fallback is used"
+  ]
+}

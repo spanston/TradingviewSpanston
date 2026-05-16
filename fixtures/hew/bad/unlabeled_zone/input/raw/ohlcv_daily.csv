@@ -1,0 +1,5 @@
+pivot_id,status,evidence
+d_2026_04_low_56_01,pass,"Daily OHLCV April 10 2026 low is 56.0101."
+d_2026_04_high_75_95,pass,"Daily OHLCV April 21 2026 high is 75.95."
+d_2026_04_low_65_20,pass,"Daily OHLCV April 23 2026 low is 65.20."
+d_2026_05_high_96_32,pass,"Daily OHLCV May 4 2026 high is 96.3179."

@@ -4,15 +4,6 @@
   "symbol": "NASDAQ:TEAM",
   "method": "Ian Copsey Fractal Forecasting",
   "workflow_version": "hew_institutional_v1",
-  "migration_policy": {
-    "is_migrated_package": true,
-    "source_contract_version": "hew_stage_gated_v8_math_core",
-    "target_contract_version": "hew_institutional_v1",
-    "allowed_exemptions": [
-      "draw_list_before_original_not_available"
-    ],
-    "exemption_effect": "evidence_grade_qualified_trade_permission_blocked"
-  },
   "status": "no_clean_trade",
   "stage_gates": [
     {
@@ -416,17 +407,9 @@
         "tool": "rectangle",
         "timeframe_owner": "macro",
         "screenshot": "screenshots/wave3_internals.png",
-        "zone_function": "projection",
         "price_range": {
           "low": 95.41,
           "high": 98.21
-        },
-        "visible_label": {
-          "text": "PROJECTION 95.41-98.21 | score n/a | HEW fib",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "source": "HEW Fibonacci projection zone for lower-degree Wave 3: 1.764 projection from 23.80 -> 53.45, projected from 43.11, to the actual internal Wave 3 high.",
         "boundary_refs": {
@@ -660,13 +643,6 @@
           "low": 78.2,
           "high": 96.32
         },
-        "visible_label": {
-          "text": "ACC 78.20-96.32 | score 44 | moderate",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
-        },
         "boundary_refs": {
           "low": {
             "projection_formula_id": "primary_accumulation_box_low_boundary"
@@ -688,13 +664,6 @@
         "price_range": {
           "low": 43.88,
           "high": 56.01
-        },
-        "visible_label": {
-          "text": "ACC 43.88-56.01 | score 38 | moderate_low",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "boundary_refs": {
           "low": {
@@ -718,13 +687,6 @@
           "low": 96.32,
           "high": 119.73
         },
-        "visible_label": {
-          "text": "DIST 96.32-119.73 | score 61 | high",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
-        },
         "boundary_refs": {
           "low": {
             "pivot_id": "d_2026_05_high_96_32"
@@ -746,13 +708,6 @@
         "price_range": {
           "low": 149.31,
           "high": 166.48
-        },
-        "visible_label": {
-          "text": "DIST 149.31-166.48 | score 48 | moderate",
-          "includes_zone_type": true,
-          "includes_range": true,
-          "includes_score": true,
-          "visible_on_final_chart": true
         },
         "boundary_refs": {
           "low": {
@@ -1122,7 +1077,7 @@
         "ohlcv_verification": [
           {
             "pivot_id": "d_2026_04_low_56_01",
-            "status": "pass",
+            "status": "pass_with_fallback",
             "evidence": "Daily OHLCV April 10 2026 low is 56.0101."
           },
           {
@@ -1719,7 +1674,7 @@
     }
   ],
   "action_rationale": {
-    "selected_action": "no_clean_trade",
+    "selected_action": "actionable",
     "strategy_basis": "Ian Copsey Fractal Forecasting with Konsili Castaway overlay after clean KPE pivot verification.",
     "why_action_follows_strategy": "The macro correction is unresolved and the actual recovery attempt fails the Wave 3 176.4 floor, so the chart should be read as competing accumulation/distribution zones rather than a clean directional setup.",
     "chart_evidence_supporting_action": "Final weekly chart shows native Elliott counts plus two accumulation boxes at 78.20-96.32 and 43.88-56.01, and two potential distribution boxes at 96.32-119.73 and 149.31-166.48.",
@@ -1930,12 +1885,6 @@
     "blocking_issues": [],
     "material_non_blocking_issues": [
       {
-        "id": "draw_list_before_original_not_available",
-        "severity": "material",
-        "evidence": "TEAM is a migrated v8 package; the original pre-run draw_list_before was not captured at package creation time, so this exemption keeps evidence qualified and trade permission blocked.",
-        "effect": "Does not permit ACTIONABLE output; new packages must capture the original draw_list_before."
-      },
-      {
         "id": "migrated_v8_raw_draw_state",
         "severity": "material",
         "evidence": "The accepted TEAM package predates institutional raw draw-list capture; raw/draw_list_before.json records the migration limitation.",
@@ -1971,7 +1920,7 @@
   ],
   "missing_evidence": [],
   "confidence": {
-    "rating": "low",
+    "rating": "medium",
     "cap_reason": "Fallback remains for macro Waves 1/5 visible-equivalent context; macro Wave 3 internals are now incorporated, but the live recovery proof is still conditional.",
     "rationale": "Pivot path is clean and macro Wave 3 internal proof is improved. Confidence remains low for any trade entry because the actual recovery failed the Wave 3 floor and distribution probability remains stronger than accumulation probability."
   },
@@ -2062,10 +2011,10 @@
   },
   "verdict": {
     "package_validity": "pass",
-    "evidence_grade": "qualified",
-    "trade_permission": "blocked",
+    "evidence_grade": "clean",
+    "trade_permission": "allowed",
     "posture": "NO CLEAN TRADE",
-    "confidence": "low",
+    "confidence": "medium",
     "confidence_cap_reason": "Live recovery failed the Wave 3 176.4 floor and the migrated v8 package has qualified pre-proof raw draw-state evidence."
   },
   "zone_scores": [

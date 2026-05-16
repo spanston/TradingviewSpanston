@@ -1,0 +1,13 @@
+{
+  "files": {
+    "raw/kpe_monthly.jsonl": "5582c3510e6c8add108536db1a0964cf63b2683cde6cac299e665eb04b81f28b",
+    "raw/kpe_weekly.jsonl": "2443bfdd1e51a85be4737ffd7a49b26189af36c7aa100e7fb03984bf4b97f0da",
+    "raw/kpe_daily.jsonl": "d2ecccb7956247ed73f5584b2e42eb3801f0e0a6fb0321ffbec62c5221eb3f3d",
+    "raw/ohlcv_monthly.csv": "c1f231267770721c757b81bcf3b46d081586a1f9bb76fc084bc8d9842ef68cef",
+    "raw/ohlcv_weekly.csv": "e56115cbcf8e62eae80ecd3dec3ed87b6329d8a46adec47f02351dc9406fef2e",
+    "raw/ohlcv_daily.csv": "b55b30971b69cc9d6794be01ac355f155e4993eed3c0d3393bdda576c6763b09",
+    "raw/draw_list_before.json": "45c509cd18e136364189161838692cae48e880744858fe846dfcf498816ab35e",
+    "raw/draw_list_after.json": "456274c79b2cfa9d4bcc83c1cfdda19b2dbbdfa49208828133616f102c8d681b",
+    "raw/chart_state_final.json": "6af5bf6bd576af82f52d94af6b65779d8a8ddedc377206b4a83f7b2c9119ca67"
+  }
+}

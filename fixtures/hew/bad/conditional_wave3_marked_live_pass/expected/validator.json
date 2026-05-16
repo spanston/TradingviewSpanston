@@ -1,0 +1,6 @@
+{
+  "should_pass": false,
+  "expected_error_patterns": [
+    "verdict\\.trade_permission must be blocked when live actual Wave 3 validation fails"
+  ]
+}

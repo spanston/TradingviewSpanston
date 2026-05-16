@@ -1,0 +1,178 @@
+[
+  {
+    "id": "preceding_impulse_context",
+    "entity_id": "4tduvk",
+    "role": "preceding_impulse_context",
+    "tool": "elliott_impulse_wave",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/macro_structure.png",
+    "direction": "bullish",
+    "levels": [
+      16.92,
+      35.16,
+      23.8,
+      149.8,
+      110.01,
+      483.13
+    ]
+  },
+  {
+    "id": "primary_degree_subwaves",
+    "entity_id": "4tduvk",
+    "role": "primary_degree_subwaves",
+    "alias_of": "preceding_impulse_context",
+    "tool": "elliott_impulse_wave",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/macro_structure.png",
+    "direction": "bullish",
+    "levels": [
+      16.92,
+      35.16,
+      23.8,
+      149.8,
+      110.01,
+      483.13
+    ]
+  },
+  {
+    "id": "macro_wave3_internal_subwaves",
+    "entity_id": "cPxm9V",
+    "role": "secondary_degree_subwaves",
+    "alias_of": "conditional_forward_projection",
+    "tool": "elliott_impulse_wave",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/wave3_internals.png",
+    "direction": "bullish",
+    "levels": [
+      23.8,
+      53.45,
+      43.11,
+      98.21,
+      65.17,
+      149.8
+    ],
+    "source": "Focused weekly KPE drilldown over the 2016-12 to 2019-07 macro Wave 3 window; left=5/right=5, temporary max_rows=100 for historical visibility.",
+    "validation": "TradingView hew_validate full_valid_hew; Wave 3 ratio 1.8583.",
+    "visual_style": "Lower-degree Elliott impulse uses degree=2, cyan color, and its own HEW Fibonacci projection zone so it is visually distinct from the macro count."
+  },
+  {
+    "id": "macro_wave3_internal_fib_zone",
+    "entity_id": "Hj2DEs",
+    "role": "zone",
+    "tool": "rectangle",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/wave3_internals.png",
+    "price_range": {
+      "low": 95.41,
+      "high": 98.21
+    },
+    "source": "HEW Fibonacci projection zone for lower-degree Wave 3: 1.764 projection from 23.80 -> 53.45, projected from 43.11, to the actual internal Wave 3 high."
+  },
+  {
+    "id": "macro_abc_correction",
+    "entity_id": "Pz4CHa",
+    "role": "macro_count",
+    "tool": "elliott_correction",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/macro_structure.png",
+    "levels": [
+      483.13,
+      113.86,
+      326,
+      56.01
+    ],
+    "note": "Macro correction after the 2021 high; C is not confirmed complete."
+  },
+  {
+    "id": "secondary_active_projection",
+    "entity_id": "M5ugd4",
+    "role": "secondary_degree_subwaves",
+    "tool": "elliott_impulse_wave",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "direction": "bullish",
+    "levels": [
+      56.01,
+      96.32,
+      78.2,
+      149.31,
+      119.73,
+      154.16
+    ],
+    "label": "conditional recovery scenario only; not trade permission"
+  },
+  {
+    "id": "conditional_forward_projection",
+    "entity_id": "M5ugd4",
+    "role": "projection_count",
+    "tool": "elliott_impulse_wave",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "direction": "bullish",
+    "levels": [
+      56.01,
+      96.32,
+      78.2,
+      149.31,
+      119.73,
+      154.16
+    ],
+    "label": "conditional projection context for zone probabilities"
+  },
+  {
+    "id": "primary_accumulation_box",
+    "entity_id": "SEOiIk",
+    "role": "zone",
+    "tool": "rectangle",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "zone_function": "accumulation",
+    "probability": 44,
+    "price_range": {
+      "low": 78.2,
+      "high": 96.32
+    }
+  },
+  {
+    "id": "terminal_accumulation_box",
+    "entity_id": "Ssbj2C",
+    "role": "zone",
+    "tool": "rectangle",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "zone_function": "accumulation",
+    "probability": 38,
+    "price_range": {
+      "low": 43.88,
+      "high": 56.01
+    }
+  },
+  {
+    "id": "near_distribution_box",
+    "entity_id": "sRzySC",
+    "role": "zone",
+    "tool": "rectangle",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "zone_function": "distribution",
+    "probability": 61,
+    "price_range": {
+      "low": 96.32,
+      "high": 119.73
+    }
+  },
+  {
+    "id": "upper_distribution_box",
+    "entity_id": "hk8Ifm",
+    "role": "zone",
+    "tool": "rectangle",
+    "timeframe_owner": "macro",
+    "screenshot": "screenshots/trade_posture.png",
+    "zone_function": "distribution",
+    "probability": 48,
+    "price_range": {
+      "low": 149.31,
+      "high": 166.48
+    }
+  }
+]

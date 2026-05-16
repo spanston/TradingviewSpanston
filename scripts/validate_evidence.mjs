@@ -135,8 +135,117 @@ function hypothesisClaimsWaveThreeComplete(hypothesis, protocol) {
   return waveThreeCompleteTypes.has(normalizedToken(hypothesis.structure_type));
 }
 
-function validateTopLevel(evidence, manifest, errors) {
-  for (const key of manifest.required_top_level || []) {
+const STAGE_REQUIRED_TOP_LEVEL = {
+  extraction: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'screenshots',
+    'raw_artifacts',
+    'visual_pivot_evidence'
+  ],
+  verification: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'screenshots',
+    'raw_artifacts',
+    'visual_pivot_evidence'
+  ],
+  anchors: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'visual_pivot_evidence',
+    'ian_copsey_wave_map',
+    'hypotheses'
+  ],
+  ratios: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'hypotheses',
+    'copsey_hew_purity',
+    'ratio_validation',
+    'verdict',
+    'confidence',
+    'action_rationale'
+  ],
+  drawings: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'chart_prep',
+    'screenshots',
+    'visual_pivot_evidence',
+    'hypotheses',
+    'hew_structure_context',
+    'execution_quality'
+  ],
+  writing: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'zone_scores',
+    'action_rationale',
+    'trade_posture',
+    'castaway_trade_model',
+    'no_trade_gate',
+    'review_conditions'
+  ],
+  critic: [
+    'journal_id',
+    'saved_at',
+    'symbol',
+    'method',
+    'workflow_version',
+    'stage_gates',
+    'verdict',
+    'confidence',
+    'action_rationale',
+    'critic_review'
+  ]
+};
+
+function requiredTopLevelForStage(manifest, stage) {
+  if (!stage || stage === 'final') return manifest.required_top_level || [];
+  return STAGE_REQUIRED_TOP_LEVEL[stage] || manifest.required_top_level || [];
+}
+
+function requiredStageGatesForStage(manifest, stage) {
+  if (!stage || stage === 'final') return manifest.stage_gates || [];
+  const order = manifest.stage_validation?.order || [];
+  const gateByStage = manifest.stage_validation?.gate_by_stage || {};
+  const index = order.indexOf(stage);
+  if (index === -1) return manifest.stage_gates || [];
+  const gates = ['route_and_layout'];
+  for (const stageName of order.slice(0, index + 1)) {
+    const gate = gateByStage[stageName];
+    if (gate) gates.push(gate);
+  }
+  return [...new Set(gates)];
+}
+
+function validateTopLevel(evidence, manifest, errors, stage = null) {
+  for (const key of requiredTopLevelForStage(manifest, stage)) {
     if (!hasOwn(evidence, key)) errors.push(`missing top-level field: ${key}`);
   }
 }
@@ -147,10 +256,10 @@ function validateContractVersion(evidence, manifest, errors) {
   }
 }
 
-function validateStageGates(evidence, manifest, errors) {
+function validateStageGates(evidence, manifest, errors, stage = null) {
   const gates = indexById(evidence.stage_gates, 'stage_gates', errors);
   const allowed = new Set(manifest.allowed?.stage_gate_statuses || ['pass', 'pass_with_fallback', 'not_applicable']);
-  for (const id of manifest.stage_gates || []) {
+  for (const id of requiredStageGatesForStage(manifest, stage)) {
     const gate = gates.get(id);
     if (!gate) {
       errors.push(`missing stage gate: ${id}`);
@@ -434,6 +543,26 @@ function validatePivotMatchesExporterRow(pivot, exporterRow, path, requiredExpor
   }
 }
 
+function normalizeKpePivotId(pivot) {
+  const timeframe = String(pivot?.timeframe || '').toLowerCase();
+  const prefix = timeframe === '1m' || timeframe === 'm' || timeframe === 'monthly' ? 'm'
+    : timeframe === '1w' || timeframe === 'w' || timeframe === 'weekly' ? 'w'
+      : timeframe === '1d' || timeframe === 'd' || timeframe === 'daily' ? 'd'
+        : timeframe.replace(/[^a-z0-9]+/g, '_');
+  const date = String(pivot?.date || '').slice(0, 7).replace('-', '_');
+  const type = String(pivot?.type || '').toLowerCase();
+  const price = String(pivot?.price ?? '').replace('.', '_').replace(/[^0-9_]+/g, '');
+  return [prefix, date, type, price].filter(Boolean).join('_');
+}
+
+function kpePivotIdAliases(pivot) {
+  const aliases = new Set([normalizeKpePivotId(pivot)]);
+  if (typeof pivot?.price === 'number' && Number.isFinite(pivot.price)) {
+    aliases.add(normalizeKpePivotId({ ...pivot, price: pivot.price.toFixed(2) }));
+  }
+  return aliases;
+}
+
 function validateVisualPivotEvidence(evidence, manifest, errors) {
   const protocol = manifest.visual_pivot_protocol;
   if (!protocol) return;
@@ -537,6 +666,36 @@ function validateVisualPivotEvidence(evidence, manifest, errors) {
   for (const timeframe of requiredTimeframes) {
     if (!seenTimeframes.has(timeframe)) errors.push(`visual_pivot_evidence missing required timeframe: ${timeframe}`);
   }
+
+  for (const drilldown of asArray(pivotEvidence.historical_drilldowns)) {
+    const drilldownPath = `visual_pivot_evidence.historical_drilldowns.${drilldown?.id || '<unknown>'}`;
+    for (const field of manifest.visual_pivot_protocol?.historical_drilldowns?.required_fields || []) {
+      const value = drilldown?.[field];
+      if (!hasOwn(drilldown || {}, field) || value == null || (typeof value === 'string' && !value.trim()) || (Array.isArray(value) && !value.length)) {
+        errors.push(`${drilldownPath}.${field} is required`);
+      }
+    }
+    const screenshot = String(drilldown?.screenshot || '').replace(/\\/g, '/');
+    if (screenshot && !screenshotPaths.has(screenshot)) {
+      errors.push(`${drilldownPath}.screenshot not listed in screenshots: ${drilldown.screenshot}`);
+    }
+    const parsed = parsePivotExporterRows(drilldown?.exporter_rows || [], {
+      rowPrefix: requiredExporter?.row_prefix || KONSILI_PIVOT_EXPORTER.rowPrefix,
+      version: requiredExporter?.version || KONSILI_PIVOT_EXPORTER.version
+    });
+    for (const error of parsed.errors) errors.push(`${drilldownPath}.exporter_rows ${error}`);
+    const normalizedIds = new Set(parsed.pivots.flatMap((pivot) => [...kpePivotIdAliases(pivot)]));
+    for (const verification of asArray(drilldown?.ohlcv_verification)) {
+      const pivotId = String(verification?.pivot_id || '').trim();
+      const status = String(verification?.status || '').toLowerCase();
+      if (!pivotId) errors.push(`${drilldownPath}.ohlcv_verification item missing pivot_id`);
+      if (pivotId && !normalizedIds.has(pivotId)) errors.push(`${drilldownPath}.ohlcv_verification.${pivotId} pivot_id not found in historical KPE rows`);
+      if (!allowedVerificationStatuses.has(status)) {
+        errors.push(`${drilldownPath}.ohlcv_verification.${pivotId || '<unknown>'} status must be one of ${[...allowedVerificationStatuses].join(', ')}: ${verification?.status}`);
+      }
+      if (!String(verification?.evidence || '').trim()) errors.push(`${drilldownPath}.ohlcv_verification.${pivotId || '<unknown>'} missing evidence`);
+    }
+  }
 }
 
 function validateIanCopseyWaveMap(evidence, manifest, errors) {
@@ -595,7 +754,7 @@ function validateIanCopseyWaveMap(evidence, manifest, errors) {
     if (count.role && !countsByRole.has(count.role)) countsByRole.set(count.role, count);
     if (!Array.isArray(count.pivots) || count.pivots.length < 4) errors.push(`${countPath}.pivots must contain at least 4 prices`);
     if (!String(count.copsey_rationale || count.structural_rationale || '').trim()) errors.push(`${countPath}.copsey_rationale is required`);
-    validateReferencedDrawings(count, countPath, drawingsById, errors);
+    if (drawings.length) validateReferencedDrawings(count, countPath, drawingsById, errors);
     if (!String(count.ratio_validation_id || '').trim()) {
       errors.push(`${countPath}.ratio_validation_id is required`);
     } else if (!ratioValidation.has(count.ratio_validation_id)) {
@@ -896,16 +1055,47 @@ function validateChartModeProtocol(evidence, manifest, errors) {
 function collectVerifiedPivotMaps(evidence) {
   const pivots = new Map();
   const ohlcvChecks = new Map();
+  const verifiedPrices = [];
   for (const timeframe of asArray(evidence.visual_pivot_evidence?.timeframes)) {
     for (const pivot of asArray(timeframe?.pivots)) {
-      if (pivot?.id) pivots.set(pivot.id, pivot);
+      if (pivot?.id) {
+        pivots.set(pivot.id, pivot);
+        if (typeof pivot.price === 'number') verifiedPrices.push({ id: pivot.id, price: pivot.price, source: 'visual_pivot_evidence.timeframes' });
+      }
     }
     for (const check of asArray(timeframe?.ohlcv_verification)) {
       if (check?.pivot_id) ohlcvChecks.set(check.pivot_id, check);
       if (check?.id) ohlcvChecks.set(check.id, check);
     }
   }
-  return { pivots, ohlcvChecks };
+  for (const drilldown of asArray(evidence.visual_pivot_evidence?.historical_drilldowns)) {
+    const parsed = parsePivotExporterRows(drilldown.exporter_rows || [], {
+      rowPrefix: evidence.visual_pivot_evidence?.exporter?.row_prefix || KONSILI_PIVOT_EXPORTER.rowPrefix,
+      version: evidence.visual_pivot_evidence?.exporter?.version || KONSILI_PIVOT_EXPORTER.version
+    });
+    for (const pivot of parsed.pivots) {
+      const id = normalizeKpePivotId(pivot);
+      const normalized = {
+        id,
+        type: pivot.type,
+        date: pivot.date,
+        time: pivot.time,
+        price: pivot.price,
+        exporter_row_id: pivot.id,
+        drilldown_id: drilldown.id,
+        screenshot: drilldown.screenshot
+      };
+      for (const alias of kpePivotIdAliases(pivot)) {
+        pivots.set(alias, { ...normalized, id: alias });
+      }
+      if (typeof pivot.price === 'number') verifiedPrices.push({ id, price: pivot.price, source: 'visual_pivot_evidence.historical_drilldowns' });
+    }
+    for (const check of asArray(drilldown?.ohlcv_verification)) {
+      if (check?.pivot_id) ohlcvChecks.set(check.pivot_id, check);
+      if (check?.id) ohlcvChecks.set(check.id, check);
+    }
+  }
+  return { pivots, ohlcvChecks, verifiedPrices };
 }
 
 function validateDrawingPointLocking(drawing, role, protocol, pivotMaps, errors) {
@@ -940,6 +1130,10 @@ function validateDrawingPointLocking(drawing, role, protocol, pivotMaps, errors)
     if (typeof point.price !== 'number' || !Number.isFinite(point.price)) errors.push(`${pointPath}.price must be a finite number`);
     const status = normalizedToken(point.point_status || 'verified');
     if (status === 'projected') {
+      const matchingVerifiedPivot = pivotMaps.verifiedPrices.find((pivot) => Math.abs(Number(point.price) - pivot.price) <= 0.000001);
+      if (matchingVerifiedPivot) {
+        errors.push(`${pointPath} is marked projected but matches verified KPE pivot ${matchingVerifiedPivot.id} from ${matchingVerifiedPivot.source}`);
+      }
       for (const field of pointLocking.projection_required_fields || []) {
         if (field === 'source_pivots') {
           if (!Array.isArray(point.source_pivots) || !point.source_pivots.length) errors.push(`${pointPath}.source_pivots must be a non-empty array`);
@@ -964,6 +1158,66 @@ function validateDrawingPointLocking(drawing, role, protocol, pivotMaps, errors)
     if (point.ohlcv_check_id && !pivotMaps.ohlcvChecks.has(point.ohlcv_check_id)) {
       errors.push(`${pointPath}.ohlcv_check_id not found in visual_pivot_evidence OHLCV checks: ${point.ohlcv_check_id}`);
     }
+  }
+}
+
+function numberTextVariants(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return [];
+  return [...new Set([String(number), number.toFixed(2), number.toFixed(1)])];
+}
+
+function textIncludesAny(text, values) {
+  const lower = String(text || '').toLowerCase();
+  return values.some((value) => lower.includes(String(value).toLowerCase()));
+}
+
+function findZoneScoreForDrawing(drawing, evidence) {
+  const zones = asArray(evidence.zone_scores);
+  const byId = zones.find((zone) => zone?.id === drawing.id);
+  if (byId) return byId;
+  return zones.find((zone) => (
+    zone?.zone_type === drawing.zone_function
+    && Number(zone?.price_range?.low) === Number(drawing.price_range?.low)
+    && Number(zone?.price_range?.high) === Number(drawing.price_range?.high)
+  ));
+}
+
+function validateZoneDrawingVisibleLabel(drawing, manifest, evidence, isFinalScreenshot, errors) {
+  if (drawing.role !== 'zone' || !isFinalScreenshot) return;
+  const config = manifest.drawing_protocol?.visible_label || {};
+  if (config.required_for_final_zone_drawings !== true) return;
+  const path = `drawing_manifest.${drawing.id || 'zone'}`;
+  const label = drawing.visible_label;
+  if (!label || typeof label !== 'object' || Array.isArray(label)) {
+    errors.push(`${path}.visible_label is required for final zone drawings`);
+    return;
+  }
+  for (const field of config.required_fields || []) {
+    if (field === 'text') {
+      if (!String(label.text || '').trim()) errors.push(`${path}.visible_label.text is required`);
+    } else if (label[field] !== true) {
+      errors.push(`${path}.visible_label.${field} must be true`);
+    }
+  }
+  const zoneScore = findZoneScoreForDrawing(drawing, evidence);
+  const zoneType = String(zoneScore?.zone_type || drawing.zone_function || '').toLowerCase();
+  const terms = config.zone_type_terms?.[zoneType] || [zoneType].filter(Boolean);
+  if (terms.length && !textIncludesAny(label.text, terms)) {
+    errors.push(`${path}.visible_label.text must include zone type ${zoneType}`);
+  }
+  const low = zoneScore?.price_range?.low ?? drawing.price_range?.low;
+  const high = zoneScore?.price_range?.high ?? drawing.price_range?.high;
+  if (!textIncludesAny(label.text, numberTextVariants(low)) || !textIncludesAny(label.text, numberTextVariants(high))) {
+    errors.push(`${path}.visible_label.text must include price range ${low}-${high}`);
+  }
+  const score = zoneScore?.zone_score?.score ?? drawing.zone_score ?? drawing.probability;
+  if (score != null && !textIncludesAny(label.text, [score])) {
+    errors.push(`${path}.visible_label.text must include zone score ${score}`);
+  }
+  const band = zoneScore?.zone_score?.band;
+  if (band && !textIncludesAny(label.text, [band])) {
+    errors.push(`${path}.visible_label.text must include zone score band ${band}`);
   }
 }
 
@@ -1081,6 +1335,7 @@ function validateDrawingManifest(evidence, manifest, errors) {
     if (forbidden.includes(tool)) errors.push(`forbidden drawing tool for ${role}: ${tool}`);
     const allowed = allowedByRole[role];
     if (allowed && !allowed.includes(tool)) errors.push(`drawing_manifest.${drawing.id || role} must use one of ${allowed.join(', ')}: ${tool}`);
+    validateZoneDrawingVisibleLabel(drawing, manifest, evidence, finalScreenshot, errors);
     validateDrawingPointLocking(drawing, role, manifest.drawing_protocol, pivotMaps, errors);
     if (!['macro', 'daily', 'execution', 'all'].includes(drawing.timeframe_owner)) {
       errors.push(`drawing_manifest.${drawing.id || role} has invalid timeframe_owner: ${drawing.timeframe_owner}`);
@@ -1537,6 +1792,18 @@ function validateFallbackPolicy(evidence, manifest, errors) {
   const fallbackPaths = collectFallbackPaths(evidence);
   if (!fallbackPaths.length) return;
 
+  const verdict = evidence.verdict || {};
+  const verdictConfidence = String(verdict.confidence || '').toLowerCase();
+  if (String(verdict.evidence_grade || '').toLowerCase() !== 'qualified') {
+    errors.push('verdict.evidence_grade must be qualified when fallback is used');
+  }
+  if (String(verdict.trade_permission || '').toLowerCase() !== 'blocked') {
+    errors.push('verdict.trade_permission must be blocked when fallback is used');
+  }
+  if (!allowedFallbackConfidence(verdictConfidence)) {
+    errors.push(`verdict.confidence must be low or very_low when fallback is used: ${verdict.confidence || '<missing>'}`);
+  }
+
   const confidence = evidence.confidence;
   const allowedRatings = new Set(policy.allowed_confidence_ratings || ['low', 'very_low']);
   const rating = String(confidence?.rating || '').toLowerCase();
@@ -1552,6 +1819,16 @@ function validateFallbackPolicy(evidence, manifest, errors) {
   if (allowedActions.size && !allowedActions.has(action)) {
     errors.push(`action_rationale.selected_action must be non-actionable when fallback is used: ${evidence.action_rationale?.selected_action || evidence.trade_posture?.posture || '<missing>'}`);
   }
+}
+
+function allowedFallbackConfidence(value) {
+  return ['low', 'very_low'].includes(String(value || '').toLowerCase());
+}
+
+function hasLiveWave3Failure(evidence) {
+  return asArray(evidence.ratio_validation).some((item) => (
+    /actual|live|rebound/i.test(String(item?.id || '')) && String(item?.status || '').toLowerCase() === 'fail'
+  ));
 }
 
 function statusIsActionable(value) {
@@ -1593,8 +1870,20 @@ function validateVerdict(evidence, manifest, errors) {
       errors.push(`${path}.posture must be a blocked posture when trade_permission is blocked: ${verdict.posture}`);
     }
   }
+  if (tradePermission === 'blocked' && statusIsActionable(evidence.action_rationale?.selected_action)) {
+    errors.push(`${path}.trade_permission blocked cannot use ACTIONABLE action_rationale.selected_action`);
+  }
   if (evidenceGrade === 'qualified' && !['low', 'very_low'].includes(confidence)) {
     errors.push(`${path}.confidence must be low or very_low when evidence_grade is qualified: ${verdict.confidence}`);
+  }
+  if (evidenceGrade === 'failed' && packageValidity !== 'fail') {
+    errors.push(`${path}.package_validity must be fail when evidence_grade is failed`);
+  }
+  if (!evidence.raw_artifacts && packageValidity !== 'fail') {
+    errors.push(`${path}.package_validity must be fail when raw_artifacts are missing`);
+  }
+  if (hasLiveWave3Failure(evidence) && tradePermission !== 'blocked') {
+    errors.push(`${path}.trade_permission must be blocked when live actual Wave 3 validation fails`);
   }
   if (confidence === 'high') {
     const zones = asArray(evidence.zone_scores);
@@ -1610,6 +1899,7 @@ function validateVerdict(evidence, manifest, errors) {
 function validateZoneProbabilities(evidence, manifest, errors) {
   if (!manifest.zone_probabilities) return;
   const zones = evidence.zone_probabilities;
+  if (zones == null) return;
   if (!Array.isArray(zones)) {
     errors.push('zone_probabilities must be an array');
     return;
@@ -1647,6 +1937,22 @@ function validateZoneProbabilities(evidence, manifest, errors) {
   }
   for (const type of requiredTypes) {
     if (!seenTypes.has(type)) errors.push(`zone_probabilities missing required zone_type: ${type}`);
+  }
+}
+
+function validateZoneProbabilityCompatibility(evidence, manifest, errors) {
+  if (!manifest.zone_probabilities || evidence.zone_probabilities == null) return;
+  const legacy = new Map(asArray(evidence.zone_probabilities).map((zone) => [zone?.id, zone]));
+  for (const scoreZone of asArray(evidence.zone_scores)) {
+    if (!scoreZone?.id) continue;
+    const legacyZone = legacy.get(scoreZone.id);
+    if (!legacyZone) continue;
+    const path = `zone_probabilities.${scoreZone.id}`;
+    if (legacyZone.zone_type !== scoreZone.zone_type) errors.push(`${path}.zone_type must match canonical zone_scores.${scoreZone.id}.zone_type`);
+    if (legacyZone.price_range?.low !== scoreZone.price_range?.low) errors.push(`${path}.price_range.low must match canonical zone_scores.${scoreZone.id}.price_range.low`);
+    if (legacyZone.price_range?.high !== scoreZone.price_range?.high) errors.push(`${path}.price_range.high must match canonical zone_scores.${scoreZone.id}.price_range.high`);
+    if (legacyZone.probability?.value !== scoreZone.zone_score?.score) errors.push(`${path}.probability.value must match canonical zone_scores.${scoreZone.id}.zone_score.score`);
+    if (legacyZone.probability?.band !== scoreZone.zone_score?.band) errors.push(`${path}.probability.band must match canonical zone_scores.${scoreZone.id}.zone_score.band`);
   }
 }
 
@@ -1735,6 +2041,51 @@ function validateZoneFirstLanguage(evidence, manifest, errors) {
   }
   for (const hit of hits) {
     errors.push(`zone_first_language forbidden term "${hit.term}" in ${hit.path}`);
+  }
+}
+
+function validateMigrationPolicy(evidence, manifest, errors) {
+  const config = manifest.migration_policy;
+  if (!config) return;
+  const policy = getByPath(evidence, config.path || 'migration_policy');
+  if (!policy) return;
+  if (!isObject(policy)) {
+    errors.push('migration_policy must be an object');
+    return;
+  }
+  const exemptions = asArray(policy.allowed_exemptions);
+  const migrated = policy.is_migrated_package === true;
+  if (exemptions.length && !migrated) {
+    errors.push('migration_policy.allowed_exemptions cannot be used by new packages');
+  }
+  const allowed = new Set(config.allowed_exemptions || []);
+  for (const exemption of exemptions) {
+    if (!allowed.has(exemption)) errors.push(`migration_policy.allowed_exemptions contains unsupported exemption: ${exemption}`);
+  }
+  if (migrated) {
+    if (policy.target_contract_version !== manifest.contract_version) {
+      errors.push(`migration_policy.target_contract_version must equal manifest contract_version ${manifest.contract_version}: ${policy.target_contract_version}`);
+    }
+    for (const field of ['source_contract_version', 'target_contract_version', 'exemption_effect']) {
+      if (!String(policy[field] || '').trim()) errors.push(`migration_policy.${field} is required`);
+    }
+  }
+  if (exemptions.length) {
+    if (policy.exemption_effect !== config.required_exemption_effect) {
+      errors.push(`migration_policy.exemption_effect must be ${config.required_exemption_effect}`);
+    }
+    if (String(evidence.verdict?.evidence_grade || '').toLowerCase() !== 'qualified') {
+      errors.push('migration_policy exemptions require verdict.evidence_grade qualified');
+    }
+    if (String(evidence.verdict?.trade_permission || '').toLowerCase() !== 'blocked') {
+      errors.push('migration_policy exemptions require verdict.trade_permission blocked');
+    }
+    const criticText = JSON.stringify(evidence.critic_review?.material_non_blocking_issues || []);
+    for (const exemption of exemptions) {
+      if (!criticText.includes(exemption)) {
+        errors.push(`migration_policy exemption must be disclosed in critic_review.material_non_blocking_issues: ${exemption}`);
+      }
+    }
   }
 }
 
@@ -1841,6 +2192,113 @@ function validateJournalAlignment(evidence, file, errors, warnings) {
   }
 }
 
+const VALIDATION_GROUPS = {
+  id_collections: (context) => validateIdCollections(context.evidence, context.manifest, context.errors),
+  package_artifacts: (context) => validatePackageArtifacts(context.evidence, context.manifest, context.file, context.errors),
+  screenshots: (context) => validateScreenshots(context.evidence, context.manifest, context.file, context.errors),
+  visual_pivot_evidence: (context) => validateVisualPivotEvidence(context.evidence, context.manifest, context.errors),
+  ian_copsey_wave_map: (context) => validateIanCopseyWaveMap(context.evidence, context.manifest, context.errors),
+  hypotheses: (context) => validateHypotheses(context.evidence, context.manifest, context.errors),
+  count_state: (context) => validateCountState(context.evidence, context.manifest, context.errors),
+  chart_mode_protocol: (context) => validateChartModeProtocol(context.evidence, context.manifest, context.errors),
+  drawing_manifest: (context) => validateDrawingManifest(context.evidence, context.manifest, context.errors),
+  hew_structure_context: (context) => validateHewStructureContext(context.evidence, context.manifest, context.errors),
+  copsey_purity: (context) => validateHewCopseyPurity(context.evidence, context.manifest, context.errors),
+  castaway_trade_model: (context) => validateCastawayTradeModelContract(context.evidence, context.manifest, context.errors),
+  execution_quality: (context) => validateExecutionQuality(context.evidence, context.manifest, context.errors),
+  fallback_policy: (context) => validateFallbackPolicy(context.evidence, context.manifest, context.errors),
+  verdict: (context) => validateVerdict(context.evidence, context.manifest, context.errors),
+  zone_probabilities: (context) => validateZoneProbabilities(context.evidence, context.manifest, context.errors),
+  zone_probability_compatibility: (context) => validateZoneProbabilityCompatibility(context.evidence, context.manifest, context.errors),
+  zone_scores: (context) => validateZoneScores(context.evidence, context.manifest, context.errors),
+  zone_first_language: (context) => validateZoneFirstLanguage(context.evidence, context.manifest, context.errors),
+  migration_policy: (context) => validateMigrationPolicy(context.evidence, context.manifest, context.errors),
+  action_rationale: (context) => validateActionRationale(context.evidence, context.manifest, context.errors),
+  critic_review: (context) => validateCriticReview(context.evidence, context.manifest, context.errors),
+  journal_alignment: (context) => validateJournalAlignment(context.evidence, context.file, context.errors, context.warnings)
+};
+
+const FINAL_VALIDATION_GROUPS = [
+  'id_collections',
+  'package_artifacts',
+  'screenshots',
+  'visual_pivot_evidence',
+  'ian_copsey_wave_map',
+  'hypotheses',
+  'count_state',
+  'chart_mode_protocol',
+  'drawing_manifest',
+  'hew_structure_context',
+  'copsey_purity',
+  'castaway_trade_model',
+  'execution_quality',
+  'fallback_policy',
+  'verdict',
+  'zone_probabilities',
+  'zone_probability_compatibility',
+  'zone_scores',
+  'zone_first_language',
+  'migration_policy',
+  'action_rationale',
+  'critic_review',
+  'journal_alignment'
+];
+
+const STAGE_VALIDATION_GROUPS = {
+  extraction: [
+    'package_artifacts',
+    'screenshots',
+    'visual_pivot_evidence'
+  ],
+  verification: [
+    'package_artifacts',
+    'screenshots',
+    'visual_pivot_evidence'
+  ],
+  anchors: [
+    'package_artifacts',
+    'visual_pivot_evidence',
+    'ian_copsey_wave_map',
+    'hypotheses'
+  ],
+  ratios: [
+    'hypotheses',
+    'copsey_purity',
+    'fallback_policy',
+    'verdict'
+  ],
+  drawings: [
+    'screenshots',
+    'drawing_manifest',
+    'hew_structure_context',
+    'execution_quality'
+  ],
+  writing: [
+    'journal_alignment',
+    'zone_probabilities',
+    'zone_probability_compatibility',
+    'zone_scores',
+    'zone_first_language',
+    'migration_policy',
+    'action_rationale',
+    'castaway_trade_model'
+  ],
+  critic: [
+    'critic_review',
+    'migration_policy',
+    'fallback_policy',
+    'verdict'
+  ],
+  final: FINAL_VALIDATION_GROUPS
+};
+
+function runValidationGroups(context, stage) {
+  const groups = stage ? STAGE_VALIDATION_GROUPS[stage] : FINAL_VALIDATION_GROUPS;
+  for (const group of groups || FINAL_VALIDATION_GROUPS) {
+    VALIDATION_GROUPS[group](context);
+  }
+}
+
 export function validateEvidenceFile(file, options = {}) {
   const errors = [];
   const warnings = [];
@@ -1862,30 +2320,10 @@ export function validateEvidenceFile(file, options = {}) {
     }
   }
 
-  validateTopLevel(evidence, manifest, errors);
+  validateTopLevel(evidence, manifest, errors, options.stage || null);
   validateContractVersion(evidence, manifest, errors);
-  validateStageGates(evidence, manifest, errors);
-  validateIdCollections(evidence, manifest, errors);
-  validatePackageArtifacts(evidence, manifest, absoluteFile, errors);
-  validateScreenshots(evidence, manifest, absoluteFile, errors);
-  validateVisualPivotEvidence(evidence, manifest, errors);
-  validateIanCopseyWaveMap(evidence, manifest, errors);
-  validateHypotheses(evidence, manifest, errors);
-  validateCountState(evidence, manifest, errors);
-  validateChartModeProtocol(evidence, manifest, errors);
-  validateDrawingManifest(evidence, manifest, errors);
-  validateHewStructureContext(evidence, manifest, errors);
-  validateHewCopseyPurity(evidence, manifest, errors);
-  validateCastawayTradeModelContract(evidence, manifest, errors);
-  validateExecutionQuality(evidence, manifest, errors);
-  validateFallbackPolicy(evidence, manifest, errors);
-  validateVerdict(evidence, manifest, errors);
-  validateZoneProbabilities(evidence, manifest, errors);
-  validateZoneScores(evidence, manifest, errors);
-  validateZoneFirstLanguage(evidence, manifest, errors);
-  validateActionRationale(evidence, manifest, errors);
-  validateCriticReview(evidence, manifest, errors);
-  validateJournalAlignment(evidence, absoluteFile, errors, warnings);
+  validateStageGates(evidence, manifest, errors, options.stage || null);
+  runValidationGroups({ evidence, manifest, file: absoluteFile, errors, warnings }, options.stage || 'final');
 
   return { file: absoluteFile, strategy, errors, warnings };
 }

@@ -1,0 +1,6 @@
+{
+  "should_pass": false,
+  "expected_error_patterns": [
+    "visual_pivot_evidence\\.monthly\\.exporter_rows.*invalid time"
+  ]
+}

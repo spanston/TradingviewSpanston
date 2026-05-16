@@ -1,0 +1,6 @@
+pivot_id,status,evidence
+m_2016_12_low_23_80,pass,"Monthly OHLCV December 2016 low is 23.80."
+m_2019_07_high_149_80,pass,"Monthly OHLCV July 2019 high is 149.80."
+m_2021_10_high_483_13,pass,"Monthly OHLCV October 2021 high is 483.13."
+m_2022_11_low_113_86,pass,"Monthly OHLCV November 2022 low is 113.855, matching KPE 113.86 within tick rounding."
+m_2025_02_high_326,pass,"Monthly/weekly OHLCV February 2025 high is 325.9999/326.00."

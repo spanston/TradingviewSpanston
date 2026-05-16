@@ -1,0 +1,6 @@
+{
+  "should_pass": false,
+  "expected_error_patterns": [
+    "drawing_manifest\\..*\\.points must be a non-empty pivot-locked geometry array"
+  ]
+}

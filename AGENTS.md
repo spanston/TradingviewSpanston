@@ -35,7 +35,7 @@ Do not preload `analysis_journal`, screenshots, reports, or generated artifacts.
 All future HEW packages should follow the Atlassian/TEAM reference style unless Johan explicitly asks for a different output surface:
 
 - Zone-first investment posture: accumulation and potential distribution boxes with uncalibrated zone scores before any action language.
-- Probabilities tied to HEW ratio fit, projection context, AO divergence, and volume evidence.
+- Zone scores tied to HEW ratio fit, projection context, AO divergence, and volume evidence.
 - `review_conditions` and zone posture changes instead of trigger, breakout, confirmation, or reclaim language.
 - Native Elliott drawings only for macro counts, corrections, subwaves, and projections; no text-label substitutes for EW markers.
 - Lower-degree macro-wave internals, especially Wave 3, should be extracted from the macro wave's own time range on a lower timeframe when readable, then drawn as a distinct lower-degree Elliott layer with a companion HEW Fibonacci projection zone when useful.
@@ -235,8 +235,17 @@ Before calling the package done:
 
 ```bash
 npm test
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage extraction
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage verification
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage anchors
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage ratios
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage drawings
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage writing
+npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json --stage critic
 npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json
 ```
+
+Use `--stage final` or omit `--stage` for the complete final suite. Earlier stage validation is for construction-time fail-fast checks and must not be treated as final package acceptance.
 
 ## Final answer standard
 
