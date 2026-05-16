@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node scripts/check_integrity.mjs && node --test tests/*.test.mjs",
     "validate": "node scripts/validate_evidence.mjs",
-    "validate:hew": "node scripts/validate_evidence.mjs --strategy hew"
+    "validate:hew": "node scripts/validate_evidence.mjs --strategy hew",
+    "validate:all": "bash -lc \"pass=0; fail=0; failures=(); for dir in analysis_journal/*; do [ -d $dir ] || continue; if npm run validate:hew -- $dir/evidence.json; then echo PASS $dir; pass=$((pass+1)); else echo FAIL $dir; fail=$((fail+1)); failures+=($dir); fi; done; echo validate:all summary: pass=$pass fail=$fail; if [ $fail -gt 0 ]; then printf 'Failed packages:\\n'; printf ' - %s\\n' ${failures[@]}; fi; exit 0\""
   },
   "dependencies": {}
 }
