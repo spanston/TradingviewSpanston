@@ -98,6 +98,7 @@ const stageValidators = {
   ],
   critic: [
     validateCriticReview,
+    validateCommitteeBrief,
     validateFallbackPolicy,
     validateVerdict
   ],
@@ -118,7 +119,7 @@ Run `baseValidators` first, then the selected stage group. The final stage shoul
 | `anchors` | verified pivots, Ian Copsey wave map, hypotheses, structural distinctness | final presentation chart, critic |
 | `ratios` | hypotheses, deterministic ratio engine results, Copsey purity, fallback/verdict consistency | final screenshots and journal alignment |
 | `drawings` | drawing manifest, pivot-locked points, required native tools, chart modes | critic review |
-| `writing` | journal, evidence, committee brief, zone scores, action rationale, no forbidden zone-first language | fresh critic verdict |
+| `writing` | journal, evidence, zone scores, action rationale, no forbidden zone-first language | committee brief, fresh critic verdict |
 | `critic` | hostile critic structure and verdict consistency | earlier raw extraction details beyond referenced package facts |
 | `final` | everything | nothing |
 
@@ -492,23 +493,28 @@ Files:
 
 - `scripts/validate_evidence.mjs`
 - `tests/validate_evidence.test.mjs`
+- `AGENTS.md` (add `--stage` flag usage examples)
+- `WORKFLOW.md` (document stage-aware validation invocation)
 
 Tasks:
 
 - Add validation group dispatcher.
 - Add stage-specific tests.
 - Ensure `--stage extraction` does not require final-stage fields.
+- Update AGENTS.md final answer standard and WORKFLOW.md validation section to reference `--stage`.
 
 ## Patch 2 - Historical drilldown pivot locking
 
 Files:
 
 - `scripts/validate_evidence.mjs`
+- `strategies/hew/manifest.json` (add `historical_drilldowns` sub-schema to `visual_pivot_evidence`)
 - `analysis_journal/TEAM_2026-05-16_hew/evidence.json`
 - `tests/validate_evidence.test.mjs`
 
 Tasks:
 
+- Add `historical_drilldowns` field definition to manifest `visual_pivot_protocol`.
 - Index `historical_drilldowns` KPE rows and OHLCV checks.
 - Fix TEAM macro Wave 3 internal drawing points.
 - Add test that verified drilldown pivots cannot be marked projected.
@@ -520,7 +526,8 @@ Files:
 - `strategies/hew/manifest.json`
 - `scripts/validate_evidence.mjs`
 - `analysis_journal/TEAM_2026-05-16_hew/evidence.json`
-- docs/prompts that still say probability for v1 packages
+- `WORKFLOW.md` (replace zone_probability references with zone_scores)
+- `docs/hew-atlassian-reference-style.md` (update probability language to score language)
 
 Tasks:
 
@@ -575,6 +582,7 @@ Files:
 - `strategies/hew/manifest.json`
 - `analysis_journal/TEAM_2026-05-16_hew/evidence.json`
 - `scripts/validate_evidence.mjs`
+- `WORKFLOW.md` (document migration policy and exemption rules)
 
 Tasks:
 
