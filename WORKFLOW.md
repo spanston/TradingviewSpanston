@@ -98,6 +98,8 @@ npm test
 npm run validate:hew -- analysis_journal/<PACKAGE>/evidence.json
 ```
 
+`npm test` starts with `scripts/check_integrity.mjs`, which fails on NUL-corrupted tracked text files or invalid JSON before unit/contract tests run.
+
 The validator fails closed on:
 
 - Missing stage gates.
