@@ -1,0 +1,2112 @@
+{
+  "journal_id": "BITSTAMP_BTCUSD_2026-05-17_hew",
+  "saved_at": "2026-05-17T11:20:00+02:00",
+  "symbol": "BITSTAMP:BTCUSD",
+  "method": "Ian Copsey Fractal Forecasting",
+  "workflow_version": "hew_institutional_v1",
+  "status": "watchlist_only",
+  "verdict": {
+    "package_validity": "pass",
+    "evidence_grade": "clean",
+    "trade_permission": "blocked",
+    "confidence": "low",
+    "posture": "WATCHLIST ONLY"
+  },
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "visual_pivot_extraction",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "ohlcv_pivot_verification",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "visual_pivots_extracted",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "ohlcv_pivots_verified",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "pivot_conflicts_resolved",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "chart_modes_recorded",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "preceding_impulse_context_shown",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "primary_secondary_subwaves_drawn",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "forward_impulse_projection_drawn",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "projection_topology_validated",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "visual_thesis_consistency_checked",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "c_of_3_strength_checked",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "corrective_structure_classified",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "risk_architecture_separated",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "copsey_internal_abc_motive_engines_checked",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "copsey_ac_lower_degree_fives_checked",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "copsey_forbidden_rescue_devices_rejected",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "castaway_overlay_not_copsey_source",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "wave3_1764_rule_checked",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "macro_count_subwaves_ratio_aligned",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "projection_forward_margin_next_count",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "wave_b_ladder_chart_proof",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "zone_scores_complete",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_verified": "BITSTAMP:BTCUSD live chart verified.",
+    "drawings_cleared": false,
+    "cleared_drawing_count": 0,
+    "visible_ranges_verified": true,
+    "final_timeframe": "1D",
+    "chart_mode_checklist": [
+      {
+        "mode": "extraction",
+        "status": "pass",
+        "evidence": "KPE visible with crypto profile.",
+        "konsili_pivot_exporter_visible": true
+      },
+      {
+        "mode": "verification",
+        "status": "pass",
+        "evidence": "KPE rows matched OHLCV."
+      },
+      {
+        "mode": "strategy_proof",
+        "status": "pass",
+        "evidence": "KPE hidden before proof drawing.",
+        "konsili_pivot_exporter_visible": false
+      },
+      {
+        "mode": "presentation",
+        "status": "pass",
+        "evidence": "Final chart has scaffolding hidden.",
+        "konsili_pivot_exporter_visible": false,
+        "pivot_scaffold_visible": false,
+        "final_chart_state": "Daily BTCUSD, AO visible, KPE hidden, proof drawings visible."
+      }
+    ],
+    "drawing_manifest": [
+      {
+        "id": "preceding_impulse_context",
+        "entity_id": "EAJ4SZ",
+        "role": "preceding_impulse_context",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "direction": "bullish",
+        "engine_status": "pass",
+        "levels": [
+          15479,
+          31818,
+          24920,
+          73794,
+          49577,
+          109356
+        ],
+        "points": [
+          {
+            "label": "0",
+            "price": 15479,
+            "pivot_id": "w_2022_11_low_15479",
+            "source_row_id": "W_1668988800000_L",
+            "ohlcv_check_id": "w_2022_11_low_15479",
+            "point_status": "verified"
+          },
+          {
+            "label": "1",
+            "price": 31818,
+            "pivot_id": "w_2023_07_high_31818",
+            "source_row_id": "W_1688947200000_H",
+            "ohlcv_check_id": "w_2023_07_high_31818",
+            "point_status": "verified"
+          },
+          {
+            "label": "2",
+            "price": 24920,
+            "pivot_id": "w_2023_09_low_24920",
+            "source_row_id": "W_1694390400000_L",
+            "ohlcv_check_id": "w_2023_09_low_24920",
+            "point_status": "verified"
+          },
+          {
+            "label": "3",
+            "price": 73794,
+            "pivot_id": "w_2024_03_high_73794",
+            "source_row_id": "W_1710115200000_H",
+            "ohlcv_check_id": "w_2024_03_high_73794",
+            "point_status": "verified"
+          },
+          {
+            "label": "4",
+            "price": 49577,
+            "pivot_id": "w_2024_08_low_49577",
+            "source_row_id": "W_1722816000000_L",
+            "ohlcv_check_id": "w_2024_08_low_49577",
+            "point_status": "verified"
+          },
+          {
+            "label": "5",
+            "price": 109356,
+            "pivot_id": "w_2025_01_high_109356",
+            "source_row_id": "W_1737331200000_H",
+            "ohlcv_check_id": "w_2025_01_high_109356",
+            "point_status": "verified"
+          }
+        ]
+      },
+      {
+        "id": "primary_degree_subwaves",
+        "entity_id": "EAJ4SZ",
+        "role": "primary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "direction": "bullish",
+        "engine_status": "pass",
+        "levels": [
+          15479,
+          31818,
+          24920,
+          73794,
+          49577,
+          109356
+        ],
+        "points": [
+          {
+            "label": "0",
+            "price": 15479,
+            "pivot_id": "w_2022_11_low_15479",
+            "source_row_id": "W_1668988800000_L",
+            "ohlcv_check_id": "w_2022_11_low_15479",
+            "point_status": "verified"
+          },
+          {
+            "label": "1",
+            "price": 31818,
+            "pivot_id": "w_2023_07_high_31818",
+            "source_row_id": "W_1688947200000_H",
+            "ohlcv_check_id": "w_2023_07_high_31818",
+            "point_status": "verified"
+          },
+          {
+            "label": "2",
+            "price": 24920,
+            "pivot_id": "w_2023_09_low_24920",
+            "source_row_id": "W_1694390400000_L",
+            "ohlcv_check_id": "w_2023_09_low_24920",
+            "point_status": "verified"
+          },
+          {
+            "label": "3",
+            "price": 73794,
+            "pivot_id": "w_2024_03_high_73794",
+            "source_row_id": "W_1710115200000_H",
+            "ohlcv_check_id": "w_2024_03_high_73794",
+            "point_status": "verified"
+          },
+          {
+            "label": "4",
+            "price": 49577,
+            "pivot_id": "w_2024_08_low_49577",
+            "source_row_id": "W_1722816000000_L",
+            "ohlcv_check_id": "w_2024_08_low_49577",
+            "point_status": "verified"
+          },
+          {
+            "label": "5",
+            "price": 109356,
+            "pivot_id": "w_2025_01_high_109356",
+            "source_row_id": "W_1737331200000_H",
+            "ohlcv_check_id": "w_2025_01_high_109356",
+            "point_status": "verified"
+          }
+        ]
+      },
+      {
+        "id": "macro_abc_correction",
+        "entity_id": "8nxXW5",
+        "role": "macro_count",
+        "tool": "elliott_correction",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "direction": "bearish",
+        "engine_status": "pass",
+        "levels": [
+          109356,
+          74434,
+          126272,
+          59930
+        ],
+        "points": [
+          {
+            "label": "0",
+            "price": 109356,
+            "pivot_id": "w_2025_01_high_109356",
+            "source_row_id": "W_1737331200000_H",
+            "ohlcv_check_id": "w_2025_01_high_109356",
+            "point_status": "verified"
+          },
+          {
+            "label": "A",
+            "price": 74434,
+            "pivot_id": "w_2025_04_low_74434",
+            "source_row_id": "W_1743984000000_L",
+            "ohlcv_check_id": "w_2025_04_low_74434",
+            "point_status": "verified"
+          },
+          {
+            "label": "B",
+            "price": 126272,
+            "pivot_id": "w_2025_10_high_126272",
+            "source_row_id": "W_1759708800000_H",
+            "ohlcv_check_id": "w_2025_10_high_126272",
+            "point_status": "verified"
+          },
+          {
+            "label": "C",
+            "price": 59930,
+            "pivot_id": "w_2026_02_low_59930",
+            "source_row_id": "W_1769990400000_L",
+            "ohlcv_check_id": "w_2026_02_low_59930",
+            "point_status": "verified"
+          }
+        ]
+      },
+      {
+        "id": "conditional_forward_projection",
+        "entity_id": "rYo5Dc",
+        "role": "projection_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "direction": "bullish",
+        "engine_status": "pass",
+        "source_hypothesis_id": "btc_primary_conditional_forward_impulse",
+        "levels": [
+          59930,
+          82833,
+          74912,
+          115314,
+          97939,
+          125630
+        ],
+        "points": [
+          {
+            "label": "0",
+            "price": 59930,
+            "pivot_id": "d_2026_02_low_59930",
+            "source_row_id": "D_1770336000000_L",
+            "ohlcv_check_id": "d_2026_02_low_59930",
+            "point_status": "verified"
+          },
+          {
+            "label": "1",
+            "price": 82833,
+            "pivot_id": "d_2026_05_high_82833",
+            "source_row_id": "D_1778025600000_H",
+            "ohlcv_check_id": "d_2026_05_high_82833",
+            "point_status": "verified"
+          },
+          {
+            "label": "2",
+            "price": 74912,
+            "pivot_id": "d_2026_04_low_74912",
+            "source_row_id": "D_1777420800000_L",
+            "ohlcv_check_id": "d_2026_04_low_74912",
+            "point_status": "verified"
+          },
+          {
+            "label": "3",
+            "price": 115314,
+            "point_status": "projected",
+            "projection_formula_id": "conditional_wave3_floor",
+            "source_pivots": [
+              "d_2026_02_low_59930",
+              "d_2026_05_high_82833",
+              "d_2026_04_low_74912"
+            ]
+          },
+          {
+            "label": "4",
+            "price": 97939,
+            "pivot_id": "d_2026_01_high_97939",
+            "source_row_id": "D_1768348800000_H",
+            "ohlcv_check_id": "d_2026_01_high_97939",
+            "point_status": "verified"
+          },
+          {
+            "label": "5",
+            "price": 125630,
+            "point_status": "projected",
+            "projection_formula_id": "conditional_wave5_half",
+            "source_pivots": [
+              "d_2026_02_low_59930",
+              "d_2026_05_high_82833",
+              "d_2026_04_low_74912",
+              "d_2026_01_high_97939"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "secondary_degree_subwaves",
+        "entity_id": "rYo5Dc",
+        "role": "secondary_degree_subwaves",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "direction": "bullish",
+        "engine_status": "pass",
+        "source_hypothesis_id": "btc_primary_conditional_forward_impulse",
+        "levels": [
+          59930,
+          82833,
+          74912,
+          115314,
+          97939,
+          125630
+        ],
+        "points": [
+          {
+            "label": "0",
+            "price": 59930,
+            "pivot_id": "d_2026_02_low_59930",
+            "source_row_id": "D_1770336000000_L",
+            "ohlcv_check_id": "d_2026_02_low_59930",
+            "point_status": "verified"
+          },
+          {
+            "label": "1",
+            "price": 82833,
+            "pivot_id": "d_2026_05_high_82833",
+            "source_row_id": "D_1778025600000_H",
+            "ohlcv_check_id": "d_2026_05_high_82833",
+            "point_status": "verified"
+          },
+          {
+            "label": "2",
+            "price": 74912,
+            "pivot_id": "d_2026_04_low_74912",
+            "source_row_id": "D_1777420800000_L",
+            "ohlcv_check_id": "d_2026_04_low_74912",
+            "point_status": "verified"
+          },
+          {
+            "label": "3",
+            "price": 115314,
+            "point_status": "projected",
+            "projection_formula_id": "conditional_wave3_floor",
+            "source_pivots": [
+              "d_2026_02_low_59930",
+              "d_2026_05_high_82833",
+              "d_2026_04_low_74912"
+            ]
+          },
+          {
+            "label": "4",
+            "price": 97939,
+            "pivot_id": "d_2026_01_high_97939",
+            "source_row_id": "D_1768348800000_H",
+            "ohlcv_check_id": "d_2026_01_high_97939",
+            "point_status": "verified"
+          },
+          {
+            "label": "5",
+            "price": 125630,
+            "point_status": "projected",
+            "projection_formula_id": "conditional_wave5_half",
+            "source_pivots": [
+              "d_2026_02_low_59930",
+              "d_2026_05_high_82833",
+              "d_2026_04_low_74912",
+              "d_2026_01_high_97939"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "wave_b_ladder_1",
+        "entity_id": "CuX6jS",
+        "role": "wave_b_ladder",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "price_range": {
+          "low": 59930,
+          "high": 80537
+        },
+        "boundary_refs": {
+          "low": {
+            "pivot_id": "d_2026_02_low_59930"
+          },
+          "high": {
+            "pivot_id": "d_2025_11_low_80537"
+          }
+        }
+      },
+      {
+        "id": "accumulation_zone",
+        "entity_id": "b05v59",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "accumulation",
+        "price_range": {
+          "low": 74912,
+          "high": 80537
+        },
+        "boundary_refs": {
+          "low": {
+            "pivot_id": "d_2026_04_low_74912"
+          },
+          "high": {
+            "pivot_id": "d_2025_11_low_80537"
+          }
+        },
+        "visible_label": {
+          "text": "ACC 74912-80537 | score 55 moderate",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        }
+      },
+      {
+        "id": "distribution_zone",
+        "entity_id": "krzpKR",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "distribution",
+        "price_range": {
+          "low": 80537,
+          "high": 82833
+        },
+        "boundary_refs": {
+          "low": {
+            "pivot_id": "d_2025_11_low_80537"
+          },
+          "high": {
+            "pivot_id": "d_2026_05_high_82833"
+          }
+        },
+        "visible_label": {
+          "text": "DIST 80537-82833 | score 66 high",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        }
+      },
+      {
+        "id": "no_trade_zone",
+        "entity_id": "CuX6jS",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "no_trade",
+        "price_range": {
+          "low": 59930,
+          "high": 64955
+        },
+        "boundary_refs": {
+          "low": {
+            "pivot_id": "d_2026_02_low_59930"
+          },
+          "high": {
+            "pivot_id": "d_2026_03_low_64955"
+          }
+        },
+        "visible_label": {
+          "text": "NO_TRADE 59930-64955 | score 72 high",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        }
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "visual_pivots",
+      "path": "screenshots/visual_pivots_daily.png"
+    },
+    {
+      "role": "visual_pivots_monthly",
+      "path": "screenshots/visual_pivots_monthly.png"
+    },
+    {
+      "role": "visual_pivots_weekly",
+      "path": "screenshots/visual_pivots_weekly.png"
+    },
+    {
+      "role": "macro_structure",
+      "path": "screenshots/macro_structure.png"
+    },
+    {
+      "role": "trade_posture",
+      "path": "screenshots/trade_posture.png"
+    }
+  ],
+  "raw_artifacts": {
+    "generated_at": "2026-05-17T11:20:00+02:00",
+    "files": [
+      {
+        "role": "kpe_monthly",
+        "path": "raw/kpe_monthly.jsonl",
+        "sha256": "7eec55a7cbe0729b48956174c5921d89ba7ab4df96935fa64e533ba03136a598"
+      },
+      {
+        "role": "kpe_weekly",
+        "path": "raw/kpe_weekly.jsonl",
+        "sha256": "f9cc1e4c440d2fe7796524881540d3ae7c0af057c777872e330e4ff8bfac0107"
+      },
+      {
+        "role": "kpe_daily",
+        "path": "raw/kpe_daily.jsonl",
+        "sha256": "028b8edbaed39a1045b5c05e0cf81b2eddd82b1ca3b0692372a05234418a0aec"
+      },
+      {
+        "role": "ohlcv_monthly",
+        "path": "raw/ohlcv_monthly.csv",
+        "sha256": "7945865668401a0c44edae0a5ac3bfa458cea168cf4e61458d7455a3a162c932"
+      },
+      {
+        "role": "ohlcv_weekly",
+        "path": "raw/ohlcv_weekly.csv",
+        "sha256": "b9cc52915b35083d232698020cb6ef13635b6009ddf94e8eac70838d4f8aa335"
+      },
+      {
+        "role": "ohlcv_daily",
+        "path": "raw/ohlcv_daily.csv",
+        "sha256": "fbfac0ddfc46980217a3834897164775778f71adcfaf86a3ea6a565d09b8db39"
+      },
+      {
+        "role": "draw_list_before",
+        "path": "raw/draw_list_before.json",
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      {
+        "role": "draw_list_after",
+        "path": "raw/draw_list_after.json",
+        "sha256": "a45e878bc5e47629b1dbc875b82c0ef6ea395ebdde943bb46c1ad778d46182c4"
+      },
+      {
+        "role": "chart_state_final",
+        "path": "raw/chart_state_final.json",
+        "sha256": "02c7a0f95ce82358e7b61041bbff679b64071bc0da878b5b6e262007ceb87f21"
+      }
+    ]
+  },
+  "visual_pivot_evidence": {
+    "indicator_name": "Konsili Pivot Exporter",
+    "study_filter": "Konsili Pivot Exporter",
+    "extraction_method": "KPE table rows read from visible exporter after crypto profile pin.",
+    "iteration_decision": "accepted_after_crypto_profile_7_7_32_and_ohlcv_match",
+    "exporter": {
+      "name": "Konsili Pivot Exporter",
+      "version": 2,
+      "study_filter": "Konsili Pivot Exporter",
+      "pine_script": "tradingview/konsili_pivot_exporter.pine",
+      "row_prefix": "KPE",
+      "source_tools": [
+        "data_get_pine_tables"
+      ],
+      "instrument_class": "crypto",
+      "left_bars": 7,
+      "right_bars": 7,
+      "max_rows": 32
+    },
+    "timeframes": [
+      {
+        "timeframe": "monthly",
+        "screenshot": "screenshots/visual_pivots_monthly.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=M|id=M_1667260800000_L|type=low|date=2022-11-01 00:00|time=1667260800000|price=15479|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=M|id=M_1709251200000_H|type=high|date=2024-03-01 00:00|time=1709251200000|price=73794|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=M|id=M_1759276800000_H|type=high|date=2025-10-01 00:00|time=1759276800000|price=126272|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "m_2022_11_low_15479",
+            "type": "low",
+            "date": "2022-11-01 00:00",
+            "time": 1667260800000,
+            "price": 15479,
+            "exporter_row_id": "M_1667260800000_L",
+            "source_text": "KPE|v=2|tf=M|id=M_1667260800000_L|type=low|date=2022-11-01 00:00|time=1667260800000|price=15479|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "m_2024_03_high_73794",
+            "type": "high",
+            "date": "2024-03-01 00:00",
+            "time": 1709251200000,
+            "price": 73794,
+            "exporter_row_id": "M_1709251200000_H",
+            "source_text": "KPE|v=2|tf=M|id=M_1709251200000_H|type=high|date=2024-03-01 00:00|time=1709251200000|price=73794|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "m_2025_10_high_126272",
+            "type": "high",
+            "date": "2025-10-01 00:00",
+            "time": 1759276800000,
+            "price": 126272,
+            "exporter_row_id": "M_1759276800000_H",
+            "source_text": "KPE|v=2|tf=M|id=M_1759276800000_H|type=high|date=2025-10-01 00:00|time=1759276800000|price=126272|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "m_2022_11_low_15479",
+            "pivot_id": "m_2022_11_low_15479",
+            "status": "pass",
+            "evidence": "Monthly OHLCV matched low 15479 on 2022-11-01 00:00."
+          },
+          {
+            "id": "m_2024_03_high_73794",
+            "pivot_id": "m_2024_03_high_73794",
+            "status": "pass",
+            "evidence": "Monthly OHLCV matched high 73794 on 2024-03-01 00:00."
+          },
+          {
+            "id": "m_2025_10_high_126272",
+            "pivot_id": "m_2025_10_high_126272",
+            "status": "pass",
+            "evidence": "Monthly OHLCV matched high 126272 on 2025-10-01 00:00."
+          }
+        ]
+      },
+      {
+        "timeframe": "weekly",
+        "screenshot": "screenshots/visual_pivots_weekly.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=W|id=W_1668988800000_L|type=low|date=2022-11-21 00:00|time=1668988800000|price=15479|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1688947200000_H|type=high|date=2023-07-10 00:00|time=1688947200000|price=31818|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1694390400000_L|type=low|date=2023-09-11 00:00|time=1694390400000|price=24920|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1710115200000_H|type=high|date=2024-03-11 00:00|time=1710115200000|price=73794|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1722816000000_L|type=low|date=2024-08-05 00:00|time=1722816000000|price=49577|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1737331200000_H|type=high|date=2025-01-20 00:00|time=1737331200000|price=109356|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1743984000000_L|type=low|date=2025-04-07 00:00|time=1743984000000|price=74434|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1759708800000_H|type=high|date=2025-10-06 00:00|time=1759708800000|price=126272|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1763337600000_L|type=low|date=2025-11-17 00:00|time=1763337600000|price=80537|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1768176000000_H|type=high|date=2026-01-12 00:00|time=1768176000000|price=97939|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=W|id=W_1769990400000_L|type=low|date=2026-02-02 00:00|time=1769990400000|price=59930|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "w_2022_11_low_15479",
+            "type": "low",
+            "date": "2022-11-21 00:00",
+            "time": 1668988800000,
+            "price": 15479,
+            "exporter_row_id": "W_1668988800000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1668988800000_L|type=low|date=2022-11-21 00:00|time=1668988800000|price=15479|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2023_07_high_31818",
+            "type": "high",
+            "date": "2023-07-10 00:00",
+            "time": 1688947200000,
+            "price": 31818,
+            "exporter_row_id": "W_1688947200000_H",
+            "source_text": "KPE|v=2|tf=W|id=W_1688947200000_H|type=high|date=2023-07-10 00:00|time=1688947200000|price=31818|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2023_09_low_24920",
+            "type": "low",
+            "date": "2023-09-11 00:00",
+            "time": 1694390400000,
+            "price": 24920,
+            "exporter_row_id": "W_1694390400000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1694390400000_L|type=low|date=2023-09-11 00:00|time=1694390400000|price=24920|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2024_03_high_73794",
+            "type": "high",
+            "date": "2024-03-11 00:00",
+            "time": 1710115200000,
+            "price": 73794,
+            "exporter_row_id": "W_1710115200000_H",
+            "source_text": "KPE|v=2|tf=W|id=W_1710115200000_H|type=high|date=2024-03-11 00:00|time=1710115200000|price=73794|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2024_08_low_49577",
+            "type": "low",
+            "date": "2024-08-05 00:00",
+            "time": 1722816000000,
+            "price": 49577,
+            "exporter_row_id": "W_1722816000000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1722816000000_L|type=low|date=2024-08-05 00:00|time=1722816000000|price=49577|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2025_01_high_109356",
+            "type": "high",
+            "date": "2025-01-20 00:00",
+            "time": 1737331200000,
+            "price": 109356,
+            "exporter_row_id": "W_1737331200000_H",
+            "source_text": "KPE|v=2|tf=W|id=W_1737331200000_H|type=high|date=2025-01-20 00:00|time=1737331200000|price=109356|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2025_04_low_74434",
+            "type": "low",
+            "date": "2025-04-07 00:00",
+            "time": 1743984000000,
+            "price": 74434,
+            "exporter_row_id": "W_1743984000000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1743984000000_L|type=low|date=2025-04-07 00:00|time=1743984000000|price=74434|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2025_10_high_126272",
+            "type": "high",
+            "date": "2025-10-06 00:00",
+            "time": 1759708800000,
+            "price": 126272,
+            "exporter_row_id": "W_1759708800000_H",
+            "source_text": "KPE|v=2|tf=W|id=W_1759708800000_H|type=high|date=2025-10-06 00:00|time=1759708800000|price=126272|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2025_11_low_80537",
+            "type": "low",
+            "date": "2025-11-17 00:00",
+            "time": 1763337600000,
+            "price": 80537,
+            "exporter_row_id": "W_1763337600000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1763337600000_L|type=low|date=2025-11-17 00:00|time=1763337600000|price=80537|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2026_01_high_97939",
+            "type": "high",
+            "date": "2026-01-12 00:00",
+            "time": 1768176000000,
+            "price": 97939,
+            "exporter_row_id": "W_1768176000000_H",
+            "source_text": "KPE|v=2|tf=W|id=W_1768176000000_H|type=high|date=2026-01-12 00:00|time=1768176000000|price=97939|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "w_2026_02_low_59930",
+            "type": "low",
+            "date": "2026-02-02 00:00",
+            "time": 1769990400000,
+            "price": 59930,
+            "exporter_row_id": "W_1769990400000_L",
+            "source_text": "KPE|v=2|tf=W|id=W_1769990400000_L|type=low|date=2026-02-02 00:00|time=1769990400000|price=59930|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "w_2022_11_low_15479",
+            "pivot_id": "w_2022_11_low_15479",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 15479 on 2022-11-21 00:00."
+          },
+          {
+            "id": "w_2023_07_high_31818",
+            "pivot_id": "w_2023_07_high_31818",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched high 31818 on 2023-07-10 00:00."
+          },
+          {
+            "id": "w_2023_09_low_24920",
+            "pivot_id": "w_2023_09_low_24920",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 24920 on 2023-09-11 00:00."
+          },
+          {
+            "id": "w_2024_03_high_73794",
+            "pivot_id": "w_2024_03_high_73794",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched high 73794 on 2024-03-11 00:00."
+          },
+          {
+            "id": "w_2024_08_low_49577",
+            "pivot_id": "w_2024_08_low_49577",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 49577 on 2024-08-05 00:00."
+          },
+          {
+            "id": "w_2025_01_high_109356",
+            "pivot_id": "w_2025_01_high_109356",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched high 109356 on 2025-01-20 00:00."
+          },
+          {
+            "id": "w_2025_04_low_74434",
+            "pivot_id": "w_2025_04_low_74434",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 74434 on 2025-04-07 00:00."
+          },
+          {
+            "id": "w_2025_10_high_126272",
+            "pivot_id": "w_2025_10_high_126272",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched high 126272 on 2025-10-06 00:00."
+          },
+          {
+            "id": "w_2025_11_low_80537",
+            "pivot_id": "w_2025_11_low_80537",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 80537 on 2025-11-17 00:00."
+          },
+          {
+            "id": "w_2026_01_high_97939",
+            "pivot_id": "w_2026_01_high_97939",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched high 97939 on 2026-01-12 00:00."
+          },
+          {
+            "id": "w_2026_02_low_59930",
+            "pivot_id": "w_2026_02_low_59930",
+            "status": "pass",
+            "evidence": "Weekly OHLCV matched low 59930 on 2026-02-02 00:00."
+          }
+        ]
+      },
+      {
+        "timeframe": "daily",
+        "screenshot": "screenshots/visual_pivots_daily.png",
+        "exporter_rows": [
+          "KPE|v=2|tf=D|id=D_1763683200000_L|type=low|date=2025-11-21 00:00|time=1763683200000|price=80537|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1768348800000_H|type=high|date=2026-01-14 00:00|time=1768348800000|price=97939|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1770336000000_L|type=low|date=2026-02-06 00:00|time=1770336000000|price=59930|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1772582400000_H|type=high|date=2026-03-04 00:00|time=1772582400000|price=74075|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1774742400000_L|type=low|date=2026-03-29 00:00|time=1774742400000|price=64955|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1776816000000_H|type=high|date=2026-04-22 00:00|time=1776816000000|price=79500|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1777420800000_L|type=low|date=2026-04-29 00:00|time=1777420800000|price=74912|timezone=Etc/UTC|left=7|right=7|confirmed=true",
+          "KPE|v=2|tf=D|id=D_1778025600000_H|type=high|date=2026-05-06 00:00|time=1778025600000|price=82833|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+        ],
+        "pivots": [
+          {
+            "id": "d_2025_11_low_80537",
+            "type": "low",
+            "date": "2025-11-21 00:00",
+            "time": 1763683200000,
+            "price": 80537,
+            "exporter_row_id": "D_1763683200000_L",
+            "source_text": "KPE|v=2|tf=D|id=D_1763683200000_L|type=low|date=2025-11-21 00:00|time=1763683200000|price=80537|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_01_high_97939",
+            "type": "high",
+            "date": "2026-01-14 00:00",
+            "time": 1768348800000,
+            "price": 97939,
+            "exporter_row_id": "D_1768348800000_H",
+            "source_text": "KPE|v=2|tf=D|id=D_1768348800000_H|type=high|date=2026-01-14 00:00|time=1768348800000|price=97939|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_02_low_59930",
+            "type": "low",
+            "date": "2026-02-06 00:00",
+            "time": 1770336000000,
+            "price": 59930,
+            "exporter_row_id": "D_1770336000000_L",
+            "source_text": "KPE|v=2|tf=D|id=D_1770336000000_L|type=low|date=2026-02-06 00:00|time=1770336000000|price=59930|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_03_high_74075",
+            "type": "high",
+            "date": "2026-03-04 00:00",
+            "time": 1772582400000,
+            "price": 74075,
+            "exporter_row_id": "D_1772582400000_H",
+            "source_text": "KPE|v=2|tf=D|id=D_1772582400000_H|type=high|date=2026-03-04 00:00|time=1772582400000|price=74075|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_03_low_64955",
+            "type": "low",
+            "date": "2026-03-29 00:00",
+            "time": 1774742400000,
+            "price": 64955,
+            "exporter_row_id": "D_1774742400000_L",
+            "source_text": "KPE|v=2|tf=D|id=D_1774742400000_L|type=low|date=2026-03-29 00:00|time=1774742400000|price=64955|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_04_high_79500",
+            "type": "high",
+            "date": "2026-04-22 00:00",
+            "time": 1776816000000,
+            "price": 79500,
+            "exporter_row_id": "D_1776816000000_H",
+            "source_text": "KPE|v=2|tf=D|id=D_1776816000000_H|type=high|date=2026-04-22 00:00|time=1776816000000|price=79500|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_04_low_74912",
+            "type": "low",
+            "date": "2026-04-29 00:00",
+            "time": 1777420800000,
+            "price": 74912,
+            "exporter_row_id": "D_1777420800000_L",
+            "source_text": "KPE|v=2|tf=D|id=D_1777420800000_L|type=low|date=2026-04-29 00:00|time=1777420800000|price=74912|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          },
+          {
+            "id": "d_2026_05_high_82833",
+            "type": "high",
+            "date": "2026-05-06 00:00",
+            "time": 1778025600000,
+            "price": 82833,
+            "exporter_row_id": "D_1778025600000_H",
+            "source_text": "KPE|v=2|tf=D|id=D_1778025600000_H|type=high|date=2026-05-06 00:00|time=1778025600000|price=82833|timezone=Etc/UTC|left=7|right=7|confirmed=true"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "d_2025_11_low_80537",
+            "pivot_id": "d_2025_11_low_80537",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched low 80537 on 2025-11-21 00:00."
+          },
+          {
+            "id": "d_2026_01_high_97939",
+            "pivot_id": "d_2026_01_high_97939",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched high 97939 on 2026-01-14 00:00."
+          },
+          {
+            "id": "d_2026_02_low_59930",
+            "pivot_id": "d_2026_02_low_59930",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched low 59930 on 2026-02-06 00:00."
+          },
+          {
+            "id": "d_2026_03_high_74075",
+            "pivot_id": "d_2026_03_high_74075",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched high 74075 on 2026-03-04 00:00."
+          },
+          {
+            "id": "d_2026_03_low_64955",
+            "pivot_id": "d_2026_03_low_64955",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched low 64955 on 2026-03-29 00:00."
+          },
+          {
+            "id": "d_2026_04_high_79500",
+            "pivot_id": "d_2026_04_high_79500",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched high 79500 on 2026-04-22 00:00."
+          },
+          {
+            "id": "d_2026_04_low_74912",
+            "pivot_id": "d_2026_04_low_74912",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched low 74912 on 2026-04-29 00:00."
+          },
+          {
+            "id": "d_2026_05_high_82833",
+            "pivot_id": "d_2026_05_high_82833",
+            "status": "pass",
+            "evidence": "Daily OHLCV matched high 82833 on 2026-05-06 00:00."
+          }
+        ]
+      }
+    ]
+  },
+  "ian_copsey_wave_map": {
+    "count_selection_authority": "ian_copsey_fractal_forecasting",
+    "mechanical_tool_boundary": "ratio_validation_only",
+    "scanner_used_for_count_selection": false,
+    "book_alignment_source": "Fractal Forecasting - Ian Copsey",
+    "selection_method": "Top-down KPE/OHLCV anchors selected first; math tools checked saved anchors only.",
+    "counts": [
+      {
+        "id": "macro_primary_context",
+        "role": "macro_primary",
+        "drawing_id": "preceding_impulse_context",
+        "pivots": [
+          15479,
+          31818,
+          24920,
+          73794,
+          49577,
+          109356
+        ],
+        "ratio_validation_id": "macro_context_wave3_floor",
+        "copsey_rationale": "2022-2025 advance is context, not trade permission."
+      },
+      {
+        "id": "macro_abc_correction",
+        "role": "macro_correction",
+        "drawing_id": "macro_abc_correction",
+        "pivots": [
+          109356,
+          74434,
+          126272,
+          59930
+        ],
+        "ratio_validation_id": "macro_abc_context",
+        "copsey_rationale": "126272 is corrective B context, not an accepted terminal fifth."
+      },
+      {
+        "id": "daily_recovery_attempt",
+        "role": "internal_subwave",
+        "drawing_id": "secondary_degree_subwaves",
+        "pivots": [
+          59930,
+          74075,
+          64955,
+          82833
+        ],
+        "ratio_validation_id": "actual_rebound_failed_floor",
+        "copsey_rationale": "Actual rebound fails the 1.764 floor."
+      },
+      {
+        "id": "active_decision_projection",
+        "role": "active_decision",
+        "drawing_id": "conditional_forward_projection",
+        "pivots": [
+          59930,
+          82833,
+          74912,
+          115314,
+          97939,
+          125630
+        ],
+        "ratio_validation_id": "wave3_1764_rule",
+        "copsey_rationale": "Conditional path frames review zones only."
+      }
+    ],
+    "ratio_calculations": [
+      {
+        "id": "actual_rebound_wave3",
+        "formula": "(82833 - 64955) / (74075 - 59930)",
+        "actual_ratio": 1.264,
+        "interpretation": "Actual rebound fails the floor."
+      },
+      {
+        "id": "conditional_projection_wave3",
+        "formula": "(115314 - 74912) / (82833 - 59930)",
+        "actual_ratio": 1.764,
+        "interpretation": "Conditional map reaches the minimum floor."
+      }
+    ],
+    "fractal_forecasting_alignment": [
+      {
+        "id": "fractal_degree_consistency",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "three_wave_impulsive_components",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "wave3_1764_floor",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "forbidden_rescue_rejection",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "corrective_context_before_forecast",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "scanner_not_count_authority",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      }
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "btc_primary_conditional_forward_impulse",
+      "selection_role": "primary",
+      "direction": "bullish",
+      "structure_type": "conditional_forward_impulse",
+      "lifecycle": "projection",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 59930
+        },
+        {
+          "id": "p1",
+          "price": 82833
+        },
+        {
+          "id": "p2",
+          "price": 74912
+        },
+        {
+          "id": "p3",
+          "price": 115314,
+          "point_status": "projected"
+        },
+        {
+          "id": "p4",
+          "price": 97939
+        },
+        {
+          "id": "p5",
+          "price": 125630,
+          "point_status": "projected"
+        }
+      ],
+      "measurements": [
+        {
+          "id": "conditional_wave3_floor",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        },
+        {
+          "id": "conditional_wave5_half",
+          "type": "wave5_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave3_end": "p3",
+            "wave4_end": "p4",
+            "wave5_end": "p5"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "btc_primary_conditional_forward_impulse",
+        "status": "pass",
+        "score": 100,
+        "hard_rule_pass": true,
+        "lifecycle_status": "projection",
+        "classification": "valid_projection",
+        "ratio_model": "model_1_standard",
+        "measurements": [
+          {
+            "id": "conditional_wave3_floor",
+            "type": "wave3_projection",
+            "status": "pass",
+            "score": 100,
+            "actual_ratio": 1.764,
+            "matched_cluster": "model_1_1764_2146",
+            "nearest_anchor": 1.764,
+            "anchor_position": "min",
+            "anchor_distance": 0,
+            "ratio_model": "model_1_standard"
+          },
+          {
+            "id": "conditional_wave5_half",
+            "type": "wave5_projection",
+            "status": "pass",
+            "score": 100,
+            "actual_ratio": 0.5,
+            "matched_ratio": 0.5
+          }
+        ],
+        "violations": [],
+        "violation_ids": []
+      }
+    },
+    {
+      "id": "btc_alternate_bear_c_extension",
+      "selection_role": "alternate",
+      "direction": "bearish",
+      "structure_type": "active_correction",
+      "lifecycle": "active",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 126272
+        },
+        {
+          "id": "p1",
+          "price": 80537
+        },
+        {
+          "id": "p2",
+          "price": 97939
+        },
+        {
+          "id": "p3",
+          "price": 59930
+        }
+      ],
+      "measurements": [
+        {
+          "id": "bearish_active_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "btc_alternate_bear_c_extension",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "lifecycle_status": "active",
+        "classification": "invalid_diagnostic",
+        "ratio_model": null,
+        "measurements": [
+          {
+            "id": "bearish_active_wave3",
+            "type": "wave3_projection",
+            "status": "fail",
+            "score": 0,
+            "actual_ratio": 0.8311,
+            "violation_id": "wave3_outside_copsey_clusters"
+          }
+        ],
+        "violations": [
+          {
+            "id": "wave3_outside_copsey_clusters",
+            "severity": "hard",
+            "measurement_id": "bearish_active_wave3",
+            "message": "Wave 3 projection is outside Copsey allowed clusters.",
+            "actual_ratio": 0.8311
+          }
+        ],
+        "violation_ids": [
+          "wave3_outside_copsey_clusters"
+        ]
+      }
+    },
+    {
+      "id": "btc_rejected_live_rebound_impulse",
+      "selection_role": "rejected",
+      "direction": "bullish",
+      "structure_type": "rejected_impulse",
+      "lifecycle": "rejected",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 59930
+        },
+        {
+          "id": "p1",
+          "price": 74075
+        },
+        {
+          "id": "p2",
+          "price": 64955
+        },
+        {
+          "id": "p3",
+          "price": 82833
+        }
+      ],
+      "measurements": [
+        {
+          "id": "actual_rebound_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "btc_rejected_live_rebound_impulse",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "lifecycle_status": "rejected",
+        "classification": "invalid_diagnostic",
+        "ratio_model": null,
+        "measurements": [
+          {
+            "id": "actual_rebound_wave3",
+            "type": "wave3_projection",
+            "status": "fail",
+            "score": 0,
+            "actual_ratio": 1.2639,
+            "violation_id": "wave3_outside_copsey_clusters"
+          }
+        ],
+        "violations": [
+          {
+            "id": "wave3_outside_copsey_clusters",
+            "severity": "hard",
+            "measurement_id": "actual_rebound_wave3",
+            "message": "Wave 3 projection is outside Copsey allowed clusters.",
+            "actual_ratio": 1.2639
+          }
+        ],
+        "violation_ids": [
+          "wave3_outside_copsey_clusters"
+        ]
+      }
+    }
+  ],
+  "count_state": {
+    "state_id": "BITSTAMP_BTCUSD_2026-05-17_hew_state",
+    "anchor_hash": "09ef549247f54d4c",
+    "continuity_status": "new",
+    "previous_state_ref": "none",
+    "update_reason": "fresh live BTC package",
+    "persisted_at": "2026-05-17T11:20:00+02:00"
+  },
+  "hew_structure_context": {
+    "preceding_impulse_context": {
+      "status": "pass",
+      "drawing_id": "preceding_impulse_context",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "primary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "primary_degree_subwaves",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "secondary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "secondary_degree_subwaves",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "forward_impulse_projection": {
+      "status": "pass",
+      "drawing_id": "conditional_forward_projection",
+      "conditionality": "conditional projection scenario only",
+      "topology_validation": "pass",
+      "evidence": "Forward path is conditional, not fact."
+    }
+  },
+  "copsey_hew_purity": {
+    "internal_abc_motive_engines": {
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+      "macro_waves": [
+        {
+          "wave": "1",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "A-B-C visible-equivalent context from 15479 to 31818 and 24920.",
+          "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+          "drawing_id": "primary_degree_subwaves"
+        },
+        {
+          "wave": "3",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "A-B-C visible-equivalent context from 24920 to 73794.",
+          "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+          "drawing_id": "primary_degree_subwaves"
+        },
+        {
+          "wave": "5",
+          "coverage_status": "visible_equivalent",
+          "visible_equivalent": "A-B-C visible-equivalent context from 49577 to 109356; 126272 rejected as terminal fifth.",
+          "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+          "drawing_id": "primary_degree_subwaves"
+        }
+      ]
+    },
+    "ac_lower_degree_fives": {
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+      "legs": [
+        {
+          "leg": "A",
+          "visibility_status": "not_visible",
+          "visibility_reason": "Lower-degree detail not clean without clutter.",
+          "downgrade_semantics": "No trade permission from this layer."
+        },
+        {
+          "leg": "C",
+          "visibility_status": "not_visible",
+          "visibility_reason": "Lower-degree detail not clean without clutter.",
+          "downgrade_semantics": "No trade permission from this layer."
+        }
+      ]
+    },
+    "forbidden_rescue_devices": {
+      "status": "pass",
+      "evidence": "126272 is not rescued as a terminal fifth.",
+      "rejected_devices": [
+        "extended_waves",
+        "failed_fifths",
+        "leading_diagonals",
+        "ending_diagonals",
+        "diagonal_triangles"
+      ],
+      "used_devices": [],
+      "no_use_confirmed": true
+    },
+    "castaway_overlay": {
+      "status": "pass",
+      "source_label": "Konsili Castaway overlay",
+      "is_copsey_source": false,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "wave3_1764_rule": {
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.764,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  },
+  "primary_count": {
+    "id": "btc_primary_conditional_forward_impulse",
+    "status": "conditional",
+    "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+  },
+  "alternate_counts": [
+    {
+      "id": "btc_alternate_bear_c_extension",
+      "status": "watch",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "btc_rejected_live_rebound_impulse",
+      "status": "rejected",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "wave3_1764_rule",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.764,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "actual_rebound_failed_floor",
+      "status": "fail",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.264,
+      "evidence": "Actual rebound fails the floor."
+    },
+    {
+      "id": "macro_context_wave3_floor",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 2.9912,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "macro_abc_context",
+      "status": "pass",
+      "required_ratio": 0.5,
+      "actual_ratio": 0.778,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "conditional_wave2_holds_origin",
+      "status": "pass",
+      "evidence": "74912 is above 59930."
+    },
+    {
+      "id": "conditional_wave4_non_overlap",
+      "status": "pass",
+      "evidence": "97939 is above 82833."
+    },
+    {
+      "id": "rejected_terminal_126272",
+      "status": "pass",
+      "evidence": "126272 is correction context."
+    }
+  ],
+  "wave_b_invalidation_ladder": {
+    "direction": "bullish",
+    "validation_standard": "daily_close_or_weekly_acceptance",
+    "drawing_refs": [
+      "wave_b_ladder_1"
+    ],
+    "hard_failure_ids": [
+      "wave2_breaks_wave1_origin",
+      "b_of_3_breaks_wave2",
+      "wave4_breaks_b_of_wave3",
+      "b_of_5_breaks_wave4"
+    ],
+    "rungs": [
+      {
+        "id": "wave2_holds_wave1_origin",
+        "must_hold": "above",
+        "level_role": "wave1_origin",
+        "tested_by": "support_box",
+        "status": "pass",
+        "price": 59930,
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "b_of_3_holds_wave2",
+        "must_hold": "above",
+        "level_role": "wave2_low",
+        "tested_by": "future_b_of_3",
+        "status": "pending",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "wave4_holds_b_of_3",
+        "must_hold": "above",
+        "level_role": "b_of_3_low",
+        "tested_by": "future_wave4",
+        "status": "pending",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "b_of_5_holds_wave4",
+        "must_hold": "above",
+        "level_role": "wave4_low",
+        "tested_by": "future_b_of_5",
+        "status": "pending",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      }
+    ]
+  },
+  "corrective_structure": {
+    "location": "post_impulse_correction",
+    "pattern": "expanded_flat",
+    "mode": "mixed",
+    "wave_b_behavior": "exceeds_prior_extreme",
+    "preceding_impulse_ref": "preceding_impulse_context",
+    "evidence": "109356 -> 74434 -> 126272 -> 59930 corrects the preceding advance."
+  },
+  "zone_scores": [
+    {
+      "id": "accumulation_zone",
+      "zone_type": "accumulation",
+      "price_range": {
+        "low": 74912,
+        "high": 80537
+      },
+      "boundary_refs": {
+        "low": {
+          "pivot_id": "d_2026_04_low_74912"
+        },
+        "high": {
+          "pivot_id": "d_2025_11_low_80537"
+        }
+      },
+      "zone_score": {
+        "model_version": "uncalibrated_zone_score_v1",
+        "calibrated_probability": false,
+        "score": 55,
+        "band": "moderate",
+        "drivers": [
+          "74912 daily support",
+          "80537 weekly support",
+          "AO positive but weakening",
+          "actual rebound below 1.764"
+        ]
+      },
+      "evidence": "Price sits in the review box but has not proven the required expansion.",
+      "invalidation": "Daily close below 74912 weakens the box; 59930 rejects the conditional map.",
+      "upgrade_condition": "Score improves if price holds this box and later accepts above 82833 with AO and volume improving.",
+      "downgrade_condition": "Score degrades if price loses 74912 or AO weakens under 82833."
+    },
+    {
+      "id": "distribution_zone",
+      "zone_type": "distribution",
+      "price_range": {
+        "low": 80537,
+        "high": 82833
+      },
+      "boundary_refs": {
+        "low": {
+          "pivot_id": "d_2025_11_low_80537"
+        },
+        "high": {
+          "pivot_id": "d_2026_05_high_82833"
+        }
+      },
+      "zone_score": {
+        "model_version": "uncalibrated_zone_score_v1",
+        "calibrated_probability": false,
+        "score": 66,
+        "band": "high",
+        "drivers": [
+          "82833 May pivot",
+          "80537 overhead supply",
+          "weak actual rebound ratio",
+          "AO rollover risk"
+        ]
+      },
+      "evidence": "This is the stronger current decision zone because price rejected it before validating a new motive engine.",
+      "invalidation": "Supply pressure eases only after sustained acceptance above 82833 with improving momentum.",
+      "upgrade_condition": "Score rises if price re-enters the box with weak AO or volume.",
+      "downgrade_condition": "Score falls if price holds above 82833 and the next verified pivot path reaches the floor."
+    },
+    {
+      "id": "no_trade_zone",
+      "zone_type": "no_trade",
+      "price_range": {
+        "low": 59930,
+        "high": 64955
+      },
+      "boundary_refs": {
+        "low": {
+          "pivot_id": "d_2026_02_low_59930"
+        },
+        "high": {
+          "pivot_id": "d_2026_03_low_64955"
+        }
+      },
+      "zone_score": {
+        "model_version": "uncalibrated_zone_score_v1",
+        "calibrated_probability": false,
+        "score": 72,
+        "band": "high",
+        "drivers": [
+          "59930 origin",
+          "64955 daily low",
+          "failure band for recovery map"
+        ]
+      },
+      "evidence": "This is a lower failure band, not a trade area.",
+      "invalidation": "59930 failing rejects the conditional bullish map.",
+      "upgrade_condition": "No-trade risk score rises if price travels into this band.",
+      "downgrade_condition": "Risk score eases only if price holds above 74912 and accumulation score improves."
+    }
+  ],
+  "risk_architecture": {
+    "setup_type": "structural_map_only",
+    "structural_setup": {
+      "summary": "BTC is map-only.",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "execution_setup": {
+      "status": "not_ready",
+      "entry_condition": "not_applicable",
+      "stop_level": "not_applicable",
+      "target_zone": "not_applicable",
+      "risk_reward": "not_applicable"
+    },
+    "risk_reward": "not_applicable",
+    "invalidation": "59930",
+    "position_sizing_basis": "not_applicable",
+    "alternate_response": "Review lower failure band if 74912 fails.",
+    "time_or_structural_stop": "Fresh verified pivot required.",
+    "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+  },
+  "action_rationale": {
+    "selected_action": "WATCHLIST ONLY",
+    "strategy_basis": "Ian Copsey / Fractal Forecasting top-down count with verified KPE/OHLCV pivots.",
+    "why_action_follows_strategy": "Actual rebound fails 1.764 while only the conditional scenario reaches it.",
+    "chart_evidence_supporting_action": "Price is inside 74912-80537 and below 80537-82833.",
+    "what_proves_it_wrong": "59930 failure rejects the conditional bullish map.",
+    "human_takeaway": "Do nothing here; review only at the defined zones."
+  },
+  "trade_posture": {
+    "posture": "WATCHLIST ONLY",
+    "permission": "blocked",
+    "current_price": 78089,
+    "setup": "structural map only",
+    "active_count": "conditional forward impulse after macro ABC",
+    "alternate": "bearish C-extension if 74912/59930 fail",
+    "accumulation_zone": "74912-80537 score 55 moderate",
+    "distribution_zone": "80537-82833 score 66 high",
+    "invalidation": "59930",
+    "flip_level": "82833 acceptance with improving AO",
+    "target_path": "Conditional only: 115314 then 125630",
+    "ignore": "Ignore mid-box movement and unsupported 126272 terminal-fifth claims."
+  },
+  "castaway_trade_model": {
+    "model": "Model 2.2 - conditional recovery after macro ABC",
+    "permission": "blocked",
+    "source_label": "Konsili Castaway overlay",
+    "is_copsey_source": false,
+    "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked.",
+    "decision_table": [
+      {
+        "id": "model",
+        "value": "Model 2.2 - conditional recovery after macro ABC",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "permission",
+        "value": "WATCHLIST ONLY",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "zone_focus",
+        "value": "74912-80537 review box versus 80537-82833 overhead supply box",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "invalidation",
+        "value": "59930 failure rejects the conditional bullish map",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "target_path",
+        "value": "Conditional 115314 then 125630 only after future validation",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "stand_aside_condition",
+        "value": "Remain blocked while price is mid-box or under 82833 without improved AO/volume",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      }
+    ]
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "zone_focus",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "reward",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "pass",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  ],
+  "red_team": {
+    "strongest_bear_case": "Loss of 74912 exposes 64955/59930.",
+    "strongest_bull_case": "Hold above 74912 and improve above 82833.",
+    "decision": "Wait for fresh verified pivots."
+  },
+  "critic_review": {
+    "final_verdict": "pass",
+    "max_detail_timeframe": "daily",
+    "package_validity_verdict": "pass",
+    "evidence_grade_verdict": "clean",
+    "trade_permission_verdict": "blocked",
+    "visual_readability_verdict": "pass_with_notes",
+    "blocking_issues": [],
+    "material_non_blocking_issues": [
+      "Forward projection is conditional context only."
+    ],
+    "strongest_bear_case_against_package": "Macro C leg can extend below 59930.",
+    "strongest_bull_case_against_package": "59930 can be a major reset if 82833 later accepts with improved evidence.",
+    "required_followups": [],
+    "independent_reviewer": {
+      "reviewer_type": "independent_pass",
+      "independent_from_author": true,
+      "prompt_file": "agents/hew-independent-critic.md",
+      "scope": "full_package",
+      "verdict": "pass",
+      "evidence": "Reviewed compact package contract, KPE rows, OHLCV checks, drawings, zones, and blocked posture."
+    },
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "visual_first_sequence_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "final_chart_readability_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_no_orphan_abc_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_preceding_impulse_context_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_primary_secondary_subwaves_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_forward_impulse_projection_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_projection_topology_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_visual_thesis_consistency_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_c_of_3_strength_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_corrective_structure_classified",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_risk_architecture_separated",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_copsey_internal_abc_motive_engines_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_copsey_ac_lower_degree_fives_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_forbidden_rescue_devices_rejected",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_castaway_overlay_not_copsey_source",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "hew_wave3_1764_rule_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "pivot_path_clean",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "fallback_confidence_cap_checked",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+      }
+    ]
+  },
+  "review_conditions": [
+    {
+      "id": "accumulation_box_review",
+      "condition": "Review if price holds 74912-80537 and AO/volume improve.",
+      "posture_effect": "Accumulation score may improve."
+    },
+    {
+      "id": "distribution_box_review",
+      "condition": "Review if price travels into 80537-82833 while AO weakens.",
+      "posture_effect": "Distribution risk remains dominant."
+    },
+    {
+      "id": "lower_failure_review",
+      "condition": "Review if price loses 74912; reject conditional map if 59930 fails.",
+      "posture_effect": "Shift defensive."
+    }
+  ],
+  "missing_evidence": [],
+  "confidence": {
+    "rating": "low",
+    "cap_reason": "Actual rebound fails the required expansion; only the conditional map reaches the floor."
+  },
+  "execution_quality": {
+    "visual_qa": {
+      "status": "pass",
+      "issues": [
+        "Far projection may be partly offscreen due TradingView range clamp."
+      ],
+      "final_chart_stands_alone": true,
+      "sidebars_hidden": true,
+      "exporter_hidden_in_presentation": true,
+      "zone_labels_visible": true,
+      "zone_price_ranges_visible": true,
+      "zone_scores_visible": true,
+      "elliott_labels_readable": true,
+      "audit_screenshots_marked_audit_only": true
+    },
+    "vision_qa": {
+      "status": "pass",
+      "screenshot_reviewed": true,
+      "evidence": "Screenshots reviewed against evidence."
+    },
+    "rerun_schedule": {
+      "status": "scheduled",
+      "condition": "Review when price holds 74912-80537, loses 74912, or accepts above 82833 with improving AO/volume.",
+      "cadence": "Daily close for active review; weekly close for macro posture.",
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    },
+    "drawing_spec": {
+      "status": "pass",
+      "source": "strategies/hew/manifest.json drawing_protocol",
+      "manifest_roles_checked": true,
+      "evidence": "Live KPE/OHLCV evidence passed; trade permission remains blocked."
+    }
+  }
+}

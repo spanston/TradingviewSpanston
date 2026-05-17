@@ -4,11 +4,11 @@
   "contract_version": "hew_institutional_v1",
   "reference_style": {
     "name": "Atlassian TEAM 2026-05-16 zone-first HEW package",
-    "package_path": "analysis_journal/TEAM_2026-05-16_hew",
+    "fixture_path": "fixtures/hew/good/team_no_clean_trade/input",
     "distilled_doc": "docs/hew-atlassian-reference-style.md",
     "required_traits": [
       "zone_first_accumulation_distribution_scores",
-      "native_elliott_wave_markers_only",
+      "native_tradingview_wave_markers_only",
       "distinct_lower_degree_macro_subwaves",
       "hew_fibonacci_projection_zone_for_internal_subwave_proof",
       "review_conditions_not_trigger_language"
@@ -38,7 +38,9 @@
     "ratio_validation",
     "rule_validation",
     "wave_b_invalidation_ladder",
+    "corrective_structure",
     "zone_scores",
+    "risk_architecture",
     "action_rationale",
     "trade_posture",
     "castaway_trade_model",
@@ -119,6 +121,63 @@
       "final": "action_output"
     }
   },
+  "method_language_protocol": {
+    "path": "method",
+    "required_method_terms": [
+      "ian copsey",
+      "fractal forecasting"
+    ],
+    "forbidden_legacy_fields": [
+      "human_wave_map",
+      "pivot_map",
+      "hew_stage_gated",
+      "zone_probabilities",
+      "migration_policy"
+    ],
+    "forbidden_workflow_version_prefixes": [
+      "hew_stage_gated"
+    ],
+    "forbidden_method_terms": [
+      "classical elliott wave",
+      "classical elliott",
+      "traditional elliott wave",
+      "traditional elliott",
+      "harmonic elliott wave",
+      "harmonic elliot wave",
+      "elliott wave"
+    ],
+    "forbidden_source_authority_terms": [
+      "classical elliott wave",
+      "classical elliott",
+      "classical ew",
+      "traditional elliott wave",
+      "traditional elliott",
+      "traditional ew",
+      "harmonic elliott wave",
+      "harmonic elliot wave"
+    ],
+    "scan_paths": [
+      "method",
+      "ian_copsey_wave_map.count_selection_authority",
+      "ian_copsey_wave_map.book_alignment_source",
+      "ian_copsey_wave_map.selection_method",
+      "ian_copsey_wave_map.counts",
+      "ian_copsey_wave_map.fractal_forecasting_alignment",
+      "action_rationale.strategy_basis",
+      "action_rationale.why_action_follows_strategy",
+      "castaway_trade_model.source_label",
+      "critic_review.independent_reviewer.scope",
+      "critic_review.independent_reviewer.evidence"
+    ],
+    "allowed_native_tool_terms": [
+      "elliott_impulse_wave",
+      "elliott_correction",
+      "elliott_triangle_wave",
+      "elliott_double_combo",
+      "elliott_triple_combo"
+    ],
+    "description": "New HEW evidence must present the method/source/authority as Ian Copsey / Fractal Forecasting, not legacy Elliott-family labels. Native TradingView Elliott tool names remain allowed."
+  },
   "verdict_protocol": {
     "path": "verdict",
     "allowed_package_validity": [
@@ -168,9 +227,14 @@
         "preceding_impulse_context_shown",
         "primary_secondary_subwaves_drawn",
         "forward_impulse_projection_drawn",
+        "projection_topology_validated",
+        "visual_thesis_consistency_checked",
+        "c_of_3_strength_checked",
+        "corrective_structure_classified",
+        "risk_architecture_separated",
         "copsey_internal_abc_motive_engines_checked",
         "copsey_ac_lower_degree_fives_checked",
-        "copsey_classical_rescue_devices_rejected",
+        "copsey_forbidden_rescue_devices_rejected",
         "castaway_overlay_not_copsey_source",
         "wave3_1764_rule_checked",
         "macro_count_subwaves_ratio_aligned",
@@ -200,6 +264,12 @@
     "trade_posture"
   ],
   "visual_pivot_protocol": {
+    "required_top_level_fields": [
+      "indicator_name",
+      "study_filter",
+      "extraction_method",
+      "iteration_decision"
+    ],
     "preferred_indicator": "Konsili Pivot Exporter",
     "required_exporter": {
       "name": "Konsili Pivot Exporter",
@@ -215,15 +285,25 @@
       "required_pivot_fields": [
         "date",
         "time",
-        "price",
-        "exporter_row_id"
+        "price"
       ],
       "price_tolerance_abs": 0.000001,
       "allowed_source_tools": [
         "data_get_pine_tables",
         "data_get_pine_labels"
       ],
-      "description": "Pivots must be exported as structured KPE rows from the visible Konsili Pivot Exporter table or labels before OHLCV verification. Each accepted pivot must carry date, time, and price copied from its exporter row."
+      "visual_label_contract": {
+        "default_label_mode": "Price + date",
+        "fallback_label_mode": "Price + date + KPE",
+        "default_table_visible": false,
+        "table_use": "fallback_only_when_visual_inspection_fails",
+        "required_visible_fields": [
+          "price",
+          "date",
+          "time"
+        ]
+      },
+      "description": "Pivots must be visually readable first as wave-anchor labels: the visible Konsili Pivot Exporter labels sit on price-wave extremes and show price plus date/time on-chart. The structured KPE table is hidden by default and shown only when visual inspection is unavailable or ambiguous. Confirm visibility with data_get_indicator, not chart_get_state alone. Each accepted pivot must carry date, time, and price copied from the visual label or fallback exporter row."
     },
     "instrument_parameter_profiles": {
       "single_stock": {
@@ -309,7 +389,7 @@
       "fractal_degree_consistency",
       "three_wave_impulsive_components",
       "wave3_1764_floor",
-      "classical_rescue_rejection",
+      "forbidden_rescue_rejection",
       "corrective_context_before_forecast",
       "scanner_not_count_authority"
     ],
@@ -379,6 +459,7 @@
       "wave5_projection",
       "retracement",
       "alternation_sum",
+      "c_of_3_strength_rule",
       "wave4_b3_rule",
       "wave3_not_shortest_rule",
       "wave1_wave4_non_overlap_rule"
@@ -399,7 +480,8 @@
       }
     ],
     "wave_iii_complete_required_measurement_types": [
-      "triple_confluence"
+      "triple_confluence",
+      "c_of_3_strength_rule"
     ],
     "hard_rule_violation_ids": [
       "missing_points",
@@ -409,9 +491,11 @@
       "wave_c_ratio_not_in_copsey_universe",
       "extended_wave5_rejected_by_copsey",
       "retracement_ratio_not_in_copsey_universe",
+      "wave2_breaches_wave1_origin",
       "wave3_is_shortest",
       "wave1_wave4_overlap",
       "wave4_breaks_b_of_wave3",
+      "c_of_3_shorter_than_a_of_3",
       "failed_fifth_forbidden",
       "projected_point_marked_complete",
       "motive_direction_mismatch"
@@ -463,24 +547,19 @@
       },
       "clusters": [
         {
-          "id": "1764_1987",
+          "id": "model_1_1764_2146",
           "min": 1.764,
-          "max": 1.987
+          "max": 2.146
         },
         {
-          "id": "2236_2618",
+          "id": "model_2_2236_2414",
           "min": 2.236,
-          "max": 2.618
+          "max": 2.414
         },
         {
-          "id": "3236_3987",
-          "min": 3.236,
-          "max": 3.987
-        },
-        {
-          "id": "4236_4987",
-          "min": 4.236,
-          "max": 4.987
+          "id": "model_3_3144_3236",
+          "min": 3.144,
+          "max": 3.236
         }
       ]
     },
@@ -493,18 +572,24 @@
         0.91,
         0.944,
         0.987,
+        1,
         1.021,
         1.056,
         1.09,
+        1.092,
+        1.144,
         1.146,
         1.236,
         1.382,
         1.414,
+        1.444,
         1.5,
         1.586,
         1.618,
         1.764,
-        1.854
+        1.854,
+        2,
+        2.236
       ]
     },
     "wave5_projection": {
@@ -549,6 +634,145 @@
       }
     }
   },
+  "ratio_models": {
+    "model_1_standard": {
+      "name": "Standard Five Waves",
+      "wave3": {
+        "min": 1.764,
+        "max": 2.146
+      },
+      "wave_a_of_3_of_wave1": [
+        1.092,
+        1.144,
+        1.236
+      ],
+      "wave_b_of_3_of_wave1": [
+        0.667,
+        0.618,
+        0.5
+      ],
+      "wave_b_of_3_of_wave_a_of_3": [
+        0.618,
+        0.667,
+        0.764
+      ],
+      "wave_c_of_3_of_wave1": [
+        1.764,
+        2,
+        2.146
+      ],
+      "wave_c_of_3_of_wave_a_of_3": [
+        1.236,
+        1.382,
+        1.764
+      ],
+      "wave4_of_wave1": [
+        1.236,
+        1.382
+      ],
+      "wave4_of_wave3": [
+        0.236,
+        0.333
+      ],
+      "wave5_of_wave1": [
+        2.144,
+        2.236
+      ],
+      "wave5_of_waves1_and3": [
+        0.5,
+        0.618,
+        0.667
+      ]
+    },
+    "model_2_extended": {
+      "name": "Extended Five Waves",
+      "wave3": {
+        "min": 2.236,
+        "max": 2.414
+      },
+      "wave_a_of_3_of_wave1": [
+        1.236
+      ],
+      "wave_b_of_3_of_wave1": [
+        1
+      ],
+      "wave_b_of_3_of_wave_a_of_3": [
+        0.236
+      ],
+      "wave_c_of_3_of_wave1": [
+        2.236,
+        2.414
+      ],
+      "wave_c_of_3_of_wave_a_of_3": [
+        1.144
+      ],
+      "wave4_of_wave1": [
+        1.444
+      ],
+      "wave4_of_wave3": [
+        0.382,
+        0.414
+      ],
+      "wave5_of_wave1": [
+        2.854
+      ],
+      "wave5_of_waves1_and3": [
+        0.5
+      ]
+    },
+    "model_3_super_extended": {
+      "name": "Super Extended Five Waves",
+      "wave3": {
+        "min": 3.144,
+        "max": 3.236
+      },
+      "wave_a_of_3_of_wave1": [
+        1.764
+      ],
+      "wave_b_of_3_of_wave1": [
+        0.764,
+        0.618
+      ],
+      "wave_b_of_3_of_wave_a_of_3": [
+        0.618,
+        0.667,
+        0.764
+      ],
+      "wave_c_of_3_of_wave1": [
+        3.144,
+        3.236
+      ],
+      "wave_c_of_3_of_wave_a_of_3": [
+        1.236,
+        1.382,
+        1.764
+      ],
+      "wave4_of_wave1": [
+        1.764,
+        2,
+        2.236
+      ],
+      "wave4_of_wave3": [
+        0.236,
+        0.414,
+        0.441
+      ],
+      "wave5_of_wave1": [
+        3.764
+      ],
+      "wave5_of_waves1_and3": [
+        0.44,
+        0.5,
+        0.618
+      ]
+    },
+    "classification_order": [
+      "model_1_standard",
+      "model_2_extended",
+      "model_3_super_extended"
+    ],
+    "description": "Start with Model 1, upgrade only when verified Wave 3 behavior exceeds the lower model, and use Model 3 for super-extended terminal-risk mapping rather than late chasing."
+  },
   "chart_mode_protocol": {
     "path": "chart_prep.chart_mode_checklist",
     "required_modes": [
@@ -571,7 +795,7 @@
       }
     },
     "mode_contract": {
-      "extraction": "Show Konsili Pivot Exporter and any required pivot/scanner scaffolding, capture visual_pivots, and record KPE source rows before strategy interpretation.",
+      "extraction": "Show Konsili Pivot Exporter with price-wave extreme labels that display price plus date/time for Elliott anchor selection. Keep the structured table hidden in the clean path; switch timeframes, visually inspect/iterate, capture visual_pivots, and reason from the visible price pivots. Show the KPE table or switch label text to Price + date + KPE only when visual inspection is unavailable or ambiguous.",
       "verification": "Cross-check extracted pivots against TradingView OHLCV and resolve or disclose conflicts before counting.",
       "strategy_proof": "Hide Konsili Pivot Exporter and reduce extraction clutter, then draw HEW proof with native Elliott tools: preceding impulse context, macro count/correction, primary-degree subwaves, secondary-degree subwaves, and conditional forward impulse projection.",
       "presentation": "Leave the live chart readable: Konsili Pivot Exporter and extraction scaffolding hidden unless audit_mode is explicitly true, preceding impulse/macro count/subwaves/projection/decision proof visible where not cluttered, final state verified, and no screenshot-only proof.",
@@ -585,7 +809,8 @@
       "projection_count",
       "preceding_impulse_context",
       "primary_degree_subwaves",
-      "secondary_degree_subwaves"
+      "secondary_degree_subwaves",
+      "wave_b_ladder"
     ],
     "forbidden_final_drawing_terms": [
       "rejected",
@@ -683,7 +908,9 @@
     },
     "presentation_conventions": {
       "lower_degree_macro_subwaves": "Use a visually distinct lower-degree Elliott style for subwaves inside macro waves; add a HEW Fibonacci projection zone/annotation when it clarifies the subwave proof.",
-      "macro_label_offsets": "When macro Elliott labels overlap lower-degree labels at shared pivots, solve it with Elliott degree/style separation, visible-range choice, or separate screenshots. Do not use text labels as Elliott wave marker substitutes or alter evidence pivot prices/manifest levels."
+      "macro_label_offsets": "When macro TradingView Elliott-tool labels overlap lower-degree labels at shared pivots, solve it with native degree/style separation, visible-range choice, or separate screenshots. Do not use text labels as wave-marker substitutes or alter evidence pivot prices/manifest levels.",
+      "projection_topology": "Projected Elliott impulses must still pass topology before they can be shown as decision proof: Wave 2 holds the Wave 1 origin, Wave 4 does not overlap Wave 1 territory, Wave 3 is not the shortest motive wave, and motive waves move in the declared direction.",
+      "visual_thesis_consistency": "Final screenshots must not show rejected or diagnostic counts as accepted decision proof. If macro and lower-degree drawings tell different stories, the package must resolve the degree conflict, split screenshots, or downgrade before delivery."
     },
     "point_locking": {
       "required_for_roles": [
@@ -729,30 +956,6 @@
       "description": "Final accumulation/distribution/retracement/projection zone drawings must carry visible label metadata with type, range, score, and band where available."
     }
   },
-  "zone_probabilities": {
-    "legacy_compatibility": true,
-    "canonical_replacement": "zone_scores",
-    "description": "Legacy compatibility only. New package logic must use zone_scores; if present, legacy values must match the canonical zone_scores entries.",
-    "required_zone_types": [
-      "accumulation",
-      "distribution"
-    ],
-    "allowed_zone_types": [
-      "accumulation",
-      "distribution",
-      "retracement",
-      "projection",
-      "invalidation",
-      "no_trade"
-    ],
-    "allowed_probability_bands": [
-      "low",
-      "moderate_low",
-      "moderate",
-      "moderate_high",
-      "high"
-    ]
-  },
   "zone_scores": {
     "required_zone_types": [
       "accumulation",
@@ -797,14 +1000,6 @@
       "review_conditions",
       "execution_quality.rerun_schedule"
     ]
-  },
-  "migration_policy": {
-    "path": "migration_policy",
-    "allowed_exemptions": [
-      "draw_list_before_original_not_available"
-    ],
-    "required_exemption_effect": "evidence_grade_qualified_trade_permission_blocked",
-    "description": "Migration exemptions preserve accepted legacy packages without weakening new-package standards. Exemptions require explicit migrated-package metadata, qualified evidence, blocked trade permission, and critic disclosure."
   },
   "action_rationale_fields": [
     "selected_action",
@@ -872,9 +1067,14 @@
       "hew_preceding_impulse_context_checked",
       "hew_primary_secondary_subwaves_checked",
       "hew_forward_impulse_projection_checked",
+      "hew_projection_topology_checked",
+      "hew_visual_thesis_consistency_checked",
+      "hew_c_of_3_strength_checked",
+      "hew_corrective_structure_classified",
+      "hew_risk_architecture_separated",
       "hew_copsey_internal_abc_motive_engines_checked",
       "hew_copsey_ac_lower_degree_fives_checked",
-      "hew_classical_rescue_devices_rejected",
+      "hew_forbidden_rescue_devices_rejected",
       "hew_castaway_overlay_not_copsey_source",
       "hew_wave3_1764_rule_checked",
       "pivot_path_clean",
@@ -886,8 +1086,13 @@
       "hew_preceding_impulse_context_checked",
       "hew_primary_secondary_subwaves_checked",
       "hew_forward_impulse_projection_checked",
+      "hew_projection_topology_checked",
+      "hew_visual_thesis_consistency_checked",
+      "hew_c_of_3_strength_checked",
+      "hew_corrective_structure_classified",
+      "hew_risk_architecture_separated",
       "hew_copsey_internal_abc_motive_engines_checked",
-      "hew_classical_rescue_devices_rejected",
+      "hew_forbidden_rescue_devices_rejected",
       "hew_castaway_overlay_not_copsey_source",
       "hew_wave3_1764_rule_checked",
       "pivot_path_clean",
@@ -939,6 +1144,139 @@
       "evidence"
     ],
     "description": "Castaway output must be a structured decision table, not only prose."
+  },
+  "wave_b_invalidation_ladder_protocol": {
+    "path": "wave_b_invalidation_ladder",
+    "required_fields": [
+      "direction",
+      "validation_standard",
+      "rungs",
+      "drawing_refs",
+      "hard_failure_ids"
+    ],
+    "allowed_directions": [
+      "bullish",
+      "bearish",
+      "neutral",
+      "mixed"
+    ],
+    "allowed_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "pending",
+      "fail",
+      "not_applicable"
+    ],
+    "allowed_must_hold": [
+      "above",
+      "below",
+      "not_applicable"
+    ],
+    "price_required_statuses": [
+      "pass",
+      "pass_with_fallback",
+      "fail"
+    ],
+    "required_rungs": [
+      "wave2_holds_wave1_origin",
+      "b_of_3_holds_wave2",
+      "wave4_holds_b_of_3",
+      "b_of_5_holds_wave4"
+    ],
+    "required_rung_fields": [
+      "id",
+      "must_hold",
+      "level_role",
+      "tested_by",
+      "status",
+      "evidence"
+    ],
+    "required_hard_failure_ids": [
+      "wave2_breaks_wave1_origin",
+      "b_of_3_breaks_wave2",
+      "wave4_breaks_b_of_wave3",
+      "b_of_5_breaks_wave4"
+    ],
+    "required_drawing_role": "wave_b_ladder",
+    "description": "The Wave-B invalidation ladder must be structured evidence with required ladder rungs, hard failure ids, and chart drawing references."
+  },
+  "corrective_structure_protocol": {
+    "path": "corrective_structure",
+    "required_fields": [
+      "location",
+      "pattern",
+      "mode",
+      "wave_b_behavior",
+      "preceding_impulse_ref",
+      "evidence"
+    ],
+    "allowed_locations": [
+      "wave2",
+      "wave4",
+      "wave_b",
+      "wave_x",
+      "post_impulse_correction",
+      "not_applicable"
+    ],
+    "allowed_patterns": [
+      "zigzag",
+      "double_zigzag",
+      "triple_three",
+      "regular_flat",
+      "expanded_flat",
+      "running_flat",
+      "triangle",
+      "double_three",
+      "not_applicable"
+    ],
+    "allowed_modes": [
+      "price_correction",
+      "time_correction",
+      "mixed",
+      "not_applicable"
+    ],
+    "allowed_wave_b_behavior": [
+      "countertrend",
+      "trend_direction",
+      "deceptive_retest",
+      "exceeds_prior_extreme",
+      "not_applicable"
+    ],
+    "wave2_forbidden_patterns": [
+      "triangle"
+    ],
+    "description": "Every package must classify the active correction and identify what prior impulse it is correcting. Wave 2 triangles are rejected in the core HEW workflow."
+  },
+  "risk_architecture_protocol": {
+    "path": "risk_architecture",
+    "required_fields": [
+      "setup_type",
+      "structural_setup",
+      "execution_setup",
+      "risk_reward",
+      "invalidation",
+      "position_sizing_basis",
+      "alternate_response",
+      "time_or_structural_stop",
+      "evidence"
+    ],
+    "allowed_setup_types": [
+      "structural_map_only",
+      "live_trade",
+      "not_applicable"
+    ],
+    "allowed_execution_statuses": [
+      "not_ready",
+      "ready",
+      "not_applicable"
+    ],
+    "live_trade_required_execution_fields": [
+      "entry_condition",
+      "stop_level",
+      "target_zone",
+      "risk_reward"
+    ],
+    "description": "HEW structural maps must be separated from executable trades. Live trades require entry condition, stop, target, risk/reward, position-sizing basis, alternate response, and a time or structural stop."
   },
   "execution_quality_protocol": {
     "path": "execution_quality",
@@ -1048,7 +1386,8 @@
         "id": "forward_impulse_projection",
         "required_drawing_role": "projection_count",
         "requires_conditionality": true,
-        "description": "Completed 1-5 + ABC maps include a conditional forward impulse projection, not a factual prediction."
+        "requires_topology_validation": true,
+        "description": "Completed 1-5 + ABC maps include a conditional forward impulse projection, not a factual prediction. The projection must pass Elliott topology before it can appear as decision proof."
       }
     ]
   },
@@ -1063,7 +1402,7 @@
     "required_items": [
       "internal_abc_motive_engines",
       "ac_lower_degree_fives",
-      "classical_rescue_devices",
+      "forbidden_rescue_devices",
       "castaway_overlay",
       "wave3_1764_rule"
     ],
@@ -1094,7 +1433,7 @@
       ],
       "description": "A and C legs need lower-degree five-wave action where visible; if not visible, record downgrade semantics."
     },
-    "classical_rescue_devices": {
+    "forbidden_rescue_devices": {
       "expected_rejected_devices": [
         "extended_waves",
         "failed_fifths",
@@ -1102,7 +1441,7 @@
         "ending_diagonals",
         "diagonal_triangles"
       ],
-      "description": "Classical Elliott rescue devices are rejected for Copsey HEW purity."
+      "description": "Forbidden rescue devices are rejected for Copsey HEW purity."
     },
     "castaway_overlay": {
       "required_terms": [

@@ -5,7 +5,8 @@ import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   KONSILI_PIVOT_EXPORTER,
-  parsePivotExporterRows
+  parsePivotExporterRows,
+  parseVisualPivotLabelRows
 } from './pivot_engine.mjs';
 import { scoreHewHypothesis } from './ratio_engine.mjs';
 
@@ -68,7 +69,7 @@ function indexById(items, path, errors) {
 
 function inferStrategy(evidence) {
   const method = String(evidence?.method || evidence?.workflow_version || evidence?.journal_id || '').toLowerCase();
-  if (/\bhew\b|harmonic elliott|elliott|wave count|ian copsey|fractal forecasting/.test(method)) return 'hew';
+  if (/\bhew\b|ian copsey|fractal forecasting/.test(method)) return 'hew';
   return null;
 }
 
@@ -85,7 +86,7 @@ function loadManifest(strategy, errors) {
 }
 
 function validateManifest(manifest, file, errors) {
-  const required = ['strategy_id', 'display_name', 'contract_version', 'required_top_level', 'stage_gates', 'action_rationale_fields', 'critic_review', 'copsey_ratio_universe'];
+  const required = ['strategy_id', 'display_name', 'contract_version', 'required_top_level', 'stage_gates', 'method_language_protocol', 'action_rationale_fields', 'critic_review', 'copsey_ratio_universe'];
   for (const key of required) {
     if (!hasOwn(manifest, key)) errors.push(`manifest ${file} missing ${key}`);
   }
@@ -104,6 +105,12 @@ function normalizedToken(value) {
 
 function normalizedSet(values) {
   return new Set(asArray(values).map((value) => normalizedToken(value)).filter(Boolean));
+}
+
+function normalizedDescriptorHasToken(value, token) {
+  const needle = normalizedToken(token);
+  if (!needle) return false;
+  return normalizedToken(value).split('_').includes(needle);
 }
 
 function measurementType(measurement) {
@@ -204,6 +211,7 @@ const STAGE_REQUIRED_TOP_LEVEL = {
     'method',
     'workflow_version',
     'stage_gates',
+    'wave_b_invalidation_ladder',
     'zone_scores',
     'action_rationale',
     'trade_posture',
@@ -267,6 +275,77 @@ function validateStageGates(evidence, manifest, errors, stage = null) {
     }
     if (!allowed.has(gate.status)) errors.push(`stage_gates.${id} status must be one of ${[...allowed].join(', ')}: ${gate.status}`);
     if (!String(gate.evidence || '').trim()) errors.push(`stage_gates.${id} missing evidence`);
+  }
+}
+
+function configuredPhrasePattern(term) {
+  const source = escapeRegExp(String(term || '').trim()).replace(/\s+/g, '\\s+');
+  return source ? new RegExp(`(^|[^a-z0-9_])${source}($|[^a-z0-9_])`, 'i') : null;
+}
+
+function textHasConfiguredPhrase(value, term) {
+  const pattern = configuredPhrasePattern(term);
+  return pattern ? pattern.test(String(value || '')) : false;
+}
+
+function collectStringValues(value, path, hits) {
+  if (value == null) return hits;
+  if (typeof value === 'string') {
+    hits.push({ path, value });
+    return hits;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => collectStringValues(item, `${path}[${index}]`, hits));
+    return hits;
+  }
+  if (typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      collectStringValues(child, path ? `${path}.${key}` : key, hits);
+    }
+  }
+  return hits;
+}
+
+function validateMethodLanguage(evidence, manifest, errors) {
+  const config = manifest.method_language_protocol;
+  if (!config) return;
+
+  const methodPath = config.path || 'method';
+  const method = String(getByPath(evidence, methodPath) || '');
+  for (const term of asArray(config.required_method_terms)) {
+    if (!textHasConfiguredPhrase(method, term)) {
+      errors.push(`${methodPath} must identify Ian Copsey / Fractal Forecasting; missing "${term}"`);
+    }
+  }
+  for (const term of asArray(config.forbidden_method_terms)) {
+    if (textHasConfiguredPhrase(method, term)) {
+      errors.push(`method_language forbidden legacy method term "${term}" in ${methodPath}`);
+    }
+  }
+
+  for (const field of asArray(config.forbidden_legacy_fields)) {
+    if (hasOwn(evidence, field)) errors.push(`method_language legacy evidence field is forbidden in new HEW packages: ${field}`);
+  }
+  const workflowVersion = String(evidence.workflow_version || '');
+  for (const prefix of asArray(config.forbidden_workflow_version_prefixes)) {
+    if (workflowVersion.toLowerCase().startsWith(String(prefix).toLowerCase())) {
+      errors.push(`method_language legacy workflow_version prefix is forbidden in new HEW packages: ${workflowVersion}`);
+    }
+  }
+
+  const scanTerms = asArray(config.forbidden_source_authority_terms);
+  if (!scanTerms.length) return;
+  const values = [];
+  for (const scanPath of asArray(config.scan_paths)) {
+    if (scanPath === methodPath) continue;
+    const value = getByPath(evidence, scanPath);
+    if (value !== undefined) collectStringValues(value, scanPath, values);
+  }
+  for (const item of values) {
+    for (const term of scanTerms) {
+      if (!textHasConfiguredPhrase(item.value, term)) continue;
+      errors.push(`method_language forbidden source/authority term "${term}" in ${item.path}`);
+    }
   }
 }
 
@@ -495,7 +574,9 @@ function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, e
   const rows = item.exporter_rows;
   const itemPath = `visual_pivot_evidence.${timeframe || '<unknown>'}`;
   if (!Array.isArray(rows) || rows.length === 0) {
-    errors.push(`${itemPath}.exporter_rows must be a non-empty array from Konsili Pivot Exporter`);
+    if (!Array.isArray(item.visual_label_rows) || item.visual_label_rows.length === 0) {
+      errors.push(`${itemPath}.visual_label_rows must be a non-empty array of price extreme labels, or exporter_rows must be supplied as fallback`);
+    }
     return new Map();
   }
 
@@ -526,6 +607,29 @@ function validateTimeframePivotExporterRows(item, timeframe, requiredExporter, e
   return rowsById;
 }
 
+function validateTimeframeVisualLabelRows(item, timeframe, requiredExporter, errors) {
+  const rows = item.visual_label_rows;
+  const itemPath = `visual_pivot_evidence.${timeframe || '<unknown>'}`;
+  if (!Array.isArray(rows) || rows.length === 0) return new Map();
+
+  const parsed = parseVisualPivotLabelRows(rows, {
+    timeframe,
+    rowPrefix: requiredExporter?.row_prefix,
+    version: requiredExporter?.version
+  });
+  for (const error of parsed.errors) errors.push(`${itemPath}.visual_label_rows ${error}`);
+
+  const rowsBySignature = new Map();
+  for (const pivot of parsed.pivots.filter((candidate) => candidate.timeframe === timeframe)) {
+    rowsBySignature.set(visualPivotSignature(pivot), pivot);
+  }
+  if (!rowsBySignature.size) {
+    errors.push(`${itemPath}.visual_label_rows must include at least one ${timeframe} price extreme label`);
+  }
+
+  return rowsBySignature;
+}
+
 function validatePivotMatchesExporterRow(pivot, exporterRow, path, requiredExporter, errors) {
   const tolerance = Number(requiredExporter.price_tolerance_abs ?? 0.000001);
   const requiredFields = new Set(requiredExporter.required_pivot_fields || ['date', 'time', 'price', 'exporter_row_id']);
@@ -540,6 +644,25 @@ function validatePivotMatchesExporterRow(pivot, exporterRow, path, requiredExpor
   if (typeof pivot.time === 'number' && pivot.time !== exporterRow.time) errors.push(`${path}.time must match exporter row ${exporterRow.id}: ${exporterRow.time}`);
   if (typeof pivot.price === 'number' && Math.abs(pivot.price - exporterRow.price) > tolerance) {
     errors.push(`${path}.price must match exporter row ${exporterRow.id}: ${exporterRow.price}`);
+  }
+}
+
+function visualPivotSignature(pivot) {
+  const type = String(pivot?.type || '').toLowerCase();
+  const time = typeof pivot?.time === 'number' && Number.isFinite(pivot.time) ? String(pivot.time) : String(pivot?.date || '');
+  const price = typeof pivot?.price === 'number' && Number.isFinite(pivot.price) ? pivot.price.toFixed(6) : String(pivot?.price ?? '');
+  return `${type}:${time}:${price}`;
+}
+
+function validatePivotMatchesVisualLabel(pivot, visualLabelPivot, path, errors) {
+  if (!visualLabelPivot) return;
+  const tolerance = 0.000001;
+
+  if (pivot.type && pivot.type !== visualLabelPivot.type) errors.push(`${path}.type must match visual label ${visualLabelPivot.type}`);
+  if (String(pivot.date || '') !== visualLabelPivot.date) errors.push(`${path}.date must match visual label ${visualLabelPivot.date}`);
+  if (typeof pivot.time === 'number' && pivot.time !== visualLabelPivot.time) errors.push(`${path}.time must match visual label ${visualLabelPivot.time}`);
+  if (typeof pivot.price === 'number' && Math.abs(pivot.price - visualLabelPivot.price) > tolerance) {
+    errors.push(`${path}.price must match visual label ${visualLabelPivot.price}`);
   }
 }
 
@@ -607,6 +730,7 @@ function validateVisualPivotEvidence(evidence, manifest, errors) {
       }
     }
     const exporterRowsById = validateTimeframePivotExporterRows(item, timeframe, requiredExporter, errors);
+    const visualLabelsBySignature = validateTimeframeVisualLabelRows(item, timeframe, requiredExporter, errors);
 
     const screenshot = String(item.screenshot || '').replace(/\\/g, '/');
     if (!screenshot) {
@@ -628,10 +752,23 @@ function validateVisualPivotEvidence(evidence, manifest, errors) {
         }
         if (typeof pivot.price !== 'number') errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'}.price must be a number`);
         if (!String(pivot.source_text || '').trim()) errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing source_text`);
-        if (requiredExporter) {
+        const sourceKind = String(pivot.source_kind || '').trim();
+        const visualSignature = visualPivotSignature(pivot);
+        if (visualLabelsBySignature.size && (!sourceKind || sourceKind === 'visual_price_extreme_label')) {
+          if (!visualLabelsBySignature.has(visualSignature)) {
+            errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} not found in visual_label_rows`);
+          } else {
+            validatePivotMatchesVisualLabel(
+              pivot,
+              visualLabelsBySignature.get(visualSignature),
+              `visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'}`,
+              errors
+            );
+          }
+        } else if (requiredExporter) {
           const exporterRowId = String(pivot.exporter_row_id || '').trim();
           if (!exporterRowId) {
-            errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing exporter_row_id`);
+            errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} missing exporter_row_id for KPE table fallback`);
           } else if (!exporterRowsById.has(exporterRowId)) {
             errors.push(`visual_pivot_evidence.${timeframe || '<unknown>'}.pivots.${pivot.id || '<unknown>'} exporter_row_id not found in exporter_rows: ${exporterRowId}`);
           } else {
@@ -1144,14 +1281,20 @@ function validateDrawingPointLocking(drawing, role, protocol, pivotMaps, errors)
       continue;
     }
     for (const field of pointLocking.real_point_required_fields || []) {
-      if (!String(point[field] || '').trim()) errors.push(`${pointPath}.${field} is required for verified points`);
+      if (field === 'source_row_id') {
+        if (!String(point.source_row_id || point.source_label_id || '').trim()) {
+          errors.push(`${pointPath}.source_row_id or source_label_id is required for verified points`);
+        }
+      } else if (!String(point[field] || '').trim()) {
+        errors.push(`${pointPath}.${field} is required for verified points`);
+      }
     }
     if (point.pivot_id && !pivotMaps.pivots.has(point.pivot_id)) {
       errors.push(`${pointPath}.pivot_id not found in visual_pivot_evidence: ${point.pivot_id}`);
     }
     if (point.pivot_id && point.source_row_id) {
       const pivot = pivotMaps.pivots.get(point.pivot_id);
-      if (pivot && pivot.exporter_row_id !== point.source_row_id) {
+      if (pivot?.exporter_row_id && pivot.exporter_row_id !== point.source_row_id) {
         errors.push(`${pointPath}.source_row_id must match pivot exporter_row_id ${pivot.exporter_row_id}: ${point.source_row_id}`);
       }
     }
@@ -1165,6 +1308,52 @@ function numberTextVariants(value) {
   const number = Number(value);
   if (!Number.isFinite(number)) return [];
   return [...new Set([String(number), number.toFixed(2), number.toFixed(1)])];
+}
+
+function impulseDrawingPrices(drawing) {
+  const pointPrices = asArray(drawing?.points).slice(0, 6).map((point) => Number(point?.price));
+  if (pointPrices.length >= 6 && pointPrices.every(Number.isFinite)) return pointPrices;
+  const levelPrices = asArray(drawing?.levels).slice(0, 6).map(Number);
+  if (levelPrices.length >= 6 && levelPrices.every(Number.isFinite)) return levelPrices;
+  return null;
+}
+
+function validateElliottImpulseDrawingTopology(drawing, path, errors) {
+  const prices = impulseDrawingPrices(drawing);
+  if (!prices) return;
+
+  const [wave1Start, wave1End, wave2End, wave3End, wave4End, wave5End] = prices;
+  const direction = normalizedToken(drawing.direction) || (wave1End >= wave1Start ? 'bullish' : 'bearish');
+  const bullish = direction !== 'bearish';
+  const wave1MovesCorrectly = bullish ? wave1End > wave1Start : wave1End < wave1Start;
+  const wave3MovesCorrectly = bullish ? wave3End > wave2End : wave3End < wave2End;
+  const wave5MovesCorrectly = bullish ? wave5End > wave4End : wave5End < wave4End;
+
+  if (!wave1MovesCorrectly || !wave3MovesCorrectly || !wave5MovesCorrectly) {
+    errors.push(`${path} motive_direction_mismatch: Elliott impulse motive waves must move in the declared ${direction} direction`);
+  }
+
+  const wave2BreachesOrigin = bullish ? wave2End <= wave1Start : wave2End >= wave1Start;
+  if (wave2BreachesOrigin) {
+    errors.push(`${path} wave2_breaches_wave1_origin: Elliott impulse Wave 2 must hold the Wave 1 origin`);
+  }
+
+  const wave4OverlapsWave1 = bullish ? wave4End <= wave1End : wave4End >= wave1End;
+  if (wave4OverlapsWave1) {
+    errors.push(`${path} wave1_wave4_overlap: Elliott impulse Wave 4 must not overlap Wave 1 price territory`);
+  }
+
+  const wave1Length = Math.abs(wave1End - wave1Start);
+  const wave3Length = Math.abs(wave3End - wave2End);
+  const wave5Length = Math.abs(wave5End - wave4End);
+  if (wave3Length < wave1Length && wave3Length < wave5Length) {
+    errors.push(`${path} wave3_is_shortest: Elliott impulse Wave 3 cannot be the shortest motive wave`);
+  }
+
+  const failedFifth = bullish ? wave5End <= wave3End : wave5End >= wave3End;
+  if (failedFifth) {
+    errors.push(`${path} failed_fifth_forbidden: Elliott impulse Wave 5 must exceed Wave 3 for ${direction} counts`);
+  }
 }
 
 function textIncludesAny(text, values) {
@@ -1287,7 +1476,7 @@ function validateDrawingManifest(evidence, manifest, errors) {
       drawing.source_context,
       drawing.status
     ].filter(Boolean).join(' '));
-    if (forbiddenFinalDrawingTerms.some((term) => drawingDescriptor.includes(term)) && !auditOnly) {
+    if (forbiddenFinalDrawingTerms.some((term) => normalizedDescriptorHasToken(drawingDescriptor, term)) && !auditOnly) {
       errors.push(`drawing_manifest.${drawing.id || role} appears to be rejected/diagnostic and must be audit_only or presentation_allowed=false`);
     }
     if (deprecatedFinalRoles.has(normalizedToken(role)) && !auditOnly) {
@@ -1319,17 +1508,8 @@ function validateDrawingManifest(evidence, manifest, errors) {
     if (drawingEngineStatus && drawingEngineStatus !== 'pass' && !auditOnly) {
       errors.push(`drawing_manifest.${drawing.id || role} has non-pass engine_status and must be audit_only or presentation_allowed=false: ${drawing.engine_status || drawing.engine_result_status}`);
     }
-    if (tool === 'elliott_impulse_wave' && !auditOnly && Array.isArray(drawing.levels) && drawing.levels.length >= 6) {
-      const levels = drawing.levels.map(Number);
-      if (levels.slice(0, 6).every(Number.isFinite)) {
-        const direction = normalizedToken(drawing.direction) || (levels[3] >= levels[0] ? 'bullish' : 'bearish');
-        const failedFifth = direction === 'bearish'
-          ? levels[5] >= levels[3]
-          : levels[5] <= levels[3];
-        if (failedFifth) {
-          errors.push(`drawing_manifest.${drawing.id || role} failed_fifth_forbidden: Elliott impulse Wave 5 must exceed Wave 3 for ${direction} counts`);
-        }
-      }
+    if (tool === 'elliott_impulse_wave' && !auditOnly) {
+      validateElliottImpulseDrawingTopology(drawing, `drawing_manifest.${drawing.id || role}`, errors);
     }
     const forbidden = forbiddenByRole[role] || [];
     if (forbidden.includes(tool)) errors.push(`forbidden drawing tool for ${role}: ${tool}`);
@@ -1634,19 +1814,19 @@ function validateHewCopseyPurity(evidence, manifest, errors) {
     }
   }
 
-  const rescueConfig = protocol.classical_rescue_devices || {};
-  const rescue = purity.classical_rescue_devices;
+  const rescueConfig = protocol.forbidden_rescue_devices || {};
+  const rescue = purity.forbidden_rescue_devices;
   if (rescue && typeof rescue === 'object' && !Array.isArray(rescue)) {
     const rejected = new Set(asArray(rescue.rejected_devices).map((device) => String(device).toLowerCase()));
     for (const device of rescueConfig.expected_rejected_devices || []) {
-      if (!rejected.has(device)) errors.push(`${path}.classical_rescue_devices missing rejected device: ${device}`);
+      if (!rejected.has(device)) errors.push(`${path}.forbidden_rescue_devices missing rejected device: ${device}`);
     }
     const usedDevices = asArray(rescue.used_devices).filter(Boolean);
     if (usedDevices.length) {
-      errors.push(`${path}.classical_rescue_devices used_devices must be empty; classical rescue devices are forbidden: ${usedDevices.join(', ')}`);
+      errors.push(`${path}.forbidden_rescue_devices used_devices must be empty; used forbidden rescue devices: ${usedDevices.join(', ')}`);
     }
     if (rescue.no_use_confirmed !== true && rescue.no_use !== true) {
-      errors.push(`${path}.classical_rescue_devices.no_use_confirmed must be true`);
+      errors.push(`${path}.forbidden_rescue_devices.no_use_confirmed must be true`);
     }
   }
 
@@ -1736,6 +1916,181 @@ function validateCastawayTradeModelContract(evidence, manifest, errors) {
     for (const field of protocol.required_row_fields || []) {
       if (!String(row[field] || '').trim()) errors.push(`${path}.decision_table.${rowId}.${field} is required`);
     }
+  }
+}
+
+function validateWaveBInvalidationLadder(evidence, manifest, errors) {
+  const protocol = manifest.wave_b_invalidation_ladder_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'wave_b_invalidation_ladder';
+  const ladder = getByPath(evidence, path);
+  if (!ladder || typeof ladder !== 'object' || Array.isArray(ladder)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  for (const field of protocol.required_fields || []) {
+    const value = ladder[field];
+    if (Array.isArray(value)) {
+      if (!value.length) errors.push(`${path}.${field} must be a non-empty array`);
+    } else if (value == null || (typeof value === 'string' && !value.trim())) {
+      errors.push(`${path}.${field} is required`);
+    }
+  }
+
+  const allowedDirections = new Set(protocol.allowed_directions || []);
+  if (allowedDirections.size && !allowedDirections.has(String(ladder.direction || '').toLowerCase())) {
+    errors.push(`${path}.direction must be one of ${[...allowedDirections].join(', ')}: ${ladder.direction || '<missing>'}`);
+  }
+
+  if (!Array.isArray(ladder.rungs)) {
+    errors.push(`${path}.rungs must be an array`);
+  } else {
+    const rungs = indexById(ladder.rungs, `${path}.rungs`, errors);
+    const allowedStatuses = new Set(protocol.allowed_statuses || []);
+    const allowedMustHold = new Set(protocol.allowed_must_hold || []);
+    const priceRequiredStatuses = new Set(protocol.price_required_statuses || []);
+
+    for (const rungId of protocol.required_rungs || []) {
+      if (!rungs.has(rungId)) errors.push(`${path}.rungs missing required rung: ${rungId}`);
+    }
+
+    for (const rung of ladder.rungs) {
+      if (!rung || typeof rung !== 'object') continue;
+      const rungId = rung.id || '<unknown>';
+      const rungPath = `${path}.rungs.${rungId}`;
+      for (const field of protocol.required_rung_fields || []) {
+        const value = rung[field];
+        if (value == null || (typeof value === 'string' && !value.trim())) errors.push(`${rungPath}.${field} is required`);
+      }
+
+      const status = String(rung.status || '').toLowerCase();
+      if (allowedStatuses.size && !allowedStatuses.has(status)) {
+        errors.push(`${rungPath}.status must be one of ${[...allowedStatuses].join(', ')}: ${rung.status || '<missing>'}`);
+      }
+      const mustHold = String(rung.must_hold || '').toLowerCase();
+      if (allowedMustHold.size && !allowedMustHold.has(mustHold)) {
+        errors.push(`${rungPath}.must_hold must be one of ${[...allowedMustHold].join(', ')}: ${rung.must_hold || '<missing>'}`);
+      }
+      if (rung.price != null && (typeof rung.price !== 'number' || !Number.isFinite(rung.price))) {
+        errors.push(`${rungPath}.price must be a finite number when provided`);
+      }
+      if (priceRequiredStatuses.has(status) && typeof rung.price !== 'number') {
+        errors.push(`${rungPath}.price is required for status ${status}`);
+      }
+    }
+  }
+
+  const hardFailureIds = new Set(asArray(ladder.hard_failure_ids).map(String));
+  for (const failureId of protocol.required_hard_failure_ids || []) {
+    if (!hardFailureIds.has(failureId)) errors.push(`${path}.hard_failure_ids missing required id: ${failureId}`);
+  }
+
+  const drawingRefs = asArray(ladder.drawing_refs).map(String).filter(Boolean);
+  if (!drawingRefs.length) {
+    errors.push(`${path}.drawing_refs must reference at least one drawing`);
+    return;
+  }
+  const drawings = asArray(getByPath(evidence, manifest.drawing_protocol?.path || 'chart_prep.drawing_manifest'));
+  const drawingsById = new Map(drawings.filter((drawing) => drawing?.id).map((drawing) => [drawing.id, drawing]));
+  const requiredRole = protocol.required_drawing_role || 'wave_b_ladder';
+  for (const drawingId of drawingRefs) {
+    const drawing = drawingsById.get(drawingId);
+    if (!drawing) {
+      errors.push(`${path}.drawing_refs references missing drawing_manifest id: ${drawingId}`);
+      continue;
+    }
+    if (drawing.role !== requiredRole) {
+      errors.push(`${path}.drawing_refs.${drawingId} must reference drawing role ${requiredRole}: ${drawing.role || '<missing>'}`);
+    }
+  }
+}
+
+function validateCorrectiveStructure(evidence, manifest, errors) {
+  const protocol = manifest.corrective_structure_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'corrective_structure';
+  const structure = getByPath(evidence, path);
+  if (!structure || typeof structure !== 'object' || Array.isArray(structure)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  for (const field of protocol.required_fields || []) {
+    if (!String(structure[field] || '').trim()) errors.push(`${path}.${field} is required`);
+  }
+
+  const checks = [
+    ['location', protocol.allowed_locations],
+    ['pattern', protocol.allowed_patterns],
+    ['mode', protocol.allowed_modes],
+    ['wave_b_behavior', protocol.allowed_wave_b_behavior]
+  ];
+  for (const [field, allowedValues] of checks) {
+    const allowed = normalizedSet(allowedValues || []);
+    const value = normalizedToken(structure[field]);
+    if (allowed.size && value && !allowed.has(value)) {
+      errors.push(`${path}.${field} must be one of ${[...allowed].join(', ')}: ${structure[field]}`);
+    }
+  }
+
+  const location = normalizedToken(structure.location);
+  const pattern = normalizedToken(structure.pattern);
+  const wave2ForbiddenPatterns = normalizedSet(protocol.wave2_forbidden_patterns || []);
+  if (location === 'wave2' && wave2ForbiddenPatterns.has(pattern)) {
+    errors.push(`${path}.pattern cannot be ${structure.pattern} when location is wave2`);
+  }
+}
+
+function validateRiskArchitecture(evidence, manifest, errors) {
+  const protocol = manifest.risk_architecture_protocol;
+  if (!protocol) return;
+
+  const path = protocol.path || 'risk_architecture';
+  const risk = getByPath(evidence, path);
+  if (!risk || typeof risk !== 'object' || Array.isArray(risk)) {
+    errors.push(`${path} must be an object`);
+    return;
+  }
+
+  for (const field of protocol.required_fields || []) {
+    const value = risk[field];
+    if (value == null || (typeof value === 'string' && !value.trim())) errors.push(`${path}.${field} is required`);
+  }
+
+  const allowedSetupTypes = normalizedSet(protocol.allowed_setup_types || []);
+  const setupType = normalizedToken(risk.setup_type);
+  if (allowedSetupTypes.size && setupType && !allowedSetupTypes.has(setupType)) {
+    errors.push(`${path}.setup_type must be one of ${[...allowedSetupTypes].join(', ')}: ${risk.setup_type}`);
+  }
+
+  if (!risk.structural_setup || typeof risk.structural_setup !== 'object' || Array.isArray(risk.structural_setup)) {
+    errors.push(`${path}.structural_setup must be an object`);
+  } else if (!String(risk.structural_setup.evidence || risk.structural_setup.summary || '').trim()) {
+    errors.push(`${path}.structural_setup missing evidence/summary`);
+  }
+
+  const execution = risk.execution_setup;
+  if (!execution || typeof execution !== 'object' || Array.isArray(execution)) {
+    errors.push(`${path}.execution_setup must be an object`);
+    return;
+  }
+
+  const allowedExecutionStatuses = normalizedSet(protocol.allowed_execution_statuses || []);
+  const executionStatus = normalizedToken(execution.status);
+  if (allowedExecutionStatuses.size && executionStatus && !allowedExecutionStatuses.has(executionStatus)) {
+    errors.push(`${path}.execution_setup.status must be one of ${[...allowedExecutionStatuses].join(', ')}: ${execution.status}`);
+  }
+
+  if (setupType === 'live_trade') {
+    for (const field of protocol.live_trade_required_execution_fields || []) {
+      if (!String(execution[field] || '').trim()) errors.push(`${path}.execution_setup.${field} is required for live_trade`);
+    }
+    if (executionStatus !== 'ready') errors.push(`${path}.execution_setup.status must be ready for live_trade`);
+  } else if (executionStatus === 'ready') {
+    errors.push(`${path}.execution_setup.status cannot be ready unless setup_type is live_trade`);
   }
 }
 
@@ -1896,66 +2251,6 @@ function validateVerdict(evidence, manifest, errors) {
   }
 }
 
-function validateZoneProbabilities(evidence, manifest, errors) {
-  if (!manifest.zone_probabilities) return;
-  const zones = evidence.zone_probabilities;
-  if (zones == null) return;
-  if (!Array.isArray(zones)) {
-    errors.push('zone_probabilities must be an array');
-    return;
-  }
-  const allowedTypes = new Set(manifest.zone_probabilities.allowed_zone_types || []);
-  const requiredTypes = new Set(manifest.zone_probabilities.required_zone_types || []);
-  const allowedBands = new Set(manifest.zone_probabilities.allowed_probability_bands || []);
-  const seenTypes = new Set();
-  indexById(zones, 'zone_probabilities', errors);
-  for (const zone of zones) {
-    if (!zone || typeof zone !== 'object') continue;
-    if (zone.zone_type) seenTypes.add(zone.zone_type);
-    if (!allowedTypes.has(zone.zone_type)) errors.push(`zone_probabilities.${zone.id || '<unknown>'} invalid zone_type: ${zone.zone_type}`);
-    for (const field of ['price_range', 'probability', 'evidence', 'invalidation', 'upgrade_condition', 'downgrade_condition']) {
-      if (!hasOwn(zone, field) || (typeof zone[field] === 'string' && !zone[field].trim())) {
-        errors.push(`zone_probabilities.${zone.id || '<unknown>'} missing ${field}`);
-      }
-    }
-    if (typeof zone.probability?.value !== 'number') errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.value must be a number`);
-    if (typeof zone.probability?.value === 'number' && (zone.probability.value < 0 || zone.probability.value > 100)) {
-      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.value must be between 0 and 100: ${zone.probability.value}`);
-    }
-    if (!zone.probability?.band) {
-      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.band is required`);
-    } else if (allowedBands.size && !allowedBands.has(zone.probability.band)) {
-      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.probability.band must be one of ${[...allowedBands].join(', ')}: ${zone.probability.band}`);
-    }
-    const low = zone.price_range?.low;
-    const high = zone.price_range?.high;
-    if (typeof low !== 'number' || typeof high !== 'number') {
-      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.price_range.low/high must be numbers`);
-    } else if (!(low < high)) {
-      errors.push(`zone_probabilities.${zone.id || '<unknown>'}.price_range.low must be less than high`);
-    }
-  }
-  for (const type of requiredTypes) {
-    if (!seenTypes.has(type)) errors.push(`zone_probabilities missing required zone_type: ${type}`);
-  }
-}
-
-function validateZoneProbabilityCompatibility(evidence, manifest, errors) {
-  if (!manifest.zone_probabilities || evidence.zone_probabilities == null) return;
-  const legacy = new Map(asArray(evidence.zone_probabilities).map((zone) => [zone?.id, zone]));
-  for (const scoreZone of asArray(evidence.zone_scores)) {
-    if (!scoreZone?.id) continue;
-    const legacyZone = legacy.get(scoreZone.id);
-    if (!legacyZone) continue;
-    const path = `zone_probabilities.${scoreZone.id}`;
-    if (legacyZone.zone_type !== scoreZone.zone_type) errors.push(`${path}.zone_type must match canonical zone_scores.${scoreZone.id}.zone_type`);
-    if (legacyZone.price_range?.low !== scoreZone.price_range?.low) errors.push(`${path}.price_range.low must match canonical zone_scores.${scoreZone.id}.price_range.low`);
-    if (legacyZone.price_range?.high !== scoreZone.price_range?.high) errors.push(`${path}.price_range.high must match canonical zone_scores.${scoreZone.id}.price_range.high`);
-    if (legacyZone.probability?.value !== scoreZone.zone_score?.score) errors.push(`${path}.probability.value must match canonical zone_scores.${scoreZone.id}.zone_score.score`);
-    if (legacyZone.probability?.band !== scoreZone.zone_score?.band) errors.push(`${path}.probability.band must match canonical zone_scores.${scoreZone.id}.zone_score.band`);
-  }
-}
-
 function validateZoneScores(evidence, manifest, errors) {
   const config = manifest.zone_scores;
   if (!config) return;
@@ -2041,51 +2336,6 @@ function validateZoneFirstLanguage(evidence, manifest, errors) {
   }
   for (const hit of hits) {
     errors.push(`zone_first_language forbidden term "${hit.term}" in ${hit.path}`);
-  }
-}
-
-function validateMigrationPolicy(evidence, manifest, errors) {
-  const config = manifest.migration_policy;
-  if (!config) return;
-  const policy = getByPath(evidence, config.path || 'migration_policy');
-  if (!policy) return;
-  if (!isObject(policy)) {
-    errors.push('migration_policy must be an object');
-    return;
-  }
-  const exemptions = asArray(policy.allowed_exemptions);
-  const migrated = policy.is_migrated_package === true;
-  if (exemptions.length && !migrated) {
-    errors.push('migration_policy.allowed_exemptions cannot be used by new packages');
-  }
-  const allowed = new Set(config.allowed_exemptions || []);
-  for (const exemption of exemptions) {
-    if (!allowed.has(exemption)) errors.push(`migration_policy.allowed_exemptions contains unsupported exemption: ${exemption}`);
-  }
-  if (migrated) {
-    if (policy.target_contract_version !== manifest.contract_version) {
-      errors.push(`migration_policy.target_contract_version must equal manifest contract_version ${manifest.contract_version}: ${policy.target_contract_version}`);
-    }
-    for (const field of ['source_contract_version', 'target_contract_version', 'exemption_effect']) {
-      if (!String(policy[field] || '').trim()) errors.push(`migration_policy.${field} is required`);
-    }
-  }
-  if (exemptions.length) {
-    if (policy.exemption_effect !== config.required_exemption_effect) {
-      errors.push(`migration_policy.exemption_effect must be ${config.required_exemption_effect}`);
-    }
-    if (String(evidence.verdict?.evidence_grade || '').toLowerCase() !== 'qualified') {
-      errors.push('migration_policy exemptions require verdict.evidence_grade qualified');
-    }
-    if (String(evidence.verdict?.trade_permission || '').toLowerCase() !== 'blocked') {
-      errors.push('migration_policy exemptions require verdict.trade_permission blocked');
-    }
-    const criticText = JSON.stringify(evidence.critic_review?.material_non_blocking_issues || []);
-    for (const exemption of exemptions) {
-      if (!criticText.includes(exemption)) {
-        errors.push(`migration_policy exemption must be disclosed in critic_review.material_non_blocking_issues: ${exemption}`);
-      }
-    }
   }
 }
 
@@ -2193,6 +2443,7 @@ function validateJournalAlignment(evidence, file, errors, warnings) {
 }
 
 const VALIDATION_GROUPS = {
+  method_language: (context) => validateMethodLanguage(context.evidence, context.manifest, context.errors),
   id_collections: (context) => validateIdCollections(context.evidence, context.manifest, context.errors),
   package_artifacts: (context) => validatePackageArtifacts(context.evidence, context.manifest, context.file, context.errors),
   screenshots: (context) => validateScreenshots(context.evidence, context.manifest, context.file, context.errors),
@@ -2204,21 +2455,22 @@ const VALIDATION_GROUPS = {
   drawing_manifest: (context) => validateDrawingManifest(context.evidence, context.manifest, context.errors),
   hew_structure_context: (context) => validateHewStructureContext(context.evidence, context.manifest, context.errors),
   copsey_purity: (context) => validateHewCopseyPurity(context.evidence, context.manifest, context.errors),
+  wave_b_invalidation_ladder: (context) => validateWaveBInvalidationLadder(context.evidence, context.manifest, context.errors),
+  corrective_structure: (context) => validateCorrectiveStructure(context.evidence, context.manifest, context.errors),
+  risk_architecture: (context) => validateRiskArchitecture(context.evidence, context.manifest, context.errors),
   castaway_trade_model: (context) => validateCastawayTradeModelContract(context.evidence, context.manifest, context.errors),
   execution_quality: (context) => validateExecutionQuality(context.evidence, context.manifest, context.errors),
   fallback_policy: (context) => validateFallbackPolicy(context.evidence, context.manifest, context.errors),
   verdict: (context) => validateVerdict(context.evidence, context.manifest, context.errors),
-  zone_probabilities: (context) => validateZoneProbabilities(context.evidence, context.manifest, context.errors),
-  zone_probability_compatibility: (context) => validateZoneProbabilityCompatibility(context.evidence, context.manifest, context.errors),
   zone_scores: (context) => validateZoneScores(context.evidence, context.manifest, context.errors),
   zone_first_language: (context) => validateZoneFirstLanguage(context.evidence, context.manifest, context.errors),
-  migration_policy: (context) => validateMigrationPolicy(context.evidence, context.manifest, context.errors),
   action_rationale: (context) => validateActionRationale(context.evidence, context.manifest, context.errors),
   critic_review: (context) => validateCriticReview(context.evidence, context.manifest, context.errors),
   journal_alignment: (context) => validateJournalAlignment(context.evidence, context.file, context.errors, context.warnings)
 };
 
 const FINAL_VALIDATION_GROUPS = [
+  'method_language',
   'id_collections',
   'package_artifacts',
   'screenshots',
@@ -2230,15 +2482,15 @@ const FINAL_VALIDATION_GROUPS = [
   'drawing_manifest',
   'hew_structure_context',
   'copsey_purity',
+  'wave_b_invalidation_ladder',
+  'corrective_structure',
+  'risk_architecture',
   'castaway_trade_model',
   'execution_quality',
   'fallback_policy',
   'verdict',
-  'zone_probabilities',
-  'zone_probability_compatibility',
   'zone_scores',
   'zone_first_language',
-  'migration_policy',
   'action_rationale',
   'critic_review',
   'journal_alignment'
@@ -2246,46 +2498,53 @@ const FINAL_VALIDATION_GROUPS = [
 
 const STAGE_VALIDATION_GROUPS = {
   extraction: [
+    'method_language',
     'package_artifacts',
     'screenshots',
     'visual_pivot_evidence'
   ],
   verification: [
+    'method_language',
     'package_artifacts',
     'screenshots',
     'visual_pivot_evidence'
   ],
   anchors: [
+    'method_language',
     'package_artifacts',
     'visual_pivot_evidence',
     'ian_copsey_wave_map',
     'hypotheses'
   ],
   ratios: [
+    'method_language',
     'hypotheses',
     'copsey_purity',
+    'corrective_structure',
     'fallback_policy',
     'verdict'
   ],
   drawings: [
+    'method_language',
     'screenshots',
     'drawing_manifest',
     'hew_structure_context',
+    'wave_b_invalidation_ladder',
     'execution_quality'
   ],
   writing: [
+    'method_language',
     'journal_alignment',
-    'zone_probabilities',
-    'zone_probability_compatibility',
+    'wave_b_invalidation_ladder',
     'zone_scores',
     'zone_first_language',
-    'migration_policy',
+    'risk_architecture',
     'action_rationale',
     'castaway_trade_model'
   ],
   critic: [
+    'method_language',
     'critic_review',
-    'migration_policy',
     'fallback_policy',
     'verdict'
   ],

@@ -12,14 +12,13 @@ export const DEFAULT_COPSEY_RATIO_UNIVERSE = {
     minimum: 1.764,
     rare_exception_range: { min: 1.72, max: 1.764 },
     clusters: [
-      { id: '1764_1987', min: 1.764, max: 1.987 },
-      { id: '2236_2618', min: 2.236, max: 2.618 },
-      { id: '3236_3987', min: 3.236, max: 3.987 },
-      { id: '4236_4987', min: 4.236, max: 4.987 }
+      { id: 'model_1_1764_2146', min: 1.764, max: 2.146 },
+      { id: 'model_2_2236_2414', min: 2.236, max: 2.414 },
+      { id: 'model_3_3144_3236', min: 3.144, max: 3.236 }
     ]
   },
   wave_c_projection: {
-    ratios: [0.618, 0.667, 0.764, 0.854, 0.91, 0.944, 0.987, 1.021, 1.056, 1.09, 1.146, 1.236, 1.382, 1.414, 1.5, 1.586, 1.618, 1.764, 1.854]
+    ratios: [0.618, 0.667, 0.764, 0.854, 0.91, 0.944, 0.987, 1.0, 1.021, 1.056, 1.09, 1.092, 1.144, 1.146, 1.236, 1.382, 1.414, 1.444, 1.5, 1.586, 1.618, 1.764, 1.854, 2.0, 2.236]
   },
   wave5_projection: {
     ratios: [0.3, 0.333, 0.382, 0.414, 0.5, 0.586, 0.618, 0.667, 0.764, 0.854]
@@ -32,6 +31,149 @@ export const DEFAULT_COPSEY_RATIO_UNIVERSE = {
     corrective: { min: 1.0, max: 1.2 }
   }
 };
+
+export const RATIO_MODELS = {
+  model_1_standard: {
+    id: 'model_1_standard',
+    name: 'Standard Five Waves',
+    wave3: { min: 1.764, max: 2.146 },
+    waveAOf3OfWave1: [1.092, 1.144, 1.236],
+    waveBOf3OfWave1: [0.667, 0.618, 0.5],
+    waveBOf3OfWaveAOf3: [0.618, 0.667, 0.764],
+    waveCOf3OfWave1: [1.764, 2.0, 2.146],
+    waveCOf3OfWaveAOf3: [1.236, 1.382, 1.764],
+    wave4OfWave1: [1.236, 1.382],
+    wave4OfWave3: [0.236, 0.333],
+    wave5OfWave1: [2.144, 2.236],
+    wave5OfWaves1And3: [0.5, 0.618, 0.667]
+  },
+  model_2_extended: {
+    id: 'model_2_extended',
+    name: 'Extended Five Waves',
+    wave3: { min: 2.236, max: 2.414 },
+    waveAOf3OfWave1: [1.236],
+    waveBOf3OfWave1: [1.0],
+    waveBOf3OfWaveAOf3: [0.236],
+    waveCOf3OfWave1: [2.236, 2.414],
+    waveCOf3OfWaveAOf3: [1.144],
+    wave4OfWave1: [1.444],
+    wave4OfWave3: [0.382, 0.414],
+    wave5OfWave1: [2.854],
+    wave5OfWaves1And3: [0.5]
+  },
+  model_3_super_extended: {
+    id: 'model_3_super_extended',
+    name: 'Super Extended Five Waves',
+    wave3: { min: 3.144, max: 3.236 },
+    waveAOf3OfWave1: [1.764],
+    waveBOf3OfWave1: [0.764, 0.618],
+    waveBOf3OfWaveAOf3: [0.618, 0.667, 0.764],
+    waveCOf3OfWave1: [3.144, 3.236],
+    waveCOf3OfWaveAOf3: [1.236, 1.382, 1.764],
+    wave4OfWave1: [1.764, 2.0, 2.236],
+    wave4OfWave3: [0.236, 0.414, 0.441],
+    wave5OfWave1: [3.764],
+    wave5OfWaves1And3: [0.44, 0.5, 0.618]
+  }
+};
+
+export function length(a, b) {
+  return Math.abs(Number(b?.price) - Number(a?.price));
+}
+
+export function bullishProjection(start, measuredLength, ratio) {
+  return Number(start?.price) + Number(measuredLength) * Number(ratio);
+}
+
+export function bearishProjection(start, measuredLength, ratio) {
+  return Number(start?.price) - Number(measuredLength) * Number(ratio);
+}
+
+export function projectionRatio(projectedMove, baseMove) {
+  if (!baseMove) return null;
+  return Math.abs(projectedMove) / Math.abs(baseMove);
+}
+
+export function retracementRatio(correctionMove, priorMove) {
+  if (!priorMove) return null;
+  return Math.abs(correctionMove) / Math.abs(priorMove);
+}
+
+export function classifyRatioModel({ wave3Ratio } = {}) {
+  const ratio = number(wave3Ratio);
+  if (ratio == null) return null;
+  const epsilon = 1e-12;
+  if (ratio >= 3.144 - epsilon) return RATIO_MODELS.model_3_super_extended;
+  if (ratio >= 2.236 - epsilon) return RATIO_MODELS.model_2_extended;
+  if (ratio >= 1.764 - epsilon) return RATIO_MODELS.model_1_standard;
+  return null;
+}
+
+export function validateBullishRules(points = {}) {
+  const errors = [];
+  const wave1Origin = number(points.w1_origin?.price);
+  const wave1 = number(points.w1?.price);
+  const wave2 = number(points.w2?.price);
+  const wave3 = number(points.w3?.price);
+  const bOf3 = number(points.b_of_3?.price);
+  const wave4 = number(points.w4?.price);
+  const bOf5 = number(points.b_of_5?.price);
+
+  if (wave2 != null && wave1Origin != null && wave2 <= wave1Origin) {
+    errors.push('wave2_breaks_wave1_origin');
+  }
+
+  if (wave3 != null && wave1 != null && wave3 <= wave1) {
+    errors.push('wave3_does_not_exceed_wave1');
+  }
+
+  if (bOf3 != null && wave2 != null && bOf3 <= wave2) {
+    errors.push('b_of_3_breaks_wave2');
+  }
+
+  if (wave4 != null && bOf3 != null && wave4 <= bOf3) {
+    errors.push('wave4_breaks_b_of_wave3');
+  }
+
+  if (bOf5 != null && wave4 != null && bOf5 <= wave4) {
+    errors.push('b_of_5_breaks_wave4');
+  }
+
+  return errors;
+}
+
+export function validateBearishRules(points = {}) {
+  const errors = [];
+  const wave1Origin = number(points.w1_origin?.price);
+  const wave1 = number(points.w1?.price);
+  const wave2 = number(points.w2?.price);
+  const wave3 = number(points.w3?.price);
+  const bOf3 = number(points.b_of_3?.price);
+  const wave4 = number(points.w4?.price);
+  const bOf5 = number(points.b_of_5?.price);
+
+  if (wave2 != null && wave1Origin != null && wave2 >= wave1Origin) {
+    errors.push('wave2_breaks_wave1_origin');
+  }
+
+  if (wave3 != null && wave1 != null && wave3 >= wave1) {
+    errors.push('wave3_does_not_exceed_wave1');
+  }
+
+  if (bOf3 != null && wave2 != null && bOf3 >= wave2) {
+    errors.push('b_of_3_breaks_wave2');
+  }
+
+  if (wave4 != null && bOf3 != null && wave4 >= bOf3) {
+    errors.push('wave4_breaks_b_of_wave3');
+  }
+
+  if (bOf5 != null && wave4 != null && bOf5 >= wave4) {
+    errors.push('b_of_5_breaks_wave4');
+  }
+
+  return errors;
+}
 
 function number(value) {
   const parsed = Number(value);
@@ -155,7 +297,14 @@ function absoluteRatio(numerator, denominator) {
 }
 
 function within(value, range, tolerance = 0) {
-  return value >= range.min - tolerance && value <= range.max + tolerance;
+  const epsilon = 1e-12;
+  return value >= range.min - tolerance - epsilon && value <= range.max + tolerance + epsilon;
+}
+
+function wave3RareExceptionDocumented(measurement) {
+  if (measurement?.allow_rare_exception === true || measurement?.rare_exception === true) return true;
+  const status = normalizedToken(measurement?.exception?.status || measurement?.rare_exception_status);
+  return status === 'accepted' || status === 'documented' || status === 'rare_exception_downgraded';
 }
 
 function nearestAllowedRatio(value, ratios, tolerance) {
@@ -229,28 +378,36 @@ function evaluateWave3(measurement, points, config) {
   const matchedCluster = (rule.clusters || []).find((cluster) => within(actual, cluster));
   if (matchedCluster) {
     const anchor = nearestClusterAnchor(actual, matchedCluster);
+    const model = classifyRatioModel({ wave3Ratio: actual });
     return {
       result: passResult(measurement, actual, {
         matched_cluster: matchedCluster.id,
         nearest_anchor: anchor ? round(anchor.value) : null,
         anchor_position: anchor ? anchor.label : null,
-        anchor_distance: anchor ? round(anchor.distance) : null
+        anchor_distance: anchor ? round(anchor.distance) : null,
+        ratio_model: model?.id ?? null
       }),
       violations: []
     };
   }
 
   if (within(actual, rule.rare_exception_range || {}, 0)) {
-    const item = violation('wave3_rare_exception_range', 'soft', measurement, 'Wave 3 is in Copsey rare exception range below 176.4%.', { actual_ratio: round(actual) });
+    const documented = wave3RareExceptionDocumented(measurement);
+    const item = documented
+      ? violation('wave3_rare_exception_range', 'soft', measurement, 'Wave 3 is in Copsey rare exception range below 176.4%.', { actual_ratio: round(actual) })
+      : violation('wave3_below_1764_floor', 'hard', measurement, 'Wave 3 is below the Copsey 176.4% floor without a documented rare exception.', { actual_ratio: round(actual) });
     return {
-      result: {
-        id: measurement.id,
-        type: measurement.type,
-        status: 'warning',
-        score: 75,
-        actual_ratio: round(actual),
-        violation_id: item.id
-      },
+      result: documented
+        ? {
+            id: measurement.id,
+            type: measurement.type,
+            status: 'warning',
+            score: 75,
+            actual_ratio: round(actual),
+            violation_id: item.id,
+            ratio_model: null
+          }
+        : failResult(measurement, actual, item),
       violations: [item]
     };
   }
@@ -268,6 +425,31 @@ function evaluateWaveC(measurement, points, config) {
   if (nearest) return { result: passResult(measurement, actual, { matched_ratio: nearest.ratio }), violations: [] };
 
   const item = violation('wave_c_ratio_not_in_copsey_universe', 'hard', measurement, 'Wave C projection is not in Copsey allowed ratio universe.', { actual_ratio: round(actual) });
+  return { result: failResult(measurement, actual, item), violations: [item] };
+}
+
+function evaluateCOf3Strength(measurement, points) {
+  const prices = pricesFromKeys(['wave_a_start', 'wave_a_end', 'wave_b_end', 'wave_c_end'], measurement, points);
+  if (!prices) return { result: failResult(measurement, null, { id: 'missing_points', severity: 'hard' }), violations: [violation('missing_points', 'hard', measurement, 'C of 3 strength check requires wave_a_start, wave_a_end, wave_b_end, and wave_c_end.')] };
+
+  const waveA = Math.abs(prices.wave_a_end - prices.wave_a_start);
+  const waveC = Math.abs(prices.wave_c_end - prices.wave_b_end);
+  const actual = projectionRatio(waveC, waveA);
+  if (actual >= 1) {
+    return {
+      result: passResult(measurement, actual, {
+        wave_a_length: round(waveA),
+        wave_c_length: round(waveC)
+      }),
+      violations: []
+    };
+  }
+
+  const item = violation('c_of_3_shorter_than_a_of_3', 'hard', measurement, 'Wave C of 3 is shorter than Wave A of 3; the alleged heart of the trend is structurally weak.', {
+    actual_ratio: round(actual),
+    wave_a_length: round(waveA),
+    wave_c_length: round(waveC)
+  });
   return { result: failResult(measurement, actual, item), violations: [item] };
 }
 
@@ -332,27 +514,78 @@ function evaluateImpulseTopology(hypothesis, points) {
   const wave5 = measurements.find((measurement) => (measurement?.type || measurement?.kind) === 'wave5_projection');
   if (!wave3 || !wave5) return null;
 
-  const wave3Prices = pricesFromKeys(['wave2_end', 'wave3_end'], wave3, points);
+  const wave3Prices = pricesFromKeys(['wave1_start', 'wave1_end', 'wave2_end', 'wave3_end'], wave3, points);
   const wave5Prices = pricesFromKeys(['wave4_end', 'wave5_end'], wave5, points);
   if (!wave3Prices || !wave5Prices) return null;
 
-  const direction = normalizedToken(hypothesis?.direction) || (wave3Prices.wave3_end >= wave3Prices.wave2_end ? 'bullish' : 'bearish');
+  const direction = normalizedToken(hypothesis?.direction) || (wave3Prices.wave1_end >= wave3Prices.wave1_start ? 'bullish' : 'bearish');
   const bullish = direction !== 'bearish';
+  const wave1MovesCorrectly = bullish
+    ? wave3Prices.wave1_end > wave3Prices.wave1_start
+    : wave3Prices.wave1_end < wave3Prices.wave1_start;
   const wave3MovesCorrectly = bullish
     ? wave3Prices.wave3_end > wave3Prices.wave2_end
     : wave3Prices.wave3_end < wave3Prices.wave2_end;
   const wave5MovesCorrectly = bullish
     ? wave5Prices.wave5_end > wave5Prices.wave4_end
     : wave5Prices.wave5_end < wave5Prices.wave4_end;
-  if (!wave3MovesCorrectly || !wave5MovesCorrectly) {
+  if (!wave1MovesCorrectly || !wave3MovesCorrectly || !wave5MovesCorrectly) {
     return structuralFailure(
       'motive_direction_mismatch',
       'Motive wave endpoints move against the declared hypothesis direction.',
       {
         direction,
+        wave1_start: round(wave3Prices.wave1_start),
+        wave1_end: round(wave3Prices.wave1_end),
         wave3_end: round(wave3Prices.wave3_end),
         wave4_end: round(wave5Prices.wave4_end),
         wave5_end: round(wave5Prices.wave5_end)
+      }
+    );
+  }
+
+  const wave2BreachesOrigin = bullish
+    ? wave3Prices.wave2_end <= wave3Prices.wave1_start
+    : wave3Prices.wave2_end >= wave3Prices.wave1_start;
+  if (wave2BreachesOrigin) {
+    return structuralFailure(
+      'wave2_breaches_wave1_origin',
+      'R.N. Elliott rule 1 failed: Wave 2 must not breach or retest the Wave 1 origin.',
+      {
+        direction,
+        wave1_origin: round(wave3Prices.wave1_start),
+        wave2_end: round(wave3Prices.wave2_end)
+      }
+    );
+  }
+
+  const wave4OverlapsWave1 = bullish
+    ? wave5Prices.wave4_end <= wave3Prices.wave1_end
+    : wave5Prices.wave4_end >= wave3Prices.wave1_end;
+  if (wave4OverlapsWave1) {
+    return structuralFailure(
+      'wave1_wave4_overlap',
+      'R.N. Elliott rule 3 failed: Wave 4 overlaps Wave 1 price territory.',
+      {
+        direction,
+        wave1_boundary: round(wave3Prices.wave1_end),
+        wave4_end: round(wave5Prices.wave4_end)
+      }
+    );
+  }
+
+  const wave1Length = Math.abs(wave3Prices.wave1_end - wave3Prices.wave1_start);
+  const wave3Length = Math.abs(wave3Prices.wave3_end - wave3Prices.wave2_end);
+  const wave5Length = Math.abs(wave5Prices.wave5_end - wave5Prices.wave4_end);
+  if (wave3Length < wave1Length && wave3Length < wave5Length) {
+    return structuralFailure(
+      'wave3_is_shortest',
+      'R.N. Elliott rule 2 failed: Wave 3 is the shortest motive wave.',
+      {
+        direction,
+        wave1: round(wave1Length),
+        wave3: round(wave3Length),
+        wave5: round(wave5Length)
       }
     );
   }
@@ -540,6 +773,8 @@ function evaluateMeasurement(measurement, points, config) {
       return evaluateWave3({ ...measurement, type }, points, config);
     case 'wave_c_projection':
       return evaluateWaveC({ ...measurement, type }, points, config);
+    case 'c_of_3_strength_rule':
+      return evaluateCOf3Strength({ ...measurement, type }, points);
     case 'wave5_projection':
       return evaluateWave5({ ...measurement, type }, points, config);
     case 'retracement':
@@ -603,6 +838,8 @@ export function scoreHewHypothesis(hypothesis, ratioUniverse = {}) {
     : 0;
   const score = round(Math.max(0, rawScore - softViolations.length * 3), 2);
   const status = hardViolations.length ? 'fail' : (softViolations.length ? 'pass_with_warnings' : 'pass');
+  const wave3Ratio = results.find((item) => item.type === 'wave3_projection' && number(item.actual_ratio) != null)?.actual_ratio;
+  const ratioModel = classifyRatioModel({ wave3Ratio });
 
   return {
     hypothesis_id: hypothesis?.id || '<unknown>',
@@ -611,6 +848,7 @@ export function scoreHewHypothesis(hypothesis, ratioUniverse = {}) {
     hard_rule_pass: hardViolations.length === 0,
     lifecycle_status: lifecycleStatus,
     classification: classifyHypothesis(status, lifecycleStatus),
+    ratio_model: ratioModel?.id ?? null,
     measurements: results,
     violations
   };

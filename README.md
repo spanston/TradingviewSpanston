@@ -16,8 +16,8 @@ This repo prevents structural drift: rules stay in one narrow HEW/Copsey lane, a
 1. Route to Ian Copsey Fractal Forecasting.
 2. Load only the HEW manifest, specialist prompt, and directly relevant workflow material.
 3. Switch to `HEW layout`.
-4. Enter extraction mode: keep `Konsili Pivot Exporter` visible and extract Monthly, Weekly, and Daily pivots from structured `KPE|...` table/label rows.
-5. Enter verification mode: verify those visual pivots with TradingView OHLCV before HEW analysis.
+4. Enter extraction mode: keep `Konsili Pivot Exporter` visible, capture price-wave extreme labels showing price plus date/time, and collect one Monthly/Weekly/Daily visual-label batch.
+5. Enter verification mode: normalize that batch with `buildMtfPivotEvidence(...)` from `scripts/pivot_engine.mjs`; stop if profile or OHLCV verification errors remain.
 6. Read Monthly -> Weekly -> Daily using TradingView MCP only unless Johan asked for outside research.
 7. Enter strategy-proof mode: hide `Konsili Pivot Exporter`, reduce pivot clutter, and draw only HEW proof.
 8. Enter presentation mode: keep `Konsili Pivot Exporter` and extraction scaffolding hidden unless audit mode is explicit, leave a readable decision chart, and verify final live state.
@@ -35,9 +35,9 @@ If the required layout is missing, the agent should stop unless Johan explicitly
 
 ## Pivot Exporter
 
-Add `tradingview/konsili_pivot_exporter.pine` to `HEW layout` as `Konsili Pivot Exporter`. During extraction, read `data_get_pine_tables` first and `data_get_pine_labels` as backup with `study_filter: "Konsili Pivot Exporter"`.
+Add `tradingview/konsili_pivot_exporter.pine` to `HEW layout` as `Konsili Pivot Exporter`. The default chart labels are visual-first wave-anchor labels: price first, date/time second, and `PH`/`PL` as the pivot marker at the actual price extreme. The structured `KPE|...` table is hidden by default. During extraction, switch Monthly/Weekly/Daily and rely on the visible price pivots plus `data_get_pine_labels`; show the table or switch label text to `Price + date + KPE` only when visual inspection is unavailable or ambiguous. Package builders should pass the collected M/W/D label rows plus OHLCV summaries through `buildMtfPivotEvidence(...)` instead of hand-assembling three separate pivot sections.
 
-If the exporter is absent or returns no `KPE|...` rows, fix the layout/exporter or downgrade. Do not treat screenshot-only pivots, Pivot Points High Low, Pivot Scanner, or `hew_scan_chart` output as a clean pivot evidence pass.
+If the exporter is absent or returns no readable price-extreme labels, fix the layout/exporter or downgrade. Do not treat unrelated Pivot Points High Low, Pivot Scanner, or `hew_scan_chart` output as a clean pivot evidence pass.
 
 ## Validation
 

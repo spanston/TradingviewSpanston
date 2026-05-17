@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__tradingview__layout_list",
+      "mcp__tradingview__chart_get_state",
+      "mcp__tradingview__layout_switch",
+      "mcp__tradingview__chart_set_symbol",
+      "mcp__tradingview__symbol_info",
+      "mcp__tradingview__data_get_indicator",
+      "mcp__tradingview__quote_get",
+      "mcp__tradingview__draw_list",
+      "mcp__tradingview__chart_set_timeframe",
+      "mcp__tradingview__data_get_pine_labels",
+      "mcp__tradingview__data_get_ohlcv",
+      "mcp__tradingview__data_get_pine_tables",
+      "mcp__tradingview__indicator_toggle_visibility",
+      "mcp__tradingview__data_diagnose_pine_graphics",
+      "mcp__tradingview__chart_set_visible_range",
+      "mcp__tradingview__indicator_set_inputs",
+      "mcp__tradingview__capture_screenshot",
+      "Bash(node -e \"import\\('./scripts/pivot_engine.mjs'\\).then\\(m => console.log\\(Object.keys\\(m\\).join\\('\\\\n'\\)\\)\\)\")",
+      "Bash(node analysis_journal/VOLCAR_B_2026-05-17_hew/raw/build_helpers.mjs)",
+      "mcp__tradingview__hew_validate",
+      "mcp__tradingview__draw_shape",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 const textExtensions = new Set(['.json', '.mjs', '.js', '.md', '.pine', '.txt', '.yml', '.yaml']);
 const errors = [];
@@ -14,13 +14,19 @@ function isTextContractFile(file) {
   return textExtensions.has(extensionOf(file)) || file === 'package.json' || file === 'AGENTS.md' || file === 'WORKFLOW.md';
 }
 
+function isGeneratedArtifact(file) {
+  return file.replace(/\\/g, '/').startsWith('analysis_journal/');
+}
+
 const trackedFiles = execFileSync('git', ['ls-files'], { encoding: 'utf8' })
   .split(/\r?\n/)
   .map((file) => file.trim())
   .filter(Boolean)
+  .filter((file) => !isGeneratedArtifact(file))
   .filter(isTextContractFile);
 
 for (const file of trackedFiles) {
+  if (!existsSync(file)) continue;
   const buffer = readFileSync(file);
   const nulAt = buffer.indexOf(0);
   if (nulAt >= 0) {

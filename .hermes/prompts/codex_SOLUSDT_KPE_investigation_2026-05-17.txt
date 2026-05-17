@@ -1,0 +1,53 @@
+You are Codex acting as a repo-aware technical critic for Johan's KonsiliTradingview workflow.
+
+Working repo/canon: C:/Users/Johan/Desktop/KonsiliTradingview
+Adjacent MCP tooling implementation, if needed for code inspection only: C:/Users/Johan/Desktop/HEWAI BOT/tv-bot/src/server.js
+Do not treat the adjacent tooling repo as KonsiliTradingview workflow canon.
+
+Task: Investigate the SOLUSDT HEW analysis failure and the blocked KPE data path. This is a consultation/investigation pass, not a file-editing pass.
+
+Context:
+- User initiated a Claude Code full institutional Ian Copsey / Fractal Forecasting analysis for BINANCE:SOLUSDT.
+- Package exists at analysis_journal/SOLUSDT_2026-05-17_hew/.
+- Claude returned STAND ASIDE because:
+  1) Mandatory Konsili Pivot Exporter (KPE) data path failed. mcp_tradingview data_get_pine_tables with study_filter "Konsili Pivot Exporter" returned study_count: 0 even though KPE was attached to the chart. KPE entity was reported as TR8cKk, linked to USER;ea527429ded4409e93f015d842654bd2.
+  2) OHLCV fallback count had Wave 3 ratio (295.83 - 8.00) / (259.90 - 1.03) = 1.112x, below HEW/Copsey 1.764 floor.
+- npm test passed: 80/80.
+- npm run validate:hew -- analysis_journal/SOLUSDT_2026-05-17_hew/evidence.json failed with 59 errors, mostly expected because the package is a blocked/fail package lacking KPE rows, structural drawings, hew_structure_context, etc.
+- Live chart final state was presentation-clean: KPE hidden, Pivot HL hidden, AO visible, no drawings left behind.
+
+Read first:
+- AGENTS.md
+- WORKFLOW.md
+- strategies/hew/manifest.json
+- agents/harmonic-elliott-wave-analyst.md
+- agents/hew-independent-critic.md
+- package.json
+- analysis_journal/SOLUSDT_2026-05-17_hew/evidence.json
+- analysis_journal/SOLUSDT_2026-05-17_hew/journal.md
+- analysis_journal/SOLUSDT_2026-05-17_hew/committee_brief.md
+- raw KPE artifacts under analysis_journal/SOLUSDT_2026-05-17_hew/raw/
+
+Then inspect implementation paths relevant to Pine table/label extraction:
+- Search repo for KPE/Pine table/label/exporter references.
+- Inspect tradingview/konsili_pivot_exporter.pine.
+- Inspect adjacent MCP server source only if needed to understand why data_get_pine_tables might report study_count 0 for an attached hidden/visible Pine study.
+
+Questions to answer:
+1. Is the STAND ASIDE conclusion correct under the repo contract, or did the analysis/validator misuse the fail-state package?
+2. What is the most likely root cause of data_get_pine_tables returning study_count: 0 when KPE is attached?
+3. Is the problem more likely chart state/visibility/layout, Pine script output construction, MCP study-filter matching, TradingView internal API drift, or prompt/operator procedure?
+4. What exact next diagnostic steps should Hermes run to isolate it? Be concrete: MCP calls, code locations, expected observations.
+5. If you can identify a code fix, propose the minimal patch location and logic. Do not edit files in this pass.
+6. Should we re-run SOLUSDT after the fix, or is the 1.112x Wave 3 failure enough to keep STAND ASIDE regardless?
+
+Output format:
+- Verdict
+- Evidence reviewed
+- Root cause hypothesis ranked 1-5 with confidence
+- Diagnostics to run next, ordered
+- Minimal fix proposal if any
+- Re-run recommendation
+- Any concerns about the current package or workflow
+
+Keep it blunt. Do not invent KPE rows or trading conclusions. If evidence is insufficient, say exactly what is missing.

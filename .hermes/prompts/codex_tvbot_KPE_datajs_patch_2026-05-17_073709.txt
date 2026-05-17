@@ -1,0 +1,86 @@
+You are Codex working on Johan's TradingView MCP tooling repo.
+
+Purpose:
+Implement the Phase 0 fix recommended by Claude Opus Max for the Konsili Pivot Exporter (KPE) data path failure. The goal is reliable Pine graphics extraction for data_get_pine_tables/labels without weakening the KonsiliTradingview visual-first HEW evidence contract.
+
+Working repo:
+C:/Users/Johan/Desktop/HEWAI BOT/tv-bot
+
+Important context:
+- This repo is dirty with many unrelated pending changes. DO NOT clean, reset, stage, commit, rename, format, or touch unrelated files.
+- Only modify these files unless you can justify a hard need:
+  1) src/core/data.js
+  2) src/tools/data.js
+- Do not edit KonsiliTradingview manifests, validators, reports, packages, or Pine scripts in this task.
+- Do not alter HEW methodology or allow raw OHLCV-only pivots. This is only MCP transport hardening.
+
+Read first:
+- AGENTS.md
+- src/core/data.js
+- src/core/stream.js
+- src/tools/data.js
+- C:/Users/Johan/Desktop/KonsiliTradingview/.hermes/claude_runs/KPE_better_options_claude_2026-05-17_072501_final.md
+
+Problem:
+KPE was visible in chart_get_state, but data_get_pine_tables/labels returned study_count=0. Claude identified likely stale extraction in src/core/data.js:
+- data.js uses model.model().dataSources(), no study wrapper unwrap, and only s._graphics.
+- stream.js uses chart.getAllStudies(), chart.getStudyById(), study._study || study, and src._graphics || src._source._graphics.
+- stream.js reads table data via pc.ownFirstValue(); data.js only has brittle dwgtablecells/tableCells paths.
+
+Required implementation:
+
+1. Harden buildGraphicsJS(collectionName, mapKey, filter) in src/core/data.js.
+   - Preserve current output shape expected by getPineLines/getPineLabels/getPineTables/getPineBoxes: [{ name, count, items }].
+   - Resolve studies robustly. Prefer active chart API getAllStudies/getStudyById when available, but keep dataSources fallback so existing behavior survives.
+   - Match study_filter case-insensitively across useful identifiers: study name/title/id plus meta.description/meta.shortDescription.
+   - Resolve wrapped studies: src = study._study || study, then graphics via src._graphics || src._source?._graphics; include fallback checks on original object too.
+   - Keep all existing line/label/box extraction behavior compatible.
+   - For tables, add pc.ownFirstValue() fallback. Convert table.data cells into raw objects compatible with existing getPineTables(): { tid, row, col, t }.
+   - Avoid optional chaining inside the injected browser JS string if surrounding code style avoids it; TradingView desktop may be Chromium but keep this conservative.
+
+2. Add a read-only diagnostics function in src/core/data.js:
+   export async function getPineGraphicsDiagnostics({ study_filter } = {})
+   It should evaluate in the TradingView page and return a compact JSON-friendly object:
+   {
+     success: true,
+     study_count: <matched studies count>,
+     studies: [
+       {
+         id,
+         name,
+         visible,
+         match_basis,
+         graphics_path,
+         has_graphics,
+         primitive_keys,
+         counts: { labels, lines, boxes, table_cells, own_first_tables },
+         errors: []
+       }
+     ]
+   }
+   Notes:
+   - Use the same study resolution / graphics resolution logic as buildGraphicsJS.
+   - Diagnostics must not throw just because a primitive path is missing. It should explain what was found.
+   - Count labels/lines/boxes/table cells/tables using safe checks.
+   - Keep result compact. No raw huge primitive dumps.
+
+3. Register the MCP tool in src/tools/data.js:
+   data_diagnose_pine_graphics
+   Description: read-only diagnostics for Pine graphics extraction; reports matched studies, graphics paths, primitive collection keys/counts, and filter match basis.
+   Schema: optional study_filter string.
+   Return jsonResult(await core.getPineGraphicsDiagnostics({ study_filter })).
+
+Verification:
+- Run at least:
+  node --check src/core/data.js
+  node --check src/tools/data.js
+- If cheap, run a targeted import smoke test:
+  node -e "import('./src/core/data.js').then(m => console.log(Boolean(m.getPineGraphicsDiagnostics), Boolean(m.getPineTables)))"
+- Do NOT run broad cleanup or full test suite if unrelated dirty-state breakage appears. If a verification fails due your files, fix it. If it fails due existing repo dirt, report that clearly.
+
+Final response:
+- State exact files changed.
+- Summarize extraction hardening.
+- Summarize diagnostic tool shape.
+- Report commands run and results.
+- Name any caveats, especially if full live TradingView/KPE verification still needs Hermes/operator restart of the MCP server.

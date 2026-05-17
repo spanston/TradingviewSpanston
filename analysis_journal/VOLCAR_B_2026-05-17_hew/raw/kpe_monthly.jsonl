@@ -1,0 +1,7 @@
+{"timeframe":"1M","exporter_version":2,"left":5,"right":5,"max_rows":24,"label_mode":"Price + date","symbol":"OMXSTO:VOLCAR_B","captured_at":"2026-05-17"}
+{"id":"M_1646121600_L","tf":"1M","type":"low","date":"2022-03-01","time":1646121600,"price":47.55,"source":"kpe_label","confirmed":true}
+{"id":"M_1683010800_L","tf":"1M","type":"low","date":"2023-05-02","time":1683010800,"price":33.38,"source":"kpe_label","confirmed":true}
+{"id":"M_1704182400_L","tf":"1M","type":"low","date":"2024-01-02","time":1704182400,"price":23.34,"source":"kpe_label","confirmed":true}
+{"id":"M_1712041200_H","tf":"1M","type":"high","date":"2024-04-02","time":1712041200,"price":43.24,"source":"kpe_label","confirmed":true}
+{"id":"M_1748847600_L","tf":"1M","type":"low","date":"2025-06-02","time":1748847600,"price":15.94,"source":"kpe_label","confirmed":true}
+{"id":"M_1762156800_H","tf":"1M","type":"high","date":"2025-11-03","time":1762156800,"price":36.54,"source":"kpe_label","confirmed":true}

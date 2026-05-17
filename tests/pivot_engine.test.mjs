@@ -2,10 +2,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  buildMtfPivotEvidence,
+  CANONICAL_MTF_TIMEFRAMES,
   KONSILI_PIVOT_EXPORTER,
   detectSwingPivots,
+  parseKpeRow,
   parsePivotExporterRows,
-  rankHewImpulseCandidates
+  parseVisualPivotLabelRows,
+  rankHewImpulseCandidates,
+  validatePivotProfile,
+  verifyPivotAgainstOhlcv
 } from '../scripts/pivot_engine.mjs';
 
 function priceBars(prices) {
@@ -74,6 +80,36 @@ test('parsePivotExporterRows normalizes Konsili Pivot Exporter table rows', () =
   assert.equal(result.pivots[0].date, '2024-01-01 00:00');
   assert.equal(result.pivots[0].time, 1704067200000);
   assert.equal(result.pivots[0].price, 150.25);
+  assert.equal(result.pivots[0].version, KONSILI_PIVOT_EXPORTER.version);
+  assert.equal(result.pivots[0].exporter_row_id, '1M_1704067200000_H');
+  assert.equal(result.pivots[0].source_text, rows[0]);
+  assert.equal(parseKpeRow(rows[0]).id, '1M_1704067200000_H');
+});
+
+test('parsePivotExporterRows accepts visual label text that embeds a KPE row', () => {
+  const row = 'KPE|v=2|tf=1D|id=1D_1704844800000_H|type=high|date=2024-01-10 00:00|time=1704844800000|price=120|timezone=Etc/UTC|left=5|right=5|confirmed=true';
+  const labelText = `120.00\n2024-01-10 00:00\nPH\n${row}`;
+
+  const result = parsePivotExporterRows([labelText]);
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.pivots[0].id, '1D_1704844800000_H');
+  assert.equal(result.pivots[0].source_text, row);
+});
+
+test('parseVisualPivotLabelRows extracts price-wave extreme labels without a KPE row', () => {
+  const result = parseVisualPivotLabelRows([
+    { text: '82833\n2026-05-06 00:00\nPH', price: 82833 },
+    { text: '74912\n2026-04-29 00:00\nPL', price: 74912 }
+  ], { timeframe: 'D' });
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.pivots[0].type, 'high');
+  assert.equal(result.pivots[0].price, 82833);
+  assert.equal(result.pivots[0].date, '2026-05-06 00:00');
+  assert.equal(result.pivots[0].time, 1778025600000);
+  assert.equal(result.pivots[0].source_kind, 'visual_price_extreme_label');
+  assert.equal(result.pivots[1].type, 'low');
 });
 
 test('parsePivotExporterRows fails closed on malformed exporter rows', () => {
@@ -94,4 +130,124 @@ test('parsePivotExporterRows requires the indicator date field', () => {
 
   assert.equal(result.pivots.length, 0);
   assert.match(result.errors.join('\n'), /missing date/i);
+});
+
+test('validatePivotProfile rejects wrong left/right exporter profile settings', () => {
+  const [row] = parsePivotExporterRows([
+    'KPE|v=2|tf=1D|id=1D_1704844800000_H|type=high|date=2024-01-10 00:00|time=1704844800000|price=120|timezone=Etc/UTC|left=7|right=7|confirmed=true'
+  ]).pivots;
+
+  assert.equal(validatePivotProfile(row, { left: 7, right: 7 }), true);
+  assert.equal(validatePivotProfile(row, { left: 5, right: 7 }), false);
+  assert.equal(validatePivotProfile(row, { left: 7, right: 5 }), false);
+});
+
+test('parsePivotExporterRows fails closed when KPE price is missing', () => {
+  const invalidRow = 'KPE|v=2|tf=1D|id=bad_missing_price|type=high|date=2024-01-10 00:00|time=1704844800000|timezone=Etc/UTC|left=5|right=5|confirmed=true';
+  const result = parsePivotExporterRows([invalidRow]);
+
+  assert.equal(result.pivots.length, 0);
+  assert.match(result.errors.join('\n'), /invalid price/i);
+  assert.equal(parseKpeRow(invalidRow), null);
+});
+
+test('parsePivotExporterRows fails closed when KPE row is unconfirmed', () => {
+  const result = parsePivotExporterRows([
+    'KPE|v=2|tf=1D|id=bad_unconfirmed|type=low|date=2024-01-10 00:00|time=1704844800000|price=100|timezone=Etc/UTC|left=5|right=5|confirmed=false'
+  ]);
+
+  assert.equal(result.pivots.length, 0);
+  assert.match(result.errors.join('\n'), /confirmed must be true/i);
+});
+
+test('verifyPivotAgainstOhlcv validates high pivots against OHLCV highs', () => {
+  const pivot = parseKpeRow(
+    'KPE|v=2|tf=1D|id=1D_1704844800000_H|type=high|date=2024-01-10 00:00|time=1704844800000|price=120.5|timezone=Etc/UTC|left=5|right=5|confirmed=true'
+  );
+
+  assert.equal(verifyPivotAgainstOhlcv(pivot, { high: 120.5, low: 98 }), true);
+  assert.equal(verifyPivotAgainstOhlcv(pivot, { high: 120.49, low: 98 }), false);
+});
+
+test('verifyPivotAgainstOhlcv validates low pivots against OHLCV lows', () => {
+  const pivot = parseKpeRow(
+    'KPE|v=2|tf=1D|id=1D_1704844800000_L|type=low|date=2024-01-10 00:00|time=1704844800000|price=98.25|timezone=Etc/UTC|left=5|right=5|confirmed=true'
+  );
+
+  assert.equal(verifyPivotAgainstOhlcv(pivot, { high: 120.5, low: 98.25 }), true);
+  assert.equal(verifyPivotAgainstOhlcv(pivot, { high: 120.5, low: 98.3 }), false);
+});
+
+test('buildMtfPivotEvidence creates one verified visual_pivot_evidence object for monthly weekly daily rows', () => {
+  const result = buildMtfPivotEvidence({
+    instrumentClass: 'single_stock',
+    screenshots: {
+      monthly: 'screenshots/visual_pivots_monthly.png',
+      weekly: 'screenshots/visual_pivots_weekly.png',
+      daily: 'screenshots/visual_pivots_daily.png'
+    },
+    labelsByTimeframe: {
+      monthly: [{ text: '150\n2024-01-01 00:00\nPH', price: 150 }],
+      weekly: [{ text: '100\n2024-01-08 00:00\nPL', price: 100 }],
+      daily: [{ text: '125\n2024-01-10 00:00\nPH', price: 125 }]
+    },
+    ohlcvByTimeframe: {
+      monthly: [{ time: 1704067200, high: 150, low: 90 }],
+      weekly: [{ time: 1704672000, high: 130, low: 100 }],
+      daily: [{ time: 1704844800, high: 125, low: 99 }]
+    }
+  });
+
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.evidence.timeframes.map((item) => item.timeframe), CANONICAL_MTF_TIMEFRAMES);
+  assert.equal(result.evidence.exporter.instrument_class, 'single_stock');
+  assert.equal(result.evidence.exporter.left_bars, 5);
+  assert.equal(result.evidence.timeframes[0].pivots[0].id, 'm_2024_01_high_150');
+  assert.equal(result.evidence.timeframes[0].source_mode, 'visual_price_extreme_labels');
+  assert.equal(result.evidence.timeframes[0].pivots[0].source_kind, 'visual_price_extreme_label');
+  assert.equal(result.evidence.timeframes[1].ohlcv_verification[0].status, 'pass');
+  assert.equal(result.pivotsByTimeframe.daily[0].source_kind, 'visual_price_extreme_label');
+  assert.equal(result.evidence.exporter.default_table_visible, false);
+  assert.equal(result.evidence.exporter.table_fallback_only, true);
+});
+
+test('buildMtfPivotEvidence fails closed on profile drift or OHLCV mismatch', () => {
+  const result = buildMtfPivotEvidence({
+    instrumentClass: 'single_stock',
+    rowsByTimeframe: {
+      monthly: ['KPE|v=2|tf=M|id=M_1704067200000_H|type=high|date=2024-01-01 00:00|time=1704067200000|price=150|timezone=Etc/UTC|left=7|right=5|confirmed=true'],
+      weekly: ['KPE|v=2|tf=W|id=W_1704672000000_L|type=low|date=2024-01-08 00:00|time=1704672000000|price=100|timezone=Etc/UTC|left=5|right=5|confirmed=true'],
+      daily: ['KPE|v=2|tf=D|id=D_1704844800000_H|type=high|date=2024-01-10 00:00|time=1704844800000|price=125|timezone=Etc/UTC|left=5|right=5|confirmed=true']
+    },
+    ohlcvByTimeframe: {
+      monthly: [{ time: 1704067200, high: 150, low: 90 }],
+      weekly: [{ time: 1704672000, high: 130, low: 100 }],
+      daily: [{ time: 1704844800, high: 124, low: 99 }]
+    }
+  });
+
+  assert.match(result.errors.join('\n'), /profile/i);
+  assert.match(result.errors.join('\n'), /does not match OHLCV/i);
+  assert.equal(result.evidence.timeframes[2].ohlcv_verification[0].status, 'fail');
+});
+
+test('buildMtfPivotEvidence uses KPE table rows only as fallback when visual labels are missing', () => {
+  const result = buildMtfPivotEvidence({
+    instrumentClass: 'single_stock',
+    sourceTools: ['data_get_pine_tables'],
+    rowsByTimeframe: {
+      monthly: ['KPE|v=2|tf=M|id=M_1704067200000_H|type=high|date=2024-01-01 00:00|time=1704067200000|price=150|timezone=Etc/UTC|left=5|right=5|confirmed=true'],
+      weekly: ['KPE|v=2|tf=W|id=W_1704672000000_L|type=low|date=2024-01-08 00:00|time=1704672000000|price=100|timezone=Etc/UTC|left=5|right=5|confirmed=true'],
+      daily: ['KPE|v=2|tf=D|id=D_1704844800000_H|type=high|date=2024-01-10 00:00|time=1704844800000|price=125|timezone=Etc/UTC|left=5|right=5|confirmed=true']
+    },
+    ohlcvByTimeframe: {
+      monthly: [{ time: 1704067200, high: 150, low: 90 }],
+      weekly: [{ time: 1704672000, high: 130, low: 100 }],
+      daily: [{ time: 1704844800, high: 125, low: 99 }]
+    }
+  });
+
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.evidence.timeframes[0].source_mode, 'kpe_table_fallback');
+  assert.equal(result.pivotsByTimeframe.daily[0].exporter_row_id, 'D_1704844800000_H');
 });

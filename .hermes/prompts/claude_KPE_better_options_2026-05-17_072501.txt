@@ -1,0 +1,50 @@
+You are Claude Code Opus with max reasoning. Ultrathink.
+
+Purpose:
+We need a better option for Johan's KonsiliTradingview HEW workflow after a failed Solana analysis exposed a brittle KPE Pine table/label extraction path. The goal is not to make analysis easier. The goal is to preserve the visual-first evidence contract while making pivot receipt extraction reliable enough for institutional Ian Copsey / Fractal Forecasting packages.
+
+Context:
+- Repo canon is C:/Users/Johan/Desktop/KonsiliTradingview.
+- Adjacent TradingView MCP tooling repo is C:/Users/Johan/Desktop/HEWAI BOT/tv-bot. Use it only as tooling implementation context, not project canon.
+- The failed SOLUSDT package is analysis_journal/SOLUSDT_2026-05-17_hew/.
+- Existing Codex alternative report is .hermes/codex_runs/KPE_alternatives_2026-05-17_071931_final.md.
+- Current best hypothesis: data_get_pine_tables/labels in tv-bot src/core/data.js is stale/brittle and should port stronger graphics extraction logic from src/core/stream.js.
+- Current proposed architecture: do not abandon KPE; evolve from table/label-only into normalized KPE pivot receipts with source tiers; add KPE diagnostics; add line/box geometry receipts; later add dual-attested local KPE mirror.
+
+Hard constraints:
+1. Do not lower standards to raw OHLCV-only clean pivots.
+2. Do not fabricate KPE rows.
+3. Do not weaken HEW validation: Wave 3 1.764 floor, no orphan ABC, native Elliott drawings, primary/secondary subwaves, preceding impulse, forward projection remain blocking.
+4. Preserve visual-first discipline: pivots must come from visible TradingView/KPE evidence or be explicitly blocked/qualified.
+5. Prefer robust, operator-usable architecture over clever hacks.
+6. This is a consult/review pass. Do not edit files unless explicitly asked. Read-only analysis only.
+
+Read these first:
+- AGENTS.md
+- WORKFLOW.md
+- strategies/hew/manifest.json
+- agents/harmonic-elliott-wave-analyst.md
+- agents/hew-independent-critic.md
+- tradingview/konsili_pivot_exporter.pine
+- scripts/validate_evidence.mjs
+- scripts/pivot_engine.mjs if present
+- analysis_journal/SOLUSDT_2026-05-17_hew/evidence.json
+- analysis_journal/SOLUSDT_2026-05-17_hew/journal.md
+- .hermes/codex_runs/KPE_alternatives_2026-05-17_071931_final.md
+- C:/Users/Johan/Desktop/HEWAI BOT/tv-bot/src/core/data.js
+- C:/Users/Johan/Desktop/HEWAI BOT/tv-bot/src/core/stream.js
+- Any other nearby files needed to understand MCP Pine graphics extraction.
+
+Decision question:
+Find the best option — including any better option than the current multi-surface KPE receipt plan — for reliable pivot receipt extraction that preserves Johan's visual-first HEW evidence contract.
+
+Required output:
+1. Brutal verdict: is the current plan right, wrong, overcomplicated, or missing a better architecture?
+2. Rank 5-8 options by evidence quality, implementation risk, resilience to TradingView API drift, operator burden, and validator impact.
+3. Identify the best next move for the next 1-2 days. Make it concrete: exact files/functions to inspect or patch, tests/spikes to run, and acceptance criteria.
+4. If there is a better architecture, describe it as an implementation plan with phases.
+5. Name dead ends to avoid.
+6. Include validator/manifest implications without writing code.
+7. Include a short final recommendation for Johan: what to build first, what to spike second, what to reject.
+
+Be skeptical. Do not rubber-stamp Codex. If current plan is too complex, say so. If a simpler path exists, say exactly why it is stronger. If the only honest answer is to fix MCP first and then revisit, say that.

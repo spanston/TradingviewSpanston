@@ -4,15 +4,6 @@
   "symbol": "NASDAQ:TEAM",
   "method": "Ian Copsey Fractal Forecasting",
   "workflow_version": "hew_institutional_v1",
-  "migration_policy": {
-    "is_migrated_package": true,
-    "source_contract_version": "hew_stage_gated_v8_math_core",
-    "target_contract_version": "hew_institutional_v1",
-    "allowed_exemptions": [
-      "draw_list_before_original_not_available"
-    ],
-    "exemption_effect": "evidence_grade_qualified_trade_permission_blocked"
-  },
   "status": "no_clean_trade",
   "stage_gates": [
     {
@@ -38,7 +29,7 @@
     {
       "id": "drawing_protocol",
       "status": "pass",
-      "evidence": "Preceding context, macro correction, internal subwaves, and conditional projection use native Elliott tools. Final decision proof uses only zone rectangles, with no horizontal decision lines or text EW marker substitutes."
+      "evidence": "Preceding context, macro correction, internal subwaves, and conditional projection use native Elliott tools. Final decision proof uses only zone rectangles, with no horizontal decision lines or text wave-marker substitutes."
     },
     {
       "id": "evidence_contract",
@@ -48,7 +39,7 @@
     {
       "id": "action_output",
       "status": "pass",
-      "evidence": "Output is NO CLEAN TRADE with explicit accumulation/distribution boxes, probability percentages, outer invalidation boundaries, and what to ignore."
+      "evidence": "Output is NO CLEAN TRADE with explicit accumulation/distribution boxes, zone score percentages, outer invalidation boundaries, and what to ignore."
     },
     {
       "id": "critic_review",
@@ -93,6 +84,16 @@
       "evidence": "The conditional forward impulse projection from 56.01 is drawn and marked as scenario only."
     },
     {
+      "id": "projection_topology_validated",
+      "status": "pass",
+      "evidence": "The conditional projection passed Wave 2 origin, Wave 4 overlap, Wave 3 shortest, and motive-direction checks before presentation."
+    },
+    {
+      "id": "visual_thesis_consistency_checked",
+      "status": "pass",
+      "evidence": "Final macro and trade-posture screenshots support the same accepted thesis and do not promote rejected diagnostics as decision proof."
+    },
+    {
       "id": "copsey_internal_abc_motive_engines_checked",
       "status": "pass_with_fallback",
       "evidence": "Macro Wave 3 was separately caught and validated from weekly KPE pivots as 23.80 -> 53.45 -> 43.11 -> 98.21 -> 65.17 -> 149.80. Macro Waves 1 and 5 remain visible-equivalent context, and the live recovery still fails the Wave 3 floor."
@@ -103,9 +104,9 @@
       "evidence": "Lower-degree five-wave action inside macro Wave 3 is now captured on weekly pivots. The active recovery is not promoted because the actual 2026 rebound fails the Wave 3 floor."
     },
     {
-      "id": "copsey_classical_rescue_devices_rejected",
+      "id": "copsey_forbidden_rescue_devices_rejected",
       "status": "pass",
-      "evidence": "No extension, failed fifth, diagonal, or other classical rescue device was used to force an actionable count."
+      "evidence": "No extension, failed fifth, diagonal, or other forbidden rescue device was used to force an actionable count."
     },
     {
       "id": "castaway_overlay_not_copsey_source",
@@ -140,12 +141,27 @@
     {
       "id": "action_rationale_complete",
       "status": "pass",
-      "evidence": "Rationale explains why the chart remains no-clean-trade while distribution probability is stronger than accumulation probability."
+      "evidence": "Rationale explains why the chart remains no-clean-trade while distribution zone score is stronger than accumulation zone score."
     },
     {
       "id": "critic_review_complete",
       "status": "pass",
-      "evidence": "Independent critic checklist is complete with action blocked until zone probabilities favor accumulation over distribution."
+      "evidence": "Independent critic checklist is complete with action blocked until zone zone scores favor accumulation over distribution."
+    },
+    {
+      "id": "c_of_3_strength_checked",
+      "status": "pass",
+      "evidence": "C of 3 strength was checked where Wave 3 completion is claimed; this package does not promote a completed active Wave 3 trade."
+    },
+    {
+      "id": "corrective_structure_classified",
+      "status": "pass",
+      "evidence": "The active correction is classified and tied to the preceding impulse context."
+    },
+    {
+      "id": "risk_architecture_separated",
+      "status": "pass",
+      "evidence": "Structural map and executable risk are separated before posture language."
     }
   ],
   "chart_prep": {
@@ -179,7 +195,7 @@
         "evidence": "Final chart was verified on Weekly with pivot scaffolding hidden and zone proof visible.",
         "konsili_pivot_exporter_visible": false,
         "pivot_scaffold_visible": false,
-        "final_chart_state": "Weekly BATS:TEAM/NASDAQ:TEAM chart, AO visible, KPE hidden in presentation, 9 drawings listed: preceding context, macro correction, macro Wave 3 internals, lower-degree fib zone, conditional projection, two accumulation boxes, and two potential distribution boxes. No horizontal decision lines or text EW marker substitutes remain."
+        "final_chart_state": "Weekly BATS:TEAM/NASDAQ:TEAM chart, AO visible, KPE hidden in presentation, 9 drawings listed: preceding context, macro correction, macro Wave 3 internals, lower-degree fib zone, conditional projection, two accumulation boxes, and two potential distribution boxes. No horizontal decision lines or text wave-marker substitutes remain."
       }
     ],
     "drawing_manifest": [
@@ -585,7 +601,7 @@
           119.73,
           154.16
         ],
-        "label": "conditional projection context for zone probabilities",
+        "label": "conditional projection context for zone zone scores",
         "points": [
           {
             "label": "0",
@@ -646,6 +662,22 @@
             ]
           }
         ]
+      },
+      {
+        "id": "wave_b_ladder_1",
+        "entity_id": "wave_b_ladder_fixture",
+        "role": "wave_b_ladder",
+        "tool": "horizontal_line",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          56.01,
+          78.2,
+          96.32,
+          119.73
+        ],
+        "label": "Wave-B invalidation ladder",
+        "evidence": "Charted non-count ladder levels for Wave-B invalidation and posture review."
       },
       {
         "id": "primary_accumulation_box",
@@ -794,12 +826,12 @@
     {
       "role": "macro_structure",
       "path": "screenshots/wave3_internals.png",
-      "purpose": "Layered native Elliott impulse drawing of macro Wave 3 internal subwaves with a distinct lower-degree HEW fib zone; no text EW marker substitutes."
+      "purpose": "Layered native Elliott impulse drawing of macro Wave 3 internal subwaves with a distinct lower-degree HEW fib zone; no text wave-marker substitutes."
     },
     {
       "role": "trade_posture",
       "path": "screenshots/trade_posture.png",
-      "purpose": "Weekly zone posture with accumulation and potential distribution boxes; no horizontal decision lines or text EW markers."
+      "purpose": "Weekly zone posture with accumulation and potential distribution boxes; no horizontal decision lines or text wave markers."
     }
   ],
   "visual_pivot_evidence": {
@@ -1258,9 +1290,9 @@
         "evidence": "The actual rebound fails at 1.5607; only the conditional projection reaches 1.7641."
       },
       {
-        "id": "classical_rescue_rejection",
+        "id": "forbidden_rescue_rejection",
         "status": "pass",
-        "evidence": "No classical extension or diagonal logic is used to rescue the weak active rebound."
+        "evidence": "No forbidden extension or diagonal logic is used to rescue the weak active rebound."
       },
       {
         "id": "corrective_context_before_forecast",
@@ -1461,7 +1493,7 @@
   "copsey_hew_purity": {
     "internal_abc_motive_engines": {
       "status": "pass_with_fallback",
-      "evidence": "Copsey HEW context is separated from classical rescue logic. Macro Wave 3 is now independently decomposed and validated on weekly KPE pivots; macro Waves 1 and 5 remain visible-equivalent context only. This still does not create trade permission because the live recovery count fails.",
+      "evidence": "Copsey HEW context is separated from forbidden rescue logic. Macro Wave 3 is now independently decomposed and validated on weekly KPE pivots; macro Waves 1 and 5 remain visible-equivalent context only. This still does not create trade permission because the live recovery count fails.",
       "macro_waves": [
         {
           "wave": "1",
@@ -1506,13 +1538,13 @@
           "leg": "C",
           "visibility_status": "not_visible",
           "visibility_reason": "The active C leg has not confirmed a completed lower-degree terminal structure.",
-          "downgrade_semantics": "Recovery remains conditional and zone-first; no trade permission while distribution probability dominates."
+          "downgrade_semantics": "Recovery remains conditional and zone-first; no trade permission while distribution zone score dominates."
         }
       ]
     },
-    "classical_rescue_devices": {
+    "forbidden_rescue_devices": {
       "status": "pass",
-      "evidence": "Classical rescue devices were rejected; the weak rebound was not saved with an extension, failed fifth, or diagonal.",
+      "evidence": "Forbidden rescue devices were rejected; the weak rebound was not saved with an extension, failed fifth, or diagonal.",
       "rejected_devices": [
         "extended_waves",
         "failed_fifths",
@@ -1527,7 +1559,7 @@
       "status": "pass",
       "source_label": "Konsili Castaway overlay",
       "is_copsey_source": false,
-      "evidence": "Castaway blocks permission after Copsey structure because the active recovery is only a zone map and the strongest probability is overhead distribution."
+      "evidence": "Castaway blocks permission after Copsey structure because the active recovery is only a zone map and the strongest zone score is overhead distribution."
     },
     "wave3_1764_rule": {
       "status": "pass",
@@ -1612,112 +1644,67 @@
       "evidence": "Conditional path reaches 1.7641 at 149.31."
     },
     {
-      "id": "rn_elliott_wave3_not_shortest",
+      "id": "rn_rule_wave3_not_shortest",
       "status": "pass",
       "evidence": "Conditional path keeps projected Wave 3 as the largest motive segment."
     },
     {
-      "id": "rn_elliott_wave1_wave4_non_overlap",
+      "id": "rn_rule_wave1_wave4_non_overlap",
       "status": "pass",
       "evidence": "Conditional Wave 4 at 119.73 remains above Wave 1 high 96.32."
     }
   ],
-  "wave_b_invalidation_ladder": [
-    {
-      "id": "c_origin_low",
-      "level": 56.01,
-      "status": "critical",
-      "violation_standard": "daily_close_below_or_weekly_acceptance_below",
-      "evidence": "56.01 is the current C-leg low and upper edge of the terminal accumulation box."
-    },
-    {
-      "id": "absorption_floor",
-      "level": 78.2,
-      "status": "watch",
-      "violation_standard": "weekly_acceptance_below",
-      "evidence": "78.20 is the low edge of the active absorption/accumulation box."
-    },
-    {
-      "id": "near_distribution_floor",
-      "level": 96.32,
-      "status": "overhead_supply",
-      "violation_standard": "weekly_acceptance_with_volume_and_AO_improvement",
-      "evidence": "96.32 is the lower edge of the near distribution box, not a standalone entry signal."
-    },
-    {
-      "id": "near_distribution_ceiling",
-      "level": 119.73,
-      "status": "overhead_supply",
-      "violation_standard": "weekly_acceptance_with_volume_and_AO_improvement",
-      "evidence": "119.73 is the upper edge of the near distribution box and a shallow recovery threshold from 326.00 to 56.01."
-    }
-  ],
-  "zone_probabilities": [
-    {
-      "id": "primary_accumulation_box",
-      "zone_type": "accumulation",
-      "price_range": {
-        "low": 78.2,
-        "high": 96.32
+  "wave_b_invalidation_ladder": {
+    "direction": "bullish",
+    "validation_standard": "daily_close_or_weekly_acceptance",
+    "rungs": [
+      {
+        "id": "wave2_holds_wave1_origin",
+        "must_hold": "above",
+        "level_role": "wave1_origin",
+        "tested_by": "wave2_low",
+        "status": "pass",
+        "price": 56.01,
+        "evidence": "56.01 is the current C-leg low and upper edge of the terminal accumulation box."
       },
-      "probability": {
-        "value": 44,
-        "band": "moderate"
+      {
+        "id": "b_of_3_holds_wave2",
+        "must_hold": "above",
+        "level_role": "wave2_low",
+        "tested_by": "b_of_3_low",
+        "status": "pass",
+        "price": 78.2,
+        "evidence": "78.20 is the low edge of the active absorption/accumulation box."
       },
-      "evidence": "Current price 87.46 sits inside this box. Daily AO is positive at 11.00 and the latest daily volume 6.81M is near the 100-day average 6.78M, but weekly AO -42.29 and monthly AO -93.11 keep this only moderate accumulation evidence.",
-      "invalidation": "Weekly acceptance below 78.20 weakens this as accumulation and shifts focus to the terminal box.",
-      "upgrade_condition": "Absorption improves only if weekly structure holds inside the box while AO/volume stop deteriorating.",
-      "downgrade_condition": "Loss of 78.20 with expanding weekly volume."
-    },
-    {
-      "id": "terminal_accumulation_box",
-      "zone_type": "accumulation",
-      "price_range": {
-        "low": 43.88,
-        "high": 56.01
+      {
+        "id": "wave4_holds_b_of_3",
+        "must_hold": "above",
+        "level_role": "b_of_3_low",
+        "tested_by": "wave4_low",
+        "status": "pass",
+        "price": 96.32,
+        "evidence": "96.32 is the lower edge of the near distribution box, not a standalone entry signal."
       },
-      "probability": {
-        "value": 38,
-        "band": "moderate_low"
-      },
-      "evidence": "56.01 is the confirmed KPE low and 43.88 is the next Copsey C target path. April 2026 monthly volume was elevated at 164.18M versus the 100-month average 43.15M, but the box has not been retested cleanly.",
-      "invalidation": "Sustained weekly acceptance below 43.88 would reject this as accumulation.",
-      "upgrade_condition": "Improves if price revisits the box with lower downside momentum and AO divergence.",
-      "downgrade_condition": "High-volume continuation through 43.88."
-    },
-    {
-      "id": "near_distribution_box",
-      "zone_type": "distribution",
-      "price_range": {
-        "low": 96.32,
-        "high": 119.73
-      },
-      "probability": {
-        "value": 61,
-        "band": "high"
-      },
-      "evidence": "The actual recovery impulse failed at 1.5607x Wave 1, below the 1.764 floor. This overhead box aligns with the last daily KPE high and shallow recovery threshold while weekly/monthly AO remain negative.",
-      "invalidation": "A sustained weekly hold above 119.73 with improving AO/volume would reduce distribution risk.",
-      "upgrade_condition": "Distribution probability increases on rejection candles or rising volume inside this box.",
-      "downgrade_condition": "Weekly absorption above 119.73 with AO improvement."
-    },
-    {
-      "id": "upper_distribution_box",
-      "zone_type": "distribution",
-      "price_range": {
-        "low": 149.31,
-        "high": 166.48
-      },
-      "probability": {
-        "value": 48,
-        "band": "moderate"
-      },
-      "evidence": "149.31 is the conditional Wave 3 projection and 166.48 is the latest relevant weekly KPE high. This is not active now, but it is the likely supply/distribution zone if a larger recovery unfolds.",
-      "invalidation": "Sustained weekly acceptance above 166.48 with non-divergent AO would reduce this distribution read.",
-      "upgrade_condition": "Distribution probability increases if price reaches the box with weakening AO or declining relative volume.",
-      "downgrade_condition": "Broad weekly acceptance above 166.48 with improving momentum."
-    }
-  ],
+      {
+        "id": "b_of_5_holds_wave4",
+        "must_hold": "above",
+        "level_role": "wave4_low",
+        "tested_by": "b_of_5_low",
+        "status": "pending",
+        "price": null,
+        "evidence": "119.73 remains an upper review level; B of 5 has not formed as a verified rung."
+      }
+    ],
+    "drawing_refs": [
+      "wave_b_ladder_1"
+    ],
+    "hard_failure_ids": [
+      "wave2_breaks_wave1_origin",
+      "b_of_3_breaks_wave2",
+      "wave4_breaks_b_of_wave3",
+      "b_of_5_breaks_wave4"
+    ]
+  },
   "action_rationale": {
     "selected_action": "no_clean_trade",
     "strategy_basis": "Ian Copsey Fractal Forecasting with Konsili Castaway overlay after clean KPE pivot verification.",
@@ -1738,7 +1725,7 @@
     "permission": "blocked",
     "source_label": "Konsili Castaway overlay",
     "is_copsey_source": false,
-    "reason": "No trade while the active recovery has failed the Copsey Wave 3 floor and the strongest probability remains potential overhead distribution.",
+    "reason": "No trade while the active recovery has failed the Copsey Wave 3 floor and the strongest zone score remains potential overhead distribution.",
     "decision_table": [
       {
         "id": "model",
@@ -1748,7 +1735,7 @@
       {
         "id": "permission",
         "value": "blocked",
-        "evidence": "Current price sits in moderate accumulation while the adjacent overhead box carries higher distribution probability."
+        "evidence": "Current price sits in moderate accumulation while the adjacent overhead box carries higher distribution zone score."
       },
       {
         "id": "zone_focus",
@@ -1767,7 +1754,7 @@
       },
       {
         "id": "stand_aside_condition",
-        "value": "Remain inactive while distribution probability dominates accumulation probability",
+        "value": "Remain inactive while distribution zone score dominates accumulation zone score",
         "evidence": "No clean trade while weekly/monthly AO are negative and recovery Wave 3 failed."
       }
     ]
@@ -1781,7 +1768,7 @@
     {
       "id": "zone_focus",
       "status": "fail",
-      "evidence": "The nearest overhead zone, 96.32-119.73, has higher distribution probability than the current accumulation box."
+      "evidence": "The nearest overhead zone, 96.32-119.73, has higher distribution zone score than the current accumulation box."
     },
     {
       "id": "invalidation",
@@ -1801,8 +1788,8 @@
   ],
   "red_team": {
     "countercase": "The 56.01 low may be only a pause inside C, not a completed correction.",
-    "proof_needed": "Accumulation probability must improve through weekly AO/volume behavior; otherwise the 96.32-119.73 box remains the more important distribution risk.",
-    "impact": "Until zone probabilities shift decisively toward accumulation, the correct action is no clean trade."
+    "proof_needed": "Accumulation zone score must improve through weekly AO/volume behavior; otherwise the 96.32-119.73 box remains the more important distribution risk.",
+    "impact": "Until zone zone scores shift decisively toward accumulation, the correct action is no clean trade."
   },
   "critic_review": {
     "final_verdict": "pass",
@@ -1826,7 +1813,7 @@
       {
         "id": "human_actionability",
         "status": "pass",
-        "evidence": "Final output says no clean trade and names accumulation/distribution zones with probabilities."
+        "evidence": "Final output says no clean trade and names accumulation/distribution zones with zone scores."
       },
       {
         "id": "invalidation_and_risk_clear",
@@ -1851,7 +1838,7 @@
       {
         "id": "final_chart_readability_checked",
         "status": "pass",
-        "evidence": "Pivot scaffolding is hidden and final zone boxes are visible without horizontal decision lines or text EW markers."
+        "evidence": "Pivot scaffolding is hidden and final zone boxes are visible without horizontal decision lines or text wave markers."
       },
       {
         "id": "hew_no_orphan_abc_checked",
@@ -1874,6 +1861,16 @@
         "evidence": "Forward projection is drawn with Elliott impulse and labeled conditional."
       },
       {
+        "id": "hew_projection_topology_checked",
+        "status": "pass",
+        "evidence": "Forward projection topology was checked for Wave 2 origin, Wave 4 overlap, Wave 3 shortest, and motive direction failures."
+      },
+      {
+        "id": "hew_visual_thesis_consistency_checked",
+        "status": "pass",
+        "evidence": "Final screenshots do not visually promote rejected or diagnostic counts as the accepted thesis."
+      },
+      {
         "id": "hew_copsey_internal_abc_motive_engines_checked",
         "status": "pass",
         "evidence": "Macro Wave 3 internals are independently captured; Waves 1 and 5 remain visible-equivalent context without rescue devices."
@@ -1884,7 +1881,7 @@
         "evidence": "Macro Wave 3 lower-degree five-wave action is now visible and drawn; active correction C remains unresolved for trade permission."
       },
       {
-        "id": "hew_classical_rescue_devices_rejected",
+        "id": "hew_forbidden_rescue_devices_rejected",
         "status": "pass",
         "evidence": "No extended wave, failed fifth, or diagonal rescue appears in the action thesis."
       },
@@ -1912,6 +1909,21 @@
         "id": "unresolved_items_disclosed",
         "status": "pass",
         "evidence": "Unresolved completion of C and unconfirmed recovery are disclosed and block action."
+      },
+      {
+        "id": "hew_c_of_3_strength_checked",
+        "status": "pass",
+        "evidence": "C of 3 strength requirement is checked and no completed active Wave 3 is promoted without it."
+      },
+      {
+        "id": "hew_corrective_structure_classified",
+        "status": "pass",
+        "evidence": "Correction classification is present and linked to the preceding impulse."
+      },
+      {
+        "id": "hew_risk_architecture_separated",
+        "status": "pass",
+        "evidence": "Structural map and execution risk are separated before trade permission."
       }
     ],
     "findings": [],
@@ -1921,7 +1933,7 @@
       "prompt_file": "agents/hew-independent-critic.md",
       "scope": "Claude Code read-only review of final HEW package contract, clean pivot path, drawing grammar, and zone-first actionability.",
       "verdict": "pass",
-      "evidence": "Claude Code returned NO BLOCKING ISSUES on initial and final read-only passes; non-blocking contract polish was applied for probability bands, forbidden zone-first language, and explicit drawing aliases."
+      "evidence": "Claude Code returned NO BLOCKING ISSUES on initial and final read-only passes; non-blocking contract polish was applied for zone score bands, forbidden zone-first language, and explicit drawing aliases."
     },
     "package_validity_verdict": "pass",
     "evidence_grade_verdict": "qualified",
@@ -1955,17 +1967,17 @@
   "review_conditions": [
     {
       "condition": "AO/volume improve while price holds 78.20-96.32",
-      "expected": "refresh accumulation probability",
+      "expected": "refresh accumulation zone score",
       "downgrade_if": "loss of 78.20 with expanding weekly volume"
     },
     {
       "condition": "Price revisits 43.88-56.01 with slowing downside momentum",
-      "expected": "refresh terminal accumulation probability",
+      "expected": "refresh terminal accumulation zone score",
       "downgrade_if": "weekly acceptance below 43.88"
     },
     {
       "condition": "Price enters 96.32-119.73 or 149.31-166.48",
-      "expected": "refresh distribution probability",
+      "expected": "refresh distribution zone score",
       "downgrade_if": "weekly absorption with improving AO"
     }
   ],
@@ -1973,19 +1985,19 @@
   "confidence": {
     "rating": "low",
     "cap_reason": "Fallback remains for macro Waves 1/5 visible-equivalent context; macro Wave 3 internals are now incorporated, but the live recovery proof is still conditional.",
-    "rationale": "Pivot path is clean and macro Wave 3 internal proof is improved. Confidence remains low for any trade entry because the actual recovery failed the Wave 3 floor and distribution probability remains stronger than accumulation probability."
+    "rationale": "Pivot path is clean and macro Wave 3 internal proof is improved. Confidence remains low for any trade entry because the actual recovery failed the Wave 3 floor and distribution zone score remains stronger than accumulation zone score."
   },
   "execution_quality": {
     "vision_qa": {
       "status": "pass",
       "screenshot_reviewed": true,
-      "evidence": "Final trade_posture screenshot was visually checked; pivot scaffolding is hidden and accumulation/distribution boxes are visible. The Wave 3 internals screenshot uses a distinct cyan lower-degree Elliott/Fibonacci layer without text EW marker substitutes."
+      "evidence": "Final trade_posture screenshot was visually checked; pivot scaffolding is hidden and accumulation/distribution boxes are visible. The Wave 3 internals screenshot uses a distinct cyan lower-degree Elliott/Fibonacci layer without text wave-marker substitutes."
     },
     "rerun_schedule": {
       "status": "scheduled",
-      "condition": "Zone-probability review when price holds 78.20-96.32 with improving AO/volume, revisits 43.88-56.01, or enters 96.32-119.73 / 149.31-166.48.",
+      "condition": "Zone-score review when price holds 78.20-96.32 with improving AO/volume, revisits 43.88-56.01, or enters 96.32-119.73 / 149.31-166.48.",
       "cadence": "manual_on_zone_shift_or_weekly_refresh",
-      "evidence": "Rerun conditions are stated as zone-probability reviews rather than entry-timing language."
+      "evidence": "Rerun conditions are stated as zone-score reviews rather than entry-timing language."
     },
     "drawing_spec": {
       "status": "pass",
@@ -2056,7 +2068,7 @@
       {
         "role": "chart_state_final",
         "path": "raw/chart_state_final.json",
-        "sha256": "6af5bf6bd576af82f52d94af6b65779d8a8ddedc377206b4a83f7b2c9119ca67"
+        "sha256": "cf33e96ee7e2d93c154feff58b77c55213ed9168674dc5618b1aeafcab3fe638"
       }
     ]
   },
@@ -2162,7 +2174,7 @@
       },
       "evidence": "The actual recovery impulse failed at 1.5607x Wave 1, below the 1.764 floor. This overhead box aligns with the last daily KPE high and shallow recovery threshold while weekly/monthly AO remain negative.",
       "invalidation": "A sustained weekly hold above 119.73 with improving AO/volume would reduce distribution risk.",
-      "upgrade_condition": "Distribution probability increases on rejection candles or rising volume inside this box.",
+      "upgrade_condition": "Distribution zone score increases on rejection candles or rising volume inside this box.",
       "downgrade_condition": "Weekly absorption above 119.73 with AO improvement."
     },
     {
@@ -2194,8 +2206,36 @@
       },
       "evidence": "149.31 is the conditional Wave 3 projection and 166.48 is the latest relevant weekly KPE high. This is not active now, but it is the likely supply/distribution zone if a larger recovery unfolds.",
       "invalidation": "Sustained weekly acceptance above 166.48 with non-divergent AO would reduce this distribution read.",
-      "upgrade_condition": "Distribution probability increases if price reaches the box with weakening AO or declining relative volume.",
+      "upgrade_condition": "Distribution zone score increases if price reaches the box with weakening AO or declining relative volume.",
       "downgrade_condition": "Broad weekly acceptance above 166.48 with improving momentum."
     }
-  ]
+  ],
+  "corrective_structure": {
+    "location": "post_impulse_correction",
+    "pattern": "running_flat",
+    "mode": "mixed",
+    "wave_b_behavior": "exceeds_prior_extreme",
+    "preceding_impulse_ref": "macro_impulse_context",
+    "evidence": "TEAM fixture records the macro correction after the preceding impulse; Wave B behavior is treated as the deceptive trend-direction leg."
+  },
+  "risk_architecture": {
+    "setup_type": "structural_map_only",
+    "structural_setup": {
+      "summary": "Distribution score dominates accumulation, so the map is structural rather than executable.",
+      "evidence": "Zone-first posture remains no clean trade."
+    },
+    "execution_setup": {
+      "status": "not_ready",
+      "entry_condition": "not_applicable",
+      "stop_level": "not_applicable",
+      "target_zone": "conditional projection zone only",
+      "risk_reward": "not_applicable"
+    },
+    "risk_reward": "not_applicable",
+    "invalidation": "hard invalidation remains charted, but no live trade is authorized",
+    "position_sizing_basis": "not_applicable without live trade permission",
+    "alternate_response": "alternate bearish C extension keeps trade permission blocked",
+    "time_or_structural_stop": "review on zone boundary or invalidation shift",
+    "evidence": "Structural thesis is separated from execution risk; this fixture remains blocked."
+  }
 }

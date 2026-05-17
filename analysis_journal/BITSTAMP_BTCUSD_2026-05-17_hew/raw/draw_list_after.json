@@ -1,0 +1,56 @@
+[
+  {
+    "id": "EAJ4SZ",
+    "manifest_id": "preceding_impulse_context",
+    "role": "preceding_impulse_context",
+    "tool": "elliott_impulse_wave"
+  },
+  {
+    "id": "EAJ4SZ",
+    "manifest_id": "primary_degree_subwaves",
+    "role": "primary_degree_subwaves",
+    "tool": "elliott_impulse_wave"
+  },
+  {
+    "id": "8nxXW5",
+    "manifest_id": "macro_abc_correction",
+    "role": "macro_count",
+    "tool": "elliott_correction"
+  },
+  {
+    "id": "rYo5Dc",
+    "manifest_id": "conditional_forward_projection",
+    "role": "projection_count",
+    "tool": "elliott_impulse_wave"
+  },
+  {
+    "id": "rYo5Dc",
+    "manifest_id": "secondary_degree_subwaves",
+    "role": "secondary_degree_subwaves",
+    "tool": "elliott_impulse_wave"
+  },
+  {
+    "id": "CuX6jS",
+    "manifest_id": "wave_b_ladder_1",
+    "role": "wave_b_ladder",
+    "tool": "rectangle"
+  },
+  {
+    "id": "b05v59",
+    "manifest_id": "accumulation_zone",
+    "role": "zone",
+    "tool": "rectangle"
+  },
+  {
+    "id": "krzpKR",
+    "manifest_id": "distribution_zone",
+    "role": "zone",
+    "tool": "rectangle"
+  },
+  {
+    "id": "CuX6jS",
+    "manifest_id": "no_trade_zone",
+    "role": "zone",
+    "tool": "rectangle"
+  }
+]

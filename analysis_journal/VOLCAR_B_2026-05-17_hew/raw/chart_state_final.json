@@ -1,0 +1,14 @@
+{
+  "captured_at": "2026-05-17",
+  "symbol": "OMXSTO_DLY:VOLCAR_B",
+  "resolution": "1W",
+  "chart_type": "candles",
+  "layout": "Hew Layout",
+  "studies": [
+    {"id": "TR8cKk", "name": "Konsili Pivot Exporter", "visible_in_presentation": false},
+    {"id": "UCbOaW", "name": "Awesome Oscillator", "visible_in_presentation": true}
+  ],
+  "drawings_count": 13,
+  "presentation_state": "KPE hidden, AO visible, native Elliott proof + zone rectangles + W-B ladder rungs visible.",
+  "quote_at_capture": {"last": 22.46, "high": 22.52, "low": 21.43, "open": 22.03, "volume": 10862382, "time": 1778482800}
+}

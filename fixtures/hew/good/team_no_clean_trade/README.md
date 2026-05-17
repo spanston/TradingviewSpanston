@@ -2,4 +2,4 @@
 
 Expected result: `pass`.
 
-This fixture is represented by the migrated reference package at `analysis_journal/TEAM_2026-05-16_hew` and by the complete synthetic package generated in `tests/validate_evidence.test.mjs`.
+This fixture is the durable zone-first TEAM reference surface. It replaces loading generated `analysis_journal` packages during ordinary workflow and validator tests.

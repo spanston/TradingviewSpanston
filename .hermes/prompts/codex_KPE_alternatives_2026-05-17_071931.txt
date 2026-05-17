@@ -1,0 +1,53 @@
+You are Codex acting as a repo-aware architecture critic for Johan's KonsiliTradingview workflow.
+
+Task: brainstorm alternatives to relying on MCP Pine table/label extraction for Konsili Pivot Exporter (KPE) pivot evidence.
+
+This is NOT an implementation pass. Do not edit files. Read only. Produce a decision-grade architecture memo.
+
+Context:
+- Repo/canon: C:/Users/Johan/Desktop/KonsiliTradingview
+- Adjacent MCP tooling repo for implementation inspection only: C:/Users/Johan/Desktop/HEWAI BOT/tv-bot
+- Current HEW/Copsey contract requires KPE rows via data_get_pine_tables or data_get_pine_labels before count selection.
+- SOLUSDT run failed because data_get_pine_tables/labels returned study_count=0 for KPE despite the indicator being attached. The package correctly blocked trade action.
+- Prior Codex pass identified likely stale MCP Pine graphics extraction in HEWAI BOT/tv-bot/src/core/data.js vs stronger patterns in src/core/stream.js.
+- Johan now wants alternatives to the MCP Pine path, not just “fix data.js”.
+
+Read first:
+- AGENTS.md
+- WORKFLOW.md
+- strategies/hew/manifest.json, especially visual_pivot_protocol.allowed_source_tools
+- tradingview/konsili_pivot_exporter.pine
+- scripts/validate_evidence.mjs sections that validate visual_pivot_evidence / raw KPE rows / source tools
+- Adjacent MCP sources only if useful: HEWAI BOT/tv-bot/src/core/data.js, stream.js, pine.js, chart.js, draw/data tools.
+
+Questions to answer:
+1. What alternative pivot-evidence data paths could replace or supplement `data_get_pine_tables` / `data_get_pine_labels`?
+2. Which alternatives preserve the core invariant: verified visual TradingView pivots first, OHLCV verification second, no raw-OHLCV-only clean pass?
+3. Which alternatives require changing the manifest/validator, and exactly how?
+4. Which alternatives are realistic on TradingView Desktop + CDP, given Pine cannot write files directly?
+5. What is the best near-term plan, medium-term plan, and robust long-term architecture?
+6. Which ideas are seductive but should be rejected because they weaken evidence quality or add operator burden?
+
+Brainstorm broadly but rank sharply. Include options such as, if credible:
+- Fix MCP Pine extraction, but with a diagnostic fallback.
+- Pine output through plots/data-window/study values instead of tables/labels.
+- Pine draws machine-readable lines/boxes instead of labels/tables.
+- Strategy Tester/trade-list as a structured export channel.
+- TradingView alerts/webhook/local listener as export channel.
+- Screenshot OCR/vision as an audit fallback.
+- DOM/canvas scraping or CDP snapshot routes.
+- Local deterministic pivot engine mirrored from KPE parameters, with screenshot/OHLCV cross-check.
+- Manual pivot-entry UX with checksums.
+- Using TradingView save/export/chart layout state if accessible.
+- Abandoning KPE and making local pivots canonical (only if you think it is justified; be honest).
+
+Output format:
+- Executive recommendation
+- Option matrix with: option, evidence quality, implementation complexity, live-chart dependency, validator impact, failure modes, verdict
+- Top 3 recommended architecture paths with exact implementation sketch
+- Validator/manifest changes needed
+- Experiments/spikes to run next, ordered by risk
+- Rejected ideas and why
+- Final call: what should Johan do next
+
+Be blunt. Protect chart-analysis integrity over convenience. Do not invent TradingView capabilities; if uncertain, say what must be tested.

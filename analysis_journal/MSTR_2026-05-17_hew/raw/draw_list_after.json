@@ -1,0 +1,70 @@
+{
+  "success": true,
+  "count": 16,
+  "shapes": [
+    {
+      "id": "tjoE5u",
+      "name": "elliott_correction"
+    },
+    {
+      "id": "MCnyuO",
+      "name": "elliott_impulse_wave"
+    },
+    {
+      "id": "u6TbxX",
+      "name": "rectangle"
+    },
+    {
+      "id": "41PKvF",
+      "name": "text"
+    },
+    {
+      "id": "2ncr7q",
+      "name": "rectangle"
+    },
+    {
+      "id": "K5COKB",
+      "name": "text"
+    },
+    {
+      "id": "UyrwJx",
+      "name": "rectangle"
+    },
+    {
+      "id": "nmfY3Y",
+      "name": "text"
+    },
+    {
+      "id": "HO2Jew",
+      "name": "rectangle"
+    },
+    {
+      "id": "GxkuSa",
+      "name": "text"
+    },
+    {
+      "id": "ItIym4",
+      "name": "horizontal_line"
+    },
+    {
+      "id": "pYi144",
+      "name": "horizontal_line"
+    },
+    {
+      "id": "t7QzsB",
+      "name": "horizontal_line"
+    },
+    {
+      "id": "EOrltF",
+      "name": "elliott_correction"
+    },
+    {
+      "id": "UzPg5s",
+      "name": "elliott_correction"
+    },
+    {
+      "id": "2befcU",
+      "name": "elliott_correction"
+    }
+  ]
+}

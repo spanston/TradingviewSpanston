@@ -1,0 +1,881 @@
+{
+  "monthly": {
+    "exporter_rows": [
+      "KPE|v=2|tf=M|id=M_1646125200000_L|type=low|date=2022-03-01 09:00|time=1646125200000|price=47.55|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=M|id=M_1683018000000_L|type=low|date=2023-05-02 09:00|time=1683018000000|price=33.38|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=M|id=M_1704186000000_L|type=low|date=2024-01-02 09:00|time=1704186000000|price=23.34|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=M|id=M_1712048400000_H|type=high|date=2024-04-02 09:00|time=1712048400000|price=43.24|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=M|id=M_1748854800000_L|type=low|date=2025-06-02 09:00|time=1748854800000|price=15.94|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=M|id=M_1762160400000_H|type=high|date=2025-11-03 09:00|time=1762160400000|price=36.54|timezone=Europe/Stockholm|left=5|right=5|confirmed=true"
+    ],
+    "pivots": [
+      {
+        "id": "m_2022_03_01_low_47_55",
+        "type": "low",
+        "date": "2022-03-01 09:00",
+        "time": 1646125200000,
+        "price": 47.55,
+        "exporter_row_id": "M_1646125200000_L",
+        "source_text": "KPE monthly low 47.55 on 2022-03-01."
+      },
+      {
+        "id": "m_2023_05_02_low_33_38",
+        "type": "low",
+        "date": "2023-05-02 09:00",
+        "time": 1683018000000,
+        "price": 33.38,
+        "exporter_row_id": "M_1683018000000_L",
+        "source_text": "KPE monthly low 33.38 on 2023-05-02."
+      },
+      {
+        "id": "m_2024_01_02_low_23_34",
+        "type": "low",
+        "date": "2024-01-02 09:00",
+        "time": 1704186000000,
+        "price": 23.34,
+        "exporter_row_id": "M_1704186000000_L",
+        "source_text": "KPE monthly low 23.34 on 2024-01-02."
+      },
+      {
+        "id": "m_2024_04_02_high_43_24",
+        "type": "high",
+        "date": "2024-04-02 09:00",
+        "time": 1712048400000,
+        "price": 43.24,
+        "exporter_row_id": "M_1712048400000_H",
+        "source_text": "KPE monthly high 43.24 on 2024-04-02."
+      },
+      {
+        "id": "m_2025_06_02_low_15_94",
+        "type": "low",
+        "date": "2025-06-02 09:00",
+        "time": 1748854800000,
+        "price": 15.94,
+        "exporter_row_id": "M_1748854800000_L",
+        "source_text": "KPE monthly low 15.94 on 2025-06-02."
+      },
+      {
+        "id": "m_2025_11_03_high_36_54",
+        "type": "high",
+        "date": "2025-11-03 09:00",
+        "time": 1762160400000,
+        "price": 36.54,
+        "exporter_row_id": "M_1762160400000_H",
+        "source_text": "KPE monthly high 36.54 on 2025-11-03."
+      }
+    ],
+    "ohlcv_verification": [
+      {
+        "pivot_id": "m_2022_03_01_low_47_55",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2022-03-01 low matches KPE label 47.55."
+      },
+      {
+        "pivot_id": "m_2023_05_02_low_33_38",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2023-05-02 low matches KPE label 33.38."
+      },
+      {
+        "pivot_id": "m_2024_01_02_low_23_34",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2024-01-02 low matches KPE label 23.34."
+      },
+      {
+        "pivot_id": "m_2024_04_02_high_43_24",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2024-04-02 high matches KPE label 43.24."
+      },
+      {
+        "pivot_id": "m_2025_06_02_low_15_94",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2025-06-02 low matches KPE label 15.94."
+      },
+      {
+        "pivot_id": "m_2025_11_03_high_36_54",
+        "status": "pass",
+        "evidence": "monthly OHLCV bar on 2025-11-03 high matches KPE label 36.54."
+      }
+    ]
+  },
+  "weekly": {
+    "exporter_rows": [
+      "KPE|v=2|tf=W|id=W_1641805200000_H|type=high|date=2022-01-10 09:00|time=1641805200000|price=85.75|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1646643600000_L|type=low|date=2022-03-07 09:00|time=1646643600000|price=47.55|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1653901200000_H|type=high|date=2022-05-30 09:00|time=1653901200000|price=80.22|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1656925200000_L|type=low|date=2022-07-04 09:00|time=1656925200000|price=61.20|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1666602000000_L|type=low|date=2022-10-24 09:00|time=1666602000000|price=39.52|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1668416400000_H|type=high|date=2022-11-14 09:00|time=1668416400000|price=54.41|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1671440400000_L|type=low|date=2022-12-19 09:00|time=1671440400000|price=41.69|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1675069200000_H|type=high|date=2023-01-30 09:00|time=1675069200000|price=51.64|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1684141200000_L|type=low|date=2023-05-15 09:00|time=1684141200000|price=33.38|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1690189200000_H|type=high|date=2023-07-24 09:00|time=1690189200000|price=49.32|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1693818000000_L|type=low|date=2023-09-04 09:00|time=1693818000000|price=35.01|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1697446800000_H|type=high|date=2023-10-16 09:00|time=1697446800000|price=43.67|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1705309200000_L|type=low|date=2024-01-15 09:00|time=1705309200000|price=23.34|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1707728400000_H|type=high|date=2024-02-12 09:00|time=1707728400000|price=36.47|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1712566800000_H|type=high|date=2024-04-08 09:00|time=1712566800000|price=43.24|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1730710800000_L|type=low|date=2024-11-04 09:00|time=1730710800000|price=21.35|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1736240400000_H|type=high|date=2025-01-07 09:00|time=1736240400000|price=26.68|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1739178000000_L|type=low|date=2025-02-10 09:00|time=1739178000000|price=20.64|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1741597200000_H|type=high|date=2025-03-10 09:00|time=1741597200000|price=25.35|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1745830800000_L|type=low|date=2025-04-28 09:00|time=1745830800000|price=16.12|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1747040400000_H|type=high|date=2025-05-12 09:00|time=1747040400000|price=19.79|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1750669200000_L|type=low|date=2025-06-23 09:00|time=1750669200000|price=15.94|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1753693200000_H|type=high|date=2025-07-28 09:00|time=1753693200000|price=21.70|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1762765200000_H|type=high|date=2025-11-10 09:00|time=1762765200000|price=36.54|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1765789200000_L|type=low|date=2025-12-15 09:00|time=1765789200000|price=29.57|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1770022800000_L|type=low|date=2026-02-02 09:00|time=1770022800000|price=20.90|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=W|id=W_1774861200000_L|type=low|date=2026-03-30 09:00|time=1774861200000|price=19.86|timezone=Europe/Stockholm|left=5|right=5|confirmed=true"
+    ],
+    "pivots": [
+      {
+        "id": "w_2022_01_10_high_85_75",
+        "type": "high",
+        "date": "2022-01-10 09:00",
+        "time": 1641805200000,
+        "price": 85.75,
+        "exporter_row_id": "W_1641805200000_H",
+        "source_text": "KPE weekly high 85.75 on 2022-01-10."
+      },
+      {
+        "id": "w_2022_03_07_low_47_55",
+        "type": "low",
+        "date": "2022-03-07 09:00",
+        "time": 1646643600000,
+        "price": 47.55,
+        "exporter_row_id": "W_1646643600000_L",
+        "source_text": "KPE weekly low 47.55 on 2022-03-07."
+      },
+      {
+        "id": "w_2022_05_30_high_80_22",
+        "type": "high",
+        "date": "2022-05-30 09:00",
+        "time": 1653901200000,
+        "price": 80.22,
+        "exporter_row_id": "W_1653901200000_H",
+        "source_text": "KPE weekly high 80.22 on 2022-05-30."
+      },
+      {
+        "id": "w_2022_07_04_low_61_2",
+        "type": "low",
+        "date": "2022-07-04 09:00",
+        "time": 1656925200000,
+        "price": 61.2,
+        "exporter_row_id": "W_1656925200000_L",
+        "source_text": "KPE weekly low 61.20 on 2022-07-04."
+      },
+      {
+        "id": "w_2022_10_24_low_39_52",
+        "type": "low",
+        "date": "2022-10-24 09:00",
+        "time": 1666602000000,
+        "price": 39.52,
+        "exporter_row_id": "W_1666602000000_L",
+        "source_text": "KPE weekly low 39.52 on 2022-10-24."
+      },
+      {
+        "id": "w_2022_11_14_high_54_41",
+        "type": "high",
+        "date": "2022-11-14 09:00",
+        "time": 1668416400000,
+        "price": 54.41,
+        "exporter_row_id": "W_1668416400000_H",
+        "source_text": "KPE weekly high 54.41 on 2022-11-14."
+      },
+      {
+        "id": "w_2022_12_19_low_41_69",
+        "type": "low",
+        "date": "2022-12-19 09:00",
+        "time": 1671440400000,
+        "price": 41.69,
+        "exporter_row_id": "W_1671440400000_L",
+        "source_text": "KPE weekly low 41.69 on 2022-12-19."
+      },
+      {
+        "id": "w_2023_01_30_high_51_64",
+        "type": "high",
+        "date": "2023-01-30 09:00",
+        "time": 1675069200000,
+        "price": 51.64,
+        "exporter_row_id": "W_1675069200000_H",
+        "source_text": "KPE weekly high 51.64 on 2023-01-30."
+      },
+      {
+        "id": "w_2023_05_15_low_33_38",
+        "type": "low",
+        "date": "2023-05-15 09:00",
+        "time": 1684141200000,
+        "price": 33.38,
+        "exporter_row_id": "W_1684141200000_L",
+        "source_text": "KPE weekly low 33.38 on 2023-05-15."
+      },
+      {
+        "id": "w_2023_07_24_high_49_32",
+        "type": "high",
+        "date": "2023-07-24 09:00",
+        "time": 1690189200000,
+        "price": 49.32,
+        "exporter_row_id": "W_1690189200000_H",
+        "source_text": "KPE weekly high 49.32 on 2023-07-24."
+      },
+      {
+        "id": "w_2023_09_04_low_35_01",
+        "type": "low",
+        "date": "2023-09-04 09:00",
+        "time": 1693818000000,
+        "price": 35.01,
+        "exporter_row_id": "W_1693818000000_L",
+        "source_text": "KPE weekly low 35.01 on 2023-09-04."
+      },
+      {
+        "id": "w_2023_10_16_high_43_67",
+        "type": "high",
+        "date": "2023-10-16 09:00",
+        "time": 1697446800000,
+        "price": 43.67,
+        "exporter_row_id": "W_1697446800000_H",
+        "source_text": "KPE weekly high 43.67 on 2023-10-16."
+      },
+      {
+        "id": "w_2024_01_15_low_23_34",
+        "type": "low",
+        "date": "2024-01-15 09:00",
+        "time": 1705309200000,
+        "price": 23.34,
+        "exporter_row_id": "W_1705309200000_L",
+        "source_text": "KPE weekly low 23.34 on 2024-01-15."
+      },
+      {
+        "id": "w_2024_02_12_high_36_47",
+        "type": "high",
+        "date": "2024-02-12 09:00",
+        "time": 1707728400000,
+        "price": 36.47,
+        "exporter_row_id": "W_1707728400000_H",
+        "source_text": "KPE weekly high 36.47 on 2024-02-12."
+      },
+      {
+        "id": "w_2024_04_08_high_43_24",
+        "type": "high",
+        "date": "2024-04-08 09:00",
+        "time": 1712566800000,
+        "price": 43.24,
+        "exporter_row_id": "W_1712566800000_H",
+        "source_text": "KPE weekly high 43.24 on 2024-04-08."
+      },
+      {
+        "id": "w_2024_11_04_low_21_35",
+        "type": "low",
+        "date": "2024-11-04 09:00",
+        "time": 1730710800000,
+        "price": 21.35,
+        "exporter_row_id": "W_1730710800000_L",
+        "source_text": "KPE weekly low 21.35 on 2024-11-04."
+      },
+      {
+        "id": "w_2025_01_07_high_26_68",
+        "type": "high",
+        "date": "2025-01-07 09:00",
+        "time": 1736240400000,
+        "price": 26.68,
+        "exporter_row_id": "W_1736240400000_H",
+        "source_text": "KPE weekly high 26.68 on 2025-01-07."
+      },
+      {
+        "id": "w_2025_02_10_low_20_64",
+        "type": "low",
+        "date": "2025-02-10 09:00",
+        "time": 1739178000000,
+        "price": 20.64,
+        "exporter_row_id": "W_1739178000000_L",
+        "source_text": "KPE weekly low 20.64 on 2025-02-10."
+      },
+      {
+        "id": "w_2025_03_10_high_25_35",
+        "type": "high",
+        "date": "2025-03-10 09:00",
+        "time": 1741597200000,
+        "price": 25.35,
+        "exporter_row_id": "W_1741597200000_H",
+        "source_text": "KPE weekly high 25.35 on 2025-03-10."
+      },
+      {
+        "id": "w_2025_04_28_low_16_12",
+        "type": "low",
+        "date": "2025-04-28 09:00",
+        "time": 1745830800000,
+        "price": 16.12,
+        "exporter_row_id": "W_1745830800000_L",
+        "source_text": "KPE weekly low 16.12 on 2025-04-28."
+      },
+      {
+        "id": "w_2025_05_12_high_19_79",
+        "type": "high",
+        "date": "2025-05-12 09:00",
+        "time": 1747040400000,
+        "price": 19.79,
+        "exporter_row_id": "W_1747040400000_H",
+        "source_text": "KPE weekly high 19.79 on 2025-05-12."
+      },
+      {
+        "id": "w_2025_06_23_low_15_94",
+        "type": "low",
+        "date": "2025-06-23 09:00",
+        "time": 1750669200000,
+        "price": 15.94,
+        "exporter_row_id": "W_1750669200000_L",
+        "source_text": "KPE weekly low 15.94 on 2025-06-23."
+      },
+      {
+        "id": "w_2025_07_28_high_21_7",
+        "type": "high",
+        "date": "2025-07-28 09:00",
+        "time": 1753693200000,
+        "price": 21.7,
+        "exporter_row_id": "W_1753693200000_H",
+        "source_text": "KPE weekly high 21.70 on 2025-07-28."
+      },
+      {
+        "id": "w_2025_11_10_high_36_54",
+        "type": "high",
+        "date": "2025-11-10 09:00",
+        "time": 1762765200000,
+        "price": 36.54,
+        "exporter_row_id": "W_1762765200000_H",
+        "source_text": "KPE weekly high 36.54 on 2025-11-10."
+      },
+      {
+        "id": "w_2025_12_15_low_29_57",
+        "type": "low",
+        "date": "2025-12-15 09:00",
+        "time": 1765789200000,
+        "price": 29.57,
+        "exporter_row_id": "W_1765789200000_L",
+        "source_text": "KPE weekly low 29.57 on 2025-12-15."
+      },
+      {
+        "id": "w_2026_02_02_low_20_9",
+        "type": "low",
+        "date": "2026-02-02 09:00",
+        "time": 1770022800000,
+        "price": 20.9,
+        "exporter_row_id": "W_1770022800000_L",
+        "source_text": "KPE weekly low 20.90 on 2026-02-02."
+      },
+      {
+        "id": "w_2026_03_30_low_19_86",
+        "type": "low",
+        "date": "2026-03-30 09:00",
+        "time": 1774861200000,
+        "price": 19.86,
+        "exporter_row_id": "W_1774861200000_L",
+        "source_text": "KPE weekly low 19.86 on 2026-03-30."
+      }
+    ],
+    "ohlcv_verification": [
+      {
+        "pivot_id": "w_2022_01_10_high_85_75",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-01-10 high matches KPE label 85.75."
+      },
+      {
+        "pivot_id": "w_2022_03_07_low_47_55",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-03-07 low matches KPE label 47.55."
+      },
+      {
+        "pivot_id": "w_2022_05_30_high_80_22",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-05-30 high matches KPE label 80.22."
+      },
+      {
+        "pivot_id": "w_2022_07_04_low_61_2",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-07-04 low matches KPE label 61.20."
+      },
+      {
+        "pivot_id": "w_2022_10_24_low_39_52",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-10-24 low matches KPE label 39.52."
+      },
+      {
+        "pivot_id": "w_2022_11_14_high_54_41",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-11-14 high matches KPE label 54.41."
+      },
+      {
+        "pivot_id": "w_2022_12_19_low_41_69",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2022-12-19 low matches KPE label 41.69."
+      },
+      {
+        "pivot_id": "w_2023_01_30_high_51_64",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2023-01-30 high matches KPE label 51.64."
+      },
+      {
+        "pivot_id": "w_2023_05_15_low_33_38",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2023-05-15 low matches KPE label 33.38."
+      },
+      {
+        "pivot_id": "w_2023_07_24_high_49_32",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2023-07-24 high matches KPE label 49.32."
+      },
+      {
+        "pivot_id": "w_2023_09_04_low_35_01",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2023-09-04 low matches KPE label 35.01."
+      },
+      {
+        "pivot_id": "w_2023_10_16_high_43_67",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2023-10-16 high matches KPE label 43.67."
+      },
+      {
+        "pivot_id": "w_2024_01_15_low_23_34",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2024-01-15 low matches KPE label 23.34."
+      },
+      {
+        "pivot_id": "w_2024_02_12_high_36_47",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2024-02-12 high matches KPE label 36.47."
+      },
+      {
+        "pivot_id": "w_2024_04_08_high_43_24",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2024-04-08 high matches KPE label 43.24."
+      },
+      {
+        "pivot_id": "w_2024_11_04_low_21_35",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2024-11-04 low matches KPE label 21.35."
+      },
+      {
+        "pivot_id": "w_2025_01_07_high_26_68",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-01-07 high matches KPE label 26.68."
+      },
+      {
+        "pivot_id": "w_2025_02_10_low_20_64",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-02-10 low matches KPE label 20.64."
+      },
+      {
+        "pivot_id": "w_2025_03_10_high_25_35",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-03-10 high matches KPE label 25.35."
+      },
+      {
+        "pivot_id": "w_2025_04_28_low_16_12",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-04-28 low matches KPE label 16.12."
+      },
+      {
+        "pivot_id": "w_2025_05_12_high_19_79",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-05-12 high matches KPE label 19.79."
+      },
+      {
+        "pivot_id": "w_2025_06_23_low_15_94",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-06-23 low matches KPE label 15.94."
+      },
+      {
+        "pivot_id": "w_2025_07_28_high_21_7",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-07-28 high matches KPE label 21.70."
+      },
+      {
+        "pivot_id": "w_2025_11_10_high_36_54",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-11-10 high matches KPE label 36.54."
+      },
+      {
+        "pivot_id": "w_2025_12_15_low_29_57",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2025-12-15 low matches KPE label 29.57."
+      },
+      {
+        "pivot_id": "w_2026_02_02_low_20_9",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2026-02-02 low matches KPE label 20.90."
+      },
+      {
+        "pivot_id": "w_2026_03_30_low_19_86",
+        "status": "pass",
+        "evidence": "weekly OHLCV bar on 2026-03-30 low matches KPE label 19.86."
+      }
+    ]
+  },
+  "daily": {
+    "exporter_rows": [
+      "KPE|v=2|tf=D|id=D_1750669200000_L|type=low|date=2025-06-23 09:00|time=1750669200000|price=15.94|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1752656400000_L|type=low|date=2025-07-16 09:00|time=1752656400000|price=17.76|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1753693200000_H|type=high|date=2025-07-28 09:00|time=1753693200000|price=21.70|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1754384400000_L|type=low|date=2025-08-05 09:00|time=1754384400000|price=17.80|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1754902800000_H|type=high|date=2025-08-11 09:00|time=1754902800000|price=19.74|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1756112400000_H|type=high|date=2025-08-25 09:00|time=1756112400000|price=20.92|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1756976400000_L|type=low|date=2025-09-04 09:00|time=1756976400000|price=18.33|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1758272400000_H|type=high|date=2025-09-19 09:00|time=1758272400000|price=20.10|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1759741200000_H|type=high|date=2025-10-06 09:00|time=1759741200000|price=22.05|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1760518800000_L|type=low|date=2025-10-15 09:00|time=1760518800000|price=19.78|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1762333200000_L|type=low|date=2025-11-05 09:00|time=1762333200000|price=31.51|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1762938000000_H|type=high|date=2025-11-12 09:00|time=1762938000000|price=36.54|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1763715600000_L|type=low|date=2025-11-21 09:00|time=1763715600000|price=30.50|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1764752400000_L|type=low|date=2025-12-03 09:00|time=1764752400000|price=30.91|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1765270800000_H|type=high|date=2025-12-09 09:00|time=1765270800000|price=35.12|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1766048400000_L|type=low|date=2025-12-18 09:00|time=1766048400000|price=29.57|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1768467600000_H|type=high|date=2026-01-15 09:00|time=1768467600000|price=34.10|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1770282000000_L|type=low|date=2026-02-05 09:00|time=1770282000000|price=20.90|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1771491600000_H|type=high|date=2026-02-19 09:00|time=1771491600000|price=26.43|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1773046800000_L|type=low|date=2026-03-09 09:00|time=1773046800000|price=21.65|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1774861200000_L|type=low|date=2026-03-30 09:00|time=1774861200000|price=19.86|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1776416400000_H|type=high|date=2026-04-17 09:00|time=1776416400000|price=24.35|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1777453200000_H|type=high|date=2026-04-29 09:00|time=1777453200000|price=24.10|timezone=Europe/Stockholm|left=5|right=5|confirmed=true",
+      "KPE|v=2|tf=D|id=D_1777539600000_L|type=low|date=2026-04-30 09:00|time=1777539600000|price=21.05|timezone=Europe/Stockholm|left=5|right=5|confirmed=true"
+    ],
+    "pivots": [
+      {
+        "id": "d_2025_06_23_low_15_94",
+        "type": "low",
+        "date": "2025-06-23 09:00",
+        "time": 1750669200000,
+        "price": 15.94,
+        "exporter_row_id": "D_1750669200000_L",
+        "source_text": "KPE daily low 15.94 on 2025-06-23."
+      },
+      {
+        "id": "d_2025_07_16_low_17_76",
+        "type": "low",
+        "date": "2025-07-16 09:00",
+        "time": 1752656400000,
+        "price": 17.76,
+        "exporter_row_id": "D_1752656400000_L",
+        "source_text": "KPE daily low 17.76 on 2025-07-16."
+      },
+      {
+        "id": "d_2025_07_28_high_21_7",
+        "type": "high",
+        "date": "2025-07-28 09:00",
+        "time": 1753693200000,
+        "price": 21.7,
+        "exporter_row_id": "D_1753693200000_H",
+        "source_text": "KPE daily high 21.70 on 2025-07-28."
+      },
+      {
+        "id": "d_2025_08_05_low_17_8",
+        "type": "low",
+        "date": "2025-08-05 09:00",
+        "time": 1754384400000,
+        "price": 17.8,
+        "exporter_row_id": "D_1754384400000_L",
+        "source_text": "KPE daily low 17.80 on 2025-08-05."
+      },
+      {
+        "id": "d_2025_08_11_high_19_74",
+        "type": "high",
+        "date": "2025-08-11 09:00",
+        "time": 1754902800000,
+        "price": 19.74,
+        "exporter_row_id": "D_1754902800000_H",
+        "source_text": "KPE daily high 19.74 on 2025-08-11."
+      },
+      {
+        "id": "d_2025_08_25_high_20_92",
+        "type": "high",
+        "date": "2025-08-25 09:00",
+        "time": 1756112400000,
+        "price": 20.92,
+        "exporter_row_id": "D_1756112400000_H",
+        "source_text": "KPE daily high 20.92 on 2025-08-25."
+      },
+      {
+        "id": "d_2025_09_04_low_18_33",
+        "type": "low",
+        "date": "2025-09-04 09:00",
+        "time": 1756976400000,
+        "price": 18.33,
+        "exporter_row_id": "D_1756976400000_L",
+        "source_text": "KPE daily low 18.33 on 2025-09-04."
+      },
+      {
+        "id": "d_2025_09_19_high_20_1",
+        "type": "high",
+        "date": "2025-09-19 09:00",
+        "time": 1758272400000,
+        "price": 20.1,
+        "exporter_row_id": "D_1758272400000_H",
+        "source_text": "KPE daily high 20.10 on 2025-09-19."
+      },
+      {
+        "id": "d_2025_10_06_high_22_05",
+        "type": "high",
+        "date": "2025-10-06 09:00",
+        "time": 1759741200000,
+        "price": 22.05,
+        "exporter_row_id": "D_1759741200000_H",
+        "source_text": "KPE daily high 22.05 on 2025-10-06."
+      },
+      {
+        "id": "d_2025_10_15_low_19_78",
+        "type": "low",
+        "date": "2025-10-15 09:00",
+        "time": 1760518800000,
+        "price": 19.78,
+        "exporter_row_id": "D_1760518800000_L",
+        "source_text": "KPE daily low 19.78 on 2025-10-15."
+      },
+      {
+        "id": "d_2025_11_05_low_31_51",
+        "type": "low",
+        "date": "2025-11-05 09:00",
+        "time": 1762333200000,
+        "price": 31.51,
+        "exporter_row_id": "D_1762333200000_L",
+        "source_text": "KPE daily low 31.51 on 2025-11-05."
+      },
+      {
+        "id": "d_2025_11_12_high_36_54",
+        "type": "high",
+        "date": "2025-11-12 09:00",
+        "time": 1762938000000,
+        "price": 36.54,
+        "exporter_row_id": "D_1762938000000_H",
+        "source_text": "KPE daily high 36.54 on 2025-11-12."
+      },
+      {
+        "id": "d_2025_11_21_low_30_5",
+        "type": "low",
+        "date": "2025-11-21 09:00",
+        "time": 1763715600000,
+        "price": 30.5,
+        "exporter_row_id": "D_1763715600000_L",
+        "source_text": "KPE daily low 30.50 on 2025-11-21."
+      },
+      {
+        "id": "d_2025_12_03_low_30_91",
+        "type": "low",
+        "date": "2025-12-03 09:00",
+        "time": 1764752400000,
+        "price": 30.91,
+        "exporter_row_id": "D_1764752400000_L",
+        "source_text": "KPE daily low 30.91 on 2025-12-03."
+      },
+      {
+        "id": "d_2025_12_09_high_35_12",
+        "type": "high",
+        "date": "2025-12-09 09:00",
+        "time": 1765270800000,
+        "price": 35.12,
+        "exporter_row_id": "D_1765270800000_H",
+        "source_text": "KPE daily high 35.12 on 2025-12-09."
+      },
+      {
+        "id": "d_2025_12_18_low_29_57",
+        "type": "low",
+        "date": "2025-12-18 09:00",
+        "time": 1766048400000,
+        "price": 29.57,
+        "exporter_row_id": "D_1766048400000_L",
+        "source_text": "KPE daily low 29.57 on 2025-12-18."
+      },
+      {
+        "id": "d_2026_01_15_high_34_1",
+        "type": "high",
+        "date": "2026-01-15 09:00",
+        "time": 1768467600000,
+        "price": 34.1,
+        "exporter_row_id": "D_1768467600000_H",
+        "source_text": "KPE daily high 34.10 on 2026-01-15."
+      },
+      {
+        "id": "d_2026_02_05_low_20_9",
+        "type": "low",
+        "date": "2026-02-05 09:00",
+        "time": 1770282000000,
+        "price": 20.9,
+        "exporter_row_id": "D_1770282000000_L",
+        "source_text": "KPE daily low 20.90 on 2026-02-05."
+      },
+      {
+        "id": "d_2026_02_19_high_26_43",
+        "type": "high",
+        "date": "2026-02-19 09:00",
+        "time": 1771491600000,
+        "price": 26.43,
+        "exporter_row_id": "D_1771491600000_H",
+        "source_text": "KPE daily high 26.43 on 2026-02-19."
+      },
+      {
+        "id": "d_2026_03_09_low_21_65",
+        "type": "low",
+        "date": "2026-03-09 09:00",
+        "time": 1773046800000,
+        "price": 21.65,
+        "exporter_row_id": "D_1773046800000_L",
+        "source_text": "KPE daily low 21.65 on 2026-03-09."
+      },
+      {
+        "id": "d_2026_03_30_low_19_86",
+        "type": "low",
+        "date": "2026-03-30 09:00",
+        "time": 1774861200000,
+        "price": 19.86,
+        "exporter_row_id": "D_1774861200000_L",
+        "source_text": "KPE daily low 19.86 on 2026-03-30."
+      },
+      {
+        "id": "d_2026_04_17_high_24_35",
+        "type": "high",
+        "date": "2026-04-17 09:00",
+        "time": 1776416400000,
+        "price": 24.35,
+        "exporter_row_id": "D_1776416400000_H",
+        "source_text": "KPE daily high 24.35 on 2026-04-17."
+      },
+      {
+        "id": "d_2026_04_29_high_24_1",
+        "type": "high",
+        "date": "2026-04-29 09:00",
+        "time": 1777453200000,
+        "price": 24.1,
+        "exporter_row_id": "D_1777453200000_H",
+        "source_text": "KPE daily high 24.10 on 2026-04-29."
+      },
+      {
+        "id": "d_2026_04_30_low_21_05",
+        "type": "low",
+        "date": "2026-04-30 09:00",
+        "time": 1777539600000,
+        "price": 21.05,
+        "exporter_row_id": "D_1777539600000_L",
+        "source_text": "KPE daily low 21.05 on 2026-04-30."
+      }
+    ],
+    "ohlcv_verification": [
+      {
+        "pivot_id": "d_2025_06_23_low_15_94",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-06-23 low matches KPE label 15.94."
+      },
+      {
+        "pivot_id": "d_2025_07_16_low_17_76",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-07-16 low matches KPE label 17.76."
+      },
+      {
+        "pivot_id": "d_2025_07_28_high_21_7",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-07-28 high matches KPE label 21.70."
+      },
+      {
+        "pivot_id": "d_2025_08_05_low_17_8",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-08-05 low matches KPE label 17.80."
+      },
+      {
+        "pivot_id": "d_2025_08_11_high_19_74",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-08-11 high matches KPE label 19.74."
+      },
+      {
+        "pivot_id": "d_2025_08_25_high_20_92",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-08-25 high matches KPE label 20.92."
+      },
+      {
+        "pivot_id": "d_2025_09_04_low_18_33",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-09-04 low matches KPE label 18.33."
+      },
+      {
+        "pivot_id": "d_2025_09_19_high_20_1",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-09-19 high matches KPE label 20.10."
+      },
+      {
+        "pivot_id": "d_2025_10_06_high_22_05",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-10-06 high matches KPE label 22.05."
+      },
+      {
+        "pivot_id": "d_2025_10_15_low_19_78",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-10-15 low matches KPE label 19.78."
+      },
+      {
+        "pivot_id": "d_2025_11_05_low_31_51",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-11-05 low matches KPE label 31.51."
+      },
+      {
+        "pivot_id": "d_2025_11_12_high_36_54",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-11-12 high matches KPE label 36.54."
+      },
+      {
+        "pivot_id": "d_2025_11_21_low_30_5",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-11-21 low matches KPE label 30.50."
+      },
+      {
+        "pivot_id": "d_2025_12_03_low_30_91",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-12-03 low matches KPE label 30.91."
+      },
+      {
+        "pivot_id": "d_2025_12_09_high_35_12",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-12-09 high matches KPE label 35.12."
+      },
+      {
+        "pivot_id": "d_2025_12_18_low_29_57",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2025-12-18 low matches KPE label 29.57."
+      },
+      {
+        "pivot_id": "d_2026_01_15_high_34_1",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-01-15 high matches KPE label 34.10."
+      },
+      {
+        "pivot_id": "d_2026_02_05_low_20_9",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-02-05 low matches KPE label 20.90."
+      },
+      {
+        "pivot_id": "d_2026_02_19_high_26_43",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-02-19 high matches KPE label 26.43."
+      },
+      {
+        "pivot_id": "d_2026_03_09_low_21_65",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-03-09 low matches KPE label 21.65."
+      },
+      {
+        "pivot_id": "d_2026_03_30_low_19_86",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-03-30 low matches KPE label 19.86."
+      },
+      {
+        "pivot_id": "d_2026_04_17_high_24_35",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-04-17 high matches KPE label 24.35."
+      },
+      {
+        "pivot_id": "d_2026_04_29_high_24_1",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-04-29 high matches KPE label 24.10."
+      },
+      {
+        "pivot_id": "d_2026_04_30_low_21_05",
+        "status": "pass",
+        "evidence": "daily OHLCV bar on 2026-04-30 low matches KPE label 21.05."
+      }
+    ]
+  }
+}

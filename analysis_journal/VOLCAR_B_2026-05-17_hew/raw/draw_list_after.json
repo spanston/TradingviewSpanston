@@ -1,0 +1,20 @@
+{
+  "captured_at": "2026-05-17",
+  "stage": "after_drawing_protocol",
+  "count": 13,
+  "shapes": [
+    {"id":"WZpCkD","name":"elliott_correction","role":"macro_count","tool":"elliott_correction","timeframe_owner":"weekly","description":"Macro ABC bear correction 85.75 (2022-01-10) -> 23.34 (2024-01-15) -> 43.24 (2024-04-08) -> 15.94 (2025-06-23) of off-chart preceding impulse context"},
+    {"id":"AlKWWt","name":"elliott_impulse_wave","role":"preceding_impulse_context","tool":"elliott_impulse_wave","timeframe_owner":"weekly","description":"Approximate post-IPO 5-wave run-up Oct 2021 -> Jan 2022 85.75 (visible context only; preceding cycle largely off-chart)"},
+    {"id":"SCnhDe","name":"elliott_impulse_wave","role":"primary_degree_subwaves","tool":"elliott_impulse_wave","timeframe_owner":"weekly","description":"Macro-A leg internals 85.75 -> 47.55 -> 80.22 -> 39.52 -> 51.64 -> 23.34"},
+    {"id":"az9CqL","name":"elliott_correction","role":"secondary_degree_subwaves","tool":"elliott_correction","timeframe_owner":"weekly","description":"Conditional bull W1 internal A-B-C: 15.94 -> 21.70 -> 17.80 -> 36.54"},
+    {"id":"W06jHr","name":"elliott_impulse_wave","role":"projection_count","tool":"elliott_impulse_wave","timeframe_owner":"weekly","description":"Conditional forward bullish impulse 15.94 -> 36.54 -> 19.86 -> ~58.20 -> ~48 -> ~85 (W3 1.764x floor proven only above 36.54)"},
+    {"id":"LyAXMJ","name":"horizontal_line","role":"wave_b_ladder","tool":"horizontal_line","timeframe_owner":"weekly","description":"W-B ladder rung: W1 origin 15.94 macro invalidation"},
+    {"id":"fs0ual","name":"horizontal_line","role":"wave_b_ladder","tool":"horizontal_line","timeframe_owner":"weekly","description":"W-B ladder rung: W2 low 19.86 B-of-3 must hold"},
+    {"id":"iVQHaZ","name":"rectangle","role":"zone","tool":"rectangle","timeframe_owner":"weekly","description":"Accumulation zone A 19.50-21.50 (W2 low band)"},
+    {"id":"vpWSnL","name":"rectangle","role":"zone","tool":"rectangle","timeframe_owner":"weekly","description":"Accumulation zone B 15.94-17.80 (macro low / W1 origin band)"},
+    {"id":"9hlDwi","name":"rectangle","role":"zone","tool":"rectangle","timeframe_owner":"weekly","description":"Distribution zone 30.50-36.54 (Nov 2025 rally peak band)"},
+    {"id":"9TeG9F","name":"text","role":"zone_label","tool":"text","timeframe_owner":"weekly","description":"Acc A label 19.50-21.50 score 50"},
+    {"id":"oDQaqk","name":"text","role":"zone_label","tool":"text","timeframe_owner":"weekly","description":"Acc B label 15.94-17.80 score 55"},
+    {"id":"X7vsfN","name":"text","role":"zone_label","tool":"text","timeframe_owner":"weekly","description":"Dist label 30.50-36.54 score 60"}
+  ]
+}

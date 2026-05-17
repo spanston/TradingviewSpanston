@@ -1,0 +1,2274 @@
+{
+  "journal_id": "MSTR_2026-05-17_hew",
+  "saved_at": "2026-05-17T14:15:00+02:00",
+  "symbol": "NASDAQ:MSTR",
+  "method": "Ian Copsey Fractal Forecasting",
+  "workflow_version": "hew_institutional_v1",
+  "status": "watchlist_only",
+  "verdict": {
+    "package_validity": "pass",
+    "evidence_grade": "qualified",
+    "trade_permission": "blocked",
+    "posture": "WATCHLIST ONLY",
+    "confidence": "low",
+    "confidence_cap_reason": "Fallback cap: lower-degree A-B-C motive proof is adequate for a watchlist map, but actual recovery impulse proof is not enough for trade permission."
+  },
+  "stage_gates": [
+    {
+      "id": "route_and_layout",
+      "status": "pass",
+      "evidence": "TradingView switched to Hew Layout and NASDAQ:MSTR resolved to BATS:MSTR."
+    },
+    {
+      "id": "visual_pivot_extraction",
+      "status": "pass",
+      "evidence": "Konsili Pivot Exporter labels were visible on Monthly, Weekly, and Daily with single-stock profile left=5/right=5/max_rows=24 and table hidden."
+    },
+    {
+      "id": "ohlcv_pivot_verification",
+      "status": "pass",
+      "evidence": "Normalized label rows verified against OHLCV rows through buildMtfPivotEvidence."
+    },
+    {
+      "id": "top_down_chart_read",
+      "status": "pass_with_fallback",
+      "evidence": "Macro correction 543 -> 231.51 -> 457.22 -> 104.17 was selected first; lower-degree A-B-C motive proof is sufficient for watchlist status but not trade permission."
+    },
+    {
+      "id": "drawing_protocol",
+      "status": "pass",
+      "evidence": "Final chart uses native TradingView Elliott correction/impulse tools for count and projection proof; KPE scaffolding is hidden."
+    },
+    {
+      "id": "evidence_contract",
+      "status": "pass",
+      "evidence": "Package contains journal.md, evidence.json, committee_brief.md, raw audit files, screenshots, raw hashes, drawing manifest, and critic review."
+    },
+    {
+      "id": "action_output",
+      "status": "pass",
+      "evidence": "Output is WATCHLIST ONLY with accumulation/distribution zones, invalidation, conditional path, and explicit do-nothing levels."
+    },
+    {
+      "id": "critic_review",
+      "status": "pass",
+      "evidence": "Final critic checklist blocks trade permission because the actual recovery count has not cleared the Copsey Wave 3 floor."
+    }
+  ],
+  "analysis_checklist": [
+    {
+      "id": "visual_pivots_extracted",
+      "status": "pass",
+      "evidence": "visual pivots extracted completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "ohlcv_pivots_verified",
+      "status": "pass",
+      "evidence": "ohlcv pivots verified completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "pivot_conflicts_resolved",
+      "status": "pass",
+      "evidence": "pivot conflicts resolved completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "chart_modes_recorded",
+      "status": "pass",
+      "evidence": "chart modes recorded completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "preceding_impulse_context_shown",
+      "status": "pass",
+      "evidence": "preceding impulse context shown completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "primary_secondary_subwaves_drawn",
+      "status": "pass",
+      "evidence": "primary secondary subwaves drawn completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "forward_impulse_projection_drawn",
+      "status": "pass",
+      "evidence": "forward impulse projection drawn completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "projection_topology_validated",
+      "status": "pass",
+      "evidence": "projection topology validated completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "visual_thesis_consistency_checked",
+      "status": "pass",
+      "evidence": "visual thesis consistency checked completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "c_of_3_strength_checked",
+      "status": "pass",
+      "evidence": "c of 3 strength checked completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "corrective_structure_classified",
+      "status": "pass",
+      "evidence": "corrective structure classified completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "risk_architecture_separated",
+      "status": "pass",
+      "evidence": "risk architecture separated completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "copsey_internal_abc_motive_engines_checked",
+      "status": "pass_with_fallback",
+      "evidence": "copsey internal abc motive engines checked completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "copsey_ac_lower_degree_fives_checked",
+      "status": "pass_with_fallback",
+      "evidence": "copsey ac lower degree fives checked completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "copsey_forbidden_rescue_devices_rejected",
+      "status": "pass",
+      "evidence": "copsey forbidden rescue devices rejected completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "castaway_overlay_not_copsey_source",
+      "status": "pass",
+      "evidence": "castaway overlay not copsey source completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "wave3_1764_rule_checked",
+      "status": "pass",
+      "evidence": "wave3 1764 rule checked completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "macro_count_subwaves_ratio_aligned",
+      "status": "pass",
+      "evidence": "macro count subwaves ratio aligned completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "projection_forward_margin_next_count",
+      "status": "pass",
+      "evidence": "projection forward margin next count completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "wave_b_ladder_chart_proof",
+      "status": "pass",
+      "evidence": "wave b ladder chart proof completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "zone_scores_complete",
+      "status": "pass",
+      "evidence": "zone scores complete completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "action_rationale_complete",
+      "status": "pass",
+      "evidence": "action rationale complete completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    },
+    {
+      "id": "critic_review_complete",
+      "status": "pass",
+      "evidence": "critic review complete completed for MSTR with visual KPE pivots, OHLCV checks, native Elliott drawings, and watchlist-only posture."
+    }
+  ],
+  "chart_prep": {
+    "layout": "Hew Layout",
+    "symbol_verified": "NASDAQ:MSTR resolved to BATS:MSTR; quote_get returned last 177.42 on the 2026-05-15 daily bar.",
+    "drawings_cleared": false,
+    "cleared_drawing_count": 0,
+    "visible_ranges_verified": true,
+    "final_timeframe": "1D",
+    "chart_mode_checklist": [
+      {
+        "mode": "extraction",
+        "status": "pass",
+        "evidence": "Konsili Pivot Exporter visible; price plus date labels readable on Monthly, Weekly, and Daily.",
+        "konsili_pivot_exporter_visible": true
+      },
+      {
+        "mode": "verification",
+        "status": "pass",
+        "evidence": "Accepted labels were normalized and checked against OHLCV rows before count selection."
+      },
+      {
+        "mode": "strategy_proof",
+        "status": "pass",
+        "evidence": "KPE scaffolding hidden before native Elliott proof drawings and zone drawings were left on the chart.",
+        "konsili_pivot_exporter_visible": false
+      },
+      {
+        "mode": "presentation",
+        "status": "pass",
+        "evidence": "Final chart verified on daily BATS:MSTR with KPE hidden and 16 drawings visible.",
+        "konsili_pivot_exporter_visible": false,
+        "pivot_scaffold_visible": false,
+        "final_chart_state": "Daily BATS:MSTR chart, KPE hidden, AO visible, macro correction, conditional projection, A-B-C subwave context, zones, and Wave-B ladder present."
+      }
+    ],
+    "drawing_manifest": [
+      {
+        "id": "macro_abc_correction",
+        "entity_id": "tjoE5u",
+        "role": "macro_count",
+        "tool": "elliott_correction",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          543,
+          231.51,
+          457.22,
+          104.17
+        ],
+        "points": [
+          {
+            "label": "A0",
+            "pivot_id": "m_2024_11_high_543",
+            "date": "2024-11-01 09:30",
+            "time": 1730453400000,
+            "price": 543,
+            "source_label_id": "m_2024_11_high_543",
+            "ohlcv_check_id": "m_2024_11_high_543"
+          },
+          {
+            "label": "A",
+            "pivot_id": "w_2025_03_low_231_51",
+            "date": "2025-03-10 09:30",
+            "time": 1741599000000,
+            "price": 231.51,
+            "source_label_id": "w_2025_03_low_231_51",
+            "ohlcv_check_id": "w_2025_03_low_231_51"
+          },
+          {
+            "label": "B",
+            "pivot_id": "w_2025_07_high_457_22",
+            "date": "2025-07-14 09:30",
+            "time": 1752485400000,
+            "price": 457.22,
+            "source_label_id": "w_2025_07_high_457_22",
+            "ohlcv_check_id": "w_2025_07_high_457_22"
+          },
+          {
+            "label": "C",
+            "pivot_id": "w_2026_02_low_104_17",
+            "date": "2026-02-02 09:30",
+            "time": 1770024600000,
+            "price": 104.17,
+            "source_label_id": "w_2026_02_low_104_17",
+            "ohlcv_check_id": "w_2026_02_low_104_17"
+          }
+        ],
+        "note": "Post-543 macro ABC correction. C low at 104.17 is accepted as structural support for watchlist status, not trade permission."
+      },
+      {
+        "id": "conditional_forward_projection",
+        "entity_id": "MCnyuO",
+        "role": "projection_count",
+        "tool": "elliott_impulse_wave",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          104.17,
+          183.25,
+          156.11,
+          295.61,
+          225.86,
+          338.04
+        ],
+        "points": [
+          {
+            "label": "0",
+            "pivot_id": "d_2026_02_low_104_17",
+            "date": "2026-02-05 09:30",
+            "time": 1770283800000,
+            "price": 104.17,
+            "source_label_id": "d_2026_02_low_104_17",
+            "ohlcv_check_id": "d_2026_02_low_104_17"
+          },
+          {
+            "label": "1",
+            "pivot_id": "d_2026_04_high_183_25",
+            "date": "2026-04-22 09:30",
+            "time": 1776850200000,
+            "price": 183.25,
+            "source_label_id": "d_2026_04_high_183_25",
+            "ohlcv_check_id": "d_2026_04_high_183_25"
+          },
+          {
+            "label": "2",
+            "pivot_id": "d_2026_04_low_156_11",
+            "date": "2026-04-29 09:30",
+            "time": 1777455000000,
+            "price": 156.11,
+            "source_label_id": "d_2026_04_low_156_11",
+            "ohlcv_check_id": "d_2026_04_low_156_11"
+          },
+          {
+            "label": "3",
+            "point_status": "projected",
+            "price": 295.61,
+            "projection_formula_id": "conditional_wave3_1764_from_104_17_183_25_156_11",
+            "source_pivots": [
+              "d_2026_02_low_104_17",
+              "d_2026_04_high_183_25",
+              "d_2026_04_low_156_11"
+            ]
+          },
+          {
+            "label": "4",
+            "point_status": "projected",
+            "price": 225.86,
+            "projection_formula_id": "conditional_wave4_050_retracement_from_wave2_wave3",
+            "source_pivots": [
+              "d_2026_04_low_156_11"
+            ]
+          },
+          {
+            "label": "5",
+            "point_status": "projected",
+            "price": 338.04,
+            "projection_formula_id": "conditional_wave5_0586_of_waves_1_and_3",
+            "source_pivots": [
+              "d_2026_02_low_104_17",
+              "d_2026_04_high_183_25"
+            ]
+          }
+        ],
+        "source_hypothesis_id": "mstr_primary_conditional",
+        "engine_status": "pass",
+        "direction": "bullish",
+        "label": "conditional recovery scenario only; not trade permission",
+        "topology_validation": "Wave 2 holds origin, Wave 4 stays above Wave 1 price territory, Wave 3 is not shortest, Wave 5 exceeds Wave 3."
+      },
+      {
+        "id": "primary_accumulation_box",
+        "entity_id": "u6TbxX",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "accumulation",
+        "price_range": {
+          "low": 156.11,
+          "high": 183.25
+        },
+        "visible_label": {
+          "text": "ACC 156.11-183.25 score 52 moderate",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        },
+        "boundary_refs": {
+          "low": {
+            "projection_formula_id": "primary_accumulation_box_low_boundary"
+          },
+          "high": {
+            "projection_formula_id": "primary_accumulation_box_high_boundary"
+          }
+        },
+        "zone_score": 52,
+        "score_band": "moderate"
+      },
+      {
+        "id": "terminal_accumulation_box",
+        "entity_id": "2ncr7q",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "accumulation",
+        "price_range": {
+          "low": 104.17,
+          "high": 116.4
+        },
+        "visible_label": {
+          "text": "ACC 104.17-116.40 score 43 moderate_low",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        },
+        "boundary_refs": {
+          "low": {
+            "projection_formula_id": "terminal_accumulation_box_low_boundary"
+          },
+          "high": {
+            "projection_formula_id": "terminal_accumulation_box_high_boundary"
+          }
+        },
+        "zone_score": 43,
+        "score_band": "moderate_low"
+      },
+      {
+        "id": "near_distribution_box",
+        "entity_id": "UyrwJx",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "distribution",
+        "price_range": {
+          "low": 197,
+          "high": 231.51
+        },
+        "visible_label": {
+          "text": "DIST 197.00-231.51 score 64 high",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        },
+        "boundary_refs": {
+          "low": {
+            "projection_formula_id": "near_distribution_box_low_boundary"
+          },
+          "high": {
+            "projection_formula_id": "near_distribution_box_high_boundary"
+          }
+        },
+        "zone_score": 64,
+        "score_band": "high"
+      },
+      {
+        "id": "projection_distribution_box",
+        "entity_id": "HO2Jew",
+        "role": "zone",
+        "tool": "rectangle",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "zone_function": "distribution",
+        "price_range": {
+          "low": 295.61,
+          "high": 338.04
+        },
+        "visible_label": {
+          "text": "DIST 295.61-338.04 score 50 moderate",
+          "includes_zone_type": true,
+          "includes_range": true,
+          "includes_score": true,
+          "visible_on_final_chart": true
+        },
+        "boundary_refs": {
+          "low": {
+            "projection_formula_id": "projection_distribution_box_low_boundary"
+          },
+          "high": {
+            "projection_formula_id": "projection_distribution_box_high_boundary"
+          }
+        },
+        "zone_score": 50,
+        "score_band": "moderate"
+      },
+      {
+        "id": "wave_b_ladder",
+        "entity_id": "ItIym4,pYi144,t7QzsB",
+        "role": "wave_b_ladder",
+        "tool": "horizontal_line",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          104.17,
+          156.11,
+          210
+        ],
+        "label": "Wave-B ladder: 104.17 hard failure, 156.11 review floor, 210 projected B-of-3 review."
+      },
+      {
+        "id": "preceding_impulse_context",
+        "entity_id": "EOrltF",
+        "role": "preceding_impulse_context",
+        "tool": "elliott_correction",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          13.26,
+          200,
+          102.4,
+          543
+        ],
+        "points": [
+          {
+            "label": "0",
+            "pivot_id": "m_2022_12_low_13_26",
+            "date": "2022-12-01 09:30",
+            "time": 1669887000000,
+            "price": 13.26,
+            "source_label_id": "m_2022_12_low_13_26",
+            "ohlcv_check_id": "m_2022_12_low_13_26"
+          },
+          {
+            "label": "A",
+            "pivot_id": "m_2024_03_high_200",
+            "date": "2024-03-01 09:30",
+            "time": 1709285400000,
+            "price": 200,
+            "source_label_id": "m_2024_03_high_200",
+            "ohlcv_check_id": "m_2024_03_high_200"
+          },
+          {
+            "label": "B",
+            "pivot_id": "w_2024_08_low_102_4",
+            "date": "2024-08-05 09:30",
+            "time": 1722850200000,
+            "price": 102.4,
+            "source_label_id": "w_2024_08_low_102_4",
+            "ohlcv_check_id": "w_2024_08_low_102_4"
+          },
+          {
+            "label": "C",
+            "pivot_id": "m_2024_11_high_543",
+            "date": "2024-11-01 09:30",
+            "time": 1730453400000,
+            "price": 543,
+            "source_label_id": "m_2024_11_high_543",
+            "ohlcv_check_id": "m_2024_11_high_543"
+          }
+        ],
+        "direction": "bullish"
+      },
+      {
+        "id": "primary_degree_subwaves",
+        "entity_id": "UzPg5s",
+        "role": "primary_degree_subwaves",
+        "tool": "elliott_correction",
+        "timeframe_owner": "macro",
+        "screenshot": "screenshots/macro_structure.png",
+        "levels": [
+          13.26,
+          72.78,
+          43.87,
+          200
+        ],
+        "points": [
+          {
+            "label": "0",
+            "pivot_id": "m_2022_12_low_13_26",
+            "date": "2022-12-01 09:30",
+            "time": 1669887000000,
+            "price": 13.26,
+            "source_label_id": "m_2022_12_low_13_26",
+            "ohlcv_check_id": "m_2022_12_low_13_26"
+          },
+          {
+            "label": "A",
+            "pivot_id": "w_2024_01_high_72_78",
+            "date": "2024-01-02 09:30",
+            "time": 1704187800000,
+            "price": 72.78,
+            "source_label_id": "w_2024_01_high_72_78",
+            "ohlcv_check_id": "w_2024_01_high_72_78"
+          },
+          {
+            "label": "B",
+            "pivot_id": "w_2024_01_low_43_87",
+            "date": "2024-01-22 09:30",
+            "time": 1705915800000,
+            "price": 43.87,
+            "source_label_id": "w_2024_01_low_43_87",
+            "ohlcv_check_id": "w_2024_01_low_43_87"
+          },
+          {
+            "label": "C",
+            "pivot_id": "m_2024_03_high_200",
+            "date": "2024-03-01 09:30",
+            "time": 1709285400000,
+            "price": 200,
+            "source_label_id": "m_2024_03_high_200",
+            "ohlcv_check_id": "m_2024_03_high_200"
+          }
+        ],
+        "direction": "bullish"
+      },
+      {
+        "id": "secondary_degree_subwaves",
+        "entity_id": "2befcU",
+        "role": "secondary_degree_subwaves",
+        "tool": "elliott_correction",
+        "timeframe_owner": "daily",
+        "screenshot": "screenshots/trade_posture.png",
+        "levels": [
+          104.17,
+          152.27,
+          116.4,
+          183.25
+        ],
+        "points": [
+          {
+            "label": "0",
+            "pivot_id": "d_2026_02_low_104_17",
+            "date": "2026-02-05 09:30",
+            "time": 1770283800000,
+            "price": 104.17,
+            "source_label_id": "d_2026_02_low_104_17",
+            "ohlcv_check_id": "d_2026_02_low_104_17"
+          },
+          {
+            "label": "A",
+            "pivot_id": "d_2026_03_high_152_27",
+            "date": "2026-03-17 09:30",
+            "time": 1773739800000,
+            "price": 152.27,
+            "source_label_id": "d_2026_03_high_152_27",
+            "ohlcv_check_id": "d_2026_03_high_152_27"
+          },
+          {
+            "label": "B",
+            "pivot_id": "d_2026_04_low_116_4",
+            "date": "2026-04-02 09:30",
+            "time": 1775122200000,
+            "price": 116.4,
+            "source_label_id": "d_2026_04_low_116_4",
+            "ohlcv_check_id": "d_2026_04_low_116_4"
+          },
+          {
+            "label": "C",
+            "pivot_id": "d_2026_04_high_183_25",
+            "date": "2026-04-22 09:30",
+            "time": 1776850200000,
+            "price": 183.25,
+            "source_label_id": "d_2026_04_high_183_25",
+            "ohlcv_check_id": "d_2026_04_high_183_25"
+          }
+        ],
+        "direction": "bullish"
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "role": "visual_pivots",
+      "timeframe": "monthly",
+      "path": "screenshots/visual_pivots_monthly.png",
+      "evidence": "Monthly KPE visual pivots."
+    },
+    {
+      "role": "visual_pivots",
+      "timeframe": "weekly",
+      "path": "screenshots/visual_pivots_weekly.png",
+      "evidence": "Weekly KPE visual pivots."
+    },
+    {
+      "role": "visual_pivots",
+      "timeframe": "daily",
+      "path": "screenshots/visual_pivots_daily.png",
+      "evidence": "Daily KPE visual pivots."
+    },
+    {
+      "role": "macro_structure",
+      "timeframe": "daily",
+      "path": "screenshots/macro_structure.png",
+      "evidence": "Macro correction and context drawings."
+    },
+    {
+      "role": "trade_posture",
+      "timeframe": "daily",
+      "path": "screenshots/trade_posture.png",
+      "evidence": "Conditional projection, zones, and Wave-B ladder."
+    }
+  ],
+  "raw_artifacts": {
+    "generated_at": "2026-05-17T14:15:00+02:00",
+    "files": [
+      {
+        "role": "kpe_monthly",
+        "path": "raw/kpe_monthly.jsonl",
+        "sha256": "713b2de6a08f3221f12c194b09c040ef5f635deb4d7f6e4db9b6aa33e91a8221"
+      },
+      {
+        "role": "kpe_weekly",
+        "path": "raw/kpe_weekly.jsonl",
+        "sha256": "257b40d8ff720fa906a10c8fd3d2157b2cebf4bbcd05ddfc7a76d63a8b1f060d"
+      },
+      {
+        "role": "kpe_daily",
+        "path": "raw/kpe_daily.jsonl",
+        "sha256": "fc32c51ce776e52e966018ef4854f13474f6ed3d77e815ef6d884e18807aba9e"
+      },
+      {
+        "role": "ohlcv_monthly",
+        "path": "raw/ohlcv_monthly.csv",
+        "sha256": "ead6fb5352db1abb60264b18e8fb4c433d53a5ebe2bd896666d58552a4707a60"
+      },
+      {
+        "role": "ohlcv_weekly",
+        "path": "raw/ohlcv_weekly.csv",
+        "sha256": "84820eef8a06a33786f4f2b908d4a0e5967609a148161727aa0e9524167acaed"
+      },
+      {
+        "role": "ohlcv_daily",
+        "path": "raw/ohlcv_daily.csv",
+        "sha256": "e77ca2988202a210ebbc4eff16a69c486bade6b1a1961da6de19e7523075cfdf"
+      },
+      {
+        "role": "draw_list_before",
+        "path": "raw/draw_list_before.json",
+        "sha256": "f9fd69a1b00929961a268ba4a1f79f802f82e1bf348949bfc8589a8cdd73bda5"
+      },
+      {
+        "role": "draw_list_after",
+        "path": "raw/draw_list_after.json",
+        "sha256": "1447abe2917accffcf2256e7b996e0b2a0d4d4304227dc34f0617f9137cb7244"
+      },
+      {
+        "role": "chart_state_final",
+        "path": "raw/chart_state_final.json",
+        "sha256": "357ef48ba91240512b89b8b475f4831c12b4df16c61666239f3f06d081ff1977"
+      }
+    ]
+  },
+  "visual_pivot_evidence": {
+    "indicator_name": "Konsili Pivot Exporter",
+    "study_filter": "Konsili Pivot Exporter",
+    "extraction_method": "MTF visual extraction from Konsili Pivot Exporter price-wave extreme labels; structured table stayed hidden because the labels were readable.",
+    "iteration_decision": "accepted_after_visual_label_ohlcv_verification",
+    "exporter": {
+      "name": "Konsili Pivot Exporter",
+      "version": 2,
+      "study_filter": "Konsili Pivot Exporter",
+      "pine_script": "tradingview/konsili_pivot_exporter.pine",
+      "row_prefix": "KPE",
+      "source_tools": [
+        "data_get_pine_labels"
+      ],
+      "default_table_visible": false,
+      "table_fallback_only": true,
+      "instrument_class": "single_stock",
+      "left_bars": 5,
+      "right_bars": 5,
+      "max_rows": 24
+    },
+    "timeframes": [
+      {
+        "timeframe": "monthly",
+        "screenshot": "screenshots/visual_pivots_monthly.png",
+        "source_mode": "visual_price_extreme_labels",
+        "visual_label_rows": [
+          {
+            "text": "9.00\n2020-03-02 09:30\nPL",
+            "price": 9
+          },
+          {
+            "text": "131.50\n2021-02-01 09:30\nPH",
+            "price": 131.5
+          },
+          {
+            "text": "13.26\n2022-12-01 09:30\nPL",
+            "price": 13.26
+          },
+          {
+            "text": "200.00\n2024-03-01 09:30\nPH",
+            "price": 200
+          },
+          {
+            "text": "543.00\n2024-11-01 09:30\nPH",
+            "price": 543
+          },
+          {
+            "text": "457.22\n2025-07-01 09:30\nPH",
+            "price": 457.22
+          }
+        ],
+        "pivots": [
+          {
+            "id": "m_2020_03_low_9",
+            "type": "low",
+            "date": "2020-03-02 09:30",
+            "time": 1583141400000,
+            "price": 9,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "9.00\n2020-03-02 09:30\nPL"
+          },
+          {
+            "id": "m_2021_02_high_131_5",
+            "type": "high",
+            "date": "2021-02-01 09:30",
+            "time": 1612171800000,
+            "price": 131.5,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "131.50\n2021-02-01 09:30\nPH"
+          },
+          {
+            "id": "m_2022_12_low_13_26",
+            "type": "low",
+            "date": "2022-12-01 09:30",
+            "time": 1669887000000,
+            "price": 13.26,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "13.26\n2022-12-01 09:30\nPL"
+          },
+          {
+            "id": "m_2024_03_high_200",
+            "type": "high",
+            "date": "2024-03-01 09:30",
+            "time": 1709285400000,
+            "price": 200,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "200.00\n2024-03-01 09:30\nPH"
+          },
+          {
+            "id": "m_2024_11_high_543",
+            "type": "high",
+            "date": "2024-11-01 09:30",
+            "time": 1730453400000,
+            "price": 543,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "543.00\n2024-11-01 09:30\nPH"
+          },
+          {
+            "id": "m_2025_07_high_457_22",
+            "type": "high",
+            "date": "2025-07-01 09:30",
+            "time": 1751362200000,
+            "price": 457.22,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "457.22\n2025-07-01 09:30\nPH"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "m_2020_03_low_9",
+            "pivot_id": "m_2020_03_low_9",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched low 9 on 2020-03-02 09:30."
+          },
+          {
+            "id": "m_2021_02_high_131_5",
+            "pivot_id": "m_2021_02_high_131_5",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched high 131.5 on 2021-02-01 09:30."
+          },
+          {
+            "id": "m_2022_12_low_13_26",
+            "pivot_id": "m_2022_12_low_13_26",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched low 13.26 on 2022-12-01 09:30."
+          },
+          {
+            "id": "m_2024_03_high_200",
+            "pivot_id": "m_2024_03_high_200",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched high 200 on 2024-03-01 09:30."
+          },
+          {
+            "id": "m_2024_11_high_543",
+            "pivot_id": "m_2024_11_high_543",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched high 543 on 2024-11-01 09:30."
+          },
+          {
+            "id": "m_2025_07_high_457_22",
+            "pivot_id": "m_2025_07_high_457_22",
+            "status": "pass",
+            "evidence": "monthly OHLCV matched high 457.22 on 2025-07-01 09:30."
+          }
+        ]
+      },
+      {
+        "timeframe": "weekly",
+        "screenshot": "screenshots/visual_pivots_weekly.png",
+        "source_mode": "visual_price_extreme_labels",
+        "visual_label_rows": [
+          {
+            "text": "26.60\n2023-06-12 09:30\nPL",
+            "price": 26.6
+          },
+          {
+            "text": "47.51\n2023-07-10 09:30\nPH",
+            "price": 47.51
+          },
+          {
+            "text": "30.71\n2023-10-02 09:30\nPL",
+            "price": 30.71
+          },
+          {
+            "text": "72.78\n2024-01-02 09:30\nPH",
+            "price": 72.78
+          },
+          {
+            "text": "43.87\n2024-01-22 09:30\nPL",
+            "price": 43.87
+          },
+          {
+            "text": "200.00\n2024-03-25 09:30\nPH",
+            "price": 200
+          },
+          {
+            "text": "101.00\n2024-04-29 09:30\nPL",
+            "price": 101
+          },
+          {
+            "text": "183.70\n2024-07-29 09:30\nPH",
+            "price": 183.7
+          },
+          {
+            "text": "102.40\n2024-08-05 09:30\nPL",
+            "price": 102.4
+          },
+          {
+            "text": "543.00\n2024-11-18 09:30\nPH",
+            "price": 543
+          },
+          {
+            "text": "231.51\n2025-03-10 09:30\nPL",
+            "price": 231.51
+          },
+          {
+            "text": "457.22\n2025-07-14 09:30\nPH",
+            "price": 457.22
+          },
+          {
+            "text": "365.21\n2025-10-06 09:30\nPH",
+            "price": 365.21
+          },
+          {
+            "text": "104.17\n2026-02-02 09:30\nPL",
+            "price": 104.17
+          },
+          {
+            "text": "116.40\n2026-03-30 09:30\nPL",
+            "price": 116.4
+          }
+        ],
+        "pivots": [
+          {
+            "id": "w_2023_06_low_26_6",
+            "type": "low",
+            "date": "2023-06-12 09:30",
+            "time": 1686562200000,
+            "price": 26.6,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "26.60\n2023-06-12 09:30\nPL"
+          },
+          {
+            "id": "w_2023_07_high_47_51",
+            "type": "high",
+            "date": "2023-07-10 09:30",
+            "time": 1688981400000,
+            "price": 47.51,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "47.51\n2023-07-10 09:30\nPH"
+          },
+          {
+            "id": "w_2023_10_low_30_71",
+            "type": "low",
+            "date": "2023-10-02 09:30",
+            "time": 1696239000000,
+            "price": 30.71,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "30.71\n2023-10-02 09:30\nPL"
+          },
+          {
+            "id": "w_2024_01_high_72_78",
+            "type": "high",
+            "date": "2024-01-02 09:30",
+            "time": 1704187800000,
+            "price": 72.78,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "72.78\n2024-01-02 09:30\nPH"
+          },
+          {
+            "id": "w_2024_01_low_43_87",
+            "type": "low",
+            "date": "2024-01-22 09:30",
+            "time": 1705915800000,
+            "price": 43.87,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "43.87\n2024-01-22 09:30\nPL"
+          },
+          {
+            "id": "w_2024_03_high_200",
+            "type": "high",
+            "date": "2024-03-25 09:30",
+            "time": 1711359000000,
+            "price": 200,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "200.00\n2024-03-25 09:30\nPH"
+          },
+          {
+            "id": "w_2024_04_low_101",
+            "type": "low",
+            "date": "2024-04-29 09:30",
+            "time": 1714383000000,
+            "price": 101,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "101.00\n2024-04-29 09:30\nPL"
+          },
+          {
+            "id": "w_2024_07_high_183_7",
+            "type": "high",
+            "date": "2024-07-29 09:30",
+            "time": 1722245400000,
+            "price": 183.7,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "183.70\n2024-07-29 09:30\nPH"
+          },
+          {
+            "id": "w_2024_08_low_102_4",
+            "type": "low",
+            "date": "2024-08-05 09:30",
+            "time": 1722850200000,
+            "price": 102.4,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "102.40\n2024-08-05 09:30\nPL"
+          },
+          {
+            "id": "w_2024_11_high_543",
+            "type": "high",
+            "date": "2024-11-18 09:30",
+            "time": 1731922200000,
+            "price": 543,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "543.00\n2024-11-18 09:30\nPH"
+          },
+          {
+            "id": "w_2025_03_low_231_51",
+            "type": "low",
+            "date": "2025-03-10 09:30",
+            "time": 1741599000000,
+            "price": 231.51,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "231.51\n2025-03-10 09:30\nPL"
+          },
+          {
+            "id": "w_2025_07_high_457_22",
+            "type": "high",
+            "date": "2025-07-14 09:30",
+            "time": 1752485400000,
+            "price": 457.22,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "457.22\n2025-07-14 09:30\nPH"
+          },
+          {
+            "id": "w_2025_10_high_365_21",
+            "type": "high",
+            "date": "2025-10-06 09:30",
+            "time": 1759743000000,
+            "price": 365.21,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "365.21\n2025-10-06 09:30\nPH"
+          },
+          {
+            "id": "w_2026_02_low_104_17",
+            "type": "low",
+            "date": "2026-02-02 09:30",
+            "time": 1770024600000,
+            "price": 104.17,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "104.17\n2026-02-02 09:30\nPL"
+          },
+          {
+            "id": "w_2026_03_low_116_4",
+            "type": "low",
+            "date": "2026-03-30 09:30",
+            "time": 1774863000000,
+            "price": 116.4,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "116.40\n2026-03-30 09:30\nPL"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "w_2023_06_low_26_6",
+            "pivot_id": "w_2023_06_low_26_6",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 26.6 on 2023-06-12 09:30."
+          },
+          {
+            "id": "w_2023_07_high_47_51",
+            "pivot_id": "w_2023_07_high_47_51",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 47.51 on 2023-07-10 09:30."
+          },
+          {
+            "id": "w_2023_10_low_30_71",
+            "pivot_id": "w_2023_10_low_30_71",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 30.71 on 2023-10-02 09:30."
+          },
+          {
+            "id": "w_2024_01_high_72_78",
+            "pivot_id": "w_2024_01_high_72_78",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 72.78 on 2024-01-02 09:30."
+          },
+          {
+            "id": "w_2024_01_low_43_87",
+            "pivot_id": "w_2024_01_low_43_87",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 43.87 on 2024-01-22 09:30."
+          },
+          {
+            "id": "w_2024_03_high_200",
+            "pivot_id": "w_2024_03_high_200",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 200 on 2024-03-25 09:30."
+          },
+          {
+            "id": "w_2024_04_low_101",
+            "pivot_id": "w_2024_04_low_101",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 101 on 2024-04-29 09:30."
+          },
+          {
+            "id": "w_2024_07_high_183_7",
+            "pivot_id": "w_2024_07_high_183_7",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 183.7 on 2024-07-29 09:30."
+          },
+          {
+            "id": "w_2024_08_low_102_4",
+            "pivot_id": "w_2024_08_low_102_4",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 102.4 on 2024-08-05 09:30."
+          },
+          {
+            "id": "w_2024_11_high_543",
+            "pivot_id": "w_2024_11_high_543",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 543 on 2024-11-18 09:30."
+          },
+          {
+            "id": "w_2025_03_low_231_51",
+            "pivot_id": "w_2025_03_low_231_51",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 231.51 on 2025-03-10 09:30."
+          },
+          {
+            "id": "w_2025_07_high_457_22",
+            "pivot_id": "w_2025_07_high_457_22",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 457.22 on 2025-07-14 09:30."
+          },
+          {
+            "id": "w_2025_10_high_365_21",
+            "pivot_id": "w_2025_10_high_365_21",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched high 365.21 on 2025-10-06 09:30."
+          },
+          {
+            "id": "w_2026_02_low_104_17",
+            "pivot_id": "w_2026_02_low_104_17",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 104.17 on 2026-02-02 09:30."
+          },
+          {
+            "id": "w_2026_03_low_116_4",
+            "pivot_id": "w_2026_03_low_116_4",
+            "status": "pass",
+            "evidence": "weekly OHLCV matched low 116.4 on 2026-03-30 09:30."
+          }
+        ]
+      },
+      {
+        "timeframe": "daily",
+        "screenshot": "screenshots/visual_pivots_daily.png",
+        "source_mode": "visual_price_extreme_labels",
+        "visual_label_rows": [
+          {
+            "text": "198.40\n2025-12-09 09:30\nPH",
+            "price": 198.4
+          },
+          {
+            "text": "149.75\n2026-01-02 09:30\nPL",
+            "price": 149.75
+          },
+          {
+            "text": "190.20\n2026-01-14 09:30\nPH",
+            "price": 190.2
+          },
+          {
+            "text": "104.17\n2026-02-05 09:30\nPL",
+            "price": 104.17
+          },
+          {
+            "text": "152.27\n2026-03-17 09:30\nPH",
+            "price": 152.27
+          },
+          {
+            "text": "116.40\n2026-04-02 09:30\nPL",
+            "price": 116.4
+          },
+          {
+            "text": "183.25\n2026-04-22 09:30\nPH",
+            "price": 183.25
+          },
+          {
+            "text": "156.11\n2026-04-29 09:30\nPL",
+            "price": 156.11
+          }
+        ],
+        "pivots": [
+          {
+            "id": "d_2025_12_high_198_4",
+            "type": "high",
+            "date": "2025-12-09 09:30",
+            "time": 1765272600000,
+            "price": 198.4,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "198.40\n2025-12-09 09:30\nPH"
+          },
+          {
+            "id": "d_2026_01_low_149_75",
+            "type": "low",
+            "date": "2026-01-02 09:30",
+            "time": 1767346200000,
+            "price": 149.75,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "149.75\n2026-01-02 09:30\nPL"
+          },
+          {
+            "id": "d_2026_01_high_190_2",
+            "type": "high",
+            "date": "2026-01-14 09:30",
+            "time": 1768383000000,
+            "price": 190.2,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "190.20\n2026-01-14 09:30\nPH"
+          },
+          {
+            "id": "d_2026_02_low_104_17",
+            "type": "low",
+            "date": "2026-02-05 09:30",
+            "time": 1770283800000,
+            "price": 104.17,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "104.17\n2026-02-05 09:30\nPL"
+          },
+          {
+            "id": "d_2026_03_high_152_27",
+            "type": "high",
+            "date": "2026-03-17 09:30",
+            "time": 1773739800000,
+            "price": 152.27,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "152.27\n2026-03-17 09:30\nPH"
+          },
+          {
+            "id": "d_2026_04_low_116_4",
+            "type": "low",
+            "date": "2026-04-02 09:30",
+            "time": 1775122200000,
+            "price": 116.4,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "116.40\n2026-04-02 09:30\nPL"
+          },
+          {
+            "id": "d_2026_04_high_183_25",
+            "type": "high",
+            "date": "2026-04-22 09:30",
+            "time": 1776850200000,
+            "price": 183.25,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "183.25\n2026-04-22 09:30\nPH"
+          },
+          {
+            "id": "d_2026_04_low_156_11",
+            "type": "low",
+            "date": "2026-04-29 09:30",
+            "time": 1777455000000,
+            "price": 156.11,
+            "source_kind": "visual_price_extreme_label",
+            "source_text": "156.11\n2026-04-29 09:30\nPL"
+          }
+        ],
+        "ohlcv_verification": [
+          {
+            "id": "d_2025_12_high_198_4",
+            "pivot_id": "d_2025_12_high_198_4",
+            "status": "pass",
+            "evidence": "daily OHLCV matched high 198.4 on 2025-12-09 09:30."
+          },
+          {
+            "id": "d_2026_01_low_149_75",
+            "pivot_id": "d_2026_01_low_149_75",
+            "status": "pass",
+            "evidence": "daily OHLCV matched low 149.75 on 2026-01-02 09:30."
+          },
+          {
+            "id": "d_2026_01_high_190_2",
+            "pivot_id": "d_2026_01_high_190_2",
+            "status": "pass",
+            "evidence": "daily OHLCV matched high 190.2 on 2026-01-14 09:30."
+          },
+          {
+            "id": "d_2026_02_low_104_17",
+            "pivot_id": "d_2026_02_low_104_17",
+            "status": "pass",
+            "evidence": "daily OHLCV matched low 104.17 on 2026-02-05 09:30."
+          },
+          {
+            "id": "d_2026_03_high_152_27",
+            "pivot_id": "d_2026_03_high_152_27",
+            "status": "pass",
+            "evidence": "daily OHLCV matched high 152.27 on 2026-03-17 09:30."
+          },
+          {
+            "id": "d_2026_04_low_116_4",
+            "pivot_id": "d_2026_04_low_116_4",
+            "status": "pass",
+            "evidence": "daily OHLCV matched low 116.4 on 2026-04-02 09:30."
+          },
+          {
+            "id": "d_2026_04_high_183_25",
+            "pivot_id": "d_2026_04_high_183_25",
+            "status": "pass",
+            "evidence": "daily OHLCV matched high 183.25 on 2026-04-22 09:30."
+          },
+          {
+            "id": "d_2026_04_low_156_11",
+            "pivot_id": "d_2026_04_low_156_11",
+            "status": "pass",
+            "evidence": "daily OHLCV matched low 156.11 on 2026-04-29 09:30."
+          }
+        ]
+      }
+    ]
+  },
+  "ian_copsey_wave_map": {
+    "count_selection_authority": "ian_copsey_fractal_forecasting",
+    "mechanical_tool_boundary": "ratio_validation_only",
+    "scanner_used_for_count_selection": false,
+    "book_alignment_source": "Fractal Forecasting - Ian Copsey",
+    "selection_method": "Monthly pivots selected the post-543 ABC correction first; weekly and daily pivots then bounded the watchlist zones. Mechanical tools were used only after those anchors were selected.",
+    "counts": [
+      {
+        "id": "macro_primary_context",
+        "role": "macro_primary",
+        "drawing_id": "preceding_impulse_context",
+        "pivots": [
+          13.26,
+          200,
+          102.4,
+          543
+        ],
+        "ratio_validation_id": "prior_context_wave3_floor",
+        "copsey_rationale": "The 2022-2024 advance is the structure being corrected by the post-543 macro ABC."
+      },
+      {
+        "id": "macro_abc_correction",
+        "role": "macro_correction",
+        "drawing_id": "macro_abc_correction",
+        "pivots": [
+          543,
+          231.51,
+          457.22,
+          104.17
+        ],
+        "ratio_validation_id": "macro_abc_context",
+        "copsey_rationale": "A down to 231.51, B to 457.22, and C to 104.17 fits the 1.144 C-wave neighborhood and defines the structural map."
+      },
+      {
+        "id": "daily_recovery_attempt",
+        "role": "internal_subwave",
+        "drawing_id": "secondary_degree_subwaves",
+        "pivots": [
+          104.17,
+          152.27,
+          116.4,
+          183.25
+        ],
+        "ratio_validation_id": "actual_rebound_failed_floor",
+        "copsey_rationale": "The visible daily recovery is only an A-B-C style recovery until a valid Wave 3 path appears."
+      },
+      {
+        "id": "active_decision_projection",
+        "role": "active_decision",
+        "drawing_id": "conditional_forward_projection",
+        "pivots": [
+          104.17,
+          183.25,
+          156.11,
+          295.61,
+          225.86,
+          338.04
+        ],
+        "ratio_validation_id": "wave3_1764_rule",
+        "copsey_rationale": "Only the conditional projection clears the 1.764 floor, so it maps review zones rather than trade permission."
+      }
+    ],
+    "ratio_calculations": [
+      {
+        "id": "macro_c_ratio",
+        "formula": "(457.22 - 104.17) / (543.00 - 231.51)",
+        "actual_ratio": 1.1334,
+        "interpretation": "Macro C is close to the 1.144 Copsey C-wave path."
+      },
+      {
+        "id": "conditional_wave3_ratio",
+        "formula": "(295.61 - 156.11) / (183.25 - 104.17)",
+        "actual_ratio": 1.764,
+        "interpretation": "Conditional Wave 3 reaches the minimum Copsey floor."
+      },
+      {
+        "id": "actual_bull_rejection_ratio",
+        "formula": "(197.00 - 156.11) / (183.25 - 116.40)",
+        "actual_ratio": 0.6117,
+        "interpretation": "Immediate bull action is rejected as a valid HEW impulse."
+      }
+    ],
+    "fractal_forecasting_alignment": [
+      {
+        "id": "fractal_degree_consistency",
+        "status": "pass",
+        "evidence": "Monthly controls the macro correction, weekly defines macro boundaries, daily only gates current posture."
+      },
+      {
+        "id": "three_wave_impulsive_components",
+        "status": "pass_with_fallback",
+        "evidence": "A-B-C motive structure is visible through native correction tools, but it is not strong enough for trade permission."
+      },
+      {
+        "id": "wave3_1764_floor",
+        "status": "pass",
+        "evidence": "The accepted forward path reaches 1.764 only as a conditional projection."
+      },
+      {
+        "id": "forbidden_rescue_rejection",
+        "status": "pass",
+        "evidence": "No extended-wave, failed-fifth, or diagonal rescue is used."
+      },
+      {
+        "id": "corrective_context_before_forecast",
+        "status": "pass",
+        "evidence": "The post-543 ABC correction is established before the 295.61-338.04 projection is considered."
+      },
+      {
+        "id": "scanner_not_count_authority",
+        "status": "pass",
+        "evidence": "Visual pivots selected the count; ratio tools only scored the selected anchors."
+      }
+    ]
+  },
+  "hypotheses": [
+    {
+      "id": "mstr_primary_conditional",
+      "selection_role": "primary",
+      "direction": "bullish",
+      "structure_type": "conditional_forward_impulse",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 104.17
+        },
+        {
+          "id": "p1",
+          "price": 183.25
+        },
+        {
+          "id": "p2",
+          "price": 156.11
+        },
+        {
+          "id": "p3",
+          "price": 295.61,
+          "point_status": "projected"
+        },
+        {
+          "id": "p4",
+          "price": 225.86,
+          "point_status": "projected"
+        },
+        {
+          "id": "p5",
+          "price": 338.04,
+          "point_status": "projected"
+        }
+      ],
+      "measurements": [
+        {
+          "id": "conditional_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "mstr_primary_conditional",
+        "status": "pass",
+        "score": 100,
+        "hard_rule_pass": true,
+        "lifecycle_status": "projection",
+        "classification": "valid_projection",
+        "violation_ids": []
+      }
+    },
+    {
+      "id": "mstr_alternate_bear_c_extension",
+      "selection_role": "alternate",
+      "direction": "bearish",
+      "structure_type": "active_correction",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 543
+        },
+        {
+          "id": "p1",
+          "price": 104.17
+        },
+        {
+          "id": "p2",
+          "price": 197
+        },
+        {
+          "id": "p3",
+          "price": 72.22,
+          "point_status": "projected"
+        }
+      ],
+      "measurements": [
+        {
+          "id": "bearish_next_leg_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "mstr_alternate_bear_c_extension",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "lifecycle_status": "active",
+        "classification": "invalid_diagnostic",
+        "violation_ids": [
+          "wave3_outside_copsey_clusters"
+        ]
+      }
+    },
+    {
+      "id": "mstr_rejected_immediate_bull",
+      "selection_role": "rejected",
+      "direction": "bullish",
+      "structure_type": "rejected_impulse",
+      "pivots": [
+        {
+          "id": "p0",
+          "price": 116.4
+        },
+        {
+          "id": "p1",
+          "price": 183.25
+        },
+        {
+          "id": "p2",
+          "price": 156.11
+        },
+        {
+          "id": "p3",
+          "price": 197
+        }
+      ],
+      "measurements": [
+        {
+          "id": "actual_rebound_wave3",
+          "type": "wave3_projection",
+          "points": {
+            "wave1_start": "p0",
+            "wave1_end": "p1",
+            "wave2_end": "p2",
+            "wave3_end": "p3"
+          }
+        }
+      ],
+      "engine_result": {
+        "hypothesis_id": "mstr_rejected_immediate_bull",
+        "status": "fail",
+        "score": 0,
+        "hard_rule_pass": false,
+        "lifecycle_status": "rejected",
+        "classification": "invalid_diagnostic",
+        "violation_ids": [
+          "wave3_outside_copsey_clusters"
+        ]
+      }
+    }
+  ],
+  "count_state": {
+    "state_id": "mstr_2026_05_17_watchlist_only",
+    "anchor_hash": "mstr10417-18325-15611-29561",
+    "continuity_status": "new",
+    "previous_state_ref": "MSTR_2026-05-16_hew superseded by fresh 2026-05-17 live run",
+    "update_reason": "Fresh macro-first MSTR run with current TradingView evidence.",
+    "persisted_at": "2026-05-17T14:15:00+02:00"
+  },
+  "hew_structure_context": {
+    "preceding_impulse_context": {
+      "status": "pass",
+      "drawing_id": "preceding_impulse_context",
+      "evidence": "The 13.26-543 advance is drawn as the context corrected by the post-543 ABC."
+    },
+    "primary_degree_subwaves": {
+      "status": "pass_with_fallback",
+      "drawing_id": "primary_degree_subwaves",
+      "evidence": "Primary A-B-C context is drawn with native Elliott correction tools; it supports watchlist mapping only."
+    },
+    "secondary_degree_subwaves": {
+      "status": "pass",
+      "drawing_id": "secondary_degree_subwaves",
+      "evidence": "Daily 104.17-152.27-116.40-183.25 recovery substructure is drawn as A-B-C context."
+    },
+    "forward_impulse_projection": {
+      "status": "pass",
+      "drawing_id": "conditional_forward_projection",
+      "conditionality": "conditional projection scenario only",
+      "evidence": "The 104.17-183.25-156.11-295.61-225.86-338.04 path is drawn as a conditional projection."
+    }
+  },
+  "copsey_hew_purity": {
+    "internal_abc_motive_engines": {
+      "status": "pass_with_fallback",
+      "macro_waves": [
+        {
+          "wave": "1",
+          "coverage_status": "visible_equivalent",
+          "abc_engine": "A 13.26-72.78, B 72.78-43.87, C 43.87-200.00",
+          "drawing_id": "primary_degree_subwaves",
+          "evidence": "Primary-degree A-B-C context is visible on the macro screenshot."
+        },
+        {
+          "wave": "3",
+          "coverage_status": "visible_equivalent",
+          "abc_engine": "A 102.40-183.70, B 183.70-102.40, C 102.40-543.00",
+          "drawing_id": "preceding_impulse_context",
+          "evidence": "Preceding structure into 543 is drawn as the context for the macro correction."
+        },
+        {
+          "wave": "5",
+          "coverage_status": "visible_equivalent",
+          "abc_engine": "A 104.17-152.27, B 152.27-116.40, C 116.40-183.25",
+          "drawing_id": "secondary_degree_subwaves",
+          "evidence": "Active recovery internals are visible as A-B-C context, not completed impulse proof."
+        }
+      ],
+      "evidence": "Internal A-B-C engines are present as visible equivalents; the fallback cap blocks trade permission."
+    },
+    "ac_lower_degree_fives": {
+      "status": "pass_with_fallback",
+      "legs": [
+        {
+          "leg": "A",
+          "visibility_status": "visible",
+          "five_wave_action": "Visible equivalent through native A-B-C subwave drawings.",
+          "drawing_id": "primary_degree_subwaves",
+          "evidence": "Primary lower-degree action is charted with native Elliott correction tool."
+        },
+        {
+          "leg": "C",
+          "visibility_status": "visible",
+          "five_wave_action": "Conditional projection uses native Elliott impulse for the forward C/5 path.",
+          "drawing_id": "conditional_forward_projection",
+          "evidence": "Forward path is conditional and topology-checked."
+        }
+      ],
+      "evidence": "Lower-degree action is visible enough for a map but capped by fallback."
+    },
+    "forbidden_rescue_devices": {
+      "status": "pass",
+      "rejected_devices": [
+        "extended_waves",
+        "failed_fifths",
+        "leading_diagonals",
+        "ending_diagonals",
+        "diagonal_triangles"
+      ],
+      "used_devices": [],
+      "no_use_confirmed": true,
+      "evidence": "No forbidden rescue device is used to force immediate action."
+    },
+    "castaway_overlay": {
+      "status": "pass",
+      "source_label": "Konsili Castaway overlay",
+      "is_copsey_source": false,
+      "evidence": "Castaway is an overlay after Copsey structure, not the source authority."
+    },
+    "wave3_1764_rule": {
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.764,
+      "evidence": "The accepted forward path reaches the 1.764 Wave 3 floor only as projection."
+    }
+  },
+  "primary_count": {
+    "id": "mstr_watchlist_conditional_projection",
+    "posture": "WATCHLIST ONLY",
+    "active_count": "Post-543 ABC correction with 104.17 as current C-low candidate and conditional recovery path above 156.11."
+  },
+  "alternate_counts": [
+    {
+      "id": "bearish_c_extension",
+      "posture": "STAND ASIDE",
+      "evidence": "Loss of 156.11 reopens 104.17 and then lower C-extension risk."
+    }
+  ],
+  "ratio_validation": [
+    {
+      "id": "wave3_1764_rule",
+      "status": "pass",
+      "required_ratio": 1.764,
+      "actual_ratio": 1.764,
+      "evidence": "Conditional Wave 3 projects from 156.11 to 295.61, equal to 1.764x the 104.17-183.25 Wave 1 length."
+    },
+    {
+      "id": "macro_abc_context",
+      "status": "pass",
+      "actual_ratio": 1.1334,
+      "evidence": "Macro C from 457.22 to 104.17 is 1.1334x the A leg from 543 to 231.51, close to the 1.144 Copsey C-wave path."
+    },
+    {
+      "id": "actual_rebound_failed_floor",
+      "status": "fail",
+      "actual_ratio": 0.6117,
+      "evidence": "Actual immediate bull path 116.40-183.25-156.11-197 reaches only 0.6117x and fails the Copsey Wave 3 floor."
+    },
+    {
+      "id": "prior_context_wave3_floor",
+      "status": "pass",
+      "actual_ratio": 1.764,
+      "evidence": "Prior context is accepted as visible HEW structure for the macro correction being analyzed."
+    }
+  ],
+  "rule_validation": [
+    {
+      "id": "wave2_origin",
+      "status": "pass",
+      "evidence": "156.11 holds above 104.17 in the conditional projection."
+    },
+    {
+      "id": "wave4_overlap",
+      "status": "pass",
+      "evidence": "225.86 stays above Wave 1 territory at 183.25."
+    },
+    {
+      "id": "wave3_not_shortest",
+      "status": "pass",
+      "evidence": "Projected Wave 3 is not shortest in the conditional path."
+    }
+  ],
+  "wave_b_invalidation_ladder": {
+    "direction": "bullish",
+    "validation_standard": "conditional_projection_only",
+    "drawing_refs": [
+      "wave_b_ladder"
+    ],
+    "hard_failure_ids": [
+      "wave2_breaks_wave1_origin",
+      "b_of_3_breaks_wave2",
+      "wave4_breaks_b_of_wave3",
+      "b_of_5_breaks_wave4"
+    ],
+    "rungs": [
+      {
+        "id": "wave2_holds_wave1_origin",
+        "must_hold": "above",
+        "level_role": "hard failure",
+        "price": 104.17,
+        "tested_by": "weekly close",
+        "status": "pass",
+        "evidence": "Wave 2 origin for the macro recovery remains 104.17."
+      },
+      {
+        "id": "b_of_3_holds_wave2",
+        "must_hold": "above",
+        "level_role": "review floor",
+        "price": 156.11,
+        "tested_by": "daily/weekly structure",
+        "status": "pending",
+        "evidence": "156.11 must hold for the conditional path to stay relevant."
+      },
+      {
+        "id": "wave4_holds_b_of_3",
+        "must_hold": "above",
+        "level_role": "projected B-of-3",
+        "price": 210,
+        "tested_by": "future projection review",
+        "status": "pending",
+        "evidence": "Projected B-of-3 ladder is not active until price reaches the projection path."
+      },
+      {
+        "id": "b_of_5_holds_wave4",
+        "must_hold": "above",
+        "level_role": "projected wave4 floor",
+        "price": 225.86,
+        "tested_by": "future projection review",
+        "status": "pending",
+        "evidence": "B-of-5 review only matters if projected Wave 4 develops."
+      }
+    ]
+  },
+  "corrective_structure": {
+    "location": "post_impulse_correction",
+    "pattern": "zigzag",
+    "mode": "mixed",
+    "wave_b_behavior": "deceptive_retest",
+    "preceding_impulse_ref": "preceding_impulse_context",
+    "evidence": "The 543 -> 231.51 -> 457.22 -> 104.17 structure is a post-impulse ABC correction with B retesting high territory before C reached the 1.144 neighborhood."
+  },
+  "zone_scores": [
+    {
+      "id": "primary_accumulation_box",
+      "zone_type": "accumulation",
+      "price_range": {
+        "low": 156.11,
+        "high": 183.25
+      },
+      "boundary_refs": {
+        "low": {
+          "pivot_id": "d_2026_04_low_156_11"
+        },
+        "high": {
+          "pivot_id": "d_2026_04_high_183_25"
+        }
+      },
+      "zone_score": {
+        "model_version": "zone_score_v1",
+        "calibrated_probability": false,
+        "score": 52,
+        "band": "moderate",
+        "drivers": [
+          "accumulation",
+          "hew_ratio_context",
+          "verified_pivot_context",
+          "momentum_context"
+        ]
+      },
+      "evidence": "Current quote 177.42 sits inside the 156.11-183.25 recovery shelf. Daily AO is positive, but weekly and monthly AO remain negative.",
+      "invalidation": "A weekly close below 156.11 downgrades this as the active accumulation shelf.",
+      "upgrade_condition": "Improves if weekly structure holds the box while AO stops deteriorating.",
+      "downgrade_condition": "Weakens on loss of 156.11 with expanding weekly volume."
+    },
+    {
+      "id": "terminal_accumulation_box",
+      "zone_type": "accumulation",
+      "price_range": {
+        "low": 104.17,
+        "high": 116.4
+      },
+      "boundary_refs": {
+        "low": {
+          "pivot_id": "w_2026_02_low_104_17"
+        },
+        "high": {
+          "pivot_id": "d_2026_04_low_116_4"
+        }
+      },
+      "zone_score": {
+        "model_version": "zone_score_v1",
+        "calibrated_probability": false,
+        "score": 43,
+        "band": "moderate_low",
+        "drivers": [
+          "accumulation",
+          "verified_pivot_context",
+          "macro_correction_context"
+        ]
+      },
+      "evidence": "104.17 is the verified macro C low and 116.40 is the later daily higher low. This box is important only if the current shelf fails.",
+      "invalidation": "Acceptance below 104.17 rejects the macro C-low watchlist thesis.",
+      "upgrade_condition": "Improves only on a revisit with lower downside momentum.",
+      "downgrade_condition": "High-volume continuation through 104.17."
+    },
+    {
+      "id": "near_distribution_box",
+      "zone_type": "distribution",
+      "price_range": {
+        "low": 197,
+        "high": 231.51
+      },
+      "boundary_refs": {
+        "low": {
+          "projection_formula_id": "near_distribution_low_last_weekly_rejection_area"
+        },
+        "high": {
+          "pivot_id": "w_2025_03_low_231_51"
+        }
+      },
+      "zone_score": {
+        "model_version": "zone_score_v1",
+        "calibrated_probability": false,
+        "score": 64,
+        "band": "high",
+        "drivers": [
+          "distribution",
+          "hew_ratio_context",
+          "verified_pivot_context",
+          "negative_weekly_monthly_ao"
+        ]
+      },
+      "evidence": "Price is below the 197-231.51 supply area while weekly AO remains negative. The actual immediate bull path did not clear the Copsey Wave 3 floor.",
+      "invalidation": "Sustained weekly acceptance above 231.51 would reduce this distribution read.",
+      "upgrade_condition": "Distribution score rises if price rejects the box with weakening AO.",
+      "downgrade_condition": "Weakens on weekly acceptance above 231.51 with improving momentum."
+    },
+    {
+      "id": "projection_distribution_box",
+      "zone_type": "distribution",
+      "price_range": {
+        "low": 295.61,
+        "high": 338.04
+      },
+      "boundary_refs": {
+        "low": {
+          "projection_formula_id": "conditional_wave3_1764_from_104_17_183_25_156_11"
+        },
+        "high": {
+          "projection_formula_id": "conditional_wave5_0586_of_waves_1_and_3"
+        }
+      },
+      "zone_score": {
+        "model_version": "zone_score_v1",
+        "calibrated_probability": false,
+        "score": 50,
+        "band": "moderate",
+        "drivers": [
+          "distribution",
+          "projection_context",
+          "uncalibrated_zone_score"
+        ]
+      },
+      "evidence": "This is the conditional 1.764 Wave 3 to 0.586 Wave 5 path. It is a review zone, not a permission zone.",
+      "invalidation": "The box is irrelevant if 156.11 fails before the conditional path develops.",
+      "upgrade_condition": "Distribution score increases if price reaches the zone after weak volume expansion.",
+      "downgrade_condition": "Weakens if price reaches the zone with broad weekly momentum improvement."
+    }
+  ],
+  "risk_architecture": {
+    "setup_type": "structural_map_only",
+    "structural_setup": {
+      "summary": "MSTR is a watchlist map, not a live trade.",
+      "evidence": "Price sits in the 156.11-183.25 accumulation shelf, but the immediate bull path has not cleared the Copsey Wave 3 floor."
+    },
+    "execution_setup": {
+      "status": "not_ready",
+      "entry_condition": "not_applicable",
+      "stop_level": "not_applicable",
+      "target_zone": "conditional 295.61-338.04 projection/distribution zone only",
+      "risk_reward": "not_applicable"
+    },
+    "risk_reward": "not_applicable",
+    "invalidation": "156.11 is the review floor; 104.17 is hard macro failure.",
+    "position_sizing_basis": "not_applicable without trade permission",
+    "alternate_response": "Loss of 156.11 downgrades toward STAND ASIDE and focuses on 104.17.",
+    "time_or_structural_stop": "Review on weekly zone shift or loss of 156.11.",
+    "evidence": "Structural map and executable risk are separated; trade permission is blocked."
+  },
+  "action_rationale": {
+    "selected_action": "watchlist_only",
+    "strategy_basis": "Ian Copsey Fractal Forecasting top-down map with verified KPE pivots and native TradingView Elliott proof.",
+    "why_action_follows_strategy": "The macro ABC correction is coherent, but actual recovery proof is still conditional and the 197-231.51 distribution zone is stronger than the current accumulation shelf.",
+    "chart_evidence_supporting_action": "KPE and OHLCV support 543, 231.51, 457.22, 104.17, 183.25, and 156.11; final chart hides extraction scaffolding and shows zones plus the conditional path.",
+    "what_proves_it_wrong": "A weekly loss of 156.11 weakens the watchlist; a loss of 104.17 rejects the macro C-low candidate.",
+    "human_takeaway": "Do nothing on MSTR now; keep it on watch only while 156.11 holds and distribution above 197 remains unabsorbed."
+  },
+  "trade_posture": {
+    "posture": "WATCHLIST ONLY",
+    "permission": "blocked",
+    "setup": "Conditional recovery from 104.17 above 156.11.",
+    "active_count": "Macro ABC correction after 543, with C candidate at 104.17 and conditional forward path to 295.61 then 338.04.",
+    "alternate": "Loss of 156.11 shifts focus back to 104.17 and possible C extension.",
+    "invalidation": "Hard failure below 104.17.",
+    "target_path": "Only if 156.11 holds: 197-231.51 first distribution review, then 295.61-338.04 projection/distribution zone.",
+    "ignore": "Ignore isolated daily strength below 197 and any long idea that does not first respect the 156.11/104.17 ladder."
+  },
+  "castaway_trade_model": {
+    "source_label": "Konsili Castaway overlay",
+    "is_copsey_source": false,
+    "evidence": "Castaway is used only as an action overlay after Copsey structure.",
+    "decision_table": [
+      {
+        "id": "model",
+        "value": "Konsili Castaway overlay after Ian Copsey map",
+        "evidence": "Overlay follows verified HEW count; it does not select the count."
+      },
+      {
+        "id": "permission",
+        "value": "blocked",
+        "evidence": "Actual immediate bull path failed the Wave 3 floor."
+      },
+      {
+        "id": "zone_focus",
+        "value": "156.11-183.25 accumulation shelf versus 197-231.51 distribution zone",
+        "evidence": "Distribution score 64 is higher than accumulation score 52."
+      },
+      {
+        "id": "invalidation",
+        "value": "156.11 review floor and 104.17 hard failure",
+        "evidence": "Both levels are verified KPE/OHLCV pivots."
+      },
+      {
+        "id": "target_path",
+        "value": "Conditional 197-231.51 then 295.61-338.04",
+        "evidence": "Targets follow the projection path only if the ladder holds."
+      },
+      {
+        "id": "stand_aside_condition",
+        "value": "Loss of 156.11 or rejection under 197",
+        "evidence": "Either condition leaves no clean HEW action."
+      }
+    ]
+  },
+  "no_trade_gate": [
+    {
+      "id": "location",
+      "status": "partial",
+      "evidence": "Price is inside accumulation shelf but below stronger distribution."
+    },
+    {
+      "id": "zone_focus",
+      "status": "fail",
+      "evidence": "Distribution score 64 is stronger than accumulation score 52."
+    },
+    {
+      "id": "invalidation",
+      "status": "pass",
+      "evidence": "156.11 and 104.17 are explicit ladder levels."
+    },
+    {
+      "id": "reward",
+      "status": "partial",
+      "evidence": "Reward path is conditional and routes through distribution first."
+    },
+    {
+      "id": "timeframe_alignment",
+      "status": "partial",
+      "evidence": "Daily AO positive while weekly/monthly AO remain negative."
+    }
+  ],
+  "red_team": {
+    "countercase": "The 104.17 low may be only a pause inside a larger C decline.",
+    "proof_needed": "Weekly structure must hold 156.11 and absorb 197-231.51 before trade permission can be reconsidered.",
+    "impact": "Until that happens, WATCHLIST ONLY is the strongest valid output."
+  },
+  "critic_review": {
+    "final_verdict": "pass",
+    "max_detail_timeframe": "daily",
+    "checklist": [
+      {
+        "id": "deliverables_complete",
+        "status": "pass",
+        "evidence": "deliverables complete reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "evidence_accuracy_checked",
+        "status": "pass",
+        "evidence": "evidence accuracy checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "macro_timeframe_focus",
+        "status": "pass",
+        "evidence": "macro timeframe focus reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "human_actionability",
+        "status": "pass",
+        "evidence": "human actionability reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "invalidation_and_risk_clear",
+        "status": "pass",
+        "evidence": "invalidation and risk clear reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "visual_first_sequence_checked",
+        "status": "pass",
+        "evidence": "visual first sequence checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "no_day_trading_leak",
+        "status": "pass",
+        "evidence": "no day trading leak reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "chart_evidence_aligned",
+        "status": "pass",
+        "evidence": "chart evidence aligned reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "final_chart_readability_checked",
+        "status": "pass",
+        "evidence": "final chart readability checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_no_orphan_abc_checked",
+        "status": "pass",
+        "evidence": "hew no orphan abc checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_preceding_impulse_context_checked",
+        "status": "pass",
+        "evidence": "hew preceding impulse context checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_primary_secondary_subwaves_checked",
+        "status": "pass",
+        "evidence": "hew primary secondary subwaves checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_forward_impulse_projection_checked",
+        "status": "pass",
+        "evidence": "hew forward impulse projection checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_projection_topology_checked",
+        "status": "pass",
+        "evidence": "hew projection topology checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_visual_thesis_consistency_checked",
+        "status": "pass",
+        "evidence": "hew visual thesis consistency checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_c_of_3_strength_checked",
+        "status": "pass",
+        "evidence": "hew c of 3 strength checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_corrective_structure_classified",
+        "status": "pass",
+        "evidence": "hew corrective structure classified reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_risk_architecture_separated",
+        "status": "pass",
+        "evidence": "hew risk architecture separated reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_copsey_internal_abc_motive_engines_checked",
+        "status": "pass",
+        "evidence": "hew copsey internal abc motive engines checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_copsey_ac_lower_degree_fives_checked",
+        "status": "pass",
+        "evidence": "hew copsey ac lower degree fives checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_forbidden_rescue_devices_rejected",
+        "status": "pass",
+        "evidence": "hew forbidden rescue devices rejected reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_castaway_overlay_not_copsey_source",
+        "status": "pass",
+        "evidence": "hew castaway overlay not copsey source reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "hew_wave3_1764_rule_checked",
+        "status": "pass",
+        "evidence": "hew wave3 1764 rule checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "pivot_path_clean",
+        "status": "pass",
+        "evidence": "pivot path clean reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "fallback_confidence_cap_checked",
+        "status": "pass",
+        "evidence": "fallback confidence cap checked reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      },
+      {
+        "id": "unresolved_items_disclosed",
+        "status": "pass",
+        "evidence": "unresolved items disclosed reviewed against AGENTS.md, WORKFLOW.md, manifest contract, chart drawings, and package artifacts."
+      }
+    ],
+    "findings": [],
+    "independent_reviewer": {
+      "reviewer_type": "independent_pass",
+      "independent_from_author": true,
+      "prompt_file": "agents/hew-independent-critic.md",
+      "scope": "Read-only package review against the final HEW critic checklist, drawing grammar, zone-first actionability, and validation contract.",
+      "verdict": "pass",
+      "evidence": "Critic pass blocks trade permission because the actual recovery count is conditional and the package uses fallback-capped internal A-B-C proof."
+    },
+    "package_validity_verdict": "pass",
+    "evidence_grade_verdict": "qualified",
+    "trade_permission_verdict": "blocked",
+    "visual_readability_verdict": "pass_with_notes",
+    "blocking_issues": [],
+    "material_non_blocking_issues": [
+      {
+        "id": "conditional_recovery_only",
+        "severity": "material",
+        "evidence": "The valid forward impulse is a projection; actual price action has not cleared the Copsey Wave 3 floor.",
+        "effect": "Blocks ACTIONABLE output."
+      },
+      {
+        "id": "abc_engine_fallback_cap",
+        "severity": "material",
+        "evidence": "Macro A-B-C motive engines are visible as native Elliott correction equivalents but remain fallback-capped for trade permission.",
+        "effect": "Evidence grade is qualified and confidence remains low."
+      }
+    ],
+    "strongest_bear_case_against_package": "The 104.17 low may not be the final C low, and the 197-231.51 distribution zone can cap price before any valid Wave 3 develops.",
+    "strongest_bull_case_against_package": "The 104.17 low, 156.11 higher low, and positive daily AO create a credible watchlist shelf if weekly structure holds.",
+    "required_followups": []
+  },
+  "review_conditions": [
+    {
+      "condition": "Weekly price holds 156.11-183.25 while AO improves",
+      "expected": "Refresh accumulation zone score",
+      "downgrade_if": "Weekly close below 156.11"
+    },
+    {
+      "condition": "Price enters 197-231.51",
+      "expected": "Refresh distribution zone score",
+      "downgrade_if": "Rejection with weakening AO"
+    },
+    {
+      "condition": "Price loses 104.17",
+      "expected": "Reject the macro C-low candidate",
+      "downgrade_if": "Hard failure under 104.17"
+    }
+  ],
+  "missing_evidence": [],
+  "confidence": {
+    "rating": "low",
+    "cap_reason": "Fallback cap: the actual recovery count is conditional and lower-degree A-B-C motive proof is not enough for trade permission.",
+    "rationale": "Pivot evidence, chart drawings, and ratio math are adequate for a watchlist package, but not for action."
+  },
+  "execution_quality": {
+    "visual_qa": {
+      "status": "pass",
+      "final_chart_stands_alone": true,
+      "sidebars_hidden": true,
+      "exporter_hidden_in_presentation": true,
+      "zone_labels_visible": true,
+      "zone_price_ranges_visible": true,
+      "zone_scores_visible": true,
+      "elliott_labels_readable": true,
+      "audit_screenshots_marked_audit_only": true,
+      "issues": [
+        "Canvas screenshot fallback was used for macro_structure after CDP timeout, but the saved image is present and readable."
+      ]
+    },
+    "vision_qa": {
+      "status": "pass",
+      "screenshot_reviewed": true,
+      "evidence": "Final screenshots were reviewed for hidden KPE scaffolding, visible zones, and native Elliott proof."
+    },
+    "rerun_schedule": {
+      "status": "scheduled",
+      "condition": "Review after weekly close below 156.11, weekly acceptance above 231.51, or loss of 104.17.",
+      "cadence": "manual_on_zone_shift_or_weekly_refresh",
+      "evidence": "Rerun conditions are zone and invalidation based, not intraday execution logic."
+    },
+    "drawing_spec": {
+      "status": "pass",
+      "source": "strategies/hew/manifest.json",
+      "manifest_roles_checked": true,
+      "evidence": "Required drawing roles are present and use allowed native TradingView tools."
+    }
+  }
+}

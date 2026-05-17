@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-05-17",
+  "files": {
+    "kpe_monthly.jsonl": "03169ab89eb27f10fed51dea1143871e558dde897c0372f5d47cb3affacf45c2",
+    "kpe_weekly.jsonl": "5056b071ea3936110fd210e710274e964d23781381a661ba51bf86368119a971",
+    "kpe_daily.jsonl": "3984524853515ae633841657678954be07d66b3ed92be5bef7e0265324da22c3",
+    "ohlcv_monthly.csv": "574c91998bfefbc43f362359b28874926010f6e3f511cc16d0fc96d414f450f7",
+    "ohlcv_weekly.csv": "789a4ff0d750cef8211630e19a975e08355d572206e12f9e962bf17599029285",
+    "ohlcv_daily.csv": "9fe74cf429fe1d1a09e5b67e7e36267de1ff9dfaba23b034e553eb300fa8afe5",
+    "draw_list_before.json": "e7c4f281b89d2beaed3326987208a3745e3ec93776ad5816db6f065993947148",
+    "draw_list_after.json": "00dec093c04c0ef54aa277868491462dff908b2c1ace482afa452410e9be5ee7",
+    "chart_state_final.json": "7542c8ff545c659b323bab73a70773d7bee27d8e3ec7a0013361809bf470a01c"
+  }
+}

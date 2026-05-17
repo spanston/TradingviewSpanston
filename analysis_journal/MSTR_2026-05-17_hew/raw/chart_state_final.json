@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "symbol": "BATS:MSTR",
+  "resolution": "1D",
+  "chartType": 1,
+  "studies": [
+    {
+      "id": "TR8cKk",
+      "name": "Konsili Pivot Exporter",
+      "visible": false,
+      "inputs": {
+        "in_0": 5,
+        "in_1": 5,
+        "in_2": 24,
+        "in_3": false,
+        "in_4": true,
+        "in_5": "Price + date"
+      }
+    },
+    {
+      "id": "UCbOaW",
+      "name": "Awesome Oscillator"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{"timeframe":"1D","exporter_version":2,"left":5,"right":5,"max_rows":24,"label_mode":"Price + date","symbol":"OMXSTO:VOLCAR_B","captured_at":"2026-05-17"}
+{"id":"D_1750629600_L","tf":"1D","type":"low","date":"2025-06-23","time":1750629600,"price":15.94,"source":"kpe_label","confirmed":true}
+{"id":"D_1752613200_L","tf":"1D","type":"low","date":"2025-07-16","time":1752613200,"price":17.76,"source":"kpe_label","confirmed":true}
+{"id":"D_1753653600_H","tf":"1D","type":"high","date":"2025-07-28","time":1753653600,"price":21.70,"source":"kpe_label","confirmed":true}
+{"id":"D_1754377200_L","tf":"1D","type":"low","date":"2025-08-05","time":1754377200,"price":17.80,"source":"kpe_label","confirmed":true}
+{"id":"D_1754895600_H","tf":"1D","type":"high","date":"2025-08-11","time":1754895600,"price":19.74,"source":"kpe_label","confirmed":true}
+{"id":"D_1756105200_H","tf":"1D","type":"high","date":"2025-08-25","time":1756105200,"price":20.92,"source":"kpe_label","confirmed":true}
+{"id":"D_1756969200_L","tf":"1D","type":"low","date":"2025-09-04","time":1756969200,"price":18.33,"source":"kpe_label","confirmed":true}
+{"id":"D_1758265200_H","tf":"1D","type":"high","date":"2025-09-19","time":1758265200,"price":20.10,"source":"kpe_label","confirmed":true}
+{"id":"D_1759734000_H","tf":"1D","type":"high","date":"2025-10-06","time":1759734000,"price":22.05,"source":"kpe_label","confirmed":true}
+{"id":"D_1760511600_L","tf":"1D","type":"low","date":"2025-10-15","time":1760511600,"price":19.78,"source":"kpe_label","confirmed":true}
+{"id":"D_1762335600_L","tf":"1D","type":"low","date":"2025-11-05","time":1762335600,"price":31.51,"source":"kpe_label","confirmed":true}
+{"id":"D_1762940400_H","tf":"1D","type":"high","date":"2025-11-12","time":1762940400,"price":36.54,"source":"kpe_label","confirmed":true}
+{"id":"D_1763717400_L","tf":"1D","type":"low","date":"2025-11-21","time":1763717400,"price":30.50,"source":"kpe_label","confirmed":true}
+{"id":"D_1764756600_L","tf":"1D","type":"low","date":"2025-12-03","time":1764756600,"price":30.91,"source":"kpe_label","confirmed":true}
+{"id":"D_1765275000_H","tf":"1D","type":"high","date":"2025-12-09","time":1765275000,"price":35.12,"source":"kpe_label","confirmed":true}
+{"id":"D_1766052000_L","tf":"1D","type":"low","date":"2025-12-18","time":1766052000,"price":29.57,"source":"kpe_label","confirmed":true}
+{"id":"D_1768518000_H","tf":"1D","type":"high","date":"2026-01-15","time":1768518000,"price":34.10,"source":"kpe_label","confirmed":true}
+{"id":"D_1770332400_L","tf":"1D","type":"low","date":"2026-02-05","time":1770332400,"price":20.90,"source":"kpe_label","confirmed":true}
+{"id":"D_1771541400_H","tf":"1D","type":"high","date":"2026-02-19","time":1771541400,"price":26.43,"source":"kpe_label","confirmed":true}
+{"id":"D_1773136200_L","tf":"1D","type":"low","date":"2026-03-09","time":1773136200,"price":21.65,"source":"kpe_label","confirmed":true}
+{"id":"D_1774991400_L","tf":"1D","type":"low","date":"2026-03-30","time":1774991400,"price":19.86,"source":"kpe_label","confirmed":true}
+{"id":"D_1776550200_H","tf":"1D","type":"high","date":"2026-04-17","time":1776550200,"price":24.35,"source":"kpe_label","confirmed":true}
+{"id":"D_1777587000_H","tf":"1D","type":"high","date":"2026-04-29","time":1777587000,"price":24.10,"source":"kpe_label","confirmed":true}
+{"id":"D_1777673400_L","tf":"1D","type":"low","date":"2026-04-30","time":1777673400,"price":21.05,"source":"kpe_label","confirmed":true}
